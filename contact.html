@@ -86,6 +86,7 @@
         <input type="hidden" name="access_key" value="8a24e355-1a8a-4518-b5a4-facc015002a0">
         <input type="hidden" name="subject" value="New message from antimatterconsulting.com">
         <input type="hidden" name="from_name" value="Antimatter website">
+        <input type="hidden" name="redirect" value="https://antimatterconsulting.com/thanks">
         <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
         <div class="f2">
           <div><label for="name">Name</label><input id="name" name="name" required autocomplete="name"></div>
@@ -94,8 +95,7 @@
         <div><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email"></div>
         <div><label for="message">What do you want to talk about?</label><textarea id="message" name="message" required></textarea></div>
         <button class="btn" type="submit" id="send">Send</button>
-        <div class="err" id="err">Something went wrong. Please try again, or reach me on LinkedIn.</div>
-      </form>
+              </form>
       <div class="ok" id="ok">
         <h3>Got it.</h3>
         <p>I read every message myself and reply within a business day.</p>
@@ -127,15 +127,11 @@
 
 <script>
 (function(){
-  var f=document.getElementById('f'),ok=document.getElementById('ok'),err=document.getElementById('err'),btn=document.getElementById('send');
-  f.addEventListener('submit',function(e){
-    e.preventDefault(); btn.disabled=true; btn.textContent='Sending'; err.style.display='none';
-    var data=new FormData(f);
-    fetch(f.action,{method:'POST',body:data,headers:{'Accept':'application/json'}})
-      .then(function(r){return r.json()})
-      .then(function(j){ if(j&&j.success){f.style.display='none';ok.style.display='block'} else {throw new Error('bad')} })
-      .catch(function(){ err.style.display='block'; btn.disabled=false; btn.textContent='Send' });
-  });
+  // point the redirect at whichever host the page is on
+  var r=document.querySelector('input[name=redirect]');
+  if(r)r.value=location.origin+'/thanks';
+  var f=document.getElementById('f'),btn=document.getElementById('send');
+  f.addEventListener('submit',function(){btn.disabled=true;btn.textContent='Sending'});
 })();
 </script>
 </body>
