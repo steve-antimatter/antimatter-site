@@ -522,15 +522,15 @@
   var ctl=document.getElementById('ctl');
   // steps: scene index, camera [cx,cy,w], hold ms
   var steps=[
-    {s:0,cam:[2000,1240,2000],hold:6500},
-    {s:1,cam:[4300,1240,2000],hold:6000},
-    {s:2,cam:[6400,1240,2000],hold:5500},
-    {s:3,cam:[7250,820,2500],hold:4500},
-    {s:3,cam:[7250,1240,2500],hold:4500},
-    {s:3,cam:[7250,1660,2500],hold:4500},
-    {s:4,cam:[10000,1240,2000],hold:8000}
+    {s:0,cam:[2000,1240,2000],hold:5000},
+    {s:1,cam:[4300,1240,2000],hold:4600},
+    {s:2,cam:[6400,1240,2000],hold:4200},
+    {s:3,cam:[7250,820,2500],hold:3600},
+    {s:3,cam:[7250,1240,2500],hold:3600},
+    {s:3,cam:[7250,1660,2500],hold:3600},
+    {s:4,cam:[10000,1240,2000],hold:6000}
   ];
-  var MOVE=1800;
+  var MOVE=1400;
   var cur=-1,playing=true,inView=false,timer=null,raf=null,from=null,to=null,t0=0,startAt=0,elapsed=0,holdNow=6000;
   function ease(t){return t<.5?2*t*t:-1+(4-2*t)*t}
   function box(c){var w=c[2],h=w*0.74;svg.setAttribute('viewBox',(c[0]-w/2)+' '+(c[1]-h/2)+' '+w+' '+h)}
@@ -559,11 +559,13 @@
   prog();
   dots.forEach(function(d){d.addEventListener('click',function(){var s=+d.dataset.i;for(var k=0;k<steps.length;k++)if(steps[k].s===s){go(k);break}})});
   ctl.addEventListener('click',function(){playing=!playing;ctl.textContent=playing?'Pause':'Play';if(playing){startAt=performance.now();schedule()}else{elapsed+=performance.now()-startAt;clearTimeout(timer)}});
+  // draw the first frame immediately; the clock starts when the film scrolls into view
+  go(0,true);
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(e){var was=inView;inView=e[0].isIntersecting;
-      if(inView&&!was){if(cur<0)go(0,true);else{startAt=performance.now();schedule()}}
+      if(inView&&!was){startAt=performance.now();schedule()}
       if(!inView&&was){elapsed+=performance.now()-startAt;clearTimeout(timer)}},{threshold:.35}).observe(film);
-  }else{inView=true;go(0,true)}
+  }else{inView=true;schedule()}
   window.addEventListener('resize',function(){if(cur>=0&&to)box(from0||to)});
 })();
 </script>
