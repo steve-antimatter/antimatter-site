@@ -11,7 +11,8 @@
 <style>
   :root{
     --navy:#0a1628; --navy-2:#0f2140; --navy-3:#16305a; --deep:#07101f;
-    --ink:#e9eef4; --ink-dim:#a9b8c9; --mist:#9dbccd; --mist-2:#c9dbe5; --paper:#f4f1ea; --paper-2:#e6e9e6;
+    --ink:#e9eef4; --ink-dim:#a9b8c9; --mist:#9dbccd; --mist-2:#c9dbe5; --paper:#f4f1ea;
+    --orange:#f27a2c; --orange-2:#ffa364;
     --line:rgba(157,188,205,.18); --max:1180px;
     --head:'Oswald',sans-serif; --body:'Open Sans',system-ui,sans-serif;
   }
@@ -23,8 +24,6 @@
   .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
   h1,h2,h3,h4{font-family:var(--head);font-weight:500;line-height:1.1;letter-spacing:.01em}
   p{max-width:60ch}
-  .dim{color:var(--ink-dim)}
-  .ph{border:1px dashed rgba(157,188,205,.55);border-radius:4px;padding:0 .35em;color:var(--mist);font-style:italic}
   .eyebrow{font-family:var(--head);font-weight:300;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--mist);margin-bottom:18px}
   .btn{display:inline-block;font-family:var(--head);font-weight:500;letter-spacing:.08em;text-transform:uppercase;font-size:14px;padding:12px 22px;border:1px solid var(--mist);color:var(--mist-2);border-radius:2px;transition:all .2s}
   .btn:hover{background:var(--mist);color:var(--navy)}
@@ -38,11 +37,6 @@
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300' preserveAspectRatio='none'><defs><linearGradient id='s' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23f7f5f0'/><stop offset='1' stop-color='%23d7e4ec'/></linearGradient></defs><rect width='1200' height='300' fill='url(%23s)'/><path d='M0 175 L120 120 L260 160 L400 95 L540 150 L680 105 L820 145 L960 90 L1100 135 L1200 110 L1200 300 L0 300Z' fill='%23b7cdda' opacity='.75'/><path d='M0 215 L160 170 L320 205 L480 150 L640 210 L800 160 L960 200 L1120 165 L1200 190 L1200 300 L0 300Z' fill='%2391b1c4' opacity='.8'/><path d='M0 250 L180 225 L380 245 L560 205 L760 240 L960 215 L1200 240 L1200 300 L0 300Z' fill='%236e94ab' opacity='.9'/></svg>");
     background-size:cover;background-position:center;
   }
-  /* faint mountain ridge used as a section backdrop */
-  .ridge{position:relative;overflow:hidden}
-  .ridge::before{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;pointer-events:none;opacity:.5;
-    background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300' preserveAspectRatio='none'><path d='M0 175 L120 120 L260 160 L400 95 L540 150 L680 105 L820 145 L960 90 L1100 135 L1200 110 L1200 300 L0 300Z' fill='%239dbccd' opacity='.10'/><path d='M0 215 L160 170 L320 205 L480 150 L640 210 L800 160 L960 200 L1120 165 L1200 190 L1200 300 L0 300Z' fill='%239dbccd' opacity='.12'/><path d='M0 250 L180 225 L380 245 L560 205 L760 240 L960 215 L1200 240 L1200 300 L0 300Z' fill='%239dbccd' opacity='.16'/></svg>") center bottom/100% 100% no-repeat}
-  .ridge>.wrap{position:relative}
 
   /* nav */
   nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
@@ -58,133 +52,95 @@
   .menu{display:none;background:none;border:0;color:var(--ink);font-size:26px;cursor:pointer}
 
   /* hero */
-  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;padding:120px 28px 80px;
-    background:radial-gradient(ellipse 80% 60% at 50% 35%,#13284d 0%,var(--navy) 65%)}
-  .hero .logo{width:min(900px,88vw);margin:0 auto 48px}
+  .hero{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;padding:150px 28px 70px;
+    background:radial-gradient(ellipse 80% 60% at 50% 30%,#13284d 0%,var(--navy) 65%)}
+  .hero .logo{width:min(900px,88vw);margin:0 auto 54px}
   .hero h1{font-size:clamp(28px,4.2vw,54px);font-weight:400;max-width:20ch;color:var(--ink)}
   .hero .sub{font-family:var(--head);font-weight:300;letter-spacing:.14em;text-transform:uppercase;font-size:clamp(13px,1.4vw,17px);color:var(--mist);margin-top:18px}
-  .hero .qs{margin-top:50px;max-width:760px}
-  .hero .qs p.lead{font-size:19px;color:var(--ink);margin:0 auto 22px}
-  .hero .qs ul{list-style:none;display:grid;gap:10px}
-  .hero .qs li{font-size:17px;color:var(--ink-dim);padding:12px 20px;border-left:2px solid var(--mist);text-align:left;background:linear-gradient(90deg,rgba(22,48,90,.5),transparent)}
-  .hero .cta{margin-top:44px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
-  /* growth story */
-  .growth{background:var(--navy-2);padding:110px 0 120px}
-  .growth .stages{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-  .growth .stage{padding:44px 44px 48px;background:rgba(10,22,40,.5)}
-  .growth .stage+.stage{border-left:1px solid var(--line);background:rgba(22,48,90,.35)}
-  .growth .k{font-family:var(--head);font-weight:300;letter-spacing:.3em;font-size:12px;text-transform:uppercase;color:var(--mist)}
-  .growth .num{font-size:clamp(64px,8vw,112px);line-height:1;margin:10px 0 18px}
-  .growth .num small{display:block;font-family:var(--head);font-weight:300;font-size:clamp(14px,1.5vw,20px);letter-spacing:.14em;text-transform:uppercase;-webkit-text-fill-color:var(--ink-dim);margin-top:6px}
-  .growth .stage p{font-size:16px;color:var(--ink-dim);max-width:none}
-  .growth .mission{margin:70px auto 0;text-align:center;max-width:860px}
-  .growth .mission p{font-family:var(--head);font-weight:300;font-size:clamp(22px,2.6vw,32px);line-height:1.35;color:var(--ink);max-width:none}
-  .growth .mission p b{font-weight:500;color:var(--mist-2)}
-
-  /* how it works: film */
-  .how{background:var(--deep);padding:110px 0 120px}
-  .how .head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:34px;flex-wrap:wrap}
-  .how h2{font-size:clamp(34px,4.5vw,56px);font-weight:400;max-width:18ch}
-  .how .head p{color:var(--ink-dim);max-width:40ch}
-  .film{display:grid;grid-template-columns:340px 1fr;border:1px solid rgba(157,188,205,.3);border-radius:12px;overflow:hidden;background:#050c18;min-height:560px}
+  /* film */
+  .how{padding:30px 0 110px}
+  .film{display:grid;grid-template-columns:340px 1fr;border:1px solid rgba(157,188,205,.3);border-radius:12px;overflow:hidden;background:#050c18;min-height:580px}
   .film .panel{padding:38px 34px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(180deg,#0b1a30,#07101f)}
-  .film .cs{position:relative;min-height:230px}
+  .film .cs{position:relative;min-height:260px}
   .film .c{position:absolute;inset:0;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
   .film .c.on{opacity:1;transform:none}
-  .film .n{font-family:var(--head);font-size:72px;font-weight:300;line-height:1;color:var(--mist);opacity:.5}
-  .film .c h3{font-size:30px;margin:14px 0 10px}
+  .film .n{font-family:var(--head);font-size:64px;font-weight:300;line-height:1;color:var(--orange)}
+  .film .c h3{font-size:30px;margin:12px 0 10px}
   .film .c p{font-size:15px;color:var(--ink-dim);max-width:none}
-  .film .dots{display:flex;gap:10px;align-items:center;margin-top:30px}
-  .film .dot{width:44px;height:4px;background:rgba(157,188,205,.25);border:0;border-radius:2px;cursor:pointer;position:relative;overflow:hidden;padding:0}
-  .film .dot span{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--mist)}
-  .film .dot.done span{width:100%}
+  .film .dots{display:flex;gap:8px;align-items:center;margin-top:30px}
+  .film .dot{width:36px;height:4px;background:rgba(157,188,205,.25);border:0;border-radius:2px;cursor:pointer;position:relative;overflow:hidden;padding:0}
+  .film .dot span{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--orange)}
   .film .ctl{margin-left:auto;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:var(--head);letter-spacing:.2em;font-size:10px;text-transform:uppercase;padding:6px 10px;border-radius:2px;cursor:pointer}
   .film .ctl:hover{color:var(--ink);border-color:var(--mist)}
   .film .screen{position:relative;overflow:hidden}
   .film svg{position:absolute;inset:0;width:100%;height:100%}
   .film .fig{opacity:0;transition:opacity .6s ease}
   .film .fig.on{opacity:1}
-  .film .typ{transform-box:fill-box;transform-origin:left center;transform:scaleX(0);transition:transform .5s ease}
-  .film .on .typ{transform:scaleX(1)}
-  .film .pop{transform-box:fill-box;transform-origin:center;transform:scale(.6);opacity:0;transition:transform .5s cubic-bezier(.2,.9,.3,1.3),opacity .4s}
+  .film .pop{transform-box:fill-box;transform-origin:center;transform:scale(.6);opacity:0;transition:transform .55s cubic-bezier(.2,.9,.3,1.25),opacity .4s}
   .film .on .pop{transform:scale(1);opacity:1}
-  .film .flow{stroke-dasharray:14 10;animation:flow 1.6s linear infinite}
-  @keyframes flow{to{stroke-dashoffset:-24}}
   .film .slide{transform-box:fill-box;transform-origin:left center;transform:translateX(-40px);opacity:0;transition:transform .7s ease,opacity .5s}
   .film .on .slide{transform:none;opacity:1}
-  .film .d1{transition-delay:.3s}.film .d2{transition-delay:.7s}.film .d3{transition-delay:1.1s}.film .d4{transition-delay:1.5s}.film .d5{transition-delay:1.9s}.film .d6{transition-delay:2.3s}
+  .film .flow{stroke-dasharray:14 10;animation:flow 1.6s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-24}}
+  .film .d1{transition-delay:.2s}.film .d2{transition-delay:.6s}.film .d3{transition-delay:1s}.film .d4{transition-delay:1.4s}.film .d5{transition-delay:1.9s}.film .d6{transition-delay:2.4s}.film .d7{transition-delay:2.9s}
   .film text{font-family:var(--head);fill:var(--mist-2);letter-spacing:.06em;text-transform:uppercase}
   .film .lbl{font-size:34px;fill:var(--ink-dim);font-weight:300;letter-spacing:.14em}
   .film .ttl{font-size:46px;fill:var(--mist-2);font-weight:500}
-  .film .big{font-size:76px;fill:var(--mist-2);font-weight:500}
+  .film .big{font-size:60px;fill:var(--mist-2);font-weight:500}
   .film .chip{font-size:30px;fill:var(--mist-2);letter-spacing:.1em}
-  .film .body{font-family:var(--body);text-transform:none;letter-spacing:0;fill:var(--ink);font-size:40px;font-weight:500}
+  .film .body{font-family:var(--body);text-transform:none;letter-spacing:0;fill:var(--ink);font-size:38px;font-weight:500}
+  .film .or{fill:var(--orange)}
 
-  /* products: light band */
-  .buy{background:var(--paper);color:var(--navy);padding:110px 0 120px}
-  .buy .eyebrow{color:#5f7f94}
-  .buy h2{font-size:clamp(34px,4.5vw,56px);font-weight:400;max-width:20ch;margin-bottom:14px}
-  .buy .intro{color:#4a5c6b;margin-bottom:50px}
-  .buy .three{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--navy)}
-  .buy .prod{padding:34px 30px 40px 0;border-right:1px solid rgba(10,22,40,.15);margin-right:30px;position:relative;transition:transform .25s}
-  .buy .prod:last-child{border-right:0;margin-right:0}
-  .buy .prod:hover{transform:translateY(-4px)}
-  .buy .prod .num{font-family:var(--head);font-weight:600;font-size:64px;line-height:1;color:var(--navy)}
-  .buy .prod h3{font-size:26px;margin:16px 0 10px;color:var(--navy)}
-  .buy .prod p{font-size:16px;color:#4a5c6b;max-width:none}
-  .buy .prod .more{display:inline-block;margin-top:18px;font-family:var(--head);letter-spacing:.2em;font-size:11px;text-transform:uppercase;color:var(--navy);border-bottom:1px solid var(--navy);padding-bottom:2px}
+  /* products */
+  .buy{padding:40px 0 100px}
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .prod{display:block;padding:38px 32px 42px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,rgba(22,48,90,.45),rgba(15,33,64,.25));position:relative;transition:transform .25s,border-color .25s}
+  .prod:hover{transform:translateY(-4px);border-color:var(--mist)}
+  .prod .k{font-family:var(--head);font-weight:300;letter-spacing:.3em;font-size:12px;text-transform:uppercase;color:var(--orange)}
+  .prod .t{font-size:clamp(40px,4.4vw,58px);line-height:1;margin:10px 0 16px}
+  .prod p{font-size:16px;color:var(--ink-dim);max-width:none}
+  .prod .more{display:inline-block;margin-top:22px;font-family:var(--head);letter-spacing:.2em;font-size:11px;text-transform:uppercase;color:var(--mist-2);border-bottom:1px solid var(--mist);padding-bottom:2px}
 
-  /* product sections */
-  section.block{padding:120px 0}
-  .block.alt{background:var(--navy-2)}
-  .block h2.mist{font-size:clamp(44px,7vw,92px);line-height:1;margin-bottom:22px}
-  .block .lead{font-family:var(--head);font-weight:300;font-size:clamp(22px,2.4vw,30px);line-height:1.3;color:var(--ink);max-width:28ch}
-  .two{display:grid;grid-template-columns:5fr 7fr;gap:70px;align-items:start}
-  .two .sticky{position:sticky;top:100px}
-  .copy p+p{margin-top:18px}
-  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:70px;border-top:1px solid var(--line);padding-top:40px}
-  .cols .col .k{font-family:var(--head);font-weight:600;font-size:40px;color:var(--mist);line-height:1;margin-bottom:12px}
-  .cols .col h4{font-size:20px;margin-bottom:8px;color:var(--mist-2)}
-  .cols .col p{font-size:15px;color:var(--ink-dim);max-width:none}
-  .offers{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:60px}
-  .offer{padding:30px 32px;border-radius:8px;background:linear-gradient(135deg,var(--navy-3),var(--navy-2));border:1px solid rgba(157,188,205,.3)}
-  .offer .k{font-family:var(--head);letter-spacing:.3em;font-size:11px;color:var(--mist);text-transform:uppercase}
-  .offer h4{font-size:26px;margin:8px 0 4px}
-  .offer .meta{font-family:var(--head);font-weight:300;letter-spacing:.1em;text-transform:uppercase;font-size:14px;color:var(--ink-dim);margin-bottom:14px}
-  .offer p{max-width:none;font-size:16px}
-  .offer p+p{margin-top:10px;color:var(--ink-dim)}
-  .offer.wide{grid-column:1/-1}
+  /* product details */
+  .detail{padding:90px 0;border-top:1px solid var(--line)}
+  .detail.alt{background:var(--navy-2)}
+  .detail .grid{display:grid;grid-template-columns:4fr 8fr;gap:60px;align-items:start}
+  .detail h2{font-size:clamp(40px,5vw,64px);line-height:1;margin-bottom:14px}
+  .detail .tag{font-family:var(--head);font-weight:300;font-size:clamp(20px,2vw,26px);line-height:1.3;color:var(--ink);max-width:22ch}
+  .detail .intro{font-size:17px;color:var(--ink);margin-bottom:30px;max-width:none}
+  .detail ul{list-style:none;display:grid;gap:0;border-top:1px solid var(--line)}
+  .detail li{display:grid;grid-template-columns:190px 1fr;gap:24px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .detail li b{font-family:var(--head);font-weight:500;font-size:19px;color:var(--mist-2);letter-spacing:.02em}
+  .detail li span{font-size:15px;color:var(--ink-dim)}
+  .detail .note{margin-top:22px;font-size:15px;color:var(--ink-dim);border-left:2px solid var(--orange);padding-left:16px;max-width:none}
 
-  /* agents: statement layout */
-  .agents .stmt{font-family:var(--head);font-weight:300;font-size:clamp(26px,3.4vw,44px);line-height:1.25;max-width:24ch;margin:30px 0 50px}
-  .agents .stmt b{font-weight:500;color:var(--mist-2)}
-  .agents .pair{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-  .agents .pair h4{font-size:20px;color:var(--mist-2);margin-bottom:10px}
-  .agents .pair p{font-size:16px;color:var(--ink-dim)}
-  .agents .pair p+p{margin-top:14px}
-
-  /* coaching: definition rows */
-  .rows{margin-top:60px;border-top:1px solid var(--line)}
-  .row{display:grid;grid-template-columns:200px 1fr;gap:30px;padding:26px 0;border-bottom:1px solid var(--line);align-items:baseline}
-  .row b{font-family:var(--head);font-weight:500;font-size:24px;color:var(--mist-2)}
-  .row p{font-size:16px;color:var(--ink-dim);max-width:none}
-
-  /* proof */
-  .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
-  .tile{padding:30px;border:1px dashed rgba(157,188,205,.35);border-radius:8px;min-height:200px}
-  .tile .k{font-family:var(--head);letter-spacing:.3em;font-size:11px;color:var(--mist);text-transform:uppercase}
-  .tile h4{font-size:22px;margin:10px 0 10px}
-  .tile p{font-size:15px;color:var(--ink-dim);max-width:none}
+  /* growth */
+  .growth{padding:110px 0 120px;border-top:1px solid var(--line);background:radial-gradient(ellipse 70% 50% at 50% 0%,#13284d 0%,var(--navy) 70%)}
+  .growth .quote{max-width:820px;margin:0 auto 70px;text-align:center}
+  .growth .quote p.lead{font-family:var(--head);font-weight:300;font-size:clamp(22px,2.6vw,32px);line-height:1.3;color:var(--ink);max-width:none}
+  .growth .quote ul{list-style:none;margin-top:26px;display:grid;gap:8px}
+  .growth .quote li{font-size:17px;color:var(--ink-dim)}
+  .growth .row{display:grid;grid-template-columns:1fr auto 1fr;gap:30px;align-items:center;text-align:center}
+  .growth .num{font-size:clamp(72px,10vw,140px);line-height:1}
+  .growth .arrow{font-family:var(--head);font-weight:300;font-size:clamp(40px,6vw,80px);color:var(--orange);line-height:1}
+  .growth .cap{font-family:var(--head);font-weight:300;letter-spacing:.2em;text-transform:uppercase;font-size:clamp(13px,1.4vw,17px);color:var(--mist);margin-top:8px}
+  .growth .desc{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:40px}
+  .growth .desc p{font-size:16px;color:var(--ink-dim);max-width:none}
+  .growth .mission{margin:70px auto 0;text-align:center;max-width:860px}
+  .growth .mission p{font-family:var(--head);font-weight:300;font-size:clamp(20px,2.4vw,30px);line-height:1.35;color:var(--ink);max-width:none}
+  .growth .mission b{font-weight:500;color:var(--orange-2)}
 
   /* about */
-  .steve{display:grid;grid-template-columns:1fr 2fr;gap:70px;align-items:center}
-  .portrait{aspect-ratio:4/5;border-radius:8px;background:linear-gradient(160deg,var(--navy-3),var(--navy));border:1px solid var(--line);display:flex;align-items:flex-end;padding:24px;color:var(--ink-dim);font-size:14px}
-  .steve blockquote{font-family:var(--head);font-weight:300;font-size:clamp(24px,2.8vw,36px);line-height:1.25;color:var(--ink);margin-bottom:26px}
-  .steve .about p+p{margin-top:18px}
+  .about{padding:110px 0;border-top:1px solid var(--line)}
+  .steve{display:grid;grid-template-columns:5fr 7fr;gap:70px;align-items:center}
+  .portrait{border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/5}
+  .portrait img{width:100%;height:100%;object-fit:cover;object-position:center top}
+  .steve blockquote{font-family:var(--head);font-weight:300;font-size:clamp(24px,2.8vw,36px);line-height:1.25;color:var(--ink);margin:14px 0 26px}
+  .steve .txt p+p{margin-top:18px}
 
   /* cta */
-  .ctab{padding:140px 0;text-align:center;background:radial-gradient(ellipse 70% 60% at 50% 100%,#13284d 0%,var(--navy) 70%);border-top:1px solid var(--line)}
+  .ctab{padding:130px 0;text-align:center;background:radial-gradient(ellipse 70% 60% at 50% 100%,#13284d 0%,var(--navy) 70%);border-top:1px solid var(--line)}
   .ctab h2{font-size:clamp(40px,6vw,76px);line-height:1}
   .ctab p{margin:26px auto 36px;color:var(--ink-dim);font-size:18px}
   .ctab .mail{display:block;margin-top:22px;font-family:var(--head);letter-spacing:.08em;font-size:18px;color:var(--mist-2)}
@@ -196,17 +152,17 @@
     nav ul{display:none;position:absolute;top:68px;left:0;right:0;background:var(--navy);flex-direction:column;align-items:flex-start;padding:20px 28px 28px;gap:18px;border-bottom:1px solid var(--line)}
     nav ul.open{display:flex}
     .menu{display:block}
-    .growth .stages,.two,.steve,.cols,.offers,.agents .pair,.buy .three,.tiles{grid-template-columns:1fr}
-    .growth .stage+.stage{border-left:0;border-top:1px solid var(--line)}
-    .two .sticky{position:static}
+    .three,.detail .grid,.growth .desc,.steve{grid-template-columns:1fr}
+    .growth .row{grid-template-columns:1fr;gap:10px}
+    .growth .arrow{transform:rotate(90deg)}
     .film{grid-template-columns:1fr}
     .film .panel{border-right:0;border-bottom:1px solid var(--line);padding:28px 24px}
-    .film .cs{min-height:200px}
+    .film .cs{min-height:210px}
     .film .screen{min-height:380px}
-    .buy .prod{border-right:0;margin-right:0;padding-right:0;border-bottom:1px solid rgba(10,22,40,.15)}
-    .row{grid-template-columns:1fr;gap:6px}
-    .portrait{max-width:280px}
-    section.block,.growth,.how,.buy{padding:84px 0}
+    .detail li{grid-template-columns:1fr;gap:4px}
+    .portrait{max-width:320px}
+    .hero{padding-top:110px}
+    .detail,.growth,.about{padding:80px 0}
   }
   @media (prefers-reduced-motion:reduce){.film .flow{animation:none}}
 </style>
@@ -223,7 +179,7 @@
       <li><a href="#agents">Agents</a></li>
       <li><a href="#coaching">Coaching</a></li>
       <li><a href="#about">About</a></li>
-      <li><a class="btn" href="#contact">Start a conversation</a></li>
+      <li><a class="btn" href="contact.html">Contact</a></li>
     </ul>
   </div>
 </nav>
@@ -232,226 +188,150 @@
   <img class="logo" id="herologo" src="logo.png" alt="Antimatter Consulting">
   <h1>The founder's voice in every sales and marketing touchpoint.</h1>
   <div class="sub">Every pitch &middot; Every campaign &middot; Every asset &middot; Every agent</div>
-  <div class="qs">
-    <p class="lead">The founders of your company speak about your products with passion and clarity.</p>
-    <ul>
-      <li>Can every sales rep pitch with the same conviction?</li>
-      <li>Does every marketing campaign convey the same uniqueness?</li>
-      <li>Does your pricing reflect the company's true value, or turn it into a commodity?</li>
-    </ul>
-  </div>
-  <div class="cta">
-    <a class="btn solid" href="#contact">Start a free conversation</a>
-    <a class="btn" href="#how">See how it works</a>
-  </div>
 </header>
 
-<!-- ============ GROWTH STORY ============ -->
-<section class="growth">
-  <div class="wrap">
-    <div class="stages">
-      <div class="stage">
-        <div class="k">Getting to</div>
-        <div class="num mist">$5M<small>The honeymoon</small></div>
-        <p>Early growth comes fast for tech firms. The founders are personally involved in every deal, explaining the product with clarity and enthusiasm. They sell comprehensive solutions at a premium because they believe in what they've built.</p>
-      </div>
-      <div class="stage">
-        <div class="k">Getting from $5M to</div>
-        <div class="num mist">$50M<small>A different path</small></div>
-        <p>Growth means team building and delegation. The founder is no longer in every room. The marketing team approximates the founder. The sales team approximates the marketing team. By the time a message reaches a prospect, it's a copy of a copy.</p>
-      </div>
-    </div>
-    <div class="mission">
-      <p>Our mission is to preserve the passion and voice of the founders as the company grows, so every pitch, every post, and every piece of product marketing carries the same energy. <b>That's the difference between growth and commoditization.</b></p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ HOW IT WORKS ============ -->
+<!-- ============ FILM ============ -->
 <section class="how" id="how">
   <div class="wrap">
-    <div class="head">
-      <div>
-        <div class="eyebrow">How it works</div>
-        <h2>From one conversation to every touchpoint.</h2>
-      </div>
-      <p>Four steps. We listen to the people who know the product best, train agents on what they say, put the agents to work, and coach the reps to deliver it.</p>
-    </div>
-
     <div class="film" id="film">
       <div class="panel">
         <div class="cs">
-          <div class="c" data-i="0"><div class="n">01</div><h3>Listen</h3><p>It starts with a conversation. Founders and product experts, talking about why customers buy, what makes the product different, and how it should be priced.</p></div>
-          <div class="c" data-i="1"><div class="n">02</div><h3>Train</h3><p>That conversation becomes the knowledge base: positioning, buyers, products, pricing, and the way the company talks. Agents are trained on it, so what they produce sounds like you.</p></div>
-          <div class="c" data-i="2"><div class="n">03</div><h3>Produce</h3><p>The agents do the work. Campaigns, sales decks, content, and product materials, created in the founder's voice at the pace of the business.</p></div>
-          <div class="c" data-i="3"><div class="n">04</div><h3>Coach</h3><p>Then we coach the reps to present it. One-on-one work on real deals, so every rep tells the story with the founder's conviction and their own style.</p></div>
+          <div class="c" data-i="0"><div class="n">01</div><h3>Discover</h3><p>Antimatter works with founders, product experts, and customers to capture why customers buy, what makes the product different, and how it should be priced.</p></div>
+          <div class="c" data-i="1"><div class="n">02</div><h3>Context</h3><p>Those interviews become context and style guides: positioning, buyers, products, pricing, and the way the company talks.</p></div>
+          <div class="c" data-i="2"><div class="n">03</div><h3>Build</h3><p>Three agents are built on that foundation: a marketing campaign agent, a sales enablement agent, and a product portfolio agent.</p></div>
+          <div class="c" data-i="3"><div class="n">04</div><h3>Create</h3><p>The agents produce the assets. Emails, ads, social posts, and content. Decks, proposals, and quotes. A pricing menu built around your buyers.</p></div>
+          <div class="c" data-i="4"><div class="n">05</div><h3>Train and coach</h3><p>Antimatter trains the reps on the new systems, shows them how to generate leads with them, and coaches them to deliver the pitch live to qualified prospects.</p></div>
         </div>
         <div>
           <div class="dots" id="dots">
-            <button class="dot" data-i="0" aria-label="Listen"><span></span></button>
-            <button class="dot" data-i="1" aria-label="Train"><span></span></button>
-            <button class="dot" data-i="2" aria-label="Produce"><span></span></button>
-            <button class="dot" data-i="3" aria-label="Coach"><span></span></button>
+            <button class="dot" data-i="0" aria-label="Discover"><span></span></button>
+            <button class="dot" data-i="1" aria-label="Context"><span></span></button>
+            <button class="dot" data-i="2" aria-label="Build"><span></span></button>
+            <button class="dot" data-i="3" aria-label="Create"><span></span></button>
+            <button class="dot" data-i="4" aria-label="Train and coach"><span></span></button>
             <button class="ctl" id="ctl">Pause</button>
           </div>
         </div>
       </div>
 
       <div class="screen">
-        <svg id="world" viewBox="1350 800 1300 760" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <svg id="world" viewBox="1200 500 1600 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
           <defs>
             <linearGradient id="card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16305a"/><stop offset="1" stop-color="#0f2140"/></linearGradient>
             <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f1ea"/><stop offset="1" stop-color="#d7e4ec"/></linearGradient>
-            <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#9dbccd" stop-opacity=".3"/><stop offset="1" stop-color="#9dbccd" stop-opacity="0"/></radialGradient>
+            <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#f27a2c" stop-opacity=".22"/><stop offset="1" stop-color="#f27a2c" stop-opacity="0"/></radialGradient>
             <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#9dbccd" stroke-opacity=".06"/></pattern>
+            <!-- reusable person -->
+            <symbol id="person" viewBox="-100 -100 200 260"><circle cx="0" cy="-40" r="48" fill="#16305a" stroke="#9dbccd" stroke-width="5"/><path d="M-70 80 q70 -90 140 0 v70 h-140z" fill="#16305a" stroke="#9dbccd" stroke-width="5"/></symbol>
+            <symbol id="am" viewBox="-100 -100 200 260"><circle cx="0" cy="-40" r="48" fill="#f27a2c" stroke="#ffd4b3" stroke-width="5"/><path d="M-70 80 q70 -90 140 0 v70 h-140z" fill="#f27a2c" stroke="#ffd4b3" stroke-width="5"/></symbol>
           </defs>
-          <rect x="0" y="0" width="7000" height="2600" fill="url(#grid)"/>
+          <rect x="0" y="0" width="10000" height="3000" fill="url(#grid)"/>
 
-          <!-- SCENE 1: conversation -->
+          <!-- SCENE 1: Discover -->
           <g id="s1" class="fig">
-            <circle cx="2000" cy="1200" r="460" fill="url(#glow)"/>
-            <g>
-              <circle cx="1640" cy="1070" r="48" fill="#16305a" stroke="#9dbccd" stroke-width="4"/>
-              <path d="M1570 1185 q70 -80 140 0 v50 h-140z" fill="#16305a" stroke="#9dbccd" stroke-width="4"/>
-              <text class="lbl" x="1640" y="1285" text-anchor="middle">Founder</text>
-            </g>
-            <g>
-              <circle cx="2370" cy="1330" r="48" fill="#16305a" stroke="#9dbccd" stroke-width="4"/>
-              <path d="M2300 1445 q70 -80 140 0 v50 h-140z" fill="#16305a" stroke="#9dbccd" stroke-width="4"/>
-              <text class="lbl" x="2370" y="1545" text-anchor="middle">Product expert</text>
-            </g>
-            <g class="pop d1">
-              <path d="M1730 980 h440 a16 16 0 0 1 16 16 v110 a16 16 0 0 1 -16 16 h-390 l-30 30 v-30 h-20 a16 16 0 0 1 -16 -16 v-110 a16 16 0 0 1 16 -16z" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/>
-              <text class="body" x="1765" y="1040">Why customers buy</text>
-              <rect class="typ d2" x="1765" y="1066" width="320" height="10" rx="5" fill="#9dbccd" opacity=".45"/>
-              <rect class="typ d3" x="1765" y="1088" width="220" height="10" rx="5" fill="#9dbccd" opacity=".45"/>
-            </g>
-            <g class="pop d3">
-              <path d="M1880 1165 h460 a16 16 0 0 1 16 16 v110 a16 16 0 0 1 -16 16 h-20 v30 l-30 -30 h-410 a16 16 0 0 1 -16 -16 v-110 a16 16 0 0 1 16 -16z" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/>
-              <text class="body" x="1915" y="1225">What makes it different</text>
-              <rect class="typ d4" x="1915" y="1251" width="300" height="10" rx="5" fill="#9dbccd" opacity=".45"/>
-              <rect class="typ d5" x="1915" y="1273" width="380" height="10" rx="5" fill="#9dbccd" opacity=".45"/>
-            </g>
-            <g class="pop d5">
-              <path d="M1730 1350 h470 a16 16 0 0 1 16 16 v110 a16 16 0 0 1 -16 16 h-420 l-30 30 v-30 h-20 a16 16 0 0 1 -16 -16 v-110 a16 16 0 0 1 16 -16z" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/>
-              <text class="body" x="1765" y="1410">How we price it, and why</text>
-              <rect class="typ d6" x="1765" y="1436" width="380" height="10" rx="5" fill="#9dbccd" opacity=".45"/>
-              <rect class="typ d6" x="1765" y="1458" width="260" height="10" rx="5" fill="#9dbccd" opacity=".45"/>
-            </g>
+            <circle cx="2000" cy="1250" r="520" fill="url(#glow)"/>
+            <path class="flow d1" d="M1760 1030 L1930 1180" fill="none" stroke="#f27a2c" stroke-width="4"/>
+            <path class="flow d2" d="M1760 1520 L1930 1340" fill="none" stroke="#f27a2c" stroke-width="4"/>
+            <path class="flow d3" d="M2290 1260 L2110 1260" fill="none" stroke="#f27a2c" stroke-width="4"/>
+            <g class="pop"><use href="#am" x="1900" y="1150" width="200" height="260"/><text class="lbl or" x="2000" y="1480" text-anchor="middle">Antimatter</text></g>
+            <g class="pop d1"><use href="#person" x="1540" y="840" width="200" height="260"/><text class="lbl" x="1640" y="1170" text-anchor="middle">Founder</text></g>
+            <g class="pop d2"><use href="#person" x="1540" y="1380" width="200" height="260"/><text class="lbl" x="1640" y="1710" text-anchor="middle">Product expert</text></g>
+            <g class="pop d3"><use href="#person" x="2360" y="1120" width="200" height="260"/><text class="lbl" x="2460" y="1450" text-anchor="middle">Customer</text></g>
+            <!-- quote cards -->
+            <g class="pop d3"><rect x="1800" y="700" width="560" height="110" rx="14" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="1832" y="768">Why customers buy</text></g>
+            <g class="pop d4"><rect x="1860" y="1760" width="700" height="110" rx="14" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="1892" y="1828">What makes it different</text></g>
+            <g class="pop d5"><rect x="2600" y="960" width="560" height="110" rx="14" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="2632" y="1028">What we were missing</text></g>
+            <g class="pop d6"><rect x="2600" y="1500" width="560" height="110" rx="14" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="2632" y="1568">What it should cost</text></g>
           </g>
 
-          <!-- SCENE 2: training -->
+          <!-- SCENE 2: Context -->
           <g id="s2" class="fig">
-            <rect class="pop" x="1500" y="900" width="1000" height="760" rx="26" fill="none" stroke="#9dbccd" stroke-width="4" stroke-dasharray="20 14"/>
-            <text class="ttl pop d1" x="1520" y="860">Context and style training</text>
-            <g class="pop d2"><rect x="1530" y="1570" width="230" height="60" rx="30" fill="#16305a" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="1645" y="1610" text-anchor="middle">Positioning</text></g>
-            <g class="pop d3"><rect x="1775" y="1570" width="160" height="60" rx="30" fill="#16305a" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="1855" y="1610" text-anchor="middle">Buyers</text></g>
-            <g class="pop d4"><rect x="1950" y="1570" width="190" height="60" rx="30" fill="#16305a" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="2045" y="1610" text-anchor="middle">Products</text></g>
-            <g class="pop d5"><rect x="2155" y="1570" width="140" height="60" rx="30" fill="#16305a" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="2225" y="1610" text-anchor="middle">Voice</text></g>
-            <g class="pop d6"><rect x="2310" y="1570" width="160" height="60" rx="30" fill="#16305a" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="2390" y="1610" text-anchor="middle">Pricing</text></g>
-            <path class="flow" d="M2500 1100 C2680 1100 2680 980 2860 980" fill="none" stroke="#9dbccd" stroke-width="4"/>
-            <path class="flow" d="M2500 1280 L2860 1280" fill="none" stroke="#9dbccd" stroke-width="4"/>
-            <path class="flow" d="M2500 1460 C2680 1460 2680 1580 2860 1580" fill="none" stroke="#9dbccd" stroke-width="4"/>
+            <path class="flow" d="M3180 1250 L3480 1250" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <g class="pop">
+              <rect x="3560" y="820" width="760" height="860" rx="18" fill="url(#card)" stroke="#9dbccd" stroke-width="4" transform="translate(40,-40)" opacity=".5"/>
+              <rect x="3560" y="820" width="760" height="860" rx="18" fill="url(#card)" stroke="#9dbccd" stroke-width="4" transform="translate(20,-20)" opacity=".75"/>
+              <rect x="3560" y="820" width="760" height="860" rx="18" fill="url(#card)" stroke="#9dbccd" stroke-width="4"/>
+              <rect x="3560" y="820" width="760" height="110" rx="18" fill="#f27a2c"/><rect x="3560" y="900" width="760" height="30" fill="#f27a2c"/>
+              <text class="ttl" x="3600" y="895" style="fill:#0a1628">Context and style guide</text>
+            </g>
+            <g class="pop d1"><rect x="3600" y="980" width="270" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3735" y="1020" text-anchor="middle">Positioning</text></g>
+            <g class="pop d2"><rect x="3890" y="980" width="190" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3985" y="1020" text-anchor="middle">Buyers</text></g>
+            <g class="pop d3"><rect x="3600" y="1060" width="220" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3710" y="1100" text-anchor="middle">Products</text></g>
+            <g class="pop d4"><rect x="3840" y="1060" width="190" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3935" y="1100" text-anchor="middle">Pricing</text></g>
+            <g class="pop d5"><rect x="3600" y="1140" width="300" height="60" rx="30" fill="#f27a2c"/><text class="chip" x="3750" y="1180" text-anchor="middle" style="fill:#0a1628">Founder's voice</text></g>
+            <g class="pop d5">
+              <rect x="3600" y="1260" width="680" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1300" width="600" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1340" width="650" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
+              <rect x="3600" y="1380" width="520" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1420" width="680" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1460" width="580" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
+              <rect x="3600" y="1500" width="640" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1540" width="460" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1580" width="610" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
+            </g>
+          </g>
+
+          <!-- SCENE 3: Build -->
+          <g id="s3" class="fig">
+            <path class="flow" d="M4340 1250 C4500 1250 4500 760 4660 760" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <path class="flow" d="M4340 1250 L4660 1250" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <path class="flow" d="M4340 1250 C4500 1250 4500 1740 4660 1740" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <g class="pop d1">
+              <path d="M4800 640 l110 63 v126 l-110 63 l-110 -63 v-126z" fill="url(#card)" stroke="#9dbccd" stroke-width="5"/>
+              <circle cx="4800" cy="766" r="26" fill="none" stroke="#f27a2c" stroke-width="5"/><circle cx="4800" cy="766" r="9" fill="#f27a2c"/>
+              <text class="ttl" x="4960" y="745">Marketing campaign</text><text class="lbl" x="4960" y="800">agent</text>
+            </g>
             <g class="pop d2">
-              <path d="M2960 870 l96 55 v110 l-96 55 l-96 -55 v-110z" fill="url(#card)" stroke="#9dbccd" stroke-width="4"/>
-              <circle cx="2960" cy="980" r="20" fill="none" stroke="#9dbccd" stroke-width="4"/><circle cx="2960" cy="980" r="6" fill="#9dbccd"/>
-              <text class="lbl" x="2960" y="1140" text-anchor="middle">Research</text>
+              <path d="M4800 1130 l110 63 v126 l-110 63 l-110 -63 v-126z" fill="url(#card)" stroke="#9dbccd" stroke-width="5"/>
+              <circle cx="4800" cy="1256" r="26" fill="none" stroke="#f27a2c" stroke-width="5"/><circle cx="4800" cy="1256" r="9" fill="#f27a2c"/>
+              <text class="ttl" x="4960" y="1235">Sales enablement</text><text class="lbl" x="4960" y="1290">agent</text>
             </g>
             <g class="pop d3">
-              <path d="M2960 1170 l96 55 v110 l-96 55 l-96 -55 v-110z" fill="url(#card)" stroke="#9dbccd" stroke-width="4"/>
-              <circle cx="2960" cy="1280" r="20" fill="none" stroke="#9dbccd" stroke-width="4"/><circle cx="2960" cy="1280" r="6" fill="#9dbccd"/>
-              <text class="lbl" x="2960" y="1440" text-anchor="middle">Outreach</text>
-            </g>
-            <g class="pop d4">
-              <path d="M2960 1470 l96 55 v110 l-96 55 l-96 -55 v-110z" fill="url(#card)" stroke="#9dbccd" stroke-width="4"/>
-              <circle cx="2960" cy="1580" r="20" fill="none" stroke="#9dbccd" stroke-width="4"/><circle cx="2960" cy="1580" r="6" fill="#9dbccd"/>
-              <text class="lbl" x="2960" y="1740" text-anchor="middle">Content</text>
+              <path d="M4800 1620 l110 63 v126 l-110 63 l-110 -63 v-126z" fill="url(#card)" stroke="#9dbccd" stroke-width="5"/>
+              <circle cx="4800" cy="1746" r="26" fill="none" stroke="#f27a2c" stroke-width="5"/><circle cx="4800" cy="1746" r="9" fill="#f27a2c"/>
+              <text class="ttl" x="4960" y="1725">Product portfolio</text><text class="lbl" x="4960" y="1780">agent</text>
             </g>
           </g>
 
-          <!-- SCENE 3: outputs -->
-          <g id="s3" class="fig">
-            <path class="flow" d="M3060 980 C3350 980 3350 850 3680 850" fill="none" stroke="#9dbccd" stroke-width="4"/>
-            <path class="flow" d="M3060 1280 C3300 1280 3300 1180 3600 1180 L4200 1180 C4330 1180 4330 1100 4430 1100" fill="none" stroke="#9dbccd" stroke-width="4"/>
-            <path class="flow" d="M3060 1580 C3350 1580 3350 1500 3680 1500" fill="none" stroke="#9dbccd" stroke-width="4"/>
-            <path class="flow" d="M4330 1500 L4430 1500" fill="none" stroke="#9dbccd" stroke-width="4"/>
-            <g transform="translate(0,330)"><g class="slide d1">
-              <rect x="3700" y="380" width="620" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3" opacity=".5" transform="translate(44,-44)"/>
-              <rect x="3700" y="380" width="620" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3" opacity=".75" transform="translate(22,-22)"/>
-              <rect x="3700" y="380" width="620" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/>
-              <circle cx="3745" cy="430" r="18" fill="#9dbccd" opacity=".7"/>
-              <rect x="3775" y="420" width="280" height="14" rx="7" fill="#9dbccd" opacity=".8"/>
-              <rect x="3735" y="475" width="540" height="10" rx="5" fill="#9dbccd" opacity=".35"/>
-              <rect x="3735" y="500" width="460" height="10" rx="5" fill="#9dbccd" opacity=".35"/>
-              <rect x="3735" y="525" width="360" height="10" rx="5" fill="#9dbccd" opacity=".35"/>
-              <text class="big" x="3700" y="660">Campaigns</text>
-            </g></g>
-            <g transform="translate(750,-210)"><g class="slide d2">
-              <rect x="3700" y="920" width="620" height="350" rx="12" fill="url(#paper)"/>
-              <rect x="3700" y="920" width="620" height="70" rx="12" fill="#0a1628"/><rect x="3700" y="965" width="620" height="25" fill="#0a1628"/>
-              <text class="chip" x="3735" y="968">Antimatter</text>
-              <text x="3735" y="1070" style="font-size:44px;fill:#0a1628;font-weight:500;letter-spacing:0;text-transform:none">One story, every rep</text>
-              <rect x="3735" y="1105" width="360" height="10" rx="5" fill="#6e94ab"/><rect x="3735" y="1130" width="430" height="10" rx="5" fill="#6e94ab"/><rect x="3735" y="1155" width="290" height="10" rx="5" fill="#6e94ab"/>
-              <rect x="3735" y="1195" width="110" height="52" rx="5" fill="#91b1c4"/><rect x="3860" y="1195" width="110" height="52" rx="5" fill="#b7cdda"/><rect x="3985" y="1195" width="110" height="52" rx="5" fill="#d7e4ec"/>
-              <text class="big" x="3700" y="1360">Sales decks</text>
-            </g></g>
-            <g transform="translate(0,-200)"><g class="slide d3">
-              <rect x="3700" y="1500" width="620" height="290" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/>
-              <rect x="3735" y="1540" width="380" height="18" rx="9" fill="#c9dbe5"/>
-              <rect x="3735" y="1590" width="550" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="3735" y="1615" width="550" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="3735" y="1640" width="480" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="3735" y="1665" width="550" height="10" rx="5" fill="#9dbccd" opacity=".4"/>
-              <rect x="3735" y="1710" width="240" height="44" rx="22" fill="none" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3855" y="1741" text-anchor="middle">Case study</text>
-              <text class="big" x="3700" y="1880">Content</text>
-            </g></g>
-            <g transform="translate(750,-740)"><g class="slide d4">
-              <rect x="3700" y="2040" width="620" height="330" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/>
-              <rect x="3735" y="2080" width="240" height="16" rx="8" fill="#c9dbe5"/>
-              <rect x="3735" y="2130" width="170" height="110" rx="8" fill="#16305a" stroke="#9dbccd" stroke-width="3"/><rect x="3925" y="2130" width="170" height="110" rx="8" fill="#16305a" stroke="#9dbccd" stroke-width="3"/><rect x="4115" y="2130" width="170" height="110" rx="8" fill="#16305a" stroke="#9dbccd" stroke-width="3"/>
-              <text class="chip" x="3820" y="2195" text-anchor="middle">Core</text><text class="chip" x="4010" y="2195" text-anchor="middle">Plus</text><text class="chip" x="4200" y="2195" text-anchor="middle">Scale</text>
-              <rect x="3735" y="2275" width="550" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="3735" y="2300" width="450" height="10" rx="5" fill="#9dbccd" opacity=".4"/>
-              <text class="big" x="3700" y="2460">Product materials</text>
-            </g></g>
+          <!-- SCENE 4: Create (panned) -->
+          <g id="s4" class="fig">
+            <!-- marketing outputs -->
+            <path class="flow" d="M5500 766 L5700 766" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <g class="slide d1"><rect x="5760" y="430" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><circle cx="5800" cy="480" r="16" fill="#f27a2c"/><rect x="5830" y="470" width="220" height="14" rx="7" fill="#c9dbe5"/><rect x="5790" y="520" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="5790" y="545" width="300" height="10" rx="5" fill="#9dbccd" opacity=".4"/><text class="lbl" x="5760" y="670">Emails</text></g>
+            <g class="slide d2"><rect x="6240" y="430" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="6270" y="460" width="150" height="130" rx="8" fill="#f27a2c" opacity=".85"/><rect x="6440" y="470" width="190" height="14" rx="7" fill="#c9dbe5"/><rect x="6440" y="505" width="160" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6440" y="550" width="110" height="34" rx="17" fill="none" stroke="#9dbccd" stroke-width="3"/><text class="lbl" x="6240" y="670">Ads</text></g>
+            <g class="slide d3"><rect x="5760" y="720" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><circle cx="5805" cy="770" r="22" fill="#9dbccd" opacity=".6"/><rect x="5840" y="760" width="160" height="14" rx="7" fill="#c9dbe5"/><rect x="5790" y="810" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="5790" y="835" width="260" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="5790" y="865" width="60" height="20" rx="10" fill="#f27a2c"/><rect x="5860" y="865" width="60" height="20" rx="10" fill="#f27a2c" opacity=".6"/><text class="lbl" x="5760" y="960">Social posts</text></g>
+            <g class="slide d4"><rect x="6240" y="720" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="6270" y="750" width="300" height="16" rx="8" fill="#c9dbe5"/><rect x="6270" y="795" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="820" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="845" width="300" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="870" width="340" height="10" rx="5" fill="#9dbccd" opacity=".4"/><text class="lbl" x="6240" y="960">Content</text></g>
+            <!-- sales outputs -->
+            <path class="flow" d="M5500 1256 L5700 1256" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <g class="slide d1"><rect x="5760" y="1110" width="420" height="240" rx="12" fill="url(#paper)"/><rect x="5760" y="1110" width="420" height="56" rx="12" fill="#0a1628"/><rect x="5760" y="1150" width="420" height="16" fill="#0a1628"/><text x="5790" y="1215" style="font-size:30px;fill:#0a1628;font-weight:500;letter-spacing:0;text-transform:none">One story, every rep</text><rect x="5790" y="1240" width="240" height="10" rx="5" fill="#6e94ab"/><rect x="5790" y="1265" width="300" height="10" rx="5" fill="#6e94ab"/><rect x="5790" y="1300" width="80" height="30" rx="4" fill="#f27a2c"/><rect x="5885" y="1300" width="80" height="30" rx="4" fill="#91b1c4"/><rect x="5980" y="1300" width="80" height="30" rx="4" fill="#b7cdda"/><text class="lbl" x="5760" y="1400">Decks</text></g>
+            <g class="slide d2"><rect x="6240" y="1110" width="420" height="240" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="6270" y="1140" width="200" height="16" rx="8" fill="#c9dbe5"/><rect x="6270" y="1185" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="1210" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="1235" width="300" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="1275" width="160" height="40" rx="6" fill="#f27a2c"/><text class="chip" x="6350" y="1303" text-anchor="middle" style="fill:#0a1628;font-size:24px">Scope</text><text class="lbl" x="6240" y="1400">Proposals</text></g>
+            <g class="slide d3"><rect x="6720" y="1110" width="420" height="240" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="6750" y="1140" width="160" height="16" rx="8" fill="#c9dbe5"/><rect x="6750" y="1190" width="240" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="7050" y="1188" width="60" height="14" rx="7" fill="#9dbccd"/><rect x="6750" y="1220" width="200" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="7050" y="1218" width="60" height="14" rx="7" fill="#9dbccd"/><rect x="6750" y="1250" width="260" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="7050" y="1248" width="60" height="14" rx="7" fill="#9dbccd"/><rect x="6750" y="1290" width="360" height="3" fill="#9dbccd"/><rect x="7020" y="1305" width="90" height="18" rx="9" fill="#f27a2c"/><text class="lbl" x="6720" y="1400">Quotes</text></g>
+            <!-- product output -->
+            <path class="flow" d="M5500 1746 L5700 1746" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <g class="slide d1">
+              <rect x="5760" y="1540" width="900" height="420" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/>
+              <text class="ttl" x="5800" y="1605">Pricing menu</text>
+              <rect x="5800" y="1640" width="260" height="260" rx="8" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="5930" y="1690" text-anchor="middle">Core</text><rect x="5830" y="1715" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="5830" y="1738" width="160" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="5830" y="1761" width="180" height="8" rx="4" fill="#9dbccd" opacity=".4"/><text class="chip" x="5930" y="1870" text-anchor="middle" style="fill:#c9dbe5;font-size:36px">$</text>
+              <rect x="6080" y="1640" width="260" height="260" rx="8" fill="#0a1628" stroke="#f27a2c" stroke-width="4"/><text class="chip" x="6210" y="1690" text-anchor="middle" style="fill:#f27a2c">Plus</text><rect x="6110" y="1715" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6110" y="1738" width="160" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6110" y="1761" width="180" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6110" y="1784" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><text class="chip" x="6210" y="1870" text-anchor="middle" style="fill:#f27a2c;font-size:36px">$$</text>
+              <rect x="6360" y="1640" width="260" height="260" rx="8" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="6490" y="1690" text-anchor="middle">Scale</text><rect x="6390" y="1715" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6390" y="1738" width="160" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6390" y="1761" width="180" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6390" y="1784" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6390" y="1807" width="140" height="8" rx="4" fill="#9dbccd" opacity=".4"/><text class="chip" x="6490" y="1870" text-anchor="middle" style="fill:#c9dbe5;font-size:36px">$$$</text>
+            </g>
           </g>
 
-          <!-- SCENE 4: coaching -->
-          <g id="s4" class="fig"><g transform="translate(980,0)">
-            <path class="flow" d="M5080 1180 C5000 1180 4900 1200 4800 1200 L4820 1200" fill="none" stroke="#9dbccd" stroke-width="4"/>
-            <g class="pop">
-              <rect x="4860" y="720" width="960" height="540" rx="14" fill="#0a1628" stroke="#9dbccd" stroke-width="5"/>
-              <rect x="4892" y="752" width="896" height="476" rx="8" fill="url(#paper)"/>
-              <rect x="4892" y="752" width="896" height="96" rx="8" fill="#0a1628"/><rect x="4892" y="810" width="896" height="38" fill="#0a1628"/>
-              <text class="chip" x="4935" y="815">Antimatter</text>
-              <text x="4935" y="935" style="font-size:62px;fill:#0a1628;font-weight:500;letter-spacing:0;text-transform:none">One story, every rep</text>
-              <rect x="4935" y="975" width="460" height="14" rx="7" fill="#6e94ab"/><rect x="4935" y="1008" width="560" height="14" rx="7" fill="#6e94ab"/><rect x="4935" y="1041" width="380" height="14" rx="7" fill="#6e94ab"/>
-              <rect x="4935" y="1100" width="160" height="80" rx="7" fill="#91b1c4"/><rect x="5115" y="1100" width="160" height="80" rx="7" fill="#b7cdda"/><rect x="5295" y="1100" width="160" height="80" rx="7" fill="#d7e4ec"/>
-              <rect x="5290" y="1260" width="100" height="60" fill="#16305a" stroke="#9dbccd" stroke-width="4"/>
-              <rect x="5190" y="1320" width="300" height="16" rx="8" fill="#16305a" stroke="#9dbccd" stroke-width="4"/>
-            </g>
-            <g transform="translate(60,0)"><g class="pop d2">
-              <circle cx="5090" cy="1480" r="56" fill="#16305a" stroke="#9dbccd" stroke-width="5"/>
-              <path d="M5005 1620 q85 -95 170 0 v170 h-170z" fill="#16305a" stroke="#9dbccd" stroke-width="5"/>
-              <path d="M5170 1575 L5295 1425" stroke="#9dbccd" stroke-width="12" stroke-linecap="round"/>
-              <text class="lbl" x="5090" y="1850" text-anchor="middle">Sales rep</text>
-            </g></g>
-            <g transform="translate(-80,0)"><g class="pop d3">
-              <circle cx="4830" cy="1530" r="52" fill="#9dbccd" stroke="#f4f1ea" stroke-width="5"/>
-              <path d="M4755 1660 q75 -85 150 0 v130 h-150z" fill="#9dbccd" stroke="#f4f1ea" stroke-width="5"/>
-              <rect x="4890" y="1615" width="76" height="98" rx="7" fill="#f4f1ea" stroke="#0a1628" stroke-width="3"/>
-              <rect x="4906" y="1637" width="44" height="7" rx="3" fill="#0a1628"/><rect x="4906" y="1655" width="44" height="7" rx="3" fill="#0a1628"/><rect x="4906" y="1673" width="30" height="7" rx="3" fill="#0a1628"/>
-              <text class="lbl" x="4830" y="1850" text-anchor="middle" style="fill:#f4f1ea">Antimatter</text>
-              <g class="pop d5">
-                <path d="M4520 1270 h440 a16 16 0 0 1 16 16 v110 a16 16 0 0 1 -16 16 h-130 l-30 30 v-30 h-280 a16 16 0 0 1 -16 -16 v-110 a16 16 0 0 1 16 -16z" fill="#f4f1ea"/>
-                <text class="body" x="4550" y="1328" style="fill:#0a1628;font-size:34px">Lead with why they buy.</text>
-                <text class="body" x="4550" y="1375" style="fill:#0a1628;font-size:34px">Then show the deck.</text>
-              </g>
-            </g></g>
+          <!-- SCENE 5: Train and coach -->
+          <g id="s5" class="fig">
+            <!-- training: Antimatter with reps at laptops -->
+            <g class="pop"><use href="#am" x="7800" y="1080" width="200" height="260"/><text class="lbl or" x="7900" y="1410" text-anchor="middle">Antimatter</text></g>
+            <g class="pop d1"><use href="#person" x="8080" y="1130" width="180" height="234"/><rect x="8070" y="1330" width="200" height="14" rx="6" fill="#9dbccd"/><rect x="8100" y="1230" width="140" height="100" rx="6" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><rect x="8115" y="1250" width="110" height="8" rx="4" fill="#f27a2c"/><rect x="8115" y="1270" width="80" height="6" rx="3" fill="#9dbccd" opacity=".5"/><rect x="8115" y="1286" width="100" height="6" rx="3" fill="#9dbccd" opacity=".5"/><rect x="8115" y="1302" width="70" height="6" rx="3" fill="#9dbccd" opacity=".5"/></g>
+            <g class="pop d2"><use href="#person" x="8300" y="1130" width="180" height="234"/><rect x="8290" y="1330" width="200" height="14" rx="6" fill="#9dbccd"/><rect x="8320" y="1230" width="140" height="100" rx="6" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><rect x="8335" y="1250" width="110" height="8" rx="4" fill="#f27a2c"/><rect x="8335" y="1270" width="80" height="6" rx="3" fill="#9dbccd" opacity=".5"/><rect x="8335" y="1286" width="100" height="6" rx="3" fill="#9dbccd" opacity=".5"/><rect x="8335" y="1302" width="70" height="6" rx="3" fill="#9dbccd" opacity=".5"/></g>
+            <text class="lbl pop d2" x="8280" y="1410" text-anchor="middle">Sales reps</text>
+            <g class="pop d3"><rect x="7700" y="820" width="860" height="110" rx="14" fill="#f4f1ea"/><text class="body" x="7732" y="888" style="fill:#0a1628">Train on the systems. Generate leads.</text></g>
+            <!-- pitch: rep presents to prospects -->
+            <path class="flow d4" d="M8600 1250 L8800 1250" fill="none" stroke="#f27a2c" stroke-width="5"/>
             <g class="pop d4">
-              <circle cx="5640" cy="1510" r="48" fill="#16305a" stroke="#9dbccd" stroke-width="5"/><path d="M5570 1620 q70 -80 140 0 v140 h-140z" fill="#16305a" stroke="#9dbccd" stroke-width="5"/>
-              <circle cx="5810" cy="1550" r="48" fill="#16305a" stroke="#9dbccd" stroke-width="5"/><path d="M5740 1660 q70 -80 140 0 v110 h-140z" fill="#16305a" stroke="#9dbccd" stroke-width="5"/>
-              <circle cx="5980" cy="1510" r="48" fill="#16305a" stroke="#9dbccd" stroke-width="5"/><path d="M5910 1620 q70 -80 140 0 v140 h-140z" fill="#16305a" stroke="#9dbccd" stroke-width="5"/>
-              <text class="lbl" x="5810" y="1850" text-anchor="middle">Customers</text>
+              <rect x="9140" y="760" width="620" height="360" rx="12" fill="#0a1628" stroke="#9dbccd" stroke-width="5"/>
+              <rect x="9165" y="785" width="570" height="310" rx="6" fill="url(#paper)"/><rect x="9165" y="785" width="570" height="60" rx="6" fill="#0a1628"/><rect x="9165" y="825" width="570" height="20" fill="#0a1628"/>
+              <text x="9200" y="905" style="font-size:40px;fill:#0a1628;font-weight:500;letter-spacing:0;text-transform:none">One story, every rep</text>
+              <rect x="9200" y="935" width="320" height="10" rx="5" fill="#6e94ab"/><rect x="9200" y="960" width="400" height="10" rx="5" fill="#6e94ab"/><rect x="9200" y="1000" width="100" height="50" rx="5" fill="#f27a2c"/><rect x="9315" y="1000" width="100" height="50" rx="5" fill="#91b1c4"/><rect x="9430" y="1000" width="100" height="50" rx="5" fill="#b7cdda"/>
+              <rect x="9410" y="1120" width="80" height="50" fill="#16305a" stroke="#9dbccd" stroke-width="4"/><rect x="9330" y="1170" width="240" height="14" rx="7" fill="#16305a" stroke="#9dbccd" stroke-width="4"/>
             </g>
-            <rect x="4700" y="1790" width="1440" height="4" fill="#9dbccd" opacity=".4"/>
-          </g></g>
+            <g class="pop d5"><use href="#person" x="8900" y="1180" width="200" height="260"/><path d="M9080 1250 L9180 1140" stroke="#9dbccd" stroke-width="12" stroke-linecap="round"/><text class="lbl" x="9000" y="1510" text-anchor="middle">Sales rep</text></g>
+            <g class="pop d6"><use href="#person" x="9520" y="1230" width="180" height="234"/><use href="#person" x="9680" y="1260" width="180" height="234"/><use href="#person" x="9840" y="1230" width="180" height="234"/><text class="lbl" x="9770" y="1560" text-anchor="middle">Qualified prospects</text></g>
+            <g class="pop d7"><rect x="8700" y="1620" width="700" height="110" rx="14" fill="#f27a2c"/><text class="body" x="8732" y="1688" style="fill:#0a1628">Deliver the pitch live.</text></g>
           </g>
         </svg>
       </div>
@@ -459,148 +339,129 @@
   </div>
 </section>
 
-<!-- ============ WHAT YOU CAN BUY ============ -->
+<!-- ============ PRODUCTS ============ -->
 <section class="buy" id="services">
   <div class="wrap">
-    <div class="eyebrow">What you can buy</div>
-    <h2>Three products. Start with any one of them.</h2>
-    <p class="intro">Each is a fixed-scope engagement with its own deliverables. They build on each other, but none of them requires the others.</p>
     <div class="three">
       <a class="prod" href="#strategy">
-        <div class="num">1</div>
-        <h3>Product marketing and strategy</h3>
+        <div class="k">01</div>
+        <div class="t mist">Strategy</div>
         <p>The offer, the pricing, the story, and the deck. Clear enough that every rep can tell it and every campaign can carry it.</p>
-        <span class="more">Strategy</span>
+        <span class="more">Product marketing and strategy</span>
       </a>
       <a class="prod" href="#agents">
-        <div class="num">2</div>
-        <h3>AI agents for marketing and sales</h3>
+        <div class="k">02</div>
+        <div class="t mist">Agents</div>
         <p>Custom sales and marketing materials in the founder's voice, produced at the pace of the business as new markets, features, and customers are added.</p>
-        <span class="more">Agents</span>
+        <span class="more">AI agents for marketing and sales</span>
       </a>
       <a class="prod" href="#coaching">
-        <div class="num">3</div>
-        <h3>Sales team coaching</h3>
-        <p>One-on-one work with reps on real deals. Each one builds a style that fits them and leaves with tools they will use the day after the engagement ends.</p>
-        <span class="more">Coaching</span>
+        <div class="k">03</div>
+        <div class="t mist">Coaching</div>
+        <p>One-on-one work with reps on real deals. Each one builds a style that fits them and leaves with tools they will use after the engagement ends.</p>
+        <span class="more">Sales team coaching</span>
       </a>
     </div>
   </div>
 </section>
 
-<!-- ============ 1 STRATEGY ============ -->
-<section class="block" id="strategy">
-  <div class="wrap">
-    <div class="eyebrow">1 &middot; Product marketing and strategy</div>
-    <h2 class="mist">Strategy</h2>
-    <p class="lead">A product portfolio is not a price list. It's a set of distinct solutions built around specific buyers.</p>
-    <div class="cols">
-      <div class="col"><div class="k">A</div><h4>Industry and buyer fit</h4><p>Connect what you do well to the priorities of specific industries, verticals, and buyer roles. Solutions that speak their language.</p></div>
-      <div class="col"><div class="k">B</div><h4>Market-based pricing</h4><p>Ground pricing in what buyers expect, what the alternatives cost, and the value that makes you different.</p></div>
-      <div class="col"><div class="k">C</div><h4>Bundles that scale</h4><p>Bundle what belongs together. Let buyers add, combine, or buy &agrave; la carte, and grow without being forced into a bigger package.</p></div>
-    </div>
-    <div class="offers">
-      <div class="offer">
-        <div class="k">Workshop</div>
-        <h4>Product &amp; Offer Strategy</h4>
-        <div class="meta">3 sessions &middot; founders and executive teams</div>
-        <p>Clarify the products, packages, and pricing your buyers should choose. Buyer-to-product map, packaging and pricing guidance, catalog recommendations.</p>
-      </div>
-      <div class="offer">
-        <div class="k">Review</div>
-        <h4>Pitch &amp; Positioning</h4>
-        <div class="meta">3 sessions &middot; sales and marketing leaders</div>
-        <p>Make your value clear in the pitch and the materials behind it. Pitch assessment, revised narrative, and recommendations for the deck and delivery.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 2 AGENTS ============ -->
-<section class="block alt agents" id="agents">
-  <div class="wrap">
-    <div class="eyebrow">2 &middot; AI agents for marketing and sales</div>
-    <h2 class="mist">Agents</h2>
-    <p class="stmt">Agents trained on the founder's voice that create <b>custom sales and marketing materials at the pace of the business</b>, as new markets, features, and customers are added.</p>
-    <div class="pair">
-      <div>
-        <h4>Why it works here and not from a dev shop</h4>
-        <p>An agent is only as good as the judgment behind it. A developer can build you an agent that writes emails. It will write emails that sound like a developer thinks a salesperson sounds.</p>
-        <p>I spent 25 years carrying quota, running sales teams, and leading product marketing before I built my first agent. I know what a good first email does and what a bad one costs. The agents I build know it too, because I put it there.</p>
-      </div>
-      <div>
-        <h4>What you get</h4>
-        <p>Working agents, deployed where your team already works. The positioning, buyer, and product knowledge they run on, documented, so it can be updated when the company changes. Your team trained to use them and to edit the knowledge base themselves.</p>
-        <p>Nothing goes out without a human reading it.</p>
-      </div>
-    </div>
-    <div class="offers">
-      <div class="offer wide">
-        <div class="k">Starting point</div>
-        <h4>Agent Pilot</h4>
-        <div class="meta">One agent &middot; one workflow &middot; <span class="ph">N</span> weeks &middot; fixed fee</div>
-        <p>Pick the job that costs your team the most time or the most deals. We build one agent to do it, run it on live work, and measure what changed. You end up with a working agent and a clear view of what to build next.</p>
-        <p>Deliverables: the agent, its knowledge base, a short playbook for the team, and a written recommendation on what comes after.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 3 COACHING ============ -->
-<section class="block" id="coaching">
-  <div class="wrap two">
-    <div class="sticky">
-      <div class="eyebrow">3 &middot; Sales team coaching</div>
-      <h2 class="mist">Coaching</h2>
-      <p class="lead">Great salespeople don't all look alike. The job is to help each rep find a style that feels natural, earns the customer's confidence, and gets results.</p>
+<!-- ============ DETAILS ============ -->
+<section class="detail" id="strategy">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">01 &middot; Product marketing and strategy</div>
+      <h2 class="mist">Strategy</h2>
+      <p class="tag">A product portfolio is not a price list. It's a set of distinct solutions built around specific buyers.</p>
     </div>
     <div>
-      <div class="copy">
-        <p>Identify what makes each rep effective and where they get in their own way. Then help them use their strengths instead of overcompensating with too much talking, forced technical language, or a persona that doesn't fit.</p>
-      </div>
-      <div class="rows">
-        <div class="row"><b>Preparation</b><p>Walk in ready. Know the buyer, the products, and the data that make the case.</p></div>
-        <div class="row"><b>Delivery</b><p>Speak clearly, present with confidence, and listen closely. Get better at responding under pressure.</p></div>
-        <div class="row"><b>Negotiation</b><p>Get customers excited, build consensus, and defend value without defaulting to discounts or giveaways.</p></div>
-        <div class="row"><b>Tools they keep</b><p>A business plan, a funnel, an account growth plan, and a technical library, each built as a Claude Project the rep runs themselves. The coaching ends. The tools don't.</p></div>
-      </div>
-      <div class="offers">
-        <div class="offer wide">
-          <div class="k">Starting point</div>
-          <h4>Sales Performance Coaching</h4>
-          <div class="meta">5 one-on-one sessions &middot; individual reps</div>
-          <p>Build individual strengths through practical work on real opportunities. Development priorities, specific feedback, an individual practice plan, and the Claude Projects to run it.</p>
-        </div>
-      </div>
+      <p class="intro">Most companies at this size have the products. What they're missing is the structure that makes the products easy to buy and easy to sell, and a story every rep tells the same way.</p>
+      <ul>
+        <li><b>Buyer fit</b><span>Connect what you do well to the priorities of specific industries, verticals, and buyer roles.</span></li>
+        <li><b>Pricing</b><span>Ground pricing in what buyers expect, what the alternatives cost, and the value that makes you different.</span></li>
+        <li><b>Packaging</b><span>Bundle what belongs together. Let buyers add, combine, or buy &agrave; la carte, and grow without being forced into a bigger package.</span></li>
+        <li><b>The pitch</b><span>One core story every rep understands and can make their own. A clear top-level message and a short overview of the major product areas, so nothing gets left off the truck.</span></li>
+      </ul>
+      <p class="note">What you get: a catalog built around your buyers, packaging that preserves what sets you apart, and a sales story with the deck to back it up. It's also the raw material the agents run on.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ PROOF ============ -->
-<section class="block alt" id="proof">
+<section class="detail alt" id="agents">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">02 &middot; AI agents for marketing and sales</div>
+      <h2 class="mist">Agents</h2>
+      <p class="tag">Agents trained on the founder's voice, creating custom sales and marketing materials at the pace of the business.</p>
+    </div>
+    <div>
+      <p class="intro">As new markets, features, and customers are added, the agents produce the materials to match. Built on your positioning, your buyers, and your language, so what they make sounds like you.</p>
+      <ul>
+        <li><b>Marketing campaigns</b><span>Emails, ads, social posts, and content that start from the approved story instead of a blank page.</span></li>
+        <li><b>Sales enablement</b><span>Decks, proposals, and quotes drafted the way the founder would write them. The rep edits and sends.</span></li>
+        <li><b>Product portfolio</b><span>A pricing menu and product materials that stay current as the catalog changes.</span></li>
+        <li><b>Your team runs them</b><span>Deployed where your team already works, with the knowledge base documented and your people trained to update it.</span></li>
+      </ul>
+      <p class="note">Why here and not a dev shop: an agent is only as good as the judgment behind it. I spent 25 years carrying quota, running sales teams, and leading product marketing before I built my first one. The agents know what a good first email does because I put it there.</p>
+    </div>
+  </div>
+</section>
+
+<section class="detail" id="coaching">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">03 &middot; Sales team coaching</div>
+      <h2 class="mist">Coaching</h2>
+      <p class="tag">Great salespeople don't all look alike. Each rep builds a style that feels natural and gets results.</p>
+    </div>
+    <div>
+      <p class="intro">One-on-one work on real opportunities. Identify what makes each rep effective and where they get in their own way, then build on their strengths instead of a persona that doesn't fit.</p>
+      <ul>
+        <li><b>Preparation</b><span>Walk in ready. Know the buyer, the products, and the data that make the case.</span></li>
+        <li><b>Delivery</b><span>Speak clearly, present with confidence, and listen closely. Get better at responding under pressure.</span></li>
+        <li><b>Negotiation</b><span>Get customers excited, build consensus, and defend value without defaulting to discounts.</span></li>
+        <li><b>Tools they keep</b><span>A business plan, a funnel, an account growth plan, and a technical library, each built as a Claude Project the rep runs themselves.</span></li>
+      </ul>
+      <p class="note">The coaching ends. The tools don't.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROWTH ============ -->
+<section class="growth" id="why">
   <div class="wrap">
-    <div class="eyebrow">Case studies</div>
-    <p class="lead">Three engagements, one per product. Each one is a paragraph. If you want the longer version, ask me on the call.</p>
-    <div class="tiles">
-      <div class="tile"><div class="k">Strategy</div><h4><span class="ph">Company or category</span></h4><p><span class="ph">One-line problem.</span> <span class="ph">One-line result.</span></p></div>
-      <div class="tile"><div class="k">Agents</div><h4><span class="ph">Company or category</span></h4><p><span class="ph">One-line problem.</span> <span class="ph">One-line result.</span></p></div>
-      <div class="tile"><div class="k">Coaching</div><h4><span class="ph">Company or category</span></h4><p><span class="ph">One-line problem.</span> <span class="ph">One-line result.</span></p></div>
+    <div class="quote">
+      <p class="lead">The founders of your company speak about your products with passion and clarity.</p>
+      <ul>
+        <li>Can every sales rep pitch with the same conviction?</li>
+        <li>Does every marketing campaign convey the same uniqueness?</li>
+        <li>Does your pricing reflect the company's true value, or turn it into a commodity?</li>
+      </ul>
+    </div>
+    <div class="row">
+      <div><div class="num mist">$5M</div><div class="cap">Founder-led growth</div></div>
+      <div class="arrow">&rsaquo;</div>
+      <div><div class="num mist">$50M</div><div class="cap">A different path</div></div>
+    </div>
+    <div class="desc">
+      <p>Early growth comes fast for tech firms. The founders are personally involved in every deal, explaining the product with clarity and enthusiasm. They sell comprehensive solutions at a premium because they believe in what they've built.</p>
+      <p>Growth means team building and delegation. The founder is no longer in every room. The marketing team approximates the founder. The sales team approximates the marketing team. By the time a message reaches a prospect, it's a copy of a copy.</p>
+    </div>
+    <div class="mission">
+      <p>Our mission is to preserve the passion and voice of the founders as the company grows, so every pitch, every post, and every piece of product marketing carries the same energy. <b>That's the difference between growth and commoditization.</b></p>
     </div>
   </div>
 </section>
 
 <!-- ============ ABOUT ============ -->
-<section class="block" id="about">
-  <div class="wrap">
-    <div class="eyebrow">About</div>
-    <h2 class="mist">Steve Zeller</h2>
-    <div class="steve">
-      <div class="portrait"><span>Photo of Steve <span class="ph">to add</span></span></div>
-      <div class="about">
-        <blockquote>I've watched a lot of companies lose their voice on the way up.</blockquote>
-        <p>I was employee 20 at Logicworks. I started in entry-level sales and left as VP of Product Marketing, 19 years later, after the company was sold. In between I ran business development, built the product catalog more than once, and sat in a lot of rooms where a rep said something the founder would never have said.</p>
-        <p>After Logicworks I spent two years at Bespin Global, an AWS partner, running <span class="ph">product marketing / role</span>. In 2025 I started Antimatter to do this work directly for the companies that need it. I run the engagements and I build the agents myself.</p>
-      </div>
+<section class="about" id="about">
+  <div class="wrap steve">
+    <div class="portrait"><img src="steve.jpg" alt="Steve Zeller"></div>
+    <div class="txt">
+      <div class="eyebrow">About</div>
+      <h2 class="mist" style="font-size:clamp(40px,5vw,64px);line-height:1">Steve Zeller</h2>
+      <blockquote>I've watched a lot of companies lose their voice on the way up.</blockquote>
+      <p>I was employee 20 at Logicworks. I started in entry-level sales and left as VP of Product Marketing, 19 years later, after the company was sold. In between I ran business development, built the product catalog more than once, and sat in a lot of rooms where a rep said something the founder would never have said.</p>
+      <p>After Logicworks I spent two years at Bespin Global, an AWS partner. In 2025 I started Antimatter to do this work directly for the companies that need it. I run the engagements and I build the agents myself.</p>
     </div>
   </div>
 </section>
@@ -610,7 +471,7 @@
   <div class="wrap">
     <h2 class="mist">15 minutes.<br>A clear next step.</h2>
     <p>Bring a pitch, a campaign, a sales problem, or a job you think an agent should be doing. We'll figure out where to start and agree on scope, timing, and fee before any work begins.</p>
-    <a class="btn solid" href="mailto:steve@antimatterconsulting.com">Start a free conversation</a>
+    <a class="btn solid" href="contact.html">Start a free conversation</a>
     <a class="mail" href="mailto:steve@antimatterconsulting.com">steve@antimatterconsulting.com</a>
   </div>
 </section>
@@ -618,77 +479,69 @@
 <footer>
   <div class="wrap">
     <div>Antimatter Consulting &middot; New York</div>
-    <div><a href="mailto:steve@antimatterconsulting.com">steve@antimatterconsulting.com</a> &nbsp;&middot;&nbsp; <a href="https://linkedin.com/in/stevenlzeller" target="_blank" rel="noopener">linkedin.com/in/stevenlzeller</a></div>
+    <div><a href="contact.html">Contact</a> &nbsp;&middot;&nbsp; <a href="https://linkedin.com/in/stevenlzeller" target="_blank" rel="noopener">linkedin.com/in/stevenlzeller</a></div>
   </div>
 </footer>
 
 <script>
 (function(){
-  // nav: solid after scroll, logo once hero logo is gone
   var nav=document.getElementById('nav'),hero=document.getElementById('herologo');
   function onScrollNav(){nav.classList.toggle('solid',window.scrollY>40)}
   window.addEventListener('scroll',onScrollNav,{passive:true});onScrollNav();
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(e){nav.classList.toggle('showlogo',!e[0].isIntersecting)},{threshold:0}).observe(hero);
-  }else{nav.classList.add('showlogo')}
+  if('IntersectionObserver' in window){new IntersectionObserver(function(e){nav.classList.toggle('showlogo',!e[0].isIntersecting)},{threshold:0}).observe(hero)}else{nav.classList.add('showlogo')}
   document.querySelectorAll('#links a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('links').classList.remove('open')})});
 
   // film
   var svg=document.getElementById('world'),film=document.getElementById('film');
-  var scenes=[1,2,3,4].map(function(i){return document.getElementById('s'+i)});
+  var scenes=[1,2,3,4,5].map(function(i){return document.getElementById('s'+i)});
   var caps=Array.prototype.slice.call(document.querySelectorAll('.film .c'));
   var dots=Array.prototype.slice.call(document.querySelectorAll('.film .dot'));
   var ctl=document.getElementById('ctl');
-  var cams=[[2000,1250,1400],[2250,1280,2150],[3960,1300,2950],[6520,1300,2400]];
-  var HOLD=6500, MOVE=1600;
-  var cur=-1, playing=true, inView=false, timer=null, raf=null, from=cams[0], to=cams[0], t0=0, startAt=0, elapsed=0;
+  // steps: scene index, camera [cx,cy,w], hold ms
+  var steps=[
+    {s:0,cam:[2200,1250,1900],hold:6500},
+    {s:1,cam:[3400,1250,2300],hold:6000},
+    {s:2,cam:[4500,1250,2300],hold:5500},
+    {s:3,cam:[6000,800,2250],hold:4500},
+    {s:3,cam:[6150,1250,2500],hold:4500},
+    {s:3,cam:[6050,1750,2300],hold:4500},
+    {s:4,cam:[8800,1250,2600],hold:8000}
+  ];
+  var MOVE=1800;
+  var cur=-1,playing=true,inView=false,timer=null,raf=null,from=null,to=null,t0=0,startAt=0,elapsed=0,holdNow=6000;
   function ease(t){return t<.5?2*t*t:-1+(4-2*t)*t}
-  function setBox(c){
-    var asp=svg.clientWidth/svg.clientHeight||1.4, w=c[2]; if(asp<1.1)w*=1.35;
-    var h=w/asp; svg.setAttribute('viewBox',(c[0]-w/2)+' '+(c[1]-h/2)+' '+w+' '+h);
-  }
-  function tween(){
-    var t=Math.min(1,(performance.now()-t0)/MOVE), e=ease(t);
-    setBox([from[0]+(to[0]-from[0])*e,from[1]+(to[1]-from[1])*e,from[2]+(to[2]-from[2])*e]);
-    if(t<1)raf=requestAnimationFrame(tween);
-  }
+  function box(c){var asp=svg.clientWidth/svg.clientHeight||1.4,w=c[2];if(asp<1.1)w*=1.35;var h=w/asp;svg.setAttribute('viewBox',(c[0]-w/2)+' '+(c[1]-h/2)+' '+w+' '+h)}
+  function tween(){var t=Math.min(1,(performance.now()-t0)/MOVE),e=ease(t);var c=[from[0]+(to[0]-from[0])*e,from[1]+(to[1]-from[1])*e,from[2]+(to[2]-from[2])*e];box(c);from0=c;if(t<1)raf=requestAnimationFrame(tween)}
+  var from0=null;
   function go(i,instant){
-    i=(i+4)%4;
-    var prev=cur; cur=i;
-    scenes.forEach(function(s,k){s.classList.toggle('on',k<=i)});
-    caps.forEach(function(c,k){c.classList.toggle('on',k===i)});
-    dots.forEach(function(d,k){d.classList.toggle('done',k<i); if(k!==i)d.querySelector('span').style.width=k<i?'100%':'0'});
-    from=prev<0||instant?cams[i]:[from[0],from[1],from[2]]; to=cams[i];
+    i=(i+steps.length)%steps.length; var prev=cur; cur=i; var st=steps[i];
+    scenes.forEach(function(g,k){g.classList.toggle('on',k<=st.s)});
+    caps.forEach(function(c,k){c.classList.toggle('on',k===st.s)});
+    dots.forEach(function(d,k){d.querySelector('span').style.width=k<st.s?'100%':(k>st.s?'0':d.querySelector('span').style.width)});
+    to=st.cam; holdNow=st.hold;
     if(raf)cancelAnimationFrame(raf);
-    if(prev<0||instant){setBox(cams[i])}else{t0=performance.now();raf=requestAnimationFrame(tween)}
-    elapsed=0; startAt=performance.now(); schedule();
+    if(prev<0||instant){box(to);from0=to}else{from=from0||steps[prev].cam;t0=performance.now();raf=requestAnimationFrame(tween)}
+    elapsed=0;startAt=performance.now();schedule();
   }
-  function schedule(){
-    clearTimeout(timer); if(!playing||!inView)return;
-    timer=setTimeout(function(){go(cur+1)},HOLD-elapsed);
-  }
-  // progress fill on current dot
+  function schedule(){clearTimeout(timer);if(!playing||!inView)return;timer=setTimeout(function(){go(cur+1)},holdNow-elapsed)}
   function prog(){
-    if(cur>=0){var p=playing&&inView?Math.min(1,(elapsed+(performance.now()-startAt))/HOLD):Math.min(1,elapsed/HOLD);
-      dots[cur].querySelector('span').style.width=(p*100)+'%'}
-    requestAnimationFrame(prog);
-  }
+    if(cur>=0){var st=steps[cur];
+      // progress of the whole scene (several steps may share a scene)
+      var first=cur;while(first>0&&steps[first-1].s===st.s)first--;
+      var last=cur;while(last<steps.length-1&&steps[last+1].s===st.s)last++;
+      var total=0,done=0;for(var k=first;k<=last;k++){total+=steps[k].hold;if(k<cur)done+=steps[k].hold}
+      var now=playing&&inView?elapsed+(performance.now()-startAt):elapsed;
+      dots[st.s].querySelector('span').style.width=(Math.min(1,(done+now)/total)*100)+'%'}
+    requestAnimationFrame(prog)}
   prog();
-  // keep "from" tracking current box during tween
-  var _setBox=setBox; setBox=function(c){from=c;_setBox(c)};
-  dots.forEach(function(d){d.addEventListener('click',function(){go(+d.dataset.i)})});
-  ctl.addEventListener('click',function(){
-    playing=!playing; ctl.textContent=playing?'Pause':'Play';
-    if(playing){startAt=performance.now();schedule()}else{elapsed+=performance.now()-startAt;clearTimeout(timer)}
-  });
+  dots.forEach(function(d){d.addEventListener('click',function(){var s=+d.dataset.i;for(var k=0;k<steps.length;k++)if(steps[k].s===s){go(k);break}})});
+  ctl.addEventListener('click',function(){playing=!playing;ctl.textContent=playing?'Pause':'Play';if(playing){startAt=performance.now();schedule()}else{elapsed+=performance.now()-startAt;clearTimeout(timer)}});
   if('IntersectionObserver' in window){
-    new IntersectionObserver(function(e){
-      var was=inView; inView=e[0].isIntersecting;
-      if(inView&&!was){ if(cur<0)go(0,true); else {startAt=performance.now();schedule()} }
-      if(!inView&&was){elapsed+=performance.now()-startAt;clearTimeout(timer)}
-    },{threshold:.35}).observe(film);
+    new IntersectionObserver(function(e){var was=inView;inView=e[0].isIntersecting;
+      if(inView&&!was){if(cur<0)go(0,true);else{startAt=performance.now();schedule()}}
+      if(!inView&&was){elapsed+=performance.now()-startAt;clearTimeout(timer)}},{threshold:.35}).observe(film);
   }else{inView=true;go(0,true)}
-  window.addEventListener('resize',function(){if(cur>=0)_setBox(to)});
+  window.addEventListener('resize',function(){if(cur>=0&&to)box(from0||to)});
 })();
 </script>
 </body>
