@@ -165,7 +165,7 @@ function login(failed) {
     ${failed ? '<div class="err">That password didn’t match. Try again, or ask Steve for the current one.</div>' : ''}
     <button class="btn" type="submit">Open</button>
   </form>
-  <p class="fine">Steve sends the password directly. If you need it, email him.</p>`);
+  <p class="fine">Steve sends the password directly. If you need it, email <a href="mailto:steve@antimatterconsulting.com" style="color:var(--mist-2);border-bottom:1px solid var(--line)">steve@antimatterconsulting.com</a>.</p>`);
 }
 
 function notConfigured() {
