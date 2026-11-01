@@ -105,6 +105,8 @@
   .note:nth-child(2){animation-delay:.9s}
   .note:nth-child(3){animation-delay:1.7s}
   @keyframes float{0%{opacity:0;transform:translate(0,0) rotate(-8deg)}15%{opacity:1}100%{opacity:0;transform:translate(26px,-110px) rotate(14deg)}}
+  .hum{opacity:0;animation:hum 5.2s ease-out infinite;transform-box:fill-box;transform-origin:0 100%;letter-spacing:.02em;font-style:italic}
+  @keyframes hum{0%{opacity:0;transform:translate(0,6px) rotate(-3deg)}10%{opacity:1;transform:translate(0,0) rotate(0)}70%{opacity:1}100%{opacity:0;transform:translate(10px,-40px) rotate(3deg)}}
   #gull{animation:gull 14s linear infinite}
   @keyframes gull{from{transform:translateX(-200px)}to{transform:translateX(1900px)}}
   #gull path{animation:wings .5s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 50%}
@@ -410,6 +412,7 @@
           <text class="note" x="0" y="0">♪</text>
           <text class="note" x="14" y="10">♫</text>
           <text class="note" x="-8" y="6">♪</text>
+          <text id="humTitle" class="hum" x="36" y="-78" font-size="15" font-weight="600" fill="#002423">Sussudio</text>
         </g>
       </g>
 
@@ -741,6 +744,11 @@ drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('over'
 // ---- navigation ----
 const interior=document.getElementById('interior');
 document.getElementById('doorG').addEventListener('click',goAboard);
+// what the captain's humming (titles only)
+const HUM=['Sussudio','Easy Lover','In the Air Tonight','Against All Odds','One More Night','Another Day in Paradise','Invisible Touch','Take Me Home','Two Hearts','You Can\'t Hurry Love','I Don\'t Care Anymore','A Groovy Kind of Love','Land of Confusion','Something Happened on the Way to Heaven','Follow You Follow Me'];
+let humI=Math.floor(Math.random()*HUM.length);
+document.getElementById('humTitle').addEventListener('animationiteration',()=>{humI=(humI+1)%HUM.length;humTitle.textContent=HUM[humI]});
+humTitle.textContent=HUM[humI];
 // Gladys Knight
 const dogEl=document.getElementById('dog');
 dogEl.addEventListener('click',e=>{e.stopPropagation();document.getElementById('dogModal').classList.add('on')});
