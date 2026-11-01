@@ -2,7 +2,12 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "antimatter-site",
   "compatibility_date": "2026-11-01",
+  "main": "worker.js",
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "binding": "ASSETS",
+    // Only these paths go through worker.js; everything else is served
+    // straight from the static files, as before.
+    "run_worker_first": ["/leapwork", "/leapwork/*", "/private/*"]
   }
 }
