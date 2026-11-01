@@ -173,21 +173,21 @@
     .three,.detail .grid,.growth .desc,.steve{grid-template-columns:1fr}
     .growth .row{grid-template-columns:1fr;gap:10px}
     .growth .arrow{transform:rotate(90deg)}
-    .film{grid-template-columns:1fr;min-height:0}
-    .film .screen{display:block;position:static}
-    .film svg{display:none}
-    .film .ctas{position:static;opacity:1;pointer-events:auto;padding:28px 24px;border-top:1px solid var(--line)}
-    .film .c[data-i="5"]{display:none}
-    .film .panel{border-right:0;padding:28px 24px;justify-content:flex-start}
-    .film .cs{position:static;min-height:0;display:grid;gap:26px}
-    .film .c{position:static;opacity:1;transform:none;padding-bottom:26px;border-bottom:1px solid var(--line)}
-    .film .c:last-child{border-bottom:0;padding-bottom:0}
+    .film{grid-template-columns:minmax(0,1fr);min-height:0}
+    .film .screen{order:-1;position:relative;display:flex;flex-direction:column-reverse;border-bottom:1px solid var(--line);min-width:0;width:100%}
+    .film svg{position:static;width:100%;max-width:100%;height:auto;aspect-ratio:1.35;display:block}
+    .film .ctas{position:static;opacity:1;pointer-events:auto;padding:28px 24px;border-top:1px solid var(--line);display:block;width:100%}
+    .film .ctas form{width:100%;max-width:100%}
+    .film .ctas input[type=text],.film .ctas input[type=email]{max-width:100%}
+    .film .panel{border-right:0;padding:26px 24px 24px}
+    .film .cs{min-height:200px}
     .film .n{font-size:40px}
     .film .c h3{font-size:24px;margin:6px 0 6px}
-    .film .dots{display:none}
+    .film .c[data-i="5"] h3{font-size:22px}
+    .film .dots{margin-top:18px}
     .detail li{grid-template-columns:1fr;gap:4px}
     .steve{gap:28px}
-    .portrait{max-width:120px;margin-top:0;aspect-ratio:4/5;border-radius:12px}
+    .portrait{max-width:120px;margin-top:0;aspect-ratio:3/4;border-radius:12px}
     .portrait img{object-position:center top}
     .hero{padding-top:110px}
     .detail,.growth,.about{padding:80px 0}
