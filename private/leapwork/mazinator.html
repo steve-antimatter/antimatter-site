@@ -625,7 +625,7 @@
       <g class="genWave"><path d="M-300 90 q 30 -10 60 0 t 60 0 t 60 0 t 60 0 t 60 0 t 60 0 t 60 0 t 60 0 t 60 0 t 60 0 V120 H-300z" fill="#618FA4"/></g>
       <g transform="translate(150 78)"><g class="genBoat"><path d="M-34 -13 h40 l26 13 l-26 13 h-40 z" fill="#090F12"/><rect x="-26" y="-8" width="30" height="16" fill="#FFFFFF"/><rect x="-22" y="-5" width="7" height="10" fill="#D2E1EA"/><rect x="-11" y="-5" width="7" height="10" fill="#D2E1EA"/><circle cx="16" cy="-2" r="5" fill="#BFA66A"/></g></g>
     </svg>
-    <div class="cap"><small>Generating campaign</small><h3 id="genTitle">—</h3><p id="genStep">Reading the cabins…</p></div>
+    <div class="cap"><small>Charting the island</small><h3 id="genTitle">—</h3><p id="genStep">Adding it to the chart…</p></div>
   </div>
 </div>
 <div class="modal" id="dogModal" onclick="if(event.target===this)closeDog()">
@@ -1103,7 +1103,7 @@ function submitNew(){
   const c={id:'c'+Date.now(),title:name,sub:'campaign',launch:ncLaunch.value||'',desc,status:'generating',x:sp[0],y:sp[1],seed:CAMPAIGNS.length*4+1,assets};
   CAMPAIGNS.push(c);csave();renderMap();
   genTitle.textContent=name;genModal.classList.add('on');
-  const steps=['Charting the island…','Filing the use case…','Reading the cabins…'];
+  const steps=['Adding it to the chart…','Filing the use case…'];
   let i=0;genStep.textContent=steps[0];
   const t=setInterval(()=>{i++;if(i<steps.length)genStep.textContent=steps[i]},700);
   setTimeout(()=>{clearInterval(t);genModal.classList.remove('on');showSubmitted(c)},steps.length*700+300);
