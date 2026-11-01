@@ -271,13 +271,12 @@
 
           <!-- SCENE 1: Discover (region 1000-3000 x 500-1980) -->
           <g id="s1" class="fig">
-            <g class="pop"><use href="#person" x="1200" y="720" width="200" height="260"/><text class="lbl" x="1300" y="1060" text-anchor="middle">Founder</text></g>
-            <g class="pop d1"><path d="M1480 700 h700 a14 14 0 0 1 14 14 v82 a14 14 0 0 1 -14 14 h-640 l-40 36 v-36 h-20 a14 14 0 0 1 -14 -14 v-82 a14 14 0 0 1 14 -14z" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="1512" y="768">Why customers buy</text></g>
-            <g class="pop d2"><path d="M1480 860 h560 a14 14 0 0 1 14 14 v82 a14 14 0 0 1 -14 14 h-500 l-40 36 v-36 h-20 a14 14 0 0 1 -14 -14 v-82 a14 14 0 0 1 14 -14z" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="1512" y="928">What it should cost</text></g>
-            <g class="pop d3"><use href="#person" x="2600" y="860" width="200" height="260"/><text class="lbl" x="2700" y="1200" text-anchor="middle">Customer</text></g>
-            <g class="pop d4"><path d="M2074 930 h492 a14 14 0 0 1 14 14 v28 l38 22 l-38 22 v18 a14 14 0 0 1 -14 14 h-492 a14 14 0 0 1 -14 -14 v-90 a14 14 0 0 1 14 -14z" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="2092" y="1000">What we were missing</text></g>
-            <g class="pop d5"><use href="#person" x="1900" y="1500" width="200" height="260"/><text class="lbl" x="2000" y="1850" text-anchor="middle">Product expert</text></g>
-            <g class="pop d6"><path d="M2160 1400 h720 a14 14 0 0 1 14 14 v82 a14 14 0 0 1 -14 14 h-660 l-40 36 v-36 h-20 a14 14 0 0 1 -14 -14 v-82 a14 14 0 0 1 14 -14z" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="2192" y="1468">What makes it different</text></g>
+            <g class="pop d1"><use href="#person" x="1130" y="620" width="190" height="247"/><use href="#person" x="1340" y="620" width="190" height="247"/><text class="ttl or" x="1330" y="950" text-anchor="middle">Founders</text></g>
+            <g class="slide d1"><rect x="1040" y="1010" width="580" height="370" rx="14" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><circle cx="1085" cy="1073" r="9" fill="#f27a2c"/><text class="body" x="1112" y="1085" style="font-size:34px">Why customers buy</text><circle cx="1085" cy="1173" r="9" fill="#f27a2c"/><text class="body" x="1112" y="1185" style="font-size:34px">The original story</text><circle cx="1085" cy="1273" r="9" fill="#f27a2c"/><text class="body" x="1112" y="1285" style="font-size:34px">What it should cost</text></g>
+            <g class="pop d2"><use href="#person" x="1800" y="620" width="190" height="247"/><use href="#person" x="2010" y="620" width="190" height="247"/><text class="ttl or" x="2000" y="950" text-anchor="middle">Product experts</text></g>
+            <g class="slide d2"><rect x="1710" y="1010" width="580" height="370" rx="14" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><circle cx="1755" cy="1073" r="9" fill="#f27a2c"/><text class="body" x="1782" y="1085" style="font-size:34px">What makes it different</text><circle cx="1755" cy="1173" r="9" fill="#f27a2c"/><text class="body" x="1782" y="1185" style="font-size:34px">How it actually works</text><circle cx="1755" cy="1273" r="9" fill="#f27a2c"/><text class="body" x="1782" y="1285" style="font-size:34px">Where it fits</text></g>
+            <g class="pop d3"><use href="#person" x="2470" y="620" width="190" height="247"/><use href="#person" x="2680" y="620" width="190" height="247"/><text class="ttl or" x="2670" y="950" text-anchor="middle">Customers</text></g>
+            <g class="slide d3"><rect x="2380" y="1010" width="580" height="370" rx="14" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><circle cx="2425" cy="1073" r="9" fill="#f27a2c"/><text class="body" x="2452" y="1085" style="font-size:34px">Why we chose it</text><circle cx="2425" cy="1173" r="9" fill="#f27a2c"/><text class="body" x="2452" y="1185" style="font-size:34px">What we were missing</text><circle cx="2425" cy="1273" r="9" fill="#f27a2c"/><text class="body" x="2452" y="1285" style="font-size:34px">What we would pay for</text></g>
           </g>
 
           <!-- SCENE 2: Context (region 3200-5200) -->
@@ -555,7 +554,7 @@
   var ctl=document.getElementById('ctl');
   // steps: scene index, camera [cx,cy,w], hold ms
   var steps=[
-    {s:0,cam:[2000,1240,2000],hold:5000},
+    {s:0,cam:[2000,1040,2000],hold:5000},
     {s:1,cam:[4300,1240,2000],hold:4600},
     {s:2,cam:[6400,1240,2000],hold:4200},
     {s:3,cam:[7250,820,2500],hold:3600},
