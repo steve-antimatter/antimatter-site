@@ -53,7 +53,10 @@
   #bubble{transform-box:fill-box;transform-origin:95% 100%;animation:bubbleIn .5s cubic-bezier(.3,1.4,.5,1) 4.6s both}
   @keyframes bubbleIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
   body.skip #bubble{animation:none}
-  #bubble:hover #bubbleBox{fill:var(--mist)}
+  #bubble:hover #bubbleBox,#maz:hover ~ #bubble #bubbleBox{fill:var(--mist)}
+  #castHint{opacity:0;transition:opacity .2s;pointer-events:none}
+  #maz:hover ~ #castHint,#bubble:hover ~ #castHint{opacity:1}
+  body.castoff #castHint{display:none}
   body.castoff #boatMove{animation:sailOff 2.2s cubic-bezier(.6,0,.9,.6) forwards}
   @keyframes sailOff{to{transform:translateX(1500px)}}
   body.castoff #bubble{animation:bubbleOut .4s ease-in 1.6s forwards}
@@ -102,10 +105,10 @@
   #wheel{transform-box:fill-box;transform-origin:50% 50%;animation:turn 1.7s ease-in-out infinite alternate}
   @keyframes turn{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
   .note{font-weight:700;fill:var(--dark-teal);opacity:0;animation:float 3.4s ease-out infinite;transform-box:fill-box;transform-origin:0 100%}
-  .note:nth-child(2){animation-delay:.85s}
-  .note:nth-child(3){animation-delay:1.7s}
-  .note:nth-child(4){animation-delay:2.55s}
-  .hum{font-style:italic;letter-spacing:.02em}
+  .note:nth-child(2){animation-delay:1.13s}
+  .note:nth-child(4){animation-delay:2.27s}
+  .hum{font-style:italic;letter-spacing:.02em;animation:none}
+  .hum.go{animation:float 3.6s ease-out 1}
   @keyframes float{0%{opacity:0;transform:translate(0,0) rotate(-6deg)}15%{opacity:1}100%{opacity:0;transform:translate(18px,-110px) rotate(8deg)}}
   #gull{animation:gull 14s linear infinite}
   @keyframes gull{from{transform:translateX(-200px)}to{transform:translateX(1900px)}}
@@ -373,7 +376,7 @@
       <rect x="1140" y="520" width="56" height="10" fill="#002423"/>
 
       <!-- THE CAPTAIN -->
-      <g id="maz">
+      <g id="maz" style="cursor:pointer">
         <rect x="1086" y="540" width="18" height="62" fill="#090F12"/>
         <rect x="1110" y="540" width="18" height="62" fill="#090F12"/>
         <!-- hair, behind body -->
@@ -437,8 +440,9 @@
       <!-- speech bubble -->
       <g id="bubble" style="cursor:pointer">
         <path id="bubbleBox" d="M836 262 h236 a8 8 0 0 1 8 8 v44 a8 8 0 0 1 -8 8 h-24 l 12 20 l -32 -20 h-192 a8 8 0 0 1 -8 -8 v-44 a8 8 0 0 1 8 -8 z" fill="#FFFFFF" stroke="#090F12" stroke-width="2.5"/>
-        <text id="bubbleText" x="954" y="298" text-anchor="middle" font-size="18" font-weight="700" fill="#090F12">All aboard?</text>
+        <text id="bubbleText" x="954" y="298" text-anchor="middle" font-size="18" font-weight="700" fill="#090F12">All Aboard!</text>
       </g>
+      <g id="castHint"><rect x="904" y="216" width="100" height="30" fill="#090F12"/><polygon points="946,246 962,246 954,256" fill="#090F12"/><text x="954" y="236" text-anchor="middle" font-size="12" font-weight="600" letter-spacing="2" fill="#FFFFFF">CAST OFF!</text></g>
     </g></g>
 
     <g>
@@ -745,24 +749,26 @@ drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('over'
 const interior=document.getElementById('interior');
 document.getElementById('doorG').addEventListener('click',goAboard);
 // what the captain's humming (titles only)
-const HUM=['Sussudio','Easy Lover','In the Air Tonight','Against All Odds','One More Night','Another Day in Paradise','Invisible Touch','Take Me Home','Two Hearts','You Can\'t Hurry Love','I Don\'t Care Anymore','A Groovy Kind of Love','Land of Confusion','Follow You Follow Me'];
+const HUM=['Dee doo doo','Sussudio','Hmm hmmm','Easy Lover','Whoa whoa whoa','In the Air Tonight','Dee doo doo','Against All Odds','Hmm hmmm','One More Night','Whoa whoa whoa','Invisible Touch','Dee doo doo','Take Me Home','Hmm hmmm','Two Hearts','Whoa whoa whoa','A Groovy Kind of Love','Land of Confusion'];
 let humI=Math.floor(Math.random()*HUM.length);
-document.getElementById('humTitle').addEventListener('animationiteration',()=>{humI=(humI+1)%HUM.length;humTitle.textContent=HUM[humI]});
-humTitle.textContent=HUM[humI];
+function hum(){humI=(humI+1)%HUM.length;humTitle.textContent=HUM[humI];humTitle.classList.remove('go');void humTitle.getBBox();humTitle.classList.add('go')}
+humTitle.addEventListener('animationend',()=>humTitle.classList.remove('go'));
+setTimeout(hum,9000);setInterval(hum,30000);
 // Gladys Knight
 const dogEl=document.getElementById('dog');
 dogEl.addEventListener('click',e=>{e.stopPropagation();document.getElementById('dogModal').classList.add('on')});
 function closeDog(){document.getElementById('dogModal').classList.remove('on')}
 // All aboard? -> anchors aweigh -> sail to the chart
 let casting=false;
-document.getElementById('bubble').addEventListener('click',e=>{e.stopPropagation();if(casting)return;casting=true;
+function castOff(e){e.stopPropagation();if(casting)return;casting=true;
   bubbleText.textContent='Anchors aweigh!';
   const chain=document.getElementById('chain'),anc=document.getElementById('anchor');let t0=null;
   function up(ts){if(!t0)t0=ts;const t=Math.min(1,(ts-t0)/1100);const e=1-Math.pow(1-t,3);const y=745-(745-640)*e;
     chain.setAttribute('y2',y);anc.setAttribute('transform',`translate(1310 ${y}) rotate(${Math.sin(t*12)*8})`);
     if(t<1)requestAnimationFrame(up);else{bubbleText.textContent='Next stop: the islands.';setTimeout(()=>{document.body.classList.add('castoff');setTimeout(()=>{goChart();},1900)},500)}}
-  requestAnimationFrame(up)});
-function resetBoat(){casting=false;document.body.classList.remove('castoff');bubbleText.textContent='All aboard?';document.getElementById('chain').setAttribute('y2',745);document.getElementById('anchor').setAttribute('transform','translate(1310 745)')}
+  requestAnimationFrame(up)}
+document.getElementById('bubble').addEventListener('click',castOff);document.getElementById('maz').addEventListener('click',castOff);
+function resetBoat(){casting=false;document.body.classList.remove('castoff');bubbleText.textContent='All Aboard!';document.getElementById('chain').setAttribute('y2',745);document.getElementById('anchor').setAttribute('transform','translate(1310 745)')}
 function goAboard(){
   document.body.classList.add('aboard');
   setTimeout(()=>{renderDeck();interior.classList.add('on');requestAnimationFrame(()=>interior.classList.add('show'));},700);
