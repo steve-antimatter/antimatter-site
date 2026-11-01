@@ -562,7 +562,7 @@
     {s:3,cam:[7250,1240,2500],hold:3600},
     {s:3,cam:[7250,1660,2500],hold:3600},
     {s:4,cam:[10000,1240,2000],hold:6000},
-    {s:5,cam:[10000,1240,2000],hold:0}
+    {s:5,cam:[10000,1240,2000],hold:9000}
   ];
   var MOVE=1400;
   var cur=-1,playing=true,inView=false,timer=null,raf=null,from=null,to=null,t0=0,startAt=0,elapsed=0,holdNow=6000;
@@ -574,7 +574,6 @@
     i=(i+steps.length)%steps.length; var prev=cur; cur=i; var st=steps[i];
     scenes.forEach(function(g,k){g.classList.toggle('on',k<=st.s)});
     document.getElementById('ctas').classList.toggle('on',st.s===5);
-    if(st.s===5){playing=false;ctl.textContent='Replay'}
     caps.forEach(function(c,k){c.classList.toggle('on',k===st.s)});
     dots.forEach(function(d,k){d.querySelector('span').style.width=k<st.s?'100%':(k>st.s?'0':d.querySelector('span').style.width)});
     to=st.cam; holdNow=st.hold;
@@ -582,7 +581,8 @@
     if(prev<0||instant){box(to);from0=to}else{from=from0||steps[prev].cam;t0=performance.now();raf=requestAnimationFrame(tween)}
     elapsed=0;startAt=performance.now();schedule();
   }
-  function schedule(){clearTimeout(timer);if(!playing||!inView||holdNow===0)return;timer=setTimeout(function(){go(cur+1)},holdNow-elapsed)}
+  function engaged(){var f=document.getElementById('ctas');if(!f)return false;if(f.contains(document.activeElement))return true;var ins=f.querySelectorAll('input[type=text],input[type=email]');for(var i=0;i<ins.length;i++)if(ins[i].value.trim())return true;return false}
+  function schedule(){clearTimeout(timer);if(!playing||!inView)return;timer=setTimeout(function(){if(steps[cur].s===5&&engaged()){elapsed=holdNow-1;schedule();return}go(cur+1)},Math.max(300,holdNow-elapsed))}
   function prog(){
     if(cur>=0){var st=steps[cur];
       // progress of the whole scene (several steps may share a scene)
@@ -593,8 +593,8 @@
       dots[st.s].querySelector('span').style.width=(total?Math.min(1,(done+now)/total)*100:100)+'%'}
     requestAnimationFrame(prog)}
   prog();
-  dots.forEach(function(d){d.addEventListener('click',function(){var s=+d.dataset.i;if(s!==5&&!playing){playing=true;ctl.textContent='Pause'}for(var k=0;k<steps.length;k++)if(steps[k].s===s){go(k);break}})});
-  ctl.addEventListener('click',function(){if(steps[cur].s===5){playing=true;ctl.textContent='Pause';go(0);return}playing=!playing;ctl.textContent=playing?'Pause':'Play';if(playing){startAt=performance.now();schedule()}else{elapsed+=performance.now()-startAt;clearTimeout(timer)}});
+  dots.forEach(function(d){d.addEventListener('click',function(){var s=+d.dataset.i;for(var k=0;k<steps.length;k++)if(steps[k].s===s){go(k);break}})});
+  ctl.addEventListener('click',function(){playing=!playing;ctl.textContent=playing?'Pause':'Play';if(playing){startAt=performance.now();schedule()}else{elapsed+=performance.now()-startAt;clearTimeout(timer)}});
   var cf=document.querySelector('#ctas form');
   cf.addEventListener('submit',function(){var u=document.getElementById('cta-url');var v=u.value.trim();if(v&&!/^https?:\/\//i.test(v))u.value='https://'+v;cf.querySelector('button').disabled=true;cf.querySelector('button').textContent='Sending'});
   // draw the first frame immediately; the clock starts when the film scrolls into view
