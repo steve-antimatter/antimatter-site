@@ -104,7 +104,7 @@
 
   /* product details */
   .detail{padding:90px 0;border-top:1px solid var(--line)}
-  .detail.alt{background:var(--navy-2)}
+  .detail.alt{background:linear-gradient(180deg,#132a4f,#0f2140)}
   .detail .grid{display:grid;grid-template-columns:4fr 8fr;gap:60px;align-items:start}
   .detail h2{font-size:clamp(40px,5vw,64px);line-height:1;margin-bottom:14px}
   .detail .tag{font-family:var(--head);font-weight:300;font-size:clamp(20px,2vw,26px);line-height:1.3;color:var(--ink);max-width:22ch}
@@ -133,11 +133,11 @@
 
   /* about */
   .about{padding:110px 0;border-top:1px solid var(--line)}
-  .steve{display:grid;grid-template-columns:340px 1fr;gap:70px;align-items:center}
-  .portrait{border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:2/3;max-width:340px}
+  .steve{display:grid;grid-template-columns:280px 1fr;gap:64px;align-items:start}
+  .portrait{border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:2/3;max-width:280px;margin-top:70px}
   .portrait img{width:100%;height:100%;object-fit:cover;object-position:center top}
   .steve blockquote{font-family:var(--head);font-weight:300;font-size:clamp(24px,2.8vw,36px);line-height:1.25;color:var(--ink);margin:14px 0 26px}
-  .steve .txt p+p{margin-top:18px}
+  .steve .txt p{font-size:16px}.steve .txt p+p{margin-top:16px}
 
   /* cta */
   .ctab{padding:130px 0;text-align:center;background:radial-gradient(ellipse 70% 60% at 50% 100%,#13284d 0%,var(--navy) 70%);border-top:1px solid var(--line)}
@@ -367,10 +367,9 @@
 </section>
 
 <!-- ============ DETAILS ============ -->
-<section class="detail" id="strategy">
+<section class="detail alt" id="strategy">
   <div class="wrap grid">
     <div>
-      <div class="eyebrow">01 &middot; Product marketing and strategy</div>
       <h2 class="mist">Strategy</h2>
       <p class="tag">A product portfolio is not a price list. It's a set of distinct solutions built around specific buyers.</p>
     </div>
@@ -387,10 +386,9 @@
   </div>
 </section>
 
-<section class="detail alt" id="agents">
+<section class="detail" id="agents">
   <div class="wrap grid">
     <div>
-      <div class="eyebrow">02 &middot; AI agents for marketing and sales</div>
       <h2 class="mist">Agents</h2>
       <p class="tag">Agents trained on the founder's voice, creating custom sales and marketing materials at the pace of the business.</p>
     </div>
@@ -402,15 +400,14 @@
         <li><b>Product portfolio</b><span>A pricing menu and product materials that stay current as the catalog changes.</span></li>
         <li><b>Your team runs them</b><span>Deployed where your team already works, with the knowledge base documented and your people trained to update it.</span></li>
       </ul>
-      <p class="note">Why here and not a dev shop: an agent is only as good as the judgment behind it. I spent 25 years carrying quota, running sales teams, and leading product marketing before I built my first one. The agents know what a good first email does because I put it there.</p>
+      <p class="note">Why here and not a dev shop: an agent is only as good as the judgment behind it. Steve spent 25 years carrying quota, running sales teams, and leading product marketing before he built his first one. The agents know what a good first email does because he put it there.</p>
     </div>
   </div>
 </section>
 
-<section class="detail" id="coaching">
+<section class="detail alt" id="coaching">
   <div class="wrap grid">
     <div>
-      <div class="eyebrow">03 &middot; Sales team coaching</div>
       <h2 class="mist">Coaching</h2>
       <p class="tag">Great salespeople don't all look alike. Each rep builds a style that feels natural and gets results.</p>
     </div>
@@ -460,9 +457,10 @@
     <div class="txt">
       <div class="eyebrow">About</div>
       <h2 class="mist" style="font-size:clamp(40px,5vw,64px);line-height:1">Steve Zeller</h2>
-      <blockquote>I've watched a lot of companies lose their voice on the way up.</blockquote>
-      <p>I was employee 20 at Logicworks. I started in entry-level sales and left as VP of Product Marketing, 19 years later, after the company was sold. In between I ran business development, built the product catalog more than once, and sat in a lot of rooms where a rep said something the founder would never have said.</p>
-      <p>After Logicworks I spent two years at Bespin Global, an AWS partner. In 2025 I started Antimatter to do this work directly for the companies that need it. I run the engagements and I build the agents myself.</p>
+      <blockquote>A sales team that sells the difference, not the discount.</blockquote>
+      <p>Steve's formative years in sales were a fight for survival. Selling managed cloud services in the early days of AWS, he watched more than forty salespeople get hired and fired around him while he carried 70% of his company's quota. He vowed to build a system where hard-working reps could succeed.</p>
+      <p>That took him into product strategy, where he built a $50M healthcare cloud practice, and then to the executive level, where he redefined product portfolios, pricing, and alliance strategies. He has led product teams at News Corp and Cablevision, and was Head of Product Strategy at Bespin Global, where he led go-to-market for AI applications. The reps he trained along the way are now VPs and CROs in their own right.</p>
+      <p>He founded Antimatter to solve an obvious but pervasive problem. Early on, founders can convey what makes their product unique and sell it at a premium. As they scale, that product gets split into SKUs, discounted, and eventually commoditized. Antimatter brings the passion of the original story back into every sales pitch, using a modern, AI-fluent toolkit to solve a timeless challenge. The goal is a sales team that sells the difference, not the discount.</p>
     </div>
   </div>
 </section>
