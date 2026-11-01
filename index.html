@@ -83,7 +83,7 @@
   .film .ctas .k{font-family:var(--head);font-weight:300;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--orange)}
   .film .ctas h3{font-size:clamp(24px,2.6vw,34px);font-weight:400;margin-bottom:10px}
   .film .ctas label{font-family:var(--head);font-weight:300;letter-spacing:.2em;text-transform:uppercase;font-size:11px;color:var(--mist);margin-top:6px}
-  .film .ctas input[type=url],.film .ctas input[type=email]{width:100%;background:rgba(10,22,40,.75);border:1px solid rgba(157,188,205,.35);border-radius:4px;color:var(--ink);font:inherit;font-size:16px;padding:12px 14px;outline:none}
+  .film .ctas input[type=text],.film .ctas input[type=email]{width:100%;background:rgba(10,22,40,.75);border:1px solid rgba(157,188,205,.35);border-radius:4px;color:var(--ink);font:inherit;font-size:16px;padding:12px 14px;outline:none}
   .film .ctas input:focus{border-color:var(--mist)}
   .film .ctas .btn{justify-self:start;margin-top:10px;cursor:pointer}
   .film .ctas .fine{font-size:13px;color:var(--ink-dim);margin-top:4px}
@@ -253,7 +253,7 @@
             <div class="k">Free review</div>
             <h3>Your pitch, your positioning, your pricing.</h3>
             <label for="cta-url">Your website</label>
-            <input id="cta-url" name="website" type="url" placeholder="https://" required>
+            <input id="cta-url" name="website" type="text" inputmode="url" autocomplete="url" placeholder="yourcompany.com" required>
             <label for="cta-email">Your email</label>
             <input id="cta-email" name="email" type="email" placeholder="you@company.com" required>
             <button class="btn solid" type="submit">Send it to Steve</button>
@@ -595,6 +595,8 @@
   prog();
   dots.forEach(function(d){d.addEventListener('click',function(){var s=+d.dataset.i;if(s!==5&&!playing){playing=true;ctl.textContent='Pause'}for(var k=0;k<steps.length;k++)if(steps[k].s===s){go(k);break}})});
   ctl.addEventListener('click',function(){if(steps[cur].s===5){playing=true;ctl.textContent='Pause';go(0);return}playing=!playing;ctl.textContent=playing?'Pause':'Play';if(playing){startAt=performance.now();schedule()}else{elapsed+=performance.now()-startAt;clearTimeout(timer)}});
+  var cf=document.querySelector('#ctas form');
+  cf.addEventListener('submit',function(){var u=document.getElementById('cta-url');var v=u.value.trim();if(v&&!/^https?:\/\//i.test(v))u.value='https://'+v;cf.querySelector('button').disabled=true;cf.querySelector('button').textContent='Sending'});
   // draw the first frame immediately; the clock starts when the film scrolls into view
   go(0,true);
   if('IntersectionObserver' in window){
