@@ -144,9 +144,13 @@
   .ctab h2{font-size:clamp(40px,6vw,76px);line-height:1}
   .ctab p{margin:26px auto 36px;color:var(--ink-dim);font-size:18px}
   .ctab .mail{display:block;margin-top:22px;font-family:var(--head);letter-spacing:.08em;font-size:18px;color:var(--mist-2)}
-  footer{padding:36px 0;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim)}
-  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
+  footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
+  footer .flogo{height:44px}footer .flogo img{height:100%;width:auto}
+  footer ul{display:flex;gap:26px;list-style:none;flex-wrap:wrap}
+  footer li a{font-family:var(--head);letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--ink-dim)}
   footer a:hover{color:var(--ink)}
+  footer .bottom{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px}
 
   @media (max-width:900px){
     nav ul{display:none;position:absolute;top:68px;left:0;right:0;background:var(--navy);flex-direction:column;align-items:flex-start;padding:20px 28px 28px;gap:18px;border-bottom:1px solid var(--line)}
@@ -248,7 +252,7 @@
             <g class="pop d2"><rect x="3680" y="860" width="190" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3775" y="900" text-anchor="middle">Buyers</text></g>
             <g class="pop d3"><rect x="3390" y="940" width="220" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3500" y="980" text-anchor="middle">Products</text></g>
             <g class="pop d4"><rect x="3630" y="940" width="190" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3725" y="980" text-anchor="middle">Pricing</text></g>
-            <g class="pop d5"><rect x="3390" y="1020" width="300" height="60" rx="30" fill="#f27a2c"/><text class="chip" x="3540" y="1060" text-anchor="middle" style="fill:#0a1628">Founder's voice</text></g>
+            <g class="pop d5"><rect x="3390" y="1020" width="360" height="60" rx="30" fill="#f27a2c"/><text class="chip" x="3570" y="1060" text-anchor="middle" style="fill:#0a1628">Founder's voice</text></g>
             <g class="pop d5">
               <rect x="3390" y="1140" width="680" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1180" width="600" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1220" width="650" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
               <rect x="3390" y="1260" width="520" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1300" width="680" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1340" width="580" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
@@ -258,10 +262,10 @@
             </g>
             <path class="flow d5" d="M4110 1240 L4360 1240" fill="none" stroke="#f27a2c" stroke-width="5"/>
             <g class="pop d6">
-              <rect x="4380" y="1000" width="820" height="480" rx="18" fill="#f27a2c"/>
-              <text class="body" x="4430" y="1130" style="fill:#0a1628;font-size:54px;font-weight:600">Train agents on</text>
-              <text class="body" x="4430" y="1250" style="fill:#0a1628;font-size:54px;font-weight:600">founder voice and</text>
-              <text class="body" x="4430" y="1370" style="fill:#0a1628;font-size:54px;font-weight:600">differentiation</text>
+              <rect x="4380" y="980" width="800" height="520" rx="18" fill="#f27a2c"/>
+              <text class="ttl" x="4430" y="1090" style="fill:#0a1628;font-size:64px">Train agents:</text>
+              <rect x="4430" y="1150" width="700" height="110" rx="14" fill="#0a1628"/><text class="body" x="4780" y="1222" text-anchor="middle" style="fill:#ffd4b3;font-size:46px;font-weight:600">Founder voice</text>
+              <rect x="4430" y="1300" width="700" height="110" rx="14" fill="#0a1628"/><text class="body" x="4780" y="1372" text-anchor="middle" style="fill:#ffd4b3;font-size:46px;font-weight:600">Product uniqueness</text>
             </g>
           </g>
 
@@ -455,7 +459,7 @@
   <div class="wrap steve">
     <div class="portrait"><img src="steve.jpg" alt="Steve Zeller"></div>
     <div class="txt">
-      <div class="eyebrow">About</div>
+      <div class="eyebrow">About the founder</div>
       <h2 class="mist" style="font-size:clamp(40px,5vw,64px);line-height:1">Steve Zeller</h2>
       <blockquote>A sales team that sells the difference, not the discount.</blockquote>
       <p>Steve's formative years in sales were a fight for survival. Selling managed cloud services in the early days of AWS, he watched more than forty salespeople get hired and fired around him while he carried 70% of his company's quota. He vowed to build a system where hard-working reps could succeed.</p>
@@ -475,8 +479,22 @@
 
 <footer>
   <div class="wrap">
-    <div>Antimatter Consulting &middot; New York</div>
-    <div><a href="contact.html">Contact</a> &nbsp;&middot;&nbsp; <a href="https://linkedin.com/in/stevenlzeller" target="_blank" rel="noopener">LinkedIn</a></div>
+    <div class="top">
+      <a class="flogo" href="#top"><img src="logo.png" alt="Antimatter Consulting"></a>
+      <ul>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#strategy">Strategy</a></li>
+        <li><a href="#agents">Agents</a></li>
+        <li><a href="#coaching">Coaching</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="https://linkedin.com/in/stevenlzeller" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+    <div class="bottom">
+      <div>&copy; 2026 Antimatter Consulting &middot; New York</div>
+      <div>The founder's voice in every sales and marketing touchpoint.</div>
+    </div>
   </div>
 </footer>
 
@@ -497,7 +515,7 @@
   // steps: scene index, camera [cx,cy,w], hold ms
   var steps=[
     {s:0,cam:[2000,1240,2000],hold:6500},
-    {s:1,cam:[4200,1240,2000],hold:6000},
+    {s:1,cam:[4300,1240,2000],hold:6000},
     {s:2,cam:[6400,1240,2000],hold:5500},
     {s:3,cam:[7250,820,2500],hold:4500},
     {s:3,cam:[7250,1240,2500],hold:4500},
