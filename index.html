@@ -162,10 +162,15 @@
     .three,.detail .grid,.growth .desc,.steve{grid-template-columns:1fr}
     .growth .row{grid-template-columns:1fr;gap:10px}
     .growth .arrow{transform:rotate(90deg)}
-    .film{grid-template-columns:1fr}
-    .film .panel{border-right:0;border-bottom:1px solid var(--line);padding:28px 24px}
-    .film .cs{min-height:210px}
-    .film .screen{min-height:380px}
+    .film{grid-template-columns:1fr;min-height:0}
+    .film .screen{display:none}
+    .film .panel{border-right:0;padding:28px 24px;justify-content:flex-start}
+    .film .cs{position:static;min-height:0;display:grid;gap:26px}
+    .film .c{position:static;opacity:1;transform:none;padding-bottom:26px;border-bottom:1px solid var(--line)}
+    .film .c:last-child{border-bottom:0;padding-bottom:0}
+    .film .n{font-size:40px}
+    .film .c h3{font-size:24px;margin:6px 0 6px}
+    .film .dots{display:none}
     .detail li{grid-template-columns:1fr;gap:4px}
     .portrait{max-width:320px}
     .hero{padding-top:110px}
