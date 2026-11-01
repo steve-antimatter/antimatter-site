@@ -124,6 +124,10 @@
   .card .cap .checks input:checked::after{content:"";position:absolute;left:4px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
   .card .cap .go{margin-top:22px;width:100%;padding:16px}
   .err{color:var(--terracotta);font-size:13px;margin-top:12px;min-height:16px}
+  .card.sub{width:min(460px,92vw)}
+  .card.sub .cap p{font-size:14px;color:var(--steel-blue);line-height:1.5}
+  .card.sub .cap .go{display:block;text-align:center;text-decoration:none;margin-top:18px}
+  .card.sub .cap .fine{font-size:12px;margin-top:12px;opacity:.8}
   .card.gen{width:300px;text-align:center}
   .card.gen .cap{padding:18px 24px 24px}
   .card.gen h3{font-size:22px}
@@ -317,6 +321,9 @@
   .assets .node .appr input[type=checkbox]:checked::after{left:5px;top:1px;width:6px;height:10px}
   .assets .node .appr span{font-size:10px}
   .node.ok{border-color:var(--harbor-teal);box-shadow:inset 0 0 0 1px var(--harbor-teal)}
+  .node.pending{opacity:.6;border-style:dashed}
+  .node.pending .appr{display:none}
+  .node .wait{display:inline-block;margin-top:6px;font-size:12px;color:var(--fog-blue);font-style:italic}
   .node .ftype{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fog-blue)}
   .node .ficon{width:26px;height:32px;position:relative;flex:none;background:var(--atlantic)}
   .node .ficon::before{content:"";position:absolute;right:0;top:0;border-style:solid;border-width:0 9px 9px 0;border-color:var(--mist-light) var(--mist-light) var(--white) var(--white)}
@@ -599,6 +606,18 @@
     </div>
   </div>
 </div>
+<div class="modal" id="subModal" onclick="if(event.target===this)closeSubmitted()">
+  <div class="card sub">
+    <svg viewBox="0 0 300 120" preserveAspectRatio="xMidYMid slice" style="width:100%;height:120px;display:block"><rect width="300" height="120" fill="#002423"/><rect width="300" height="120" fill="url(#halves2)" opacity=".08"/><use href="#crest" x="120" y="30" width="60" height="60"/></svg>
+    <div class="cap">
+      <small>Island charted</small>
+      <h3 id="subTitle">—</h3>
+      <p>Antimatter Consulting is creating your campaign and will get back to you. You'll see the island on the chart marked <b>Generating</b> until the brief and assets are in Drive.</p>
+      <a class="btn go" id="subMail" href="#">Send the request to Antimatter</a>
+      <p class="fine">Opens an email to steve@antimatterconsulting.com with the campaign details filled in. Automatic notification is coming with the next build.</p>
+    </div>
+  </div>
+</div>
 <div class="modal" id="genModal">
   <div class="card gen">
     <svg viewBox="0 0 300 120" width="300" height="120">
@@ -706,7 +725,7 @@
     </div>
   </div>
   <div class="chead"><h2>Campaign chart</h2><p>Every campaign is an island. Click one and the Mazinator sails over.</p></div>
-  <div class="legend"><i style="background:var(--mist);border:1px solid var(--atlantic)"></i><span>Draft</span><i style="background:var(--atlantic)"></i><span>In progress</span><i style="background:var(--accent-gold)"></i><span>In review</span><i style="background:var(--harbor-teal)"></i><span>Approved</span></div>
+  <div class="legend"><i style="background:var(--fog-blue)"></i><span>Generating</span><i style="background:var(--mist);border:1px solid var(--atlantic)"></i><span>Draft</span><i style="background:var(--atlantic)"></i><span>In progress</span><i style="background:var(--accent-gold)"></i><span>In review</span><i style="background:var(--harbor-teal)"></i><span>Approved</span></div>
 </div>
 
 <!-- ================= CAMPAIGN ================= -->
@@ -931,7 +950,7 @@ function replay(){document.body.classList.remove('skip','aboard');interior.class
 if(location.hash==='#aboard'){document.body.classList.add('skip');goAboard()}
 
 // ================= CAMPAIGNS =================
-const STATUS={idea:['Draft','#D2E1EA'],progress:['In progress','#618FA4'],review:['In review','#BFA66A'],approved:['Approved','#3F7A78']};
+const STATUS={generating:['Generating','#4F6F82'],idea:['Draft','#D2E1EA'],progress:['In progress','#618FA4'],review:['In review','#BFA66A'],approved:['Approved','#3F7A78']};
 const ASSETS=[
   {k:'brief',n:'Campaign Brief',t:'doc'},
   {k:'landing',n:'Landing Page',t:'doc'},
@@ -1071,6 +1090,7 @@ function openNew(){
   newModal.classList.add('on');setTimeout(()=>ncName.focus(),250);
 }
 function closeNew(){newModal.classList.remove('on')}
+function closeSubmitted(id){id=id||subModal.dataset.id;subModal.classList.remove('on');if(id)setTimeout(()=>sailTo(id),300)}
 function submitNew(){
   const name=ncName.value.trim(),desc=ncDesc.value.trim();
   const assets=[...ncAssets.querySelectorAll('input:checked')].map(i=>i.value);
@@ -1080,20 +1100,27 @@ function submitNew(){
   closeNew();
   const spots=[[900,220],[1400,440],[300,560],[1120,560],[700,560],[560,760],[1000,480]];
   const used=CAMPAIGNS.map(c=>c.x+','+c.y);const sp=spots.find(p=>!used.includes(p.join(',')))||[800,450];
-  const c={id:'c'+Date.now(),title:name,sub:'campaign',launch:ncLaunch.value||'',desc,status:'idea',x:sp[0],y:sp[1],seed:CAMPAIGNS.length*4+1,assets};
+  const c={id:'c'+Date.now(),title:name,sub:'campaign',launch:ncLaunch.value||'',desc,status:'generating',x:sp[0],y:sp[1],seed:CAMPAIGNS.length*4+1,assets};
   CAMPAIGNS.push(c);csave();renderMap();
   genTitle.textContent=name;genModal.classList.add('on');
-  const steps=['Reading the cabins…','Drafting the use case…','Writing the campaign brief…','Creating the Drive folder…','Generating assets…','Wiring up approvals…'];
+  const steps=['Charting the island…','Filing the use case…','Reading the cabins…'];
   let i=0;genStep.textContent=steps[0];
-  const t=setInterval(()=>{i++;if(i<steps.length)genStep.textContent=steps[i]},650);
-  setTimeout(()=>{clearInterval(t);genModal.classList.remove('on');sailTo(c.id)},steps.length*650+300);
+  const t=setInterval(()=>{i++;if(i<steps.length)genStep.textContent=steps[i]},700);
+  setTimeout(()=>{clearInterval(t);genModal.classList.remove('on');showSubmitted(c)},steps.length*700+300);
+}
+function showSubmitted(c){
+  const names=ASSETS.filter(a=>c.assets.includes(a.k)).map(a=>a.n);
+  const body=`New campaign from the Mazinator\n\nName: ${c.title}\nLaunch: ${fmtDate(c.launch)}\nAssets: ${names.join(', ')}\n\nUse case:\n${c.desc}\n`;
+  const href='mailto:steve@antimatterconsulting.com?subject='+encodeURIComponent('Mazinator — new campaign: '+c.title)+'&body='+encodeURIComponent(body);
+  subTitle.textContent=c.title;subMail.setAttribute('href',href);subMail.onclick=()=>{setTimeout(()=>closeSubmitted(c.id),400)};subModal.dataset.id=c.id;
+  subModal.classList.add('on');
 }
 
 // ----- campaign page (Drive flow chart) -----
 let cur=null;
 function openCampaign(id){
   cur=CAMPAIGNS.find(k=>k.id===id);
-  cpCrumb.textContent=cur.title;cpTitle.textContent=cur.title;cpDesc.textContent='Every asset lives in Google Drive. Initial and tick to approve.';cpLabel.textContent=subline(cur)+' · '+(cur.assets||[]).length+' assets';
+  cpCrumb.textContent=cur.title;cpTitle.textContent=cur.title;cpDesc.textContent=cur.status==='generating'?'Antimatter Consulting is creating this campaign and will get back to you. Assets appear here as they land in Drive.':'Every asset lives in Google Drive. Initial and tick to approve.';cpLabel.textContent=subline(cur)+' · '+(cur.assets||[]).length+' assets';
   syncStatus();
   renderFlow();
   const v=document.getElementById('campaign');v.classList.add('on');v.scrollTop=0;requestAnimationFrame(()=>{v.classList.add('show');drawWires()});
@@ -1101,10 +1128,11 @@ function openCampaign(id){
 function backToChart(){const v=document.getElementById('campaign');v.classList.remove('show');setTimeout(()=>{v.classList.remove('on');renderMap()},450)}
 function nodeHtml(key,name,type,extra){
   const d=cget(cur.id);const a=d.appr[key]||{};
-  return `<div class="node ${a.ok?'ok':''}" data-k="${key}">
+  const gen=cur.status==='generating'&&key!=='usecase';
+  return `<div class="node ${a.ok?'ok':''} ${gen?'pending':''}" data-k="${key}">
     <div class="ftype"><i class="ficon ${type}"></i>${TYPE[type]}</div>
     <h4>${esc(name)}</h4>
-    <a href="#" onclick="toast('Demo — this will open the file in Google Drive.');return false">Open in Drive ↗</a>
+    ${gen?'<span class="wait">Generating…</span>':'<a href="#" onclick="toast(\'Demo — this will open the file in Google Drive.\');return false">Open in Drive ↗</a>'}
     <div class="appr"><input type="text" maxlength="4" placeholder="INIT" value="${esc(a.who||'')}" oninput="setA('${key}','who',this.value)"><input type="checkbox" ${a.ok?'checked':''} onchange="setA('${key}','ok',this.checked)"><span>${a.ok?`<b>Approved</b> ${esc(a.who||'')}`:'Approve'}</span></div>
   </div>`;
 }
@@ -1134,7 +1162,7 @@ window.addEventListener('resize',drawWires);
 function setA(k,f,v){const d=cget(cur.id);d.appr[k]=d.appr[k]||{};if(f==='who')v=v.toUpperCase();d.appr[k][f]=v;if(f==='ok'&&!v)d.final=false;csave();syncStatus();if(f==='ok')renderFlow();else{const n=document.querySelector(`.node[data-k=${k}] .appr span`);if(n&&d.appr[k].ok)n.innerHTML=`<b>Approved</b> ${esc(v)}`}}
 function setFinal(v){cget(cur.id).final=v;csave();syncStatus();renderFlow()}
 function syncStatus(){const d=cget(cur.id);const keys=['usecase','brief',...(cur.assets||[]).filter(k=>k!=='brief')];const n=keys.filter(k=>d.appr[k]?.ok).length;
-  cur.status=d.final?'approved':n===keys.length?'review':n>0?'progress':'idea';csave();const [sn,sc]=STATUS[cur.status];cpStatus.textContent=sn;cpDot.style.background=sc}
+  cur.status=d.final?'approved':n===keys.length?'review':n>0?'progress':(cur.status==='generating'?'generating':'idea');csave();const [sn,sc]=STATUS[cur.status];cpStatus.textContent=sn;cpDot.style.background=sc}
 
 // ----- chart navigation -----
 const chartV=document.getElementById('chart');
