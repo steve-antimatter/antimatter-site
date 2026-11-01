@@ -95,12 +95,12 @@
   /* products */
   .buy{padding:40px 0 100px}
   .three{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  .prod{display:block;padding:38px 32px 42px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,rgba(22,48,90,.45),rgba(15,33,64,.25));position:relative;transition:transform .25s,border-color .25s}
+  .prod{display:block;padding:34px 30px 36px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,rgba(22,48,90,.45),rgba(15,33,64,.25));position:relative;transition:transform .25s,border-color .25s}
   .prod:hover{transform:translateY(-4px);border-color:var(--mist)}
   .prod .k{font-family:var(--head);font-weight:300;letter-spacing:.3em;font-size:12px;text-transform:uppercase;color:var(--orange)}
   .prod .t{font-size:clamp(40px,4.4vw,58px);line-height:1;margin:10px 0 16px}
   .prod p{font-size:16px;color:var(--ink-dim);max-width:none}
-  .prod .more{display:inline-block;margin-top:22px;font-family:var(--head);letter-spacing:.2em;font-size:11px;text-transform:uppercase;color:var(--mist-2);border-bottom:1px solid var(--mist);padding-bottom:2px}
+  .prod .more{display:none}
 
   /* product details */
   .detail{padding:90px 0;border-top:1px solid var(--line)}
@@ -133,8 +133,8 @@
 
   /* about */
   .about{padding:110px 0;border-top:1px solid var(--line)}
-  .steve{display:grid;grid-template-columns:5fr 7fr;gap:70px;align-items:center}
-  .portrait{border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/5}
+  .steve{display:grid;grid-template-columns:340px 1fr;gap:70px;align-items:center}
+  .portrait{border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:2/3;max-width:340px}
   .portrait img{width:100%;height:100%;object-fit:cover;object-position:center top}
   .steve blockquote{font-family:var(--head);font-weight:300;font-size:clamp(24px,2.8vw,36px);line-height:1.25;color:var(--ink);margin:14px 0 26px}
   .steve .txt p+p{margin-top:18px}
@@ -215,124 +215,125 @@
       </div>
 
       <div class="screen">
-        <svg id="world" viewBox="1200 500 1600 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <svg id="world" viewBox="1000 500 2000 1480" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
           <defs>
             <linearGradient id="card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16305a"/><stop offset="1" stop-color="#0f2140"/></linearGradient>
             <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f1ea"/><stop offset="1" stop-color="#d7e4ec"/></linearGradient>
-            <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#f27a2c" stop-opacity=".22"/><stop offset="1" stop-color="#f27a2c" stop-opacity="0"/></radialGradient>
             <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#9dbccd" stroke-opacity=".06"/></pattern>
-            <!-- reusable person -->
             <symbol id="person" viewBox="-100 -100 200 260"><circle cx="0" cy="-40" r="48" fill="#16305a" stroke="#9dbccd" stroke-width="5"/><path d="M-70 80 q70 -90 140 0 v70 h-140z" fill="#16305a" stroke="#9dbccd" stroke-width="5"/></symbol>
-            <symbol id="am" viewBox="-100 -100 200 260"><circle cx="0" cy="-40" r="48" fill="#f27a2c" stroke="#ffd4b3" stroke-width="5"/><path d="M-70 80 q70 -90 140 0 v70 h-140z" fill="#f27a2c" stroke="#ffd4b3" stroke-width="5"/></symbol>
           </defs>
-          <rect x="0" y="0" width="10000" height="3000" fill="url(#grid)"/>
+          <rect x="0" y="0" width="12000" height="3000" fill="url(#grid)"/>
 
-          <!-- SCENE 1: Discover -->
+          <!-- SCENE 1: Discover (region 1000-3000 x 500-1980) -->
           <g id="s1" class="fig">
-            <circle cx="2000" cy="1250" r="520" fill="url(#glow)"/>
-            <path class="flow d1" d="M1760 1030 L1930 1180" fill="none" stroke="#f27a2c" stroke-width="4"/>
-            <path class="flow d2" d="M1760 1520 L1930 1340" fill="none" stroke="#f27a2c" stroke-width="4"/>
-            <path class="flow d3" d="M2290 1260 L2110 1260" fill="none" stroke="#f27a2c" stroke-width="4"/>
-            <g class="pop"><use href="#am" x="1900" y="1150" width="200" height="260"/><text class="lbl or" x="2000" y="1480" text-anchor="middle">Antimatter</text></g>
-            <g class="pop d1"><use href="#person" x="1540" y="840" width="200" height="260"/><text class="lbl" x="1640" y="1170" text-anchor="middle">Founder</text></g>
-            <g class="pop d2"><use href="#person" x="1540" y="1380" width="200" height="260"/><text class="lbl" x="1640" y="1710" text-anchor="middle">Product expert</text></g>
-            <g class="pop d3"><use href="#person" x="2360" y="1120" width="200" height="260"/><text class="lbl" x="2460" y="1450" text-anchor="middle">Customer</text></g>
-            <!-- quote cards -->
-            <g class="pop d3"><rect x="1800" y="700" width="560" height="110" rx="14" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="1832" y="768">Why customers buy</text></g>
-            <g class="pop d4"><rect x="1860" y="1760" width="700" height="110" rx="14" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="1892" y="1828">What makes it different</text></g>
-            <g class="pop d5"><rect x="2600" y="960" width="560" height="110" rx="14" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="2632" y="1028">What we were missing</text></g>
-            <g class="pop d6"><rect x="2600" y="1500" width="560" height="110" rx="14" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="2632" y="1568">What it should cost</text></g>
+            <g class="pop"><use href="#person" x="1200" y="720" width="200" height="260"/><text class="lbl" x="1300" y="1060" text-anchor="middle">Founder</text></g>
+            <g class="pop d1"><path d="M1480 700 h700 a14 14 0 0 1 14 14 v82 a14 14 0 0 1 -14 14 h-640 l-40 36 v-36 h-20 a14 14 0 0 1 -14 -14 v-82 a14 14 0 0 1 14 -14z" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="1512" y="768">Why customers buy</text></g>
+            <g class="pop d2"><path d="M1480 860 h640 a14 14 0 0 1 14 14 v82 a14 14 0 0 1 -14 14 h-580 l-40 36 v-36 h-20 a14 14 0 0 1 -14 -14 v-82 a14 14 0 0 1 14 -14z" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="1512" y="928">What it should cost</text></g>
+            <g class="pop d3"><use href="#person" x="2600" y="720" width="200" height="260"/><text class="lbl" x="2700" y="1060" text-anchor="middle">Customer</text></g>
+            <g class="pop d4"><path d="M1900 1040 h620 a14 14 0 0 1 14 14 v82 a14 14 0 0 1 -14 14 h-20 v36 l-40 -36 h-560 a14 14 0 0 1 -14 -14 v-82 a14 14 0 0 1 14 -14z" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="1932" y="1108">What we were missing</text></g>
+            <g class="pop d5"><use href="#person" x="1900" y="1500" width="200" height="260"/><text class="lbl" x="2000" y="1850" text-anchor="middle">Product expert</text></g>
+            <g class="pop d6"><path d="M2160 1400 h720 a14 14 0 0 1 14 14 v82 a14 14 0 0 1 -14 14 h-660 l-40 36 v-36 h-20 a14 14 0 0 1 -14 -14 v-82 a14 14 0 0 1 14 -14z" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><text class="body" x="2192" y="1468">What makes it different</text></g>
           </g>
 
-          <!-- SCENE 2: Context -->
+          <!-- SCENE 2: Context (region 3200-5200) -->
           <g id="s2" class="fig">
-            <path class="flow" d="M3180 1250 L3480 1250" fill="none" stroke="#f27a2c" stroke-width="5"/>
             <g class="pop">
-              <rect x="3560" y="820" width="760" height="860" rx="18" fill="url(#card)" stroke="#9dbccd" stroke-width="4" transform="translate(40,-40)" opacity=".5"/>
-              <rect x="3560" y="820" width="760" height="860" rx="18" fill="url(#card)" stroke="#9dbccd" stroke-width="4" transform="translate(20,-20)" opacity=".75"/>
-              <rect x="3560" y="820" width="760" height="860" rx="18" fill="url(#card)" stroke="#9dbccd" stroke-width="4"/>
-              <rect x="3560" y="820" width="760" height="110" rx="18" fill="#f27a2c"/><rect x="3560" y="900" width="760" height="30" fill="#f27a2c"/>
-              <text class="ttl" x="3600" y="895" style="fill:#0a1628">Context and style guide</text>
+              <rect x="3350" y="700" width="760" height="1080" rx="18" fill="url(#card)" stroke="#9dbccd" stroke-width="4" transform="translate(36,-36)" opacity=".5"/>
+              <rect x="3350" y="700" width="760" height="1080" rx="18" fill="url(#card)" stroke="#9dbccd" stroke-width="4" transform="translate(18,-18)" opacity=".75"/>
+              <rect x="3350" y="700" width="760" height="1080" rx="18" fill="url(#card)" stroke="#9dbccd" stroke-width="4"/>
+              <rect x="3350" y="700" width="760" height="110" rx="18" fill="#f27a2c"/><rect x="3350" y="780" width="760" height="30" fill="#f27a2c"/>
+              <text class="ttl" x="3390" y="775" style="fill:#0a1628">Context and training</text>
             </g>
-            <g class="pop d1"><rect x="3600" y="980" width="270" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3735" y="1020" text-anchor="middle">Positioning</text></g>
-            <g class="pop d2"><rect x="3890" y="980" width="190" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3985" y="1020" text-anchor="middle">Buyers</text></g>
-            <g class="pop d3"><rect x="3600" y="1060" width="220" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3710" y="1100" text-anchor="middle">Products</text></g>
-            <g class="pop d4"><rect x="3840" y="1060" width="190" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3935" y="1100" text-anchor="middle">Pricing</text></g>
-            <g class="pop d5"><rect x="3600" y="1140" width="300" height="60" rx="30" fill="#f27a2c"/><text class="chip" x="3750" y="1180" text-anchor="middle" style="fill:#0a1628">Founder's voice</text></g>
+            <g class="pop d1"><rect x="3390" y="860" width="270" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3525" y="900" text-anchor="middle">Positioning</text></g>
+            <g class="pop d2"><rect x="3680" y="860" width="190" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3775" y="900" text-anchor="middle">Buyers</text></g>
+            <g class="pop d3"><rect x="3390" y="940" width="220" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3500" y="980" text-anchor="middle">Products</text></g>
+            <g class="pop d4"><rect x="3630" y="940" width="190" height="60" rx="30" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="3725" y="980" text-anchor="middle">Pricing</text></g>
+            <g class="pop d5"><rect x="3390" y="1020" width="300" height="60" rx="30" fill="#f27a2c"/><text class="chip" x="3540" y="1060" text-anchor="middle" style="fill:#0a1628">Founder's voice</text></g>
             <g class="pop d5">
-              <rect x="3600" y="1260" width="680" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1300" width="600" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1340" width="650" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
-              <rect x="3600" y="1380" width="520" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1420" width="680" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1460" width="580" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
-              <rect x="3600" y="1500" width="640" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1540" width="460" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3600" y="1580" width="610" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
+              <rect x="3390" y="1140" width="680" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1180" width="600" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1220" width="650" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
+              <rect x="3390" y="1260" width="520" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1300" width="680" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1340" width="580" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
+              <rect x="3390" y="1380" width="640" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1420" width="460" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1460" width="610" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
+              <rect x="3390" y="1500" width="560" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1540" width="660" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1580" width="500" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
+              <rect x="3390" y="1620" width="620" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1660" width="440" height="12" rx="6" fill="#9dbccd" opacity=".4"/><rect x="3390" y="1700" width="590" height="12" rx="6" fill="#9dbccd" opacity=".4"/>
+            </g>
+            <path class="flow d5" d="M4110 1240 L4380 1240" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <g class="pop d6">
+              <rect x="4400" y="1060" width="700" height="360" rx="16" fill="#f27a2c"/>
+              <text class="body" x="4440" y="1160" style="fill:#0a1628">Train agents on</text>
+              <text class="body" x="4440" y="1245" style="fill:#0a1628">founder voice and</text>
+              <text class="body" x="4440" y="1330" style="fill:#0a1628">differentiation</text>
             </g>
           </g>
 
-          <!-- SCENE 3: Build -->
+          <!-- SCENE 3: Build (region 5400-7400) -->
           <g id="s3" class="fig">
-            <path class="flow" d="M4340 1250 C4500 1250 4500 760 4660 760" fill="none" stroke="#f27a2c" stroke-width="5"/>
-            <path class="flow" d="M4340 1250 L4660 1250" fill="none" stroke="#f27a2c" stroke-width="5"/>
-            <path class="flow" d="M4340 1250 C4500 1250 4500 1740 4660 1740" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <path class="flow" d="M5100 1240 C5500 1240 5400 760 5750 760" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <path class="flow" d="M5100 1240 L5750 1240" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <path class="flow" d="M5100 1240 C5500 1240 5400 1720 5750 1720" fill="none" stroke="#f27a2c" stroke-width="5"/>
             <g class="pop d1">
-              <path d="M4800 640 l110 63 v126 l-110 63 l-110 -63 v-126z" fill="url(#card)" stroke="#9dbccd" stroke-width="5"/>
-              <circle cx="4800" cy="766" r="26" fill="none" stroke="#f27a2c" stroke-width="5"/><circle cx="4800" cy="766" r="9" fill="#f27a2c"/>
-              <text class="ttl" x="4960" y="745">Marketing campaign</text><text class="lbl" x="4960" y="800">agent</text>
+              <path d="M5900 610 l130 75 v150 l-130 75 l-130 -75 v-150z" fill="url(#card)" stroke="#9dbccd" stroke-width="5"/>
+              <circle cx="5900" cy="720" r="26" fill="none" stroke="#f27a2c" stroke-width="5"/><circle cx="5900" cy="720" r="9" fill="#f27a2c"/>
+              <text class="chip" x="5900" y="830" text-anchor="middle" style="fill:#f27a2c;font-size:36px;font-weight:500">Agent</text>
+              <text class="big" x="6100" y="785">Marketing campaign</text>
             </g>
             <g class="pop d2">
-              <path d="M4800 1130 l110 63 v126 l-110 63 l-110 -63 v-126z" fill="url(#card)" stroke="#9dbccd" stroke-width="5"/>
-              <circle cx="4800" cy="1256" r="26" fill="none" stroke="#f27a2c" stroke-width="5"/><circle cx="4800" cy="1256" r="9" fill="#f27a2c"/>
-              <text class="ttl" x="4960" y="1235">Sales enablement</text><text class="lbl" x="4960" y="1290">agent</text>
+              <path d="M5900 1090 l130 75 v150 l-130 75 l-130 -75 v-150z" fill="url(#card)" stroke="#9dbccd" stroke-width="5"/>
+              <circle cx="5900" cy="1200" r="26" fill="none" stroke="#f27a2c" stroke-width="5"/><circle cx="5900" cy="1200" r="9" fill="#f27a2c"/>
+              <text class="chip" x="5900" y="1310" text-anchor="middle" style="fill:#f27a2c;font-size:36px;font-weight:500">Agent</text>
+              <text class="big" x="6100" y="1265">Sales enablement</text>
             </g>
             <g class="pop d3">
-              <path d="M4800 1620 l110 63 v126 l-110 63 l-110 -63 v-126z" fill="url(#card)" stroke="#9dbccd" stroke-width="5"/>
-              <circle cx="4800" cy="1746" r="26" fill="none" stroke="#f27a2c" stroke-width="5"/><circle cx="4800" cy="1746" r="9" fill="#f27a2c"/>
-              <text class="ttl" x="4960" y="1725">Product portfolio</text><text class="lbl" x="4960" y="1780">agent</text>
+              <path d="M5900 1570 l130 75 v150 l-130 75 l-130 -75 v-150z" fill="url(#card)" stroke="#9dbccd" stroke-width="5"/>
+              <circle cx="5900" cy="1680" r="26" fill="none" stroke="#f27a2c" stroke-width="5"/><circle cx="5900" cy="1680" r="9" fill="#f27a2c"/>
+              <text class="chip" x="5900" y="1790" text-anchor="middle" style="fill:#f27a2c;font-size:36px;font-weight:500">Agent</text>
+              <text class="big" x="6100" y="1745">Product portfolio</text>
             </g>
           </g>
 
-          <!-- SCENE 4: Create (panned) -->
-          <g id="s4" class="fig">
-            <!-- marketing outputs -->
-            <path class="flow" d="M5500 766 L5700 766" fill="none" stroke="#f27a2c" stroke-width="5"/>
-            <g class="slide d1"><rect x="5760" y="430" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><circle cx="5800" cy="480" r="16" fill="#f27a2c"/><rect x="5830" y="470" width="220" height="14" rx="7" fill="#c9dbe5"/><rect x="5790" y="520" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="5790" y="545" width="300" height="10" rx="5" fill="#9dbccd" opacity=".4"/><text class="lbl" x="5760" y="670">Emails</text></g>
-            <g class="slide d2"><rect x="6240" y="430" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="6270" y="460" width="150" height="130" rx="8" fill="#f27a2c" opacity=".85"/><rect x="6440" y="470" width="190" height="14" rx="7" fill="#c9dbe5"/><rect x="6440" y="505" width="160" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6440" y="550" width="110" height="34" rx="17" fill="none" stroke="#9dbccd" stroke-width="3"/><text class="lbl" x="6240" y="670">Ads</text></g>
-            <g class="slide d3"><rect x="5760" y="720" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><circle cx="5805" cy="770" r="22" fill="#9dbccd" opacity=".6"/><rect x="5840" y="760" width="160" height="14" rx="7" fill="#c9dbe5"/><rect x="5790" y="810" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="5790" y="835" width="260" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="5790" y="865" width="60" height="20" rx="10" fill="#f27a2c"/><rect x="5860" y="865" width="60" height="20" rx="10" fill="#f27a2c" opacity=".6"/><text class="lbl" x="5760" y="960">Social posts</text></g>
-            <g class="slide d4"><rect x="6240" y="720" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="6270" y="750" width="300" height="16" rx="8" fill="#c9dbe5"/><rect x="6270" y="795" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="820" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="845" width="300" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="870" width="340" height="10" rx="5" fill="#9dbccd" opacity=".4"/><text class="lbl" x="6240" y="960">Content</text></g>
-            <!-- sales outputs -->
-            <path class="flow" d="M5500 1256 L5700 1256" fill="none" stroke="#f27a2c" stroke-width="5"/>
-            <g class="slide d1"><rect x="5760" y="1110" width="420" height="240" rx="12" fill="url(#paper)"/><rect x="5760" y="1110" width="420" height="56" rx="12" fill="#0a1628"/><rect x="5760" y="1150" width="420" height="16" fill="#0a1628"/><text x="5790" y="1215" style="font-size:30px;fill:#0a1628;font-weight:500;letter-spacing:0;text-transform:none">One story, every rep</text><rect x="5790" y="1240" width="240" height="10" rx="5" fill="#6e94ab"/><rect x="5790" y="1265" width="300" height="10" rx="5" fill="#6e94ab"/><rect x="5790" y="1300" width="80" height="30" rx="4" fill="#f27a2c"/><rect x="5885" y="1300" width="80" height="30" rx="4" fill="#91b1c4"/><rect x="5980" y="1300" width="80" height="30" rx="4" fill="#b7cdda"/><text class="lbl" x="5760" y="1400">Decks</text></g>
-            <g class="slide d2"><rect x="6240" y="1110" width="420" height="240" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="6270" y="1140" width="200" height="16" rx="8" fill="#c9dbe5"/><rect x="6270" y="1185" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="1210" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="1235" width="300" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6270" y="1275" width="160" height="40" rx="6" fill="#f27a2c"/><text class="chip" x="6350" y="1303" text-anchor="middle" style="fill:#0a1628;font-size:24px">Scope</text><text class="lbl" x="6240" y="1400">Proposals</text></g>
-            <g class="slide d3"><rect x="6720" y="1110" width="420" height="240" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="6750" y="1140" width="160" height="16" rx="8" fill="#c9dbe5"/><rect x="6750" y="1190" width="240" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="7050" y="1188" width="60" height="14" rx="7" fill="#9dbccd"/><rect x="6750" y="1220" width="200" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="7050" y="1218" width="60" height="14" rx="7" fill="#9dbccd"/><rect x="6750" y="1250" width="260" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="7050" y="1248" width="60" height="14" rx="7" fill="#9dbccd"/><rect x="6750" y="1290" width="360" height="3" fill="#9dbccd"/><rect x="7020" y="1305" width="90" height="18" rx="9" fill="#f27a2c"/><text class="lbl" x="6720" y="1400">Quotes</text></g>
-            <!-- product output -->
-            <path class="flow" d="M5500 1746 L5700 1746" fill="none" stroke="#f27a2c" stroke-width="5"/>
+          <!-- SCENE 4: Create (panned; outputs 6300-7700) -->
+          <g id="s4" class="fig"><g transform="translate(700,0)">
+            <path class="flow" d="M5330 760 L6260 760" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <g class="slide d1"><rect x="6300" y="440" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><circle cx="6340" cy="490" r="16" fill="#f27a2c"/><rect x="6370" y="480" width="220" height="14" rx="7" fill="#c9dbe5"/><rect x="6330" y="530" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6330" y="555" width="300" height="10" rx="5" fill="#9dbccd" opacity=".4"/><text class="ttl or" x="6300" y="690">Emails</text></g>
+            <g class="slide d2"><rect x="6800" y="440" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="6830" y="470" width="150" height="130" rx="8" fill="#f27a2c" opacity=".85"/><rect x="7000" y="480" width="190" height="14" rx="7" fill="#c9dbe5"/><rect x="7000" y="515" width="160" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="7000" y="560" width="110" height="34" rx="17" fill="none" stroke="#9dbccd" stroke-width="3"/><text class="ttl or" x="6800" y="690">Ads</text></g>
+            <g class="slide d3"><rect x="6300" y="760" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><circle cx="6345" cy="810" r="22" fill="#9dbccd" opacity=".6"/><rect x="6380" y="800" width="160" height="14" rx="7" fill="#c9dbe5"/><rect x="6330" y="850" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6330" y="875" width="260" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6330" y="905" width="60" height="20" rx="10" fill="#f27a2c"/><rect x="6400" y="905" width="60" height="20" rx="10" fill="#f27a2c" opacity=".6"/><text class="ttl or" x="6300" y="1010">Social posts</text></g>
+            <g class="slide d4"><rect x="6800" y="760" width="420" height="190" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="6830" y="790" width="300" height="16" rx="8" fill="#c9dbe5"/><rect x="6830" y="835" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6830" y="860" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6830" y="885" width="300" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6830" y="910" width="340" height="10" rx="5" fill="#9dbccd" opacity=".4"/><text class="ttl or" x="6800" y="1010">Content</text></g>
+            <path class="flow" d="M5330 1200 L6260 1200" fill="none" stroke="#f27a2c" stroke-width="5"/>
+            <g class="slide d1"><rect x="6300" y="1120" width="420" height="240" rx="12" fill="url(#paper)"/><rect x="6300" y="1120" width="420" height="56" rx="12" fill="#0a1628"/><rect x="6300" y="1160" width="420" height="16" fill="#0a1628"/><text x="6330" y="1225" style="font-size:30px;fill:#0a1628;font-weight:500;letter-spacing:0;text-transform:none">One story, every rep</text><rect x="6330" y="1250" width="240" height="10" rx="5" fill="#6e94ab"/><rect x="6330" y="1275" width="300" height="10" rx="5" fill="#6e94ab"/><rect x="6330" y="1310" width="80" height="30" rx="4" fill="#f27a2c"/><rect x="6425" y="1310" width="80" height="30" rx="4" fill="#91b1c4"/><rect x="6520" y="1310" width="80" height="30" rx="4" fill="#b7cdda"/><text class="ttl or" x="6300" y="1420">Decks</text></g>
+            <g class="slide d2"><rect x="6780" y="1120" width="420" height="240" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="6810" y="1150" width="200" height="16" rx="8" fill="#c9dbe5"/><rect x="6810" y="1195" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6810" y="1220" width="360" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6810" y="1245" width="300" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="6810" y="1285" width="160" height="40" rx="6" fill="#f27a2c"/><text class="chip" x="6890" y="1313" text-anchor="middle" style="fill:#0a1628;font-size:24px">Scope</text><text class="ttl or" x="6780" y="1420">Proposals</text></g>
+            <g class="slide d3"><rect x="7260" y="1120" width="420" height="240" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/><rect x="7290" y="1150" width="160" height="16" rx="8" fill="#c9dbe5"/><rect x="7290" y="1200" width="240" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="7590" y="1198" width="60" height="14" rx="7" fill="#9dbccd"/><rect x="7290" y="1230" width="200" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="7590" y="1228" width="60" height="14" rx="7" fill="#9dbccd"/><rect x="7290" y="1260" width="260" height="10" rx="5" fill="#9dbccd" opacity=".4"/><rect x="7590" y="1258" width="60" height="14" rx="7" fill="#9dbccd"/><rect x="7290" y="1300" width="360" height="3" fill="#9dbccd"/><rect x="7560" y="1315" width="90" height="18" rx="9" fill="#f27a2c"/><text class="ttl or" x="7260" y="1420">Quotes</text></g>
+            <path class="flow" d="M5330 1680 L6260 1680" fill="none" stroke="#f27a2c" stroke-width="5"/>
             <g class="slide d1">
-              <rect x="5760" y="1540" width="900" height="420" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/>
-              <text class="ttl" x="5800" y="1605">Pricing menu</text>
-              <rect x="5800" y="1640" width="260" height="260" rx="8" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="5930" y="1690" text-anchor="middle">Core</text><rect x="5830" y="1715" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="5830" y="1738" width="160" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="5830" y="1761" width="180" height="8" rx="4" fill="#9dbccd" opacity=".4"/><text class="chip" x="5930" y="1870" text-anchor="middle" style="fill:#c9dbe5;font-size:36px">$</text>
-              <rect x="6080" y="1640" width="260" height="260" rx="8" fill="#0a1628" stroke="#f27a2c" stroke-width="4"/><text class="chip" x="6210" y="1690" text-anchor="middle" style="fill:#f27a2c">Plus</text><rect x="6110" y="1715" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6110" y="1738" width="160" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6110" y="1761" width="180" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6110" y="1784" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><text class="chip" x="6210" y="1870" text-anchor="middle" style="fill:#f27a2c;font-size:36px">$$</text>
-              <rect x="6360" y="1640" width="260" height="260" rx="8" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="6490" y="1690" text-anchor="middle">Scale</text><rect x="6390" y="1715" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6390" y="1738" width="160" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6390" y="1761" width="180" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6390" y="1784" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6390" y="1807" width="140" height="8" rx="4" fill="#9dbccd" opacity=".4"/><text class="chip" x="6490" y="1870" text-anchor="middle" style="fill:#c9dbe5;font-size:36px">$$$</text>
+              <rect x="6300" y="1540" width="900" height="420" rx="12" fill="url(#card)" stroke="#9dbccd" stroke-width="3"/>
+              <text class="ttl or" x="6340" y="1605">Pricing menu</text>
+              <rect x="6340" y="1640" width="260" height="260" rx="8" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="6470" y="1690" text-anchor="middle">Core</text><rect x="6370" y="1715" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6370" y="1738" width="160" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6370" y="1761" width="180" height="8" rx="4" fill="#9dbccd" opacity=".4"/><text class="chip" x="6470" y="1870" text-anchor="middle" style="fill:#c9dbe5;font-size:36px">$</text>
+              <rect x="6620" y="1640" width="260" height="260" rx="8" fill="#0a1628" stroke="#f27a2c" stroke-width="4"/><text class="chip" x="6750" y="1690" text-anchor="middle" style="fill:#f27a2c">Plus</text><rect x="6650" y="1715" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6650" y="1738" width="160" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6650" y="1761" width="180" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6650" y="1784" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><text class="chip" x="6750" y="1870" text-anchor="middle" style="fill:#f27a2c;font-size:36px">$$</text>
+              <rect x="6900" y="1640" width="260" height="260" rx="8" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><text class="chip" x="7030" y="1690" text-anchor="middle">Scale</text><rect x="6930" y="1715" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6930" y="1738" width="160" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6930" y="1761" width="180" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6930" y="1784" width="200" height="8" rx="4" fill="#9dbccd" opacity=".4"/><rect x="6930" y="1807" width="140" height="8" rx="4" fill="#9dbccd" opacity=".4"/><text class="chip" x="7030" y="1870" text-anchor="middle" style="fill:#c9dbe5;font-size:36px">$$$</text>
             </g>
-          </g>
+          </g></g>
 
-          <!-- SCENE 5: Train and coach -->
-          <g id="s5" class="fig">
-            <!-- training: Antimatter with reps at laptops -->
-            <g class="pop"><use href="#am" x="7800" y="1080" width="200" height="260"/><text class="lbl or" x="7900" y="1410" text-anchor="middle">Antimatter</text></g>
-            <g class="pop d1"><use href="#person" x="8080" y="1130" width="180" height="234"/><rect x="8070" y="1330" width="200" height="14" rx="6" fill="#9dbccd"/><rect x="8100" y="1230" width="140" height="100" rx="6" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><rect x="8115" y="1250" width="110" height="8" rx="4" fill="#f27a2c"/><rect x="8115" y="1270" width="80" height="6" rx="3" fill="#9dbccd" opacity=".5"/><rect x="8115" y="1286" width="100" height="6" rx="3" fill="#9dbccd" opacity=".5"/><rect x="8115" y="1302" width="70" height="6" rx="3" fill="#9dbccd" opacity=".5"/></g>
-            <g class="pop d2"><use href="#person" x="8300" y="1130" width="180" height="234"/><rect x="8290" y="1330" width="200" height="14" rx="6" fill="#9dbccd"/><rect x="8320" y="1230" width="140" height="100" rx="6" fill="#0a1628" stroke="#9dbccd" stroke-width="3"/><rect x="8335" y="1250" width="110" height="8" rx="4" fill="#f27a2c"/><rect x="8335" y="1270" width="80" height="6" rx="3" fill="#9dbccd" opacity=".5"/><rect x="8335" y="1286" width="100" height="6" rx="3" fill="#9dbccd" opacity=".5"/><rect x="8335" y="1302" width="70" height="6" rx="3" fill="#9dbccd" opacity=".5"/></g>
-            <text class="lbl pop d2" x="8280" y="1410" text-anchor="middle">Sales reps</text>
-            <g class="pop d3"><rect x="7700" y="820" width="860" height="110" rx="14" fill="#f4f1ea"/><text class="body" x="7732" y="888" style="fill:#0a1628">Train on the systems. Generate leads.</text></g>
-            <!-- pitch: rep presents to prospects -->
-            <path class="flow d4" d="M8600 1250 L8800 1250" fill="none" stroke="#f27a2c" stroke-width="5"/>
-            <g class="pop d4">
-              <rect x="9140" y="760" width="620" height="360" rx="12" fill="#0a1628" stroke="#9dbccd" stroke-width="5"/>
-              <rect x="9165" y="785" width="570" height="310" rx="6" fill="url(#paper)"/><rect x="9165" y="785" width="570" height="60" rx="6" fill="#0a1628"/><rect x="9165" y="825" width="570" height="20" fill="#0a1628"/>
-              <text x="9200" y="905" style="font-size:40px;fill:#0a1628;font-weight:500;letter-spacing:0;text-transform:none">One story, every rep</text>
-              <rect x="9200" y="935" width="320" height="10" rx="5" fill="#6e94ab"/><rect x="9200" y="960" width="400" height="10" rx="5" fill="#6e94ab"/><rect x="9200" y="1000" width="100" height="50" rx="5" fill="#f27a2c"/><rect x="9315" y="1000" width="100" height="50" rx="5" fill="#91b1c4"/><rect x="9430" y="1000" width="100" height="50" rx="5" fill="#b7cdda"/>
-              <rect x="9410" y="1120" width="80" height="50" fill="#16305a" stroke="#9dbccd" stroke-width="4"/><rect x="9330" y="1170" width="240" height="14" rx="7" fill="#16305a" stroke="#9dbccd" stroke-width="4"/>
+          <!-- SCENE 5: Train and coach (region 8100-10100) -->
+          <g id="s5" class="fig"><g transform="translate(900,0)">
+            <text class="ttl pop" x="9100" y="700" text-anchor="middle">Training and coaching</text>
+            <g class="pop d1">
+              <rect x="8140" y="820" width="620" height="110" rx="14" fill="#f27a2c"/><text class="body" x="8172" y="888" style="fill:#0a1628">Trained to generate leads</text>
+              <use href="#person" x="8265" y="1030" width="180" height="234"/><use href="#person" x="8455" y="1030" width="180" height="234"/>
+              <text class="lbl" x="8450" y="1380" text-anchor="middle">Marketing</text>
             </g>
-            <g class="pop d5"><use href="#person" x="8900" y="1180" width="200" height="260"/><path d="M9080 1250 L9180 1140" stroke="#9dbccd" stroke-width="12" stroke-linecap="round"/><text class="lbl" x="9000" y="1510" text-anchor="middle">Sales rep</text></g>
-            <g class="pop d6"><use href="#person" x="9520" y="1230" width="180" height="234"/><use href="#person" x="9680" y="1260" width="180" height="234"/><use href="#person" x="9840" y="1230" width="180" height="234"/><text class="lbl" x="9770" y="1560" text-anchor="middle">Qualified prospects</text></g>
-            <g class="pop d7"><rect x="8700" y="1620" width="700" height="110" rx="14" fill="#f27a2c"/><text class="body" x="8732" y="1688" style="fill:#0a1628">Deliver the pitch live.</text></g>
-          </g>
+            <g class="pop d3">
+              <rect x="8890" y="820" width="420" height="110" rx="14" fill="#f27a2c"/><text class="body" x="8922" y="888" style="fill:#0a1628">Pitch and qualify</text>
+              <use href="#person" x="8915" y="1030" width="180" height="234"/><use href="#person" x="9105" y="1030" width="180" height="234"/>
+              <text class="lbl" x="9100" y="1380" text-anchor="middle">Sales</text>
+            </g>
+            <g class="pop d5">
+              <rect x="9550" y="820" width="400" height="110" rx="14" fill="#f27a2c"/><text class="body" x="9582" y="888" style="fill:#0a1628">Price and bundle</text>
+              <use href="#person" x="9565" y="1030" width="180" height="234"/><use href="#person" x="9755" y="1030" width="180" height="234"/>
+              <text class="lbl" x="9750" y="1380" text-anchor="middle">Product</text>
+            </g>
+            <g class="pop d6">
+              <rect x="8300" y="1560" width="1600" height="4" fill="#9dbccd" opacity=".4"/>
+              <text class="body" x="9100" y="1680" text-anchor="middle" style="fill:#c9dbe5">Live coaching on real deals with qualified prospects</text>
+            </g>
+          </g></g>
         </svg>
       </div>
     </div>
@@ -472,14 +473,13 @@
     <h2 class="mist">15 minutes.<br>A clear next step.</h2>
     <p>Bring a pitch, a campaign, a sales problem, or a job you think an agent should be doing. We'll figure out where to start and agree on scope, timing, and fee before any work begins.</p>
     <a class="btn solid" href="contact.html">Start a free conversation</a>
-    <a class="mail" href="mailto:steve@antimatterconsulting.com">steve@antimatterconsulting.com</a>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <div>Antimatter Consulting &middot; New York</div>
-    <div><a href="contact.html">Contact</a> &nbsp;&middot;&nbsp; <a href="https://linkedin.com/in/stevenlzeller" target="_blank" rel="noopener">linkedin.com/in/stevenlzeller</a></div>
+    <div><a href="contact.html">Contact</a> &nbsp;&middot;&nbsp; <a href="https://linkedin.com/in/stevenlzeller" target="_blank" rel="noopener">LinkedIn</a></div>
   </div>
 </footer>
 
@@ -499,18 +499,18 @@
   var ctl=document.getElementById('ctl');
   // steps: scene index, camera [cx,cy,w], hold ms
   var steps=[
-    {s:0,cam:[2200,1250,1900],hold:6500},
-    {s:1,cam:[3400,1250,2300],hold:6000},
-    {s:2,cam:[4500,1250,2300],hold:5500},
-    {s:3,cam:[6000,800,2250],hold:4500},
-    {s:3,cam:[6150,1250,2500],hold:4500},
-    {s:3,cam:[6050,1750,2300],hold:4500},
-    {s:4,cam:[8800,1250,2600],hold:8000}
+    {s:0,cam:[2000,1240,2000],hold:6500},
+    {s:1,cam:[4200,1240,2000],hold:6000},
+    {s:2,cam:[6400,1240,2000],hold:5500},
+    {s:3,cam:[7250,820,2500],hold:4500},
+    {s:3,cam:[7250,1240,2500],hold:4500},
+    {s:3,cam:[7250,1660,2500],hold:4500},
+    {s:4,cam:[10000,1240,2000],hold:8000}
   ];
   var MOVE=1800;
   var cur=-1,playing=true,inView=false,timer=null,raf=null,from=null,to=null,t0=0,startAt=0,elapsed=0,holdNow=6000;
   function ease(t){return t<.5?2*t*t:-1+(4-2*t)*t}
-  function box(c){var asp=svg.clientWidth/svg.clientHeight||1.4,w=c[2];if(asp<1.1)w*=1.35;var h=w/asp;svg.setAttribute('viewBox',(c[0]-w/2)+' '+(c[1]-h/2)+' '+w+' '+h)}
+  function box(c){var w=c[2],h=w*0.74;svg.setAttribute('viewBox',(c[0]-w/2)+' '+(c[1]-h/2)+' '+w+' '+h)}
   function tween(){var t=Math.min(1,(performance.now()-t0)/MOVE),e=ease(t);var c=[from[0]+(to[0]-from[0])*e,from[1]+(to[1]-from[1])*e,from[2]+(to[2]-from[2])*e];box(c);from0=c;if(t<1)raf=requestAnimationFrame(tween)}
   var from0=null;
   function go(i,instant){
