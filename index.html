@@ -77,6 +77,17 @@
   .film .ctl{margin-left:auto;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:var(--head);letter-spacing:.2em;font-size:10px;text-transform:uppercase;padding:6px 10px;border-radius:2px;cursor:pointer}
   .film .ctl:hover{color:var(--ink);border-color:var(--mist)}
   .film .screen{position:relative;overflow:hidden}
+  .film .ctas{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding:30px;background:radial-gradient(ellipse 70% 70% at 50% 40%,#15305a 0%,#07101f 70%);opacity:0;pointer-events:none;transition:opacity .6s}
+  .film .ctas.on{opacity:1;pointer-events:auto}
+  .film .ctas form{width:min(520px,100%);display:grid;gap:10px}
+  .film .ctas .k{font-family:var(--head);font-weight:300;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--orange)}
+  .film .ctas h3{font-size:clamp(24px,2.6vw,34px);font-weight:400;margin-bottom:10px}
+  .film .ctas label{font-family:var(--head);font-weight:300;letter-spacing:.2em;text-transform:uppercase;font-size:11px;color:var(--mist);margin-top:6px}
+  .film .ctas input[type=url],.film .ctas input[type=email]{width:100%;background:rgba(10,22,40,.75);border:1px solid rgba(157,188,205,.35);border-radius:4px;color:var(--ink);font:inherit;font-size:16px;padding:12px 14px;outline:none}
+  .film .ctas input:focus{border-color:var(--mist)}
+  .film .ctas .btn{justify-self:start;margin-top:10px;cursor:pointer}
+  .film .ctas .fine{font-size:13px;color:var(--ink-dim);margin-top:4px}
+  .hp{position:absolute;left:-9999px}
   .film svg{position:absolute;inset:0;width:100%;height:100%}
   .film .fig{opacity:0;transition:opacity .6s ease}
   .film .fig.on{opacity:1}
@@ -163,7 +174,10 @@
     .growth .row{grid-template-columns:1fr;gap:10px}
     .growth .arrow{transform:rotate(90deg)}
     .film{grid-template-columns:1fr;min-height:0}
-    .film .screen{display:none}
+    .film .screen{display:block;position:static}
+    .film svg{display:none}
+    .film .ctas{position:static;opacity:1;pointer-events:auto;padding:28px 24px;border-top:1px solid var(--line)}
+    .film .c[data-i="5"]{display:none}
     .film .panel{border-right:0;padding:28px 24px;justify-content:flex-start}
     .film .cs{position:static;min-height:0;display:grid;gap:26px}
     .film .c{position:static;opacity:1;transform:none;padding-bottom:26px;border-bottom:1px solid var(--line)}
@@ -213,6 +227,7 @@
           <div class="c" data-i="2"><div class="n">03</div><h3>Build</h3><p>Three agents are built on that foundation: a marketing campaign agent, a sales enablement agent, and a product portfolio agent.</p></div>
           <div class="c" data-i="3"><div class="n">04</div><h3>Create</h3><p>The agents produce the assets. Emails, ads, social posts, and content. Decks, proposals, and quotes. A pricing menu built around your buyers.</p></div>
           <div class="c" data-i="4"><div class="n">05</div><h3>Train and coach</h3><p>Antimatter trains the reps on the new systems, shows them how to generate leads with them, and coaches them to deliver the pitch live to qualified prospects.</p></div>
+          <div class="c" data-i="5"><div class="n">06</div><h3>See what Antimatter can do for your business.</h3><p>Send your website and an email address. Steve will look at your pitch, your positioning, and your pricing, and reply with what he'd change first.</p></div>
         </div>
         <div>
           <div class="dots" id="dots">
@@ -221,12 +236,30 @@
             <button class="dot" data-i="2" aria-label="Build"><span></span></button>
             <button class="dot" data-i="3" aria-label="Create"><span></span></button>
             <button class="dot" data-i="4" aria-label="Train and coach"><span></span></button>
+            <button class="dot" data-i="5" aria-label="Your turn"><span></span></button>
             <button class="ctl" id="ctl">Pause</button>
           </div>
         </div>
       </div>
 
       <div class="screen">
+        <div class="ctas" id="ctas">
+          <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="8a24e355-1a8a-4518-b5a4-facc015002a0">
+            <input type="hidden" name="subject" value="Website review request from antimatterconsulting.com">
+            <input type="hidden" name="from_name" value="Antimatter website">
+            <input type="hidden" name="redirect" value="https://antimatterconsulting.com/thanks">
+            <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+            <div class="k">Free review</div>
+            <h3>Your pitch, your positioning, your pricing.</h3>
+            <label for="cta-url">Your website</label>
+            <input id="cta-url" name="website" type="url" placeholder="https://" required>
+            <label for="cta-email">Your email</label>
+            <input id="cta-email" name="email" type="email" placeholder="you@company.com" required>
+            <button class="btn solid" type="submit">Send it to Steve</button>
+            <p class="fine">No newsletter, no sequence. One reply from Steve.</p>
+          </form>
+        </div>
         <svg id="world" viewBox="1000 500 2000 1480" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
           <defs>
             <linearGradient id="card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16305a"/><stop offset="1" stop-color="#0f2140"/></linearGradient>
@@ -528,7 +561,8 @@
     {s:3,cam:[7250,820,2500],hold:3600},
     {s:3,cam:[7250,1240,2500],hold:3600},
     {s:3,cam:[7250,1660,2500],hold:3600},
-    {s:4,cam:[10000,1240,2000],hold:6000}
+    {s:4,cam:[10000,1240,2000],hold:6000},
+    {s:5,cam:[10000,1240,2000],hold:0}
   ];
   var MOVE=1400;
   var cur=-1,playing=true,inView=false,timer=null,raf=null,from=null,to=null,t0=0,startAt=0,elapsed=0,holdNow=6000;
@@ -539,6 +573,8 @@
   function go(i,instant){
     i=(i+steps.length)%steps.length; var prev=cur; cur=i; var st=steps[i];
     scenes.forEach(function(g,k){g.classList.toggle('on',k<=st.s)});
+    document.getElementById('ctas').classList.toggle('on',st.s===5);
+    if(st.s===5){playing=false;ctl.textContent='Replay'}
     caps.forEach(function(c,k){c.classList.toggle('on',k===st.s)});
     dots.forEach(function(d,k){d.querySelector('span').style.width=k<st.s?'100%':(k>st.s?'0':d.querySelector('span').style.width)});
     to=st.cam; holdNow=st.hold;
@@ -546,7 +582,7 @@
     if(prev<0||instant){box(to);from0=to}else{from=from0||steps[prev].cam;t0=performance.now();raf=requestAnimationFrame(tween)}
     elapsed=0;startAt=performance.now();schedule();
   }
-  function schedule(){clearTimeout(timer);if(!playing||!inView)return;timer=setTimeout(function(){go(cur+1)},holdNow-elapsed)}
+  function schedule(){clearTimeout(timer);if(!playing||!inView||holdNow===0)return;timer=setTimeout(function(){go(cur+1)},holdNow-elapsed)}
   function prog(){
     if(cur>=0){var st=steps[cur];
       // progress of the whole scene (several steps may share a scene)
@@ -554,11 +590,11 @@
       var last=cur;while(last<steps.length-1&&steps[last+1].s===st.s)last++;
       var total=0,done=0;for(var k=first;k<=last;k++){total+=steps[k].hold;if(k<cur)done+=steps[k].hold}
       var now=playing&&inView?elapsed+(performance.now()-startAt):elapsed;
-      dots[st.s].querySelector('span').style.width=(Math.min(1,(done+now)/total)*100)+'%'}
+      dots[st.s].querySelector('span').style.width=(total?Math.min(1,(done+now)/total)*100:100)+'%'}
     requestAnimationFrame(prog)}
   prog();
-  dots.forEach(function(d){d.addEventListener('click',function(){var s=+d.dataset.i;for(var k=0;k<steps.length;k++)if(steps[k].s===s){go(k);break}})});
-  ctl.addEventListener('click',function(){playing=!playing;ctl.textContent=playing?'Pause':'Play';if(playing){startAt=performance.now();schedule()}else{elapsed+=performance.now()-startAt;clearTimeout(timer)}});
+  dots.forEach(function(d){d.addEventListener('click',function(){var s=+d.dataset.i;if(s!==5&&!playing){playing=true;ctl.textContent='Pause'}for(var k=0;k<steps.length;k++)if(steps[k].s===s){go(k);break}})});
+  ctl.addEventListener('click',function(){if(steps[cur].s===5){playing=true;ctl.textContent='Pause';go(0);return}playing=!playing;ctl.textContent=playing?'Pause':'Play';if(playing){startAt=performance.now();schedule()}else{elapsed+=performance.now()-startAt;clearTimeout(timer)}});
   // draw the first frame immediately; the clock starts when the film scrolls into view
   go(0,true);
   if('IntersectionObserver' in window){
