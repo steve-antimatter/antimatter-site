@@ -38,7 +38,7 @@ This is where rules one and two come back around.
 
 [Rule #2](/field-notes/sales-suicide-2) was: sound like a human being. Don't reach for big words to seem smart.
 
-Rule #3 is the same instinct applied to your preparation. Don't assume you know what Henry needs before he tells you. A rep who leads with HIPAA before confirming it's relevant isn't being thorough. They're just doing a different version of Brad at the bar, rattling off credentials nobody asked for, hoping something lands.
+Rule #3 is the same instinct applied to your preparation. Don't assume you know what Henry needs before he tells you. A rep who leads with HIPAA before confirming it's relevant isn't being thorough. They're just doing a different version of [the four-minute monologue](/field-notes/sales-suicide-1), rattling off credentials nobody asked for, hoping something lands.
 
 At Antimatter, persona research is one of the first things we build for a new client. And the second thing we do is teach reps how to hold it loosely. Know your Henry. But get on the call and find out if Henry is actually Henry before you start solving Henry's problems.
 

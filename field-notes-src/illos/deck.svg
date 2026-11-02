@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A slide deck on a laptop">
+  <path d="M44 44 h152 a6 6 0 0 1 6 6 v88 h-164 v-88 a6 6 0 0 1 6 -6 z"/>
+  <path d="M22 138 h196 l-10 18 H32 z"/>
+  <path d="M64 118 v-26 M92 118 v-44 M120 118 v-34 M148 118 v-56 M176 118 v-40"/>
+  <path d="M56 64 h48"/>
+</svg>

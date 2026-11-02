@@ -1,8 +1,8 @@
 *This is the second in a series on the fastest ways to kill a sale before it ever gets started.*
 
-Last week we were in a bar [getting hit on by Brad,](/field-notes/sales-suicide-1) the investment banker with the Princeton degree, the Tesla, and the $340K base who wouldn't stop talking long enough to learn your name. Brad doesn't listen. Brad thinks he's so impressive that the pitch alone will close the deal.
+Last week we listened to a rep [spend four minutes of a first call](/field-notes/sales-suicide-1) reciting his company's background before the CTO asked what the call was about. He didn't listen. He figured the pitch alone would close the deal.
 
-It won't. Not for Brad, and not for your sales team.
+It won't. Not for him, and not for your sales team.
 
 ::: rule
 **Rule #1:** Set up your pitch by listening and asking the right questions.
@@ -19,14 +19,14 @@ Can you imagine someone saying that in real life?
 ::: scene
 {{illo:cocktail}}
 
-**Scene 2** · The same bar.
+**Scene 1** · A bar.
 
-*Brad is history. Now you're talking to Brendon. Brendon's actually pretty nice. He asked what you do for a living. You told him you're the CRO of a tech consulting company.*
+*You're talking to Brendon. Brendon's actually pretty nice. He asked what you do for a living. You told him you're the CRO of a tech consulting company.*
 
 **Brendon:** "How does your organization obtain access to qualified decision-makers?"
 :::
 
-For the second time in a week, you puke in your mouth a little bit and make a beeline for the nearest exit. You really need to find a new bar.
+You puke in your mouth a little bit and make a beeline for the nearest exit. You really need to find a new bar.
 
 ::: rule
 **Rule #2:** Don't use a word in a sales communication that you wouldn't use in a bar.
