@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beware the Rainmaker — Field Notes — Antimatter Consulting</title>
+<meta name="description" content="Six questions to ask before you poach a star from a bigger competitor.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Antimatter Consulting">
+<meta property="og:title" content="Beware the Rainmaker — Field Notes — Antimatter Consulting">
+<meta property="og:description" content="Six questions to ask before you poach a star from a bigger competitor.">
+<meta property="og:url" content="https://antimatterconsulting.com/field-notes/beware-the-rainmaker">
+<meta property="og:image" content="https://antimatterconsulting.com/field-notes/img/beware-the-rainmaker.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Beware the Rainmaker — Field Notes — Antimatter Consulting">
+<meta name="twitter:description" content="Six questions to ask before you poach a star from a bigger competitor.">
+<meta name="twitter:image" content="https://antimatterconsulting.com/field-notes/img/beware-the-rainmaker.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0a1628; --navy-2:#0f2140; --navy-3:#16305a; --deep:#07101f;
+    --ink:#e9eef4; --ink-dim:#a9b8c9; --mist:#9dbccd; --mist-2:#c9dbe5; --paper:#f4f1ea;
+    --orange:#f27a2c; --orange-2:#ffa364;
+    --line:rgba(157,188,205,.18); --max:1180px;
+    --head:'Oswald',sans-serif; --body:'Open Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--navy);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+  h1,h2,h3,h4{font-family:var(--head);font-weight:500;line-height:1.1;letter-spacing:.01em}
+  .eyebrow{font-family:var(--head);font-weight:300;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--mist);margin-bottom:18px}
+  .btn{display:inline-block;font-family:var(--head);font-weight:500;letter-spacing:.08em;text-transform:uppercase;font-size:14px;padding:12px 22px;border:1px solid var(--mist);color:var(--mist-2);border-radius:2px;transition:all .2s}
+  .btn:hover{background:var(--mist);color:var(--navy)}
+  .mist{
+    font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.03em;
+    color:transparent;-webkit-background-clip:text;background-clip:text;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300' preserveAspectRatio='none'><defs><linearGradient id='s' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23f7f5f0'/><stop offset='1' stop-color='%23d7e4ec'/></linearGradient></defs><rect width='1200' height='300' fill='url(%23s)'/><path d='M0 175 L120 120 L260 160 L400 95 L540 150 L680 105 L820 145 L960 90 L1100 135 L1200 110 L1200 300 L0 300Z' fill='%23b7cdda' opacity='.75'/><path d='M0 215 L160 170 L320 205 L480 150 L640 210 L800 160 L960 200 L1120 165 L1200 190 L1200 300 L0 300Z' fill='%2391b1c4' opacity='.8'/><path d='M0 250 L180 225 L380 245 L560 205 L760 240 L960 215 L1200 240 L1200 300 L0 300Z' fill='%236e94ab' opacity='.9'/></svg>");
+    background-size:cover;background-position:center;
+  }
+
+  /* nav (solid variant for inner pages) */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,22,40,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  nav .brand{display:block;height:40px}
+  nav .brand img{height:100%;width:auto}
+  nav ul{display:flex;gap:28px;list-style:none;align-items:center}
+  nav li a{font-size:14px;color:var(--ink-dim);letter-spacing:.02em}
+  nav li a:hover,nav li a.on{color:var(--ink)}
+  nav .btn{padding:9px 16px;font-size:12px}
+  .menu{display:none;background:none;border:0;color:var(--ink);font-size:26px;cursor:pointer}
+
+  /* field notes card — option D */
+  .fn-card{container-type:inline-size;display:block;width:100%;background:var(--navy);border:1px solid rgba(157,188,205,.10);position:relative;overflow:hidden;aspect-ratio:1200/630;color:var(--ink)}
+  .fn-card .in{position:absolute;inset:0;padding:5cqw 6.6cqw 5.6cqw 8.6cqw;display:flex;flex-direction:column;justify-content:space-between}
+  .fn-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.7cqw;background:var(--orange)}
+  .fn-card .top{display:flex;justify-content:space-between;align-items:baseline}
+  .fn-card .no{font-family:var(--head);font-weight:300;font-size:10.6cqw;line-height:1;color:var(--mist);letter-spacing:.02em}
+  .fn-card .no small{font-size:2.3cqw;letter-spacing:.3em;vertical-align:top;margin-right:1cqw;position:relative;top:1.6cqw}
+  .fn-card .eb{font-family:var(--head);font-weight:300;letter-spacing:.3em;text-transform:uppercase;font-size:2cqw;color:var(--mist)}
+  .fn-card .t{font-family:var(--head);font-weight:600;text-transform:uppercase;font-size:9.3cqw;line-height:.96;color:var(--ink);max-width:84cqw}
+  .fn-card .t .mist{font-size:1.3em;line-height:.9;display:table;white-space:nowrap;padding-right:.04em;margin-top:.04em}
+  .fn-card .t.long{font-size:7cqw}
+  .fn-card .sub{font-family:var(--head);font-weight:300;letter-spacing:.14em;text-transform:uppercase;font-size:2.3cqw;color:var(--mist);margin-top:1.6cqw}
+  a.fn-card{transition:transform .25s,border-color .25s}
+  a.fn-card:hover{transform:translateY(-4px);border-color:var(--mist)}
+
+  /* index */
+  .fn-head{padding:130px 0 40px}
+  .fn-head h1{font-size:clamp(44px,6vw,80px);line-height:1}
+  .fn-head p{color:var(--ink-dim);max-width:640px;margin-top:18px;font-size:18px}
+  .fn-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 28px;padding:20px 0 110px}
+  .fn-item .meta{display:flex;justify-content:space-between;align-items:baseline;margin:14px 2px 0;font-family:var(--head);font-weight:300;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--mist)}
+  .fn-item p{color:var(--ink-dim);font-size:15px;margin:6px 2px 0}
+
+  /* post */
+  .post-hero{padding:110px 0 0}
+  .post-hero .fn-card{max-width:900px;margin:0 auto}
+  article{max-width:720px;margin:0 auto;padding:56px 28px 90px;font-size:18px;line-height:1.75}
+  article .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--head);font-weight:300;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--mist);margin-bottom:34px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  article p{margin:0 0 1.2em}
+  article h2{font-size:30px;margin:2em 0 .7em;color:var(--mist-2)}
+  article h3{font-size:22px;margin:1.8em 0 .6em;color:var(--mist-2);font-weight:500}
+  article strong{color:var(--ink);font-weight:600}
+  article em{color:var(--ink)}
+  article a{color:var(--orange-2);border-bottom:1px solid rgba(255,163,100,.35)}
+  article a:hover{color:var(--orange);border-color:var(--orange)}
+  article blockquote{border-left:3px solid var(--orange);padding:4px 0 4px 22px;margin:0 0 1.4em;color:var(--ink-dim)}
+  article blockquote p:last-child{margin-bottom:0}
+  article ul,article ol{margin:0 0 1.3em 1.3em}
+  article li{margin-bottom:.4em}
+  article hr{border:0;border-top:1px solid var(--line);margin:2.4em 0}
+  .post-nav{max-width:720px;margin:0 auto;padding:0 28px 100px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .post-nav a{font-family:var(--head);letter-spacing:.1em;text-transform:uppercase;font-size:13px;color:var(--mist)}
+  .post-nav a:hover{color:var(--ink)}
+
+  footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
+  footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
+  footer .flogo{height:44px}footer .flogo img{height:100%;width:auto}
+  footer ul{display:flex;gap:26px;list-style:none;flex-wrap:wrap}
+  footer li a{font-family:var(--head);letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--ink-dim)}
+  footer a:hover{color:var(--ink)}
+  footer .bottom{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px}
+
+  @media (max-width:900px){
+    nav ul{display:none;position:absolute;top:68px;left:0;right:0;background:var(--navy);flex-direction:column;align-items:flex-start;padding:20px 28px 28px;gap:18px;border-bottom:1px solid var(--line)}
+    nav ul.open{display:flex}
+    .menu{display:block}
+    .fn-grid{grid-template-columns:1fr}
+    .fn-head{padding-top:100px}
+    article{font-size:17px;padding-top:40px}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/logo.png" alt="Antimatter Consulting"></a>
+    <button class="menu" aria-label="Menu" onclick="document.getElementById('links').classList.toggle('open')">&#9776;</button>
+    <ul id="links">
+      <li><a href="/#how">How it works</a></li>
+      <li><a href="/#strategy">Strategy</a></li>
+      <li><a href="/#agents">Agents</a></li>
+      <li><a href="/#coaching">Coaching</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a class="on" href="/field-notes/">Field notes</a></li>
+      <li><a class="btn" href="/contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+<section class="post-hero"><div class="wrap"><div class="fn-card"><div class="in">
+    <div class="top"><div class="no"><small>No.</small>11</div><div class="eb">Antimatter Consulting · Field notes</div></div>
+    <div><div class="t" style="font-size:9.30cqw">Beware the <span class="mist">Rainmaker</span></div><div class="sub">Coaching</div></div>
+  </div></div></div></section>
+<article>
+  <div class="meta"><span>Coaching</span><span>Field notes No. 11 · Steve Zeller</span></div>
+<p>Every time I’ve seen a company try to hire a “Rainmaker”, it’s been a failure.</p>
+<p>Why? Poaching top sales talent from a larger competitor sounds like a great idea. It almost never is. Let’s dive into why.</p>
+<h2 id="this-guy-is-a-rainmaker-the-recruiter-said.">“This guy is a RAINMAKER!” the recruiter said.</h2>
+<p>He was practically bouncing off the walls with excitement as he scrambled to finalize the offer letter. He had just filled a senior sales role for a 100 person professional services shop.</p>
+<p>“Cool!” I said. “Where did you find him?”</p>
+<p>“Duuuuude, he’s been selling millions a year at Deloitte! And he’s got a Rolodex full of customers for us!!”</p>
+<p>Ok, aside from the insanely antiquated “Rolodex” reference (I never had one, but at least I’m old enough to know what it is), and the egregious “Duuuuuude”, I had concerns.</p>
+<p>Management was pumped. Sales had been slow for a few quarters. Missed targets, reps behind quota, board getting concerned. This guy was going to turn everything around.</p>
+<p>“What kind of clients did he work with at Deloitte?” I asked.</p>
+<p>“Oh man, Coca-Cola, Bank of America, Ford, you name it!”</p>
+<p>Between Coca-Cola, Bank of America, and Ford, how many do you think became customers of his new shop?</p>
+<p>You guessed it… Zero.</p>
+<h2 id="beware-the-rainmaker.">Beware the Rainmaker.</h2>
+<p>Think about a struggling sports team. Haven’t made the playoffs in years. Management decides to spend their entire budget to give a ludicrous contract to an aging star. Does this ever work?</p>
+<p>Why would sales be any different?</p>
+<p>Before you go hunting for your own Rainmaker, here are six questions worth asking…</p>
+<h3 id="are-they-legit-or-full-of-sht">1. Are they legit, or full of sh*t?</h3>
+<p>Someone spends five or eight years building a book of business at a big global company. They’re closing $20 million a year. They’re pulling in high six figures in commissions. Why would they leave to join a smaller company and start from scratch? That doesn’t make a lot of sense. Dig hard into those numbers before you get excited.</p>
+<h3 id="are-they-toxic">2. Are they toxic?</h3>
+<p>If they are putting up those numbers, is there a reason they need to jump ship? Are they about to get fired for something? Big producers at big companies sometimes have a long trail of problems that the company has been willing to overlook because of their revenue. You’re about to inherit all of that.</p>
+<h3 id="will-their-relationships-transfer">3. Will their relationships transfer?</h3>
+<p>As we covered in the <a href="/field-notes/qualifying-1">Qualifying</a> series, demographics matter. Will their big-company relationships translate into business for a smaller shop? In most cases the honest answer is no. Their contacts will take the meeting, enjoy the lunch, and then quietly go with someone on the approved vendor list.</p>
+<h3 id="do-they-actually-expect-to-work">4. Do they actually expect to work?</h3>
+<p>At a smaller company, they can’t knock on a door, talk sports for a minute, and expect someone else to handle the rest. At their old job they probably had a solutions engineer running the sales process, an RFP team writing proposals, and a junior staffer doing all the follow-up. Are they willing to roll up their sleeves? Find out before you sign the offer letter.</p>
+<h3 id="are-they-asking-for-a-huge-base">5. Are they asking for a huge base?</h3>
+<p>Be careful bringing in an outside person at a significantly higher base than your existing reps. People find out. If the Rainmaker immediately closes some big deals, great. If they don’t, you’ve just created a morale problem. Your best existing reps are now wondering why they’re making less than the new guy who hasn’t closed anything yet.</p>
+<h3 id="why-do-you-need-a-rainmaker-in-the-first-place">6. Why do you need a Rainmaker in the first place?</h3>
+<p>This is the most important question. If you’re building on success, have a team that’s performing and some extra budget to bet on an expensive hire, go for it. But if your current team is falling behind, if you don’t have lead flow coming in, and if you’re hoping for this long-shot to carry the team, forget it.</p>
+<p>Going back to our sports analogy, expecting one new star to carry the whole roster almost never works. Without the right supporting players, the right product, and a repeatable sale driven by marketing, it’s just a Hail Mary. Listen to your current team, invest in their success, fix the problems. Grow your own stars, and then fill in the gaps once you know what works.</p>
+<h2 id="rainmaker-usually-describes-the-past-not-the-future.">“Rainmaker” usually describes the past, not the future.</h2>
+<p>Rainmakers do exist. <strong>But it’s a term used to describe past performance, not a hiring strategy.</strong> Believe it or not, most of the Rainmakers I’ve seen in real life were hired as entry-level salespeople. They came from other roles, like technical, procurement, or operations roles within the industry that they later sold to. They took the time to find a product they believed in, learn about it, and carefully build a business around it. They took great personal pride in their reputation, and the outcomes they delivered for their customers. And the last thing they’d do is scrap all that success for a quick bump to their base salary.</p>
+<p>At Antimatter, building and coaching sales teams is core to what we do. If you’re trying to figure out what kind of sales talent you actually need, <a href="/contact">let’s talk.</a></p>
+
+</article>
+<div class="post-nav"><a href="/field-notes/qualifying-3">&larr; Qualifying a Prospect, Vol. 3: Demographics</a></div>
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <a class="flogo" href="/"><img src="/logo.png" alt="Antimatter Consulting"></a>
+      <ul>
+        <li><a href="/#how">How it works</a></li>
+        <li><a href="/#strategy">Strategy</a></li>
+        <li><a href="/#agents">Agents</a></li>
+        <li><a href="/#coaching">Coaching</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/field-notes/">Field notes</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="https://linkedin.com/in/stevenlzeller" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+    <div class="bottom">
+      <div>&copy; 2026 Antimatter Consulting &middot; New York</div>
+      <div>The founder's voice in every sales and marketing touchpoint.</div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  function fit(){
+    document.querySelectorAll('.fn-card').forEach(function(c){
+      var t=c.querySelector('.t'), m=c.querySelector('.mist'); if(!t||!m) return;
+      var w=c.clientWidth, avail=w*0.84, h=c.clientHeight, floor=w*0.045;
+      var fs=parseFloat(getComputedStyle(t).fontSize);
+      var guard=0;
+      while(guard++<40 && fs>floor && (m.getBoundingClientRect().width>avail || t.getBoundingClientRect().height>h*0.66)){fs*=0.95; t.style.fontSize=fs+'px';}
+    });
+  }
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(fit);} else {fit();}
+  window.addEventListener('load',fit); window.addEventListener('resize',fit);
+})();
+</script>
+</body>
+</html>
