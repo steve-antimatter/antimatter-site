@@ -154,6 +154,26 @@
     article .scene p.line{grid-template-columns:1fr;font-size:19px;row-gap:2px}
   }
 
+  /* playbook: framed do / don't */
+  article .playbook{position:relative;margin:2em 0 2.2em;padding:34px 36px 26px;border:1px solid var(--mist);outline:1px solid var(--line);outline-offset:5px;background:linear-gradient(180deg,rgba(22,48,90,.35),rgba(15,33,64,.15))}
+  article .playbook .illo{float:right;width:130px;margin:-10px -8px 6px 24px;color:var(--mist)}
+  article .playbook .illo svg{width:100%;height:auto;display:block}
+  article .playbook > p:first-of-type{font-family:var(--head);font-weight:300;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--mist);margin:0 0 22px}
+  article .playbook > p:first-of-type strong{color:var(--orange);font-weight:500}
+  article .playbook .cols{clear:both;display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+  article .playbook h3{margin:0 0 12px;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:26px;padding-bottom:8px;border-bottom:2px solid}
+  article .playbook .cols div:first-child h3{color:var(--mist-2);border-color:var(--mist)}
+  article .playbook .cols div:last-child h3{color:var(--orange-2);border-color:var(--orange)}
+  article .playbook ul{list-style:none;margin:0 0 10px;padding:0;font-size:16px;line-height:1.55}
+  article .playbook li{margin:0 0 12px;padding-left:18px;position:relative;color:var(--ink)}
+  article .playbook li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--mist)}
+  article .playbook .cols div:last-child li::before{background:var(--orange)}
+  @media (max-width:900px){
+    article .playbook{padding:24px 20px 16px}
+    article .playbook .illo{width:84px;margin:0 0 8px 14px}
+    article .playbook .cols{grid-template-columns:1fr}
+  }
+
   footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
   footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
   footer .flogo{height:44px}footer .flogo img{height:100%;width:auto}
@@ -217,8 +237,7 @@
 <p><strong>Subject: Let’s Connect on Cloud &amp; AI Transformation</strong></p>
 <p>Hi Steve, we help enterprises drive AI-powered digital transformation with cost optimization, enhanced security, and scalability. I’d love to explore how we can support your cloud strategy.</p>
 </div>
-<div class="punch"><p class="mist">Delete.</p>
-</div>
+<p>Delete.</p>
 <p>Here’s a much better approach:</p>
 <div class="good" data-label="Real">
 <p><strong>Subject: TechSmart Acquisition</strong></p>
@@ -246,6 +265,28 @@
 <p>How about something like this:</p>
 <div class="good" data-label="Real">
 <p>Hi Bob, I see you have job postings for three ML engineers. Just to provide another option: CloudServe offers scalable “pods” of resources on a monthly basis. They’re trained, certified, and ready to go if you’re up against a deadline.</p>
+</div>
+<div class="playbook">
+<div class="illo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="An envelope">
+  <path d="M36 56 h168 a6 6 0 0 1 6 6 v84 a6 6 0 0 1 -6 6 h-168 a6 6 0 0 1 -6 -6 v-84 a6 6 0 0 1 6 -6 z"/>
+  <path d="M32 62 l88 62 l88 -62"/>
+  <path d="M32 148 l66 -50 M208 148 l-66 -50"/>
+</svg></div>
+<p><strong>Playbook</strong> · Writing a cold email that gets read.</p>
+<div class="cols"><div><h3 id="do">Do</h3>
+<ul>
+<li>Find the change first. An acquisition, a launch, a funding round, a hiring spree. Put it in the subject line.</li>
+<li>Pick a small list. Spend five to ten minutes on each company before you write a word.</li>
+<li>Write it like an email to a coworker. Short, plain, one question.</li>
+<li>Ask about something they’re already dealing with, and let them tell you what they need.</li>
+</ul></div>
+<div><h3 id="dont">Don’t</h3>
+<ul>
+<li>Spray and pray. If you don’t recognize the company, don’t email it.</li>
+<li>Open with “your organization,” “our solutions,” or “I hope this finds you well.”</li>
+<li>Send a paragraph, a bulleted list, and a link. That shape is Spam, whatever it says.</li>
+<li>Tell them what their problem is. “AI strategy,” “overspending on cloud,” “scaling your team.” You don’t know yet.</li>
+</ul></div></div>
 </div>
 <p>Listen, the deck is still stacked against you. If your only strategy for growth is cold emails, you’re in trouble. We’ll talk more about the best prospecting techniques in later posts. But these principles apply to any sales communication.</p>
 <div class="rule">

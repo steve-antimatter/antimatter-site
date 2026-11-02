@@ -154,6 +154,26 @@
     article .scene p.line{grid-template-columns:1fr;font-size:19px;row-gap:2px}
   }
 
+  /* playbook: framed do / don't */
+  article .playbook{position:relative;margin:2em 0 2.2em;padding:34px 36px 26px;border:1px solid var(--mist);outline:1px solid var(--line);outline-offset:5px;background:linear-gradient(180deg,rgba(22,48,90,.35),rgba(15,33,64,.15))}
+  article .playbook .illo{float:right;width:130px;margin:-10px -8px 6px 24px;color:var(--mist)}
+  article .playbook .illo svg{width:100%;height:auto;display:block}
+  article .playbook > p:first-of-type{font-family:var(--head);font-weight:300;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--mist);margin:0 0 22px}
+  article .playbook > p:first-of-type strong{color:var(--orange);font-weight:500}
+  article .playbook .cols{clear:both;display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+  article .playbook h3{margin:0 0 12px;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:26px;padding-bottom:8px;border-bottom:2px solid}
+  article .playbook .cols div:first-child h3{color:var(--mist-2);border-color:var(--mist)}
+  article .playbook .cols div:last-child h3{color:var(--orange-2);border-color:var(--orange)}
+  article .playbook ul{list-style:none;margin:0 0 10px;padding:0;font-size:16px;line-height:1.55}
+  article .playbook li{margin:0 0 12px;padding-left:18px;position:relative;color:var(--ink)}
+  article .playbook li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--mist)}
+  article .playbook .cols div:last-child li::before{background:var(--orange)}
+  @media (max-width:900px){
+    article .playbook{padding:24px 20px 16px}
+    article .playbook .illo{width:84px;margin:0 0 8px 14px}
+    article .playbook .cols{grid-template-columns:1fr}
+  }
+
   footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
   footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
   footer .flogo{height:44px}footer .flogo img{height:100%;width:auto}
@@ -201,10 +221,24 @@
 </div>
 <p>Then we map products to Henry. Here’s what we’d propose: a MAP Migration from his datacenter to AWS, an Oracle Migration to a managed AWS database platform, and an MSSP security service with full HIPAA compliance built in. Sounds great, right? Henry’s going to love this.</p>
 <p>Now. There are maybe ten million healthcare startups in the world. And somewhere out there, there is exactly one Henry who needs all of that. At the same time. This week. And has budget. And has a CTO who picks up the phone. Do you see the trap here?</p>
-<p>Years ago I watched a rep get on a call with the CTO of a mobile health app. Early Fitbit competitor, kind of ahead of its time. Good product. The rep had done his homework. Healthcare startup, check. He knew exactly what to lead with.</p>
-<div class="punch"><p class="mist">HIPAA!!</p>
+<div class="scene">
+<div class="illo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A pipe wrench">
+  <path d="M96 60 h48 v20 h-48 z"/>
+  <path d="M108 80 v92 a6 6 0 0 0 6 6 h12 a6 6 0 0 0 6 -6 v-92"/>
+  <path d="M84 40 h72 v20 h-72 z"/>
+  <path d="M84 40 v-8 h20 v8 M136 40 v-8 h20 v8"/>
+  <path d="M104 32 l-8 -14 h48 l-8 14"/>
+  <path d="M120 100 v60"/>
+  <path d="M100 96 h40"/>
+</svg></div>
+<p><strong>Scene 1</strong> · A call with the CTO of a mobile health app. Early Fitbit competitor, kind of ahead of its time. Good product.</p>
+<p><em>The rep had done his homework. Healthcare startup, check. He knew exactly what to lead with.</em></p>
+<p class="line"><strong>Rep</strong> “So, healthcare. I’m guessing HIPAA is keeping you up at night. Let me walk you through how our compliance program handles PHI, audit trails, BAAs, the whole thing…”</p>
+<p><em>The CTO’s eyes glazed over in the first two minutes.</em></p>
+<p class="line"><strong>CTO</strong> “Sure. Send me something.”</p>
 </div>
-<p>The CTO’s eyes glazed over in the first two minutes. HIPAA is about medical records. This guy’s app tracked your steps and your heart rate. What he actually needed was a partner who could build him a CI/CD pipeline so his team could ship code faster. He couldn’t care less about compliance audits and regulatory tools.</p>
+<p>He never called back.</p>
+<p>HIPAA is about medical records. This guy’s app tracked your steps and your heart rate. What he actually needed was a partner who could build him a CI/CD pipeline so his team could ship code faster. He couldn’t care less about compliance audits and regulatory tools.</p>
 <p>The rep never found that out. He was too busy being prepared.</p>
 <div class="rule">
 <p class="line"><strong>Rule #3</strong> Don’t make assumptions.</p>

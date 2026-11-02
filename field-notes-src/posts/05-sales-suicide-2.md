@@ -15,16 +15,22 @@ How many times have you read a sales email with the word "**organization**" in i
 Can you imagine someone saying that in real life?
 
 ::: scene
-{{illo:mail}}
+{{illo:waffle}}
 
-**Scene 1** · Your inbox. Tuesday morning. You're the CRO of a tech consulting company.
+**Scene 1** · A Waffle House. 2 a.m. A customer at the counter.
 
-**Subject:** Partnership opportunity
+**Customer:** "We provide your organization with a canonical reference architecture for scalable enterprise innovation."
 
-**Email:** "Hi Steve, I hope this message finds you well. How does your organization obtain access to qualified decision-makers? We enable organizations like yours to accelerate pipeline velocity through our proprietary intent-data platform. Would you be open to a brief discovery conversation?"
+**Server:** "Ah... Ma'am, this is a Waffle House."
 :::
 
-Now picture the person who wrote that email at dinner with a friend. "How does your household obtain access to a reliable babysitter?" Nobody talks like that. The friend would ask if they were feeling ok.
+Nobody talks like that. Not at a Waffle House, not at dinner with a friend, not to a coworker in the hallway. And yet here's what showed up in my inbox on Tuesday:
+
+::: {.bad label="Word salad"}
+"Hi Steve, I hope this message finds you well. How does your organization obtain access to qualified decision-makers? We enable organizations like yours to accelerate pipeline velocity through our proprietary intent-data platform. Would you be open to a brief discovery conversation?"
+:::
+
+Picture the person who wrote that asking a friend, "How does your household obtain access to a reliable babysitter?" The friend would ask if they were feeling ok.
 
 ::: rule
 **Rule #2:** Don't use a word in a sales communication that you wouldn't say out loud to a friend.
@@ -50,15 +56,13 @@ Both paths lead to wasted budget and zero pipeline. Because any email that opens
 
 ## So what actually works?
 
-Here's how Antimatter Consulting describes itself:
+If Antimatter wrote about itself the way most companies do, it would sound like this:
 
 ::: {.bad label="Word salad"}
 "At Antimatter, we provide solutions to overcome your organization's technology challenges by unlocking innovation, breaking down siloes, and achieving meaningful progress against your enterprise KPIs."
 :::
 
-Just kidding. See how terrible it is?
-
-We actually start by deleting every single one of those non-human words. They don't belong in websites, collateral, emails, or ads. Then we think about how real people actually talk, and we rewrite everything on that one simple principle.
+We would never send that. We start by deleting every single one of those non-human words. They don't belong in websites, collateral, emails, or ads. Then we think about how real people actually talk, and we rewrite everything on that one simple principle.
 
 There's nothing wrong with something like this:
 
@@ -74,13 +78,7 @@ Or this:
 
 It sounds almost too simple. Like it can't possibly be enough. Trust me, it is. It's the only way to get taken seriously by someone who reads fifty sales emails a week.
 
-Otherwise you're sitting there like:
-
-::: dialog
-"We provide your organization with a canonical reference architecture for scalable enterprise innovation."
-
-"Ah... Ma'am, this is a Waffle House."
-:::
+Otherwise you're ordering a canonical reference architecture at a Waffle House.
 
 Do you want to remove all the annoying, unhelpful jargon from **your organization**? [Let's talk.](/contact)
 

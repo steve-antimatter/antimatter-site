@@ -161,6 +161,26 @@ CSS = r"""
     article .scene p.line{grid-template-columns:1fr;font-size:19px;row-gap:2px}
   }
 
+  /* playbook: framed do / don't */
+  article .playbook{position:relative;margin:2em 0 2.2em;padding:34px 36px 26px;border:1px solid var(--mist);outline:1px solid var(--line);outline-offset:5px;background:linear-gradient(180deg,rgba(22,48,90,.35),rgba(15,33,64,.15))}
+  article .playbook .illo{float:right;width:130px;margin:-10px -8px 6px 24px;color:var(--mist)}
+  article .playbook .illo svg{width:100%;height:auto;display:block}
+  article .playbook > p:first-of-type{font-family:var(--head);font-weight:300;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--mist);margin:0 0 22px}
+  article .playbook > p:first-of-type strong{color:var(--orange);font-weight:500}
+  article .playbook .cols{clear:both;display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+  article .playbook h3{margin:0 0 12px;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:26px;padding-bottom:8px;border-bottom:2px solid}
+  article .playbook .cols div:first-child h3{color:var(--mist-2);border-color:var(--mist)}
+  article .playbook .cols div:last-child h3{color:var(--orange-2);border-color:var(--orange)}
+  article .playbook ul{list-style:none;margin:0 0 10px;padding:0;font-size:16px;line-height:1.55}
+  article .playbook li{margin:0 0 12px;padding-left:18px;position:relative;color:var(--ink)}
+  article .playbook li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--mist)}
+  article .playbook .cols div:last-child li::before{background:var(--orange)}
+  @media (max-width:900px){
+    article .playbook{padding:24px 20px 16px}
+    article .playbook .illo{width:84px;margin:0 0 8px 14px}
+    article .playbook .cols{grid-template-columns:1fr}
+  }
+
   footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
   footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
   footer .flogo{height:44px}footer .flogo img{height:100%;width:auto}
@@ -309,6 +329,10 @@ def md_to_html(path, from_post):
     def illo(m):
         svg = (here / "illos" / (m.group(1) + ".svg")).read_text().strip()
         return '<div class="illo">' + svg + '</div>'
+    def cols(m):
+        inner = re.sub(r'(<h3[^>]*>.*?</h3>\s*<ul>.*?</ul>)', r'<div>\1</div>', m.group(1), flags=re.S)
+        return '<div class="cols">' + inner + '</div>'
+    body = re.sub(r'(<h3[^>]*>.*?</ul>\s*<h3[^>]*>.*?</ul>)(?=\s*</div>)', cols, body, flags=re.S) if 'class="playbook"' in body else body
     body = re.sub(r'<p><strong>([A-Z][^<:]{0,30}):</strong>', r'<p class="line"><strong>\1</strong>', body)
     body = re.sub(r'<p>\{\{illo:([a-z0-9-]+)\}\}</p>', illo, body)
     body = body.replace('<div class="bad">', '<div class="bad" data-label="Spam">').replace('<div class="good">', '<div class="good" data-label="Real">')

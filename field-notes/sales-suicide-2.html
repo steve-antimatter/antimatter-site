@@ -154,6 +154,26 @@
     article .scene p.line{grid-template-columns:1fr;font-size:19px;row-gap:2px}
   }
 
+  /* playbook: framed do / don't */
+  article .playbook{position:relative;margin:2em 0 2.2em;padding:34px 36px 26px;border:1px solid var(--mist);outline:1px solid var(--line);outline-offset:5px;background:linear-gradient(180deg,rgba(22,48,90,.35),rgba(15,33,64,.15))}
+  article .playbook .illo{float:right;width:130px;margin:-10px -8px 6px 24px;color:var(--mist)}
+  article .playbook .illo svg{width:100%;height:auto;display:block}
+  article .playbook > p:first-of-type{font-family:var(--head);font-weight:300;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--mist);margin:0 0 22px}
+  article .playbook > p:first-of-type strong{color:var(--orange);font-weight:500}
+  article .playbook .cols{clear:both;display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+  article .playbook h3{margin:0 0 12px;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:26px;padding-bottom:8px;border-bottom:2px solid}
+  article .playbook .cols div:first-child h3{color:var(--mist-2);border-color:var(--mist)}
+  article .playbook .cols div:last-child h3{color:var(--orange-2);border-color:var(--orange)}
+  article .playbook ul{list-style:none;margin:0 0 10px;padding:0;font-size:16px;line-height:1.55}
+  article .playbook li{margin:0 0 12px;padding-left:18px;position:relative;color:var(--ink)}
+  article .playbook li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--mist)}
+  article .playbook .cols div:last-child li::before{background:var(--orange)}
+  @media (max-width:900px){
+    article .playbook{padding:24px 20px 16px}
+    article .playbook .illo{width:84px;margin:0 0 8px 14px}
+    article .playbook .cols{grid-template-columns:1fr}
+  }
+
   footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
   footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
   footer .flogo{height:44px}footer .flogo img{height:100%;width:auto}
@@ -204,16 +224,24 @@
 <p>“Here’s how our products can help your organization.” “Does your organization struggle with regulatory compliance?” Sound familiar?</p>
 <p>Can you imagine someone saying that in real life?</p>
 <div class="scene">
-<div class="illo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="An envelope">
-  <path d="M36 56 h168 a6 6 0 0 1 6 6 v84 a6 6 0 0 1 -6 6 h-168 a6 6 0 0 1 -6 -6 v-84 a6 6 0 0 1 6 -6 z"/>
-  <path d="M32 62 l88 62 l88 -62"/>
-  <path d="M32 148 l66 -50 M208 148 l-66 -50"/>
+<div class="illo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A waffle">
+  <defs><clipPath id="w"><circle cx="120" cy="100" r="66"/></clipPath></defs>
+  <circle cx="120" cy="100" r="68"/>
+  <g clip-path="url(#w)">
+    <path d="M76 20 v160 M98 20 v160 M120 20 v160 M142 20 v160 M164 20 v160"/>
+    <path d="M40 56 h160 M40 78 h160 M40 100 h160 M40 122 h160 M40 144 h160"/>
+  </g>
+  <path d="M104 88 h32 v24 h-32 z" fill="currentColor" stroke="none" opacity=".35"/>
 </svg></div>
-<p><strong>Scene 1</strong> · Your inbox. Tuesday morning. You’re the CRO of a tech consulting company.</p>
-<p class="line"><strong>Subject</strong> Partnership opportunity</p>
-<p class="line"><strong>Email</strong> “Hi Steve, I hope this message finds you well. How does your organization obtain access to qualified decision-makers? We enable organizations like yours to accelerate pipeline velocity through our proprietary intent-data platform. Would you be open to a brief discovery conversation?”</p>
+<p><strong>Scene 1</strong> · A Waffle House. 2 a.m. A customer at the counter.</p>
+<p class="line"><strong>Customer</strong> “We provide your organization with a canonical reference architecture for scalable enterprise innovation.”</p>
+<p class="line"><strong>Server</strong> “Ah… Ma’am, this is a Waffle House.”</p>
 </div>
-<p>Now picture the person who wrote that email at dinner with a friend. “How does your household obtain access to a reliable babysitter?” Nobody talks like that. The friend would ask if they were feeling ok.</p>
+<p>Nobody talks like that. Not at a Waffle House, not at dinner with a friend, not to a coworker in the hallway. And yet here’s what showed up in my inbox on Tuesday:</p>
+<div class="bad" data-label="Word salad">
+<p>“Hi Steve, I hope this message finds you well. How does your organization obtain access to qualified decision-makers? We enable organizations like yours to accelerate pipeline velocity through our proprietary intent-data platform. Would you be open to a brief discovery conversation?”</p>
+</div>
+<p>Picture the person who wrote that asking a friend, “How does your household obtain access to a reliable babysitter?” The friend would ask if they were feeling ok.</p>
 <div class="rule">
 <p class="line"><strong>Rule #2</strong> Don’t use a word in a sales communication that you wouldn’t say out loud to a friend.</p>
 </div>
@@ -228,12 +256,11 @@
 <p>Marketing has a similar problem with a different root cause. Someone’s job is to put together a big integrated campaign across email, social, LinkedIn, Google, and banner ads. They’re going to present it to their SVP or CMO. They’ve got real budget behind it. And they don’t want it to sound dumb. Plain language feels beneath the occasion. So they start chopping up the word salad. Different motivation, same outcome.</p>
 <p>Both paths lead to wasted budget and zero pipeline. Because any email that opens with “your organization,” “our solutions,” or “common industry hurdles” is hurdling straight into the trash.</p>
 <h2 id="so-what-actually-works">So what actually works?</h2>
-<p>Here’s how Antimatter Consulting describes itself:</p>
+<p>If Antimatter wrote about itself the way most companies do, it would sound like this:</p>
 <div class="bad" data-label="Word salad">
 <p>“At Antimatter, we provide solutions to overcome your organization’s technology challenges by unlocking innovation, breaking down siloes, and achieving meaningful progress against your enterprise KPIs.”</p>
 </div>
-<p>Just kidding. See how terrible it is?</p>
-<p>We actually start by deleting every single one of those non-human words. They don’t belong in websites, collateral, emails, or ads. Then we think about how real people actually talk, and we rewrite everything on that one simple principle.</p>
+<p>We would never send that. We start by deleting every single one of those non-human words. They don’t belong in websites, collateral, emails, or ads. Then we think about how real people actually talk, and we rewrite everything on that one simple principle.</p>
 <p>There’s nothing wrong with something like this:</p>
 <div class="good" data-label="Human">
 <p>“My company, CloudServe, works with a lot of startups after a funding round. We help them figure out things like security and reliability as they grow.”</p>
@@ -243,11 +270,7 @@
 <p>“I saw you just acquired TechSoft. Congrats! If you need a team to look at all their tools and apps and make some recommendations, we’d love to help.”</p>
 </div>
 <p>It sounds almost too simple. Like it can’t possibly be enough. Trust me, it is. It’s the only way to get taken seriously by someone who reads fifty sales emails a week.</p>
-<p>Otherwise you’re sitting there like:</p>
-<div class="dialog">
-<p>“We provide your organization with a canonical reference architecture for scalable enterprise innovation.”</p>
-<p>“Ah… Ma’am, this is a Waffle House.”</p>
-</div>
+<p>Otherwise you’re ordering a canonical reference architecture at a Waffle House.</p>
 <p>Do you want to remove all the annoying, unhelpful jargon from <strong>your organization</strong>? <a href="/contact">Let’s talk.</a></p>
 <p><em>Next up in Sales Suicide Vol. 3: <a href="/field-notes/sales-suicide-3">Selling HIPAA Compliance to a Plumber</a></em></p>
 

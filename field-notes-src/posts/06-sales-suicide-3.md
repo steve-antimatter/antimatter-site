@@ -10,13 +10,23 @@ Then we map products to Henry. Here's what we'd propose: a MAP Migration from hi
 
 Now. There are maybe ten million healthcare startups in the world. And somewhere out there, there is exactly one Henry who needs all of that. At the same time. This week. And has budget. And has a CTO who picks up the phone. Do you see the trap here?
 
-Years ago I watched a rep get on a call with the CTO of a mobile health app. Early Fitbit competitor, kind of ahead of its time. Good product. The rep had done his homework. Healthcare startup, check. He knew exactly what to lead with.
+::: scene
+{{illo:wrench}}
 
-::: punch
-HIPAA!!
+**Scene 1** · A call with the CTO of a mobile health app. Early Fitbit competitor, kind of ahead of its time. Good product.
+
+*The rep had done his homework. Healthcare startup, check. He knew exactly what to lead with.*
+
+**Rep:** "So, healthcare. I'm guessing HIPAA is keeping you up at night. Let me walk you through how our compliance program handles PHI, audit trails, BAAs, the whole thing..."
+
+*The CTO's eyes glazed over in the first two minutes.*
+
+**CTO:** "Sure. Send me something."
 :::
 
-The CTO's eyes glazed over in the first two minutes. HIPAA is about medical records. This guy's app tracked your steps and your heart rate. What he actually needed was a partner who could build him a CI/CD pipeline so his team could ship code faster. He couldn't care less about compliance audits and regulatory tools.
+He never called back.
+
+HIPAA is about medical records. This guy's app tracked your steps and your heart rate. What he actually needed was a partner who could build him a CI/CD pipeline so his team could ship code faster. He couldn't care less about compliance audits and regulatory tools.
 
 The rep never found that out. He was too busy being prepared.
 

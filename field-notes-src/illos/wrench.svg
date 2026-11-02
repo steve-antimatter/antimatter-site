@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A pipe wrench">
+  <path d="M96 60 h48 v20 h-48 z"/>
+  <path d="M108 80 v92 a6 6 0 0 0 6 6 h12 a6 6 0 0 0 6 -6 v-92"/>
+  <path d="M84 40 h72 v20 h-72 z"/>
+  <path d="M84 40 v-8 h20 v8 M136 40 v-8 h20 v8"/>
+  <path d="M104 32 l-8 -14 h48 l-8 14"/>
+  <path d="M120 100 v60"/>
+  <path d="M100 96 h40"/>
+</svg>
