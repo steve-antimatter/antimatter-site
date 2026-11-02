@@ -1,10 +1,16 @@
-**"We're Not Closing Deals Because Our Sales Reps Are Lazy!"**
+::: rule
+"We're Not Closing Deals Because Our Sales Reps Are Lazy!"
+:::
 
 I've heard this so many times. And you know what? It's true. Sometimes sales reps *are* lazy. But guess what?
 
-Programmers are lazy.  
-Designers are lazy.  
+::: dialog
+Programmers are lazy.
+
+Designers are lazy.
+
 Executives are lazy.
+:::
 
 The only people who *are never* lazy are Spartan racers and UFC fighters.
 
@@ -18,6 +24,7 @@ It can be brutal, even soul-crushing. But when you have a big year in sales? ***
 
 ## Two Lessons
 
+::: numbered
 ### $ = Excitement
 
 Don't think: "My reps aren't selling because they're lazy."
@@ -41,8 +48,11 @@ Now ask yourself, would you rather have a rep who hits 200% of quota and calls i
 or
 
 A rep who's making eight hours of cold calls on Christmas Eve because he's about to get fired?
+:::
 
-**Like it or not, it's *your* problem, not theirs.**
+::: rule
+Like it or not, it's *your* problem, not theirs.
+:::
 
 It's your job, as leadership, to excite your salespeople:
 

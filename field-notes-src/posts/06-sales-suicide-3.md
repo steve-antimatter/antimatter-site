@@ -2,7 +2,9 @@
 
 One of the things we do at Antimatter is build personas. A persona is a fictional prospect with a backstory. Name, title, company, technical environment, business challenges. Something like this:
 
-> *Henry is the CTO of a healthcare startup. He's migrating from a datacenter to AWS. He wants to move from Oracle to Amazon Aurora. He's worried about HIPAA compliance and the security of his patients' PHI data.*
+::: {.good label="Persona"}
+Henry is the CTO of a healthcare startup. He's migrating from a datacenter to AWS. He wants to move from Oracle to Amazon Aurora. He's worried about HIPAA compliance and the security of his patients' PHI data.
+:::
 
 Then we map products to Henry. Here's what we'd propose: a MAP Migration from his datacenter to AWS, an Oracle Migration to a managed AWS database platform, and an MSSP security service with full HIPAA compliance built in. Sounds great, right? Henry's going to love this.
 
@@ -10,19 +12,25 @@ Now. There are maybe ten million healthcare startups in the world. And somewhere
 
 Years ago I watched a rep get on a call with the CTO of a mobile health app. Early Fitbit competitor, kind of ahead of its time. Good product. The rep had done his homework. Healthcare startup, check. He knew exactly what to lead with.
 
+::: punch
 HIPAA!!
+:::
 
 The CTO's eyes glazed over in the first two minutes. HIPAA is about medical records. This guy's app tracked your steps and your heart rate. What he actually needed was a partner who could build him a CI/CD pipeline so his team could ship code faster. He couldn't care less about compliance audits and regulatory tools.
 
 The rep never found that out. He was too busy being prepared.
 
-**Rule #3: Don't Make Assumptions.**
+::: rule
+**Rule #3:** Don't make assumptions.
+:::
 
 Personas are homework. They tell your reps what the landscape might look like, what problems tend to come up in that industry, what the tech stack probably looks like. That's useful. But homework isn't a call agenda.
 
 Just because Henry is a CTO at a healthcare company doesn't mean HIPAA is his problem. Maybe he just closed a Series A and he's trying to scale his engineering team. Maybe he's dealing with a data pipeline that breaks every Tuesday.
 
-**Maybe the "Henry" who happened to pick up the phone isn't even the CTO, maybe he's the plumber!**
+::: rule
+Maybe the "Henry" who happened to pick up the phone isn't even the CTO. Maybe he's the plumber!
+:::
 
 This is where rules one and two come back around.
 

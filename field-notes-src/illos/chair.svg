@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="An office chair">
+  <path d="M84 40 h72 a6 6 0 0 1 6 6 v52 a6 6 0 0 1 -6 6 h-72 a6 6 0 0 1 -6 -6 v-52 a6 6 0 0 1 6 -6 z"/>
+  <path d="M70 104 h100 v16 h-100 z"/>
+  <path d="M120 120 v30"/>
+  <path d="M120 150 l-40 24 M120 150 l40 24 M120 150 v26"/>
+  <path d="M74 176 h12 M154 176 h12"/>
+</svg>

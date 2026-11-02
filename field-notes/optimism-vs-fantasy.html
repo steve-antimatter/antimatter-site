@@ -89,6 +89,7 @@
   article .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--head);font-weight:300;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--mist);margin-bottom:34px;padding-bottom:18px;border-bottom:1px solid var(--line)}
   article p{margin:0 0 1.2em}
   article h2{font-size:30px;margin:2em 0 .7em;color:var(--mist-2)}
+  article h2 a{color:var(--mist-2);border:0}article h2 a:hover{color:var(--orange-2)}
   article h3{font-size:22px;margin:1.8em 0 .6em;color:var(--mist-2);font-weight:500}
   article strong{color:var(--ink);font-weight:600}
   article em{color:var(--ink)}
@@ -102,6 +103,54 @@
   .post-nav{max-width:720px;margin:0 auto;padding:0 28px 100px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .post-nav a{font-family:var(--head);letter-spacing:.1em;text-transform:uppercase;font-size:13px;color:var(--mist)}
   .post-nav a:hover{color:var(--ink)}
+
+  /* ---- breakouts ---- */
+  article .dialog{margin:1.6em 0 1.8em;padding:6px 0 6px 26px;border-left:3px solid var(--orange)}
+  article .dialog p{font-family:var(--head);font-weight:400;font-size:24px;line-height:1.3;letter-spacing:.01em;margin:0 0 .55em;color:var(--mist-2)}
+  article .dialog p:nth-child(even){color:var(--ink);padding-left:1.4em}
+  article .dialog p:last-child{margin-bottom:0}
+  article .punch{margin:1.4em 0 1.6em}
+  article .punch p{font-size:clamp(44px,7vw,72px);line-height:1;margin:0}
+  article .rule{margin:1.8em 0;padding:26px 30px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,rgba(22,48,90,.45),rgba(15,33,64,.25))}
+  article .rule p{font-family:var(--head);font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.2;color:var(--ink);margin:0}
+  article .rule p strong{color:var(--orange-2)}
+  article .bad,article .good{position:relative;margin:1.4em 0;padding:22px 26px 22px 30px;border-radius:8px;background:rgba(7,16,31,.7);border:1px solid var(--line);font-size:16px;line-height:1.6;color:var(--ink-dim)}
+  article .bad::before,article .good::before{content:attr(data-label);position:absolute;top:-11px;left:22px;font-family:var(--head);font-weight:500;letter-spacing:.24em;text-transform:uppercase;font-size:11px;padding:3px 10px;border-radius:2px;color:var(--navy)}
+  article .bad{border-left:4px solid var(--orange)}
+  article .bad::before{background:var(--orange)}
+  article .good{border-left:4px solid var(--mist)}
+  article .good::before{background:var(--mist)}
+  article .bad p,article .good p{margin:0 0 .6em}
+  article .bad p:last-child,article .good p:last-child{margin:0}
+  article .bad strong,article .good strong{color:var(--ink);font-weight:600}
+  article .numbered{counter-reset:nq;margin:1.2em 0}
+  article .numbered h3{counter-increment:nq;position:relative;padding-left:64px;min-height:50px;display:flex;align-items:center;margin:2.2em 0 .5em;font-size:24px}
+  article .numbered h3::before{content:counter(nq,decimal-leading-zero);position:absolute;left:0;top:-6px;font-family:var(--head);font-weight:300;font-size:52px;line-height:1;color:var(--orange);letter-spacing:.02em}
+  article .numbered h3+p{padding-left:64px}
+  article .numbered p{padding-left:64px}
+  @media (max-width:900px){
+    article .dialog p{font-size:20px}
+    article .numbered h3,article .numbered p,article .numbered h3+p{padding-left:48px}
+    article .numbered h3::before{font-size:40px;top:-2px}
+    article .rule{padding:20px 22px}
+  }
+
+  /* scene: framed magazine-style sidebar */
+  article .scene{position:relative;margin:2em 0 2.2em;padding:34px 36px 30px;border:1px solid var(--mist);outline:1px solid var(--line);outline-offset:5px;background:linear-gradient(180deg,rgba(22,48,90,.35),rgba(15,33,64,.15))}
+  article .scene .illo{float:right;width:150px;margin:-10px -8px 6px 24px;color:var(--mist)}
+  article .scene .illo svg{width:100%;height:auto;display:block}
+  article .scene > p:first-of-type{font-family:var(--head);font-weight:300;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--mist);margin:0 0 14px}
+  article .scene > p:first-of-type strong{color:var(--orange);font-weight:500}
+  article .scene p{margin:0 0 .9em;font-size:17px}
+  article .scene p > em:only-child{color:var(--ink-dim);display:block;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+  article .scene p.line{clear:right;display:grid;grid-template-columns:112px 1fr;column-gap:10px;align-items:baseline;font-family:var(--head);font-weight:400;font-size:23px;line-height:1.3;color:var(--mist-2);margin-bottom:.7em}
+  article .scene p.line strong{font-family:var(--head);font-weight:500;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--orange);padding-top:6px}
+  article .scene p:last-child{margin-bottom:0}
+  @media (max-width:900px){
+    article .scene{padding:24px 20px 20px}
+    article .scene .illo{width:96px;margin:0 0 8px 14px}
+    article .scene p.line{grid-template-columns:1fr;font-size:19px;row-gap:2px}
+  }
 
   footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
   footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
@@ -149,7 +198,9 @@
 <p><em>“Our biggest customer hasn’t had to open a service ticket in six months!”</em></p>
 <p><em>“We’ve got zero bug reports on our new platform!”</em></p>
 </blockquote>
-<p>Sound familiar? These may seem like signs of strength. <strong>They’re not!</strong></p>
+<p>Sound familiar? These may seem like signs of strength.</p>
+<div class="punch"><p class="mist">They’re not!</p>
+</div>
 <h2 id="honesty-vs.-hype">Honesty vs. Hype</h2>
 <p>Every exec team has to believe in their company. You’ve got to pitch, inspire, recruit, retain. If you don’t truly believe in your company deep down, then why are you putting in late nights and sacrificing family time to go the extra mile? And how can you expect the same from your employees? Optimism is great. But there’s a difference between belief and make-believe, and sometimes I see leadership teams drift quietly into fantasy land.</p>
 <h2 id="dont-build-a-strategy-around-a-fluke">Don’t Build a Strategy Around a Fluke</h2>
@@ -158,20 +209,26 @@
 <p><em>“Well, Q3 last year was really strong, so if we can just grow that by 25% per quarter we’ll be in great shape…”</em></p>
 </blockquote>
 <p>Sure. That sounds nice. Except if Q3 was your only good quarter in two years, and it happened because one massive customer came through with a surprise order that you haven’t seen before or since…</p>
-<p>That wasn’t a trend. That was a fluke.<br />
-A one-time spike isn’t a business model. If you build your forecast off it, you’re not making a plan, you’re writing fan fiction.</p>
+<p>That wasn’t a trend. That was a fluke.</p>
+<div class="rule">
+<p>A one-time spike isn’t a business model. If you build your forecast off it, you’re not making a plan, you’re writing fan fiction.</p>
+</div>
 <h2 id="no-news-usually-means-something-broke">“No News” Usually Means Something Broke</h2>
 <p>If your biggest customer hasn’t reached out in six months, it’s not because everything is hunky-dory. It’s radio silence and it’s not good.</p>
 <p>If you’ve offered quarterly business reviews but haven’t actually done one in over a year, that’s a huge red flag.</p>
 <p>And if no one has submitted a support ticket or asked for a feature in a long time? Don’t pat yourself on the back. There’s a good chance they’ve stopped using the product altogether and just haven’t told you yet.</p>
-<p><strong>Silence isn’t always peace.</strong> Sometimes it’s just neglect, and eventually, it becomes churn.</p>
+<div class="rule">
+<p>Silence isn’t always peace. Sometimes it’s just neglect, and eventually, it becomes churn.</p>
+</div>
 <h2 id="aging-deals-dont-ripen.-they-rot.">Aging Deals Don’t Ripen. They Rot.</h2>
 <p>If your forecast depends on two or three giant deals that have been “really close” for two quarters straight, you already know how this ends.</p>
 <p>Deals don’t get better with age. They get slower, messier, and harder to explain to your board.</p>
 <p>If there’s no clear closing plan (names, dates, approvals, contracts) it’s probably not real. It might’ve been real once, but if you’re being honest, at this point you’re just hoping it lands so you can hit the number. Hope is not a closing strategy.</p>
 <h2 id="same-ingredients-same-cake">Same Ingredients, Same Cake</h2>
 <p>If you don’t change the ingredients, don’t expect to get a tastier cake. If you aren’t increasing your marketing budget, you have no new IP to launch, and you’re still crossing your fingers and hiring/firing salespeople, why do you expect different results?</p>
-<p><strong>You’re baking the same cake with the same ingredients.</strong> Don’t act surprised when it tastes the same.</p>
+<div class="rule">
+<p>You’re baking the same cake with the same ingredients. Don’t act surprised when it tastes the same.</p>
+</div>
 <h2 id="optimism-is-good.-accountability-is-better.">Optimism Is Good. Accountability Is Better.</h2>
 <p>No one’s saying you need to hold doomsday meetings every Monday. But if there are obvious red flags in your operation, don’t ignore them.</p>
 <ul>
@@ -192,7 +249,8 @@ What are we assuming that’s probably wrong?</p>
 <p>Being real with each other doesn’t kill momentum. It creates <strong>clarity</strong>. And clarity is the only thing that actually moves the business forward.</p>
 <h2 id="spend-like-youve-done-this-before">Spend Like You’ve Done This Before</h2>
 <p>Spending ahead of revenue works when you are confident in your ROI. When you have a track record of successful sales hires, lots of deals from sponsorships and ads, and new features leading to new sales. But if you’re just <em>hoping</em> that this time’s different?</p>
-<p>Pause.</p>
+<div class="punch"><p class="mist">Pause.</p>
+</div>
 <p>If you haven’t seen ROI from your last round of hires, ads, events, or product launch, why do you think more of the same is going to change anything?</p>
 <blockquote>
 <p>Get data first. Then put your foot on the gas.</p>
@@ -208,8 +266,9 @@ What are we assuming that’s probably wrong?</p>
 <p>You have to believe in your business. That’s your job. But don’t lie to yourself. That’s how companies get lost.</p>
 <p>Internal honesty is a discipline. It’s a culture. And the best teams I’ve worked with hype the company <strong>externally</strong> and tell the truth <strong>internally</strong>.</p>
 <p>That’s how you stay grounded. That’s how you keep improving.</p>
-<p>Take off the mask. Rub your eyes.<br />
-Now let’s get to work!</p>
+<p>Take off the mask. Rub your eyes.</p>
+<div class="punch"><p class="mist">Now let’s get to work!</p>
+</div>
 <p>If you need help turning your dreams into numbers… <a href="/contact">Book a free consultation today!</a></p>
 
 </article>

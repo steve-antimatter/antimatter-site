@@ -6,7 +6,11 @@
 >
 > *"We've got zero bug reports on our new platform!"*
 
-Sound familiar? These may seem like signs of strength. **They're not!**
+Sound familiar? These may seem like signs of strength.
+
+::: punch
+They're not!
+:::
 
 ## Honesty vs. Hype
 
@@ -20,8 +24,11 @@ Here's one I hear too often:
 
 Sure. That sounds nice. Except if Q3 was your only good quarter in two years, and it happened because one massive customer came through with a surprise order that you haven't seen before or since...
 
-That wasn't a trend. That was a fluke.  
+That wasn't a trend. That was a fluke.
+
+::: rule
 A one-time spike isn't a business model. If you build your forecast off it, you're not making a plan, you're writing fan fiction.
+:::
 
 ## "No News" Usually Means Something Broke
 
@@ -31,7 +38,9 @@ If you've offered quarterly business reviews but haven't actually done one in ov
 
 And if no one has submitted a support ticket or asked for a feature in a long time? Don't pat yourself on the back. There's a good chance they've stopped using the product altogether and just haven't told you yet.
 
-**Silence isn't always peace.** Sometimes it's just neglect, and eventually, it becomes churn.
+::: rule
+Silence isn't always peace. Sometimes it's just neglect, and eventually, it becomes churn.
+:::
 
 ## Aging Deals Don't Ripen. They Rot.
 
@@ -45,7 +54,9 @@ If there's no clear closing plan (names, dates, approvals, contracts) it's proba
 
 If you don't change the ingredients, don't expect to get a tastier cake. If you aren't increasing your marketing budget, you have no new IP to launch, and you're still crossing your fingers and hiring/firing salespeople, why do you expect different results?
 
-**You're baking the same cake with the same ingredients.** Don't act surprised when it tastes the same.
+::: rule
+You're baking the same cake with the same ingredients. Don't act surprised when it tastes the same.
+:::
 
 ## Optimism Is Good. Accountability Is Better.
 
@@ -75,7 +86,9 @@ Being real with each other doesn't kill momentum. It creates **clarity**. And cl
 
 Spending ahead of revenue works when you are confident in your ROI. When you have a track record of successful sales hires, lots of deals from sponsorships and ads, and new features leading to new sales. But if you're just *hoping* that this time's different?
 
+::: punch
 Pause.
+:::
 
 If you haven't seen ROI from your last round of hires, ads, events, or product launch, why do you think more of the same is going to change anything?
 
@@ -97,7 +110,10 @@ Internal honesty is a discipline. It's a culture. And the best teams I've worked
 
 That's how you stay grounded. That's how you keep improving.
 
-Take off the mask. Rub your eyes.  
+Take off the mask. Rub your eyes.
+
+::: punch
 Now let's get to work!
+:::
 
 If you need help turning your dreams into numbers... [Book a free consultation today!](/contact)

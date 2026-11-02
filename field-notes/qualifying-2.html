@@ -89,6 +89,7 @@
   article .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--head);font-weight:300;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--mist);margin-bottom:34px;padding-bottom:18px;border-bottom:1px solid var(--line)}
   article p{margin:0 0 1.2em}
   article h2{font-size:30px;margin:2em 0 .7em;color:var(--mist-2)}
+  article h2 a{color:var(--mist-2);border:0}article h2 a:hover{color:var(--orange-2)}
   article h3{font-size:22px;margin:1.8em 0 .6em;color:var(--mist-2);font-weight:500}
   article strong{color:var(--ink);font-weight:600}
   article em{color:var(--ink)}
@@ -102,6 +103,54 @@
   .post-nav{max-width:720px;margin:0 auto;padding:0 28px 100px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .post-nav a{font-family:var(--head);letter-spacing:.1em;text-transform:uppercase;font-size:13px;color:var(--mist)}
   .post-nav a:hover{color:var(--ink)}
+
+  /* ---- breakouts ---- */
+  article .dialog{margin:1.6em 0 1.8em;padding:6px 0 6px 26px;border-left:3px solid var(--orange)}
+  article .dialog p{font-family:var(--head);font-weight:400;font-size:24px;line-height:1.3;letter-spacing:.01em;margin:0 0 .55em;color:var(--mist-2)}
+  article .dialog p:nth-child(even){color:var(--ink);padding-left:1.4em}
+  article .dialog p:last-child{margin-bottom:0}
+  article .punch{margin:1.4em 0 1.6em}
+  article .punch p{font-size:clamp(44px,7vw,72px);line-height:1;margin:0}
+  article .rule{margin:1.8em 0;padding:26px 30px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,rgba(22,48,90,.45),rgba(15,33,64,.25))}
+  article .rule p{font-family:var(--head);font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.2;color:var(--ink);margin:0}
+  article .rule p strong{color:var(--orange-2)}
+  article .bad,article .good{position:relative;margin:1.4em 0;padding:22px 26px 22px 30px;border-radius:8px;background:rgba(7,16,31,.7);border:1px solid var(--line);font-size:16px;line-height:1.6;color:var(--ink-dim)}
+  article .bad::before,article .good::before{content:attr(data-label);position:absolute;top:-11px;left:22px;font-family:var(--head);font-weight:500;letter-spacing:.24em;text-transform:uppercase;font-size:11px;padding:3px 10px;border-radius:2px;color:var(--navy)}
+  article .bad{border-left:4px solid var(--orange)}
+  article .bad::before{background:var(--orange)}
+  article .good{border-left:4px solid var(--mist)}
+  article .good::before{background:var(--mist)}
+  article .bad p,article .good p{margin:0 0 .6em}
+  article .bad p:last-child,article .good p:last-child{margin:0}
+  article .bad strong,article .good strong{color:var(--ink);font-weight:600}
+  article .numbered{counter-reset:nq;margin:1.2em 0}
+  article .numbered h3{counter-increment:nq;position:relative;padding-left:64px;min-height:50px;display:flex;align-items:center;margin:2.2em 0 .5em;font-size:24px}
+  article .numbered h3::before{content:counter(nq,decimal-leading-zero);position:absolute;left:0;top:-6px;font-family:var(--head);font-weight:300;font-size:52px;line-height:1;color:var(--orange);letter-spacing:.02em}
+  article .numbered h3+p{padding-left:64px}
+  article .numbered p{padding-left:64px}
+  @media (max-width:900px){
+    article .dialog p{font-size:20px}
+    article .numbered h3,article .numbered p,article .numbered h3+p{padding-left:48px}
+    article .numbered h3::before{font-size:40px;top:-2px}
+    article .rule{padding:20px 22px}
+  }
+
+  /* scene: framed magazine-style sidebar */
+  article .scene{position:relative;margin:2em 0 2.2em;padding:34px 36px 30px;border:1px solid var(--mist);outline:1px solid var(--line);outline-offset:5px;background:linear-gradient(180deg,rgba(22,48,90,.35),rgba(15,33,64,.15))}
+  article .scene .illo{float:right;width:150px;margin:-10px -8px 6px 24px;color:var(--mist)}
+  article .scene .illo svg{width:100%;height:auto;display:block}
+  article .scene > p:first-of-type{font-family:var(--head);font-weight:300;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--mist);margin:0 0 14px}
+  article .scene > p:first-of-type strong{color:var(--orange);font-weight:500}
+  article .scene p{margin:0 0 .9em;font-size:17px}
+  article .scene p > em:only-child{color:var(--ink-dim);display:block;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+  article .scene p.line{clear:right;display:grid;grid-template-columns:112px 1fr;column-gap:10px;align-items:baseline;font-family:var(--head);font-weight:400;font-size:23px;line-height:1.3;color:var(--mist-2);margin-bottom:.7em}
+  article .scene p.line strong{font-family:var(--head);font-weight:500;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--orange);padding-top:6px}
+  article .scene p:last-child{margin-bottom:0}
+  @media (max-width:900px){
+    article .scene{padding:24px 20px 20px}
+    article .scene .illo{width:96px;margin:0 0 8px 14px}
+    article .scene p.line{grid-template-columns:1fr;font-size:19px;row-gap:2px}
+  }
 
   footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
   footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
@@ -144,10 +193,19 @@
 <article>
   <div class="meta"><span>Qualifying a Prospect, Vol. 2 · Coaching</span><span>Field notes No. 09 · Steve Zeller</span></div>
 <p><em>The second in a <a href="/field-notes/qualifying-1">three-part series</a> on how to identify prospects worth your time.</em></p>
-<p>“It’s a perfect fit!” the rep said, beaming. “They’re a $400 million company, they’ve been doing this for ten years, and they work mostly with financial data, so they DEFINITELY need our security software!”</p>
-<p>This was a rep at an MDR company I worked with. Managed Detection and Response. Good product, competitive price.</p>
-<p>“Sounds great,” I said. “What do they run now?”</p>
-<p>“They run Symantec, but our software is much better and cheaper!”</p>
+<div class="scene">
+<div class="illo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A shield with a lock">
+  <path d="M120 24 l66 24 v52 c0 40 -28 68 -66 80 c-38 -12 -66 -40 -66 -80 v-52 z"/>
+  <path d="M98 104 h44 v34 h-44 z"/>
+  <path d="M106 104 v-10 a14 14 0 0 1 28 0 v10"/>
+  <path d="M120 116 v10"/>
+</svg></div>
+<p><strong>Scene 1</strong> · An MDR company. Managed Detection and Response. Good product, competitive price.</p>
+<p><em>A rep I worked with, beaming.</em></p>
+<p class="line"><strong>Rep</strong> “It’s a perfect fit! They’re a $400 million company, they’ve been doing this for ten years, and they work mostly with financial data, so they DEFINITELY need our security software!”</p>
+<p class="line"><strong>Me</strong> “Sounds great. What do they run now?”</p>
+<p class="line"><strong>Rep</strong> “They run Symantec, but our software is much better and cheaper!”</p>
+</div>
 <p>Do you think she made this sale?</p>
 <p>Last week we talked about <strong>Criticality</strong>, the first thing to look for in a prospect. In this case, criticality is real. This is a FinTech firm. Security software is a must-have, not a nice-to-have. Real customers, real data at risk, real budget. Check, check, check.</p>
 <p>But look at what else she told me about this company.</p>
@@ -156,17 +214,30 @@
 <p>If they <strong><em>aren’t already running</em></strong> serious security measures, they’d have been out of business and probably facing lawsuits. They’re not running Symantec by accident. It’s baked into their audits, their compliance policies, their customer contracts, their IT operations.</p>
 <p>Ripping that out and replacing it with something new means notifying customers, rewriting security policies, adding a new vendor to their audit process, and retraining their team. All of that overhead has to be worth it before they’ve even given the new product a serious look.</p>
 <p>This is the problem with <strong>competing against an incumbent</strong>. You don’t just have to be better and cheaper. You have to be so much better and cheaper that a significant amount of organizational pain becomes worth it. That’s a very hard case to make.</p>
-<p><strong>Companies don’t make changes unless they have to.</strong></p>
+<div class="rule">
+<p>Companies don’t make changes unless they have to.</p>
+</div>
 <p>That’s the second principle of qualifying a prospect, and it’s called <strong>Transition</strong>. A good prospect has a business problem that can’t be solved by their existing capabilities. Some kind of disruption that forces them to evaluate new solutions. Without it, inertia wins every time.</p>
 <p>Transition has to be a real event, something that affects the whole company and creates genuine pressure to act. There are four that come up most often:</p>
-<p><strong>New Product.</strong> The FinTech firm launches a mobile app. Suddenly they have a new IT environment, new endpoints, a new audit to run, and customers to notify anyway. One more change, like a new security platform, doesn’t raise nearly as many eyebrows as it would in a stable environment. And the mobile app probably has different security requirements than their browser-based products did. Does their current Symantec setup even cover it? Now you have a conversation about specific capabilities they’re already asking about.</p>
-<p><strong>New Market.</strong> What if this FinTech was a British company entering the US market? Or a US firm trying to do business in the EU? Entering a new market is a cross-departmental event with an executive charter behind it. Compliance requirements change, operations get rebuilt, products get localized. The whole company is in motion. That’s the right time to introduce a better solution.</p>
-<p><strong>New Customer.</strong> Businesses moving up-market often hit a moment where a big new customer demands more than the current stack can deliver. If our FinTech firm had been selling to community banks and just landed a shot at Morgan Stanley, the Morgan Stanley security team is going to ask hard questions. The cost of upgrading to a better tool looks very different when it’s sitting next to the value of that contract.</p>
-<p><strong>M&amp;A.</strong> Any structural change in a company creates transition by definition. An acquisition means redundant systems on both sides and gaps where the new combined organization needs coverage. A merger means evaluating everything. Going public means a whole new level of scrutiny. All of these are moments where the door is open.</p>
-<p>Going back to the rep and her FinTech prospect. What she should have been asking from the very first call was simple: “What’s going on in your business right now that’s making you look at this?”</p>
+<div class="numbered">
+<h3 id="new-product.">New Product.</h3>
+<p>The FinTech firm launches a mobile app. Suddenly they have a new IT environment, new endpoints, a new audit to run, and customers to notify anyway. One more change, like a new security platform, doesn’t raise nearly as many eyebrows as it would in a stable environment. And the mobile app probably has different security requirements than their browser-based products did. Does their current Symantec setup even cover it? Now you have a conversation about specific capabilities they’re already asking about.</p>
+<h3 id="new-market.">New Market.</h3>
+<p>What if this FinTech was a British company entering the US market? Or a US firm trying to do business in the EU? Entering a new market is a cross-departmental event with an executive charter behind it. Compliance requirements change, operations get rebuilt, products get localized. The whole company is in motion. That’s the right time to introduce a better solution.</p>
+<h3 id="new-customer.">New Customer.</h3>
+<p>Businesses moving up-market often hit a moment where a big new customer demands more than the current stack can deliver. If our FinTech firm had been selling to community banks and just landed a shot at Morgan Stanley, the Morgan Stanley security team is going to ask hard questions. The cost of upgrading to a better tool looks very different when it’s sitting next to the value of that contract.</p>
+<h3 id="ma.">M&amp;A.</h3>
+<p>Any structural change in a company creates transition by definition. An acquisition means redundant systems on both sides and gaps where the new combined organization needs coverage. A merger means evaluating everything. Going public means a whole new level of scrutiny. All of these are moments where the door is open.</p>
+</div>
+<p>Going back to the rep and her FinTech prospect. What she should have been asking from the very first call was simple:</p>
+<div class="dialog">
+<p>“What’s going on in your business right now that’s making you look at this?”</p>
+</div>
 <p>If the answer is “nothing, we’re just evaluating options,” she has a problem. That’s not a prospect. That’s a company that’s going to spend six months of her time, ask for a detailed proposal and a proof of concept, compare her favorably against Symantec on every feature, and then decide to stay put because switching is too much work.</p>
 <p>She needs to challenge that sale from the beginning and decide whether to engage based on how prepared they are to make a change.</p>
-<p><strong>Criticality</strong> tells you they have a reason to care. Transition tells you they have a reason to act. You need both.</p>
+<div class="rule">
+<p>Criticality tells you they have a reason to care. Transition tells you they have a reason to act. You need both.</p>
+</div>
 <p>Next up: <a href="/field-notes/qualifying-3">Demographics</a>. You must fill a gap in the customer’s organization. And that only happens if it’s the right size company with the right focus.</p>
 <p>At Antimatter, we help sales teams qualify faster and stop wasting time on deals that were never going to close. If your pipeline is full but your close rate is low, <a href="/contact">let’s talk.</a></p>
 

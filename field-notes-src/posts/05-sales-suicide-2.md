@@ -4,7 +4,9 @@ Last week we were in a bar [getting hit on by Brad,](/field-notes/sales-suicide-
 
 It won't. Not for Brad, and not for your sales team.
 
-**Rule #1: Set up your pitch by listening and asking the right questions.**
+::: rule
+**Rule #1:** Set up your pitch by listening and asking the right questions.
+:::
 
 Today we're on to Rule #2. And it starts with a question.
 
@@ -14,19 +16,31 @@ How many times have you read a sales email with the word "**organization**" in i
 
 Can you imagine someone saying that in real life?
 
-You're back in the bar. Brad is history. Now you're talking to Brendon. Brendon's actually pretty nice. He asked what you do for a living. You told him you're the CRO of a tech consulting company.
+::: scene
+{{illo:cocktail}}
 
-Then Brendon says: *"How does your organization obtain access to qualified decision-makers?"*
+**Scene 2** · The same bar.
+
+*Brad is history. Now you're talking to Brendon. Brendon's actually pretty nice. He asked what you do for a living. You told him you're the CRO of a tech consulting company.*
+
+**Brendon:** "How does your organization obtain access to qualified decision-makers?"
+:::
 
 For the second time in a week, you puke in your mouth a little bit and make a beeline for the nearest exit. You really need to find a new bar.
 
-**Rule #2: Don't use a word in a sales communication that you wouldn't use in a bar.**
+::: rule
+**Rule #2:** Don't use a word in a sales communication that you wouldn't use in a bar.
+:::
 
 When people talk to their peers, they use plain conversational language. For some reason, the moment they try to sell something, they shift into this weird marketing-speak that no human being has ever used in real life.
 
-*"Our solutions are super modular. We've got our own gold standard tech stack, but we're also adaptable to the preferences of your team."*
+::: {.bad label="Word salad"}
+"Our solutions are super modular. We've got our own gold standard tech stack, but we're also adaptable to the preferences of your team."
+:::
 
+::: punch
 It's vomit-inducing.
+:::
 
 ## Why does this happen?
 
@@ -40,7 +54,11 @@ Both paths lead to wasted budget and zero pipeline. Because any email that opens
 
 ## So what actually works?
 
-Here's how Antimatter Consulting describes itself: *"At Antimatter, we provide solutions to overcome your organization's technology challenges by unlocking innovation, breaking down siloes, and achieving meaningful progress against your enterprise KPIs."*
+Here's how Antimatter Consulting describes itself:
+
+::: {.bad label="Word salad"}
+"At Antimatter, we provide solutions to overcome your organization's technology challenges by unlocking innovation, breaking down siloes, and achieving meaningful progress against your enterprise KPIs."
+:::
 
 Just kidding. See how terrible it is?
 
@@ -48,17 +66,25 @@ We actually start by obsessively deleting every single one of those non-human wo
 
 There's nothing wrong with something like this:
 
-*"My company, CloudServe, works with a lot of startups after a funding round. We help them figure out things like security and reliability as they grow."*
+::: {.good label="Human"}
+"My company, CloudServe, works with a lot of startups after a funding round. We help them figure out things like security and reliability as they grow."
+:::
 
 Or this:
 
-*"I saw you just acquired TechSoft. Congrats! If you need a team to look at all their tools and apps and make some recommendations, we'd love to help."*
+::: {.good label="Human"}
+"I saw you just acquired TechSoft. Congrats! If you need a team to look at all their tools and apps and make some recommendations, we'd love to help."
+:::
 
 It sounds almost too simple. Like it can't possibly be enough. Trust me, it is. It's the only way to not get laughed out of the room.
 
-Otherwise you're sitting there like: *"We provide your organization with a canonical reference architecture for scalable enterprise innovation."*
+Otherwise you're sitting there like:
 
-And they're like: *"Ah... Ma'am, this is a Waffle House."*
+::: dialog
+"We provide your organization with a canonical reference architecture for scalable enterprise innovation."
+
+"Ah... Ma'am, this is a Waffle House."
+:::
 
 Do you want to remove all the annoying, unhelpful jargon from **your organization**? [Let's talk.](/contact)
 

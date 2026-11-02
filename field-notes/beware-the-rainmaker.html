@@ -89,6 +89,7 @@
   article .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--head);font-weight:300;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--mist);margin-bottom:34px;padding-bottom:18px;border-bottom:1px solid var(--line)}
   article p{margin:0 0 1.2em}
   article h2{font-size:30px;margin:2em 0 .7em;color:var(--mist-2)}
+  article h2 a{color:var(--mist-2);border:0}article h2 a:hover{color:var(--orange-2)}
   article h3{font-size:22px;margin:1.8em 0 .6em;color:var(--mist-2);font-weight:500}
   article strong{color:var(--ink);font-weight:600}
   article em{color:var(--ink)}
@@ -102,6 +103,54 @@
   .post-nav{max-width:720px;margin:0 auto;padding:0 28px 100px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .post-nav a{font-family:var(--head);letter-spacing:.1em;text-transform:uppercase;font-size:13px;color:var(--mist)}
   .post-nav a:hover{color:var(--ink)}
+
+  /* ---- breakouts ---- */
+  article .dialog{margin:1.6em 0 1.8em;padding:6px 0 6px 26px;border-left:3px solid var(--orange)}
+  article .dialog p{font-family:var(--head);font-weight:400;font-size:24px;line-height:1.3;letter-spacing:.01em;margin:0 0 .55em;color:var(--mist-2)}
+  article .dialog p:nth-child(even){color:var(--ink);padding-left:1.4em}
+  article .dialog p:last-child{margin-bottom:0}
+  article .punch{margin:1.4em 0 1.6em}
+  article .punch p{font-size:clamp(44px,7vw,72px);line-height:1;margin:0}
+  article .rule{margin:1.8em 0;padding:26px 30px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,rgba(22,48,90,.45),rgba(15,33,64,.25))}
+  article .rule p{font-family:var(--head);font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.2;color:var(--ink);margin:0}
+  article .rule p strong{color:var(--orange-2)}
+  article .bad,article .good{position:relative;margin:1.4em 0;padding:22px 26px 22px 30px;border-radius:8px;background:rgba(7,16,31,.7);border:1px solid var(--line);font-size:16px;line-height:1.6;color:var(--ink-dim)}
+  article .bad::before,article .good::before{content:attr(data-label);position:absolute;top:-11px;left:22px;font-family:var(--head);font-weight:500;letter-spacing:.24em;text-transform:uppercase;font-size:11px;padding:3px 10px;border-radius:2px;color:var(--navy)}
+  article .bad{border-left:4px solid var(--orange)}
+  article .bad::before{background:var(--orange)}
+  article .good{border-left:4px solid var(--mist)}
+  article .good::before{background:var(--mist)}
+  article .bad p,article .good p{margin:0 0 .6em}
+  article .bad p:last-child,article .good p:last-child{margin:0}
+  article .bad strong,article .good strong{color:var(--ink);font-weight:600}
+  article .numbered{counter-reset:nq;margin:1.2em 0}
+  article .numbered h3{counter-increment:nq;position:relative;padding-left:64px;min-height:50px;display:flex;align-items:center;margin:2.2em 0 .5em;font-size:24px}
+  article .numbered h3::before{content:counter(nq,decimal-leading-zero);position:absolute;left:0;top:-6px;font-family:var(--head);font-weight:300;font-size:52px;line-height:1;color:var(--orange);letter-spacing:.02em}
+  article .numbered h3+p{padding-left:64px}
+  article .numbered p{padding-left:64px}
+  @media (max-width:900px){
+    article .dialog p{font-size:20px}
+    article .numbered h3,article .numbered p,article .numbered h3+p{padding-left:48px}
+    article .numbered h3::before{font-size:40px;top:-2px}
+    article .rule{padding:20px 22px}
+  }
+
+  /* scene: framed magazine-style sidebar */
+  article .scene{position:relative;margin:2em 0 2.2em;padding:34px 36px 30px;border:1px solid var(--mist);outline:1px solid var(--line);outline-offset:5px;background:linear-gradient(180deg,rgba(22,48,90,.35),rgba(15,33,64,.15))}
+  article .scene .illo{float:right;width:150px;margin:-10px -8px 6px 24px;color:var(--mist)}
+  article .scene .illo svg{width:100%;height:auto;display:block}
+  article .scene > p:first-of-type{font-family:var(--head);font-weight:300;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--mist);margin:0 0 14px}
+  article .scene > p:first-of-type strong{color:var(--orange);font-weight:500}
+  article .scene p{margin:0 0 .9em;font-size:17px}
+  article .scene p > em:only-child{color:var(--ink-dim);display:block;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+  article .scene p.line{clear:right;display:grid;grid-template-columns:112px 1fr;column-gap:10px;align-items:baseline;font-family:var(--head);font-weight:400;font-size:23px;line-height:1.3;color:var(--mist-2);margin-bottom:.7em}
+  article .scene p.line strong{font-family:var(--head);font-weight:500;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--orange);padding-top:6px}
+  article .scene p:last-child{margin-bottom:0}
+  @media (max-width:900px){
+    article .scene{padding:24px 20px 20px}
+    article .scene .illo{width:96px;margin:0 0 8px 14px}
+    article .scene p.line{grid-template-columns:1fr;font-size:19px;row-gap:2px}
+  }
 
   footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
   footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
@@ -145,35 +194,57 @@
   <div class="meta"><span>Coaching</span><span>Field notes No. 11 · Steve Zeller</span></div>
 <p>Every time I’ve seen a company try to hire a “Rainmaker”, it’s been a failure.</p>
 <p>Why? Poaching top sales talent from a larger competitor sounds like a great idea. It almost never is. Let’s dive into why.</p>
-<h2 id="this-guy-is-a-rainmaker-the-recruiter-said.">“This guy is a RAINMAKER!” the recruiter said.</h2>
-<p>He was practically bouncing off the walls with excitement as he scrambled to finalize the offer letter. He had just filled a senior sales role for a 100 person professional services shop.</p>
-<p>“Cool!” I said. “Where did you find him?”</p>
-<p>“Duuuuude, he’s been selling millions a year at Deloitte! And he’s got a Rolodex full of customers for us!!”</p>
+<div class="scene">
+<div class="illo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A rain cloud">
+  <!-- cloud -->
+  <path d="M66 112 a24 24 0 0 1 4 -47 a34 34 0 0 1 64 -14 a26 26 0 0 1 44 20 a20 20 0 0 1 -2 41 z"/>
+  <!-- rain -->
+  <path d="M78 132 l-8 18"/>
+  <path d="M104 132 l-8 18"/>
+  <path d="M130 132 l-8 18"/>
+  <path d="M156 132 l-8 18"/>
+  <path d="M90 158 l-8 18"/>
+  <path d="M116 158 l-8 18"/>
+  <path d="M142 158 l-8 18"/>
+</svg></div>
+<p><strong>Scene 1</strong> · A 100-person professional services shop.</p>
+<p><em>Sales had been slow for a few quarters. Missed targets, reps behind quota, board getting concerned. A recruiter had just filled a senior sales role, and he was practically bouncing off the walls with excitement as he scrambled to finalize the offer letter.</em></p>
+<p class="line"><strong>Recruiter</strong> “This guy is a RAINMAKER!”</p>
+<p class="line"><strong>Me</strong> “Cool! Where did you find him?”</p>
+<p class="line"><strong>Recruiter</strong> “Duuuuude, he’s been selling millions a year at Deloitte! And he’s got a Rolodex full of customers for us!!”</p>
+<p class="line"><strong>Me</strong> “What kind of clients did he work with at Deloitte?”</p>
+<p class="line"><strong>Recruiter</strong> “Oh man, Coca-Cola, Bank of America, Ford, you name it!”</p>
+</div>
 <p>Ok, aside from the insanely antiquated “Rolodex” reference (I never had one, but at least I’m old enough to know what it is), and the egregious “Duuuuuude”, I had concerns.</p>
-<p>Management was pumped. Sales had been slow for a few quarters. Missed targets, reps behind quota, board getting concerned. This guy was going to turn everything around.</p>
-<p>“What kind of clients did he work with at Deloitte?” I asked.</p>
-<p>“Oh man, Coca-Cola, Bank of America, Ford, you name it!”</p>
+<p>Management was pumped. This guy was going to turn everything around.</p>
 <p>Between Coca-Cola, Bank of America, and Ford, how many do you think became customers of his new shop?</p>
-<p>You guessed it… Zero.</p>
+<p>You guessed it…</p>
+<div class="punch"><p class="mist">Zero.</p>
+</div>
 <h2 id="beware-the-rainmaker.">Beware the Rainmaker.</h2>
 <p>Think about a struggling sports team. Haven’t made the playoffs in years. Management decides to spend their entire budget to give a ludicrous contract to an aging star. Does this ever work?</p>
 <p>Why would sales be any different?</p>
 <p>Before you go hunting for your own Rainmaker, here are six questions worth asking…</p>
-<h3 id="are-they-legit-or-full-of-sht">1. Are they legit, or full of sh*t?</h3>
+<div class="numbered">
+<h3 id="are-they-legit-or-full-of-sht">Are they legit, or full of sh*t?</h3>
 <p>Someone spends five or eight years building a book of business at a big global company. They’re closing $20 million a year. They’re pulling in high six figures in commissions. Why would they leave to join a smaller company and start from scratch? That doesn’t make a lot of sense. Dig hard into those numbers before you get excited.</p>
-<h3 id="are-they-toxic">2. Are they toxic?</h3>
+<h3 id="are-they-toxic">Are they toxic?</h3>
 <p>If they are putting up those numbers, is there a reason they need to jump ship? Are they about to get fired for something? Big producers at big companies sometimes have a long trail of problems that the company has been willing to overlook because of their revenue. You’re about to inherit all of that.</p>
-<h3 id="will-their-relationships-transfer">3. Will their relationships transfer?</h3>
+<h3 id="will-their-relationships-transfer">Will their relationships transfer?</h3>
 <p>As we covered in the <a href="/field-notes/qualifying-1">Qualifying</a> series, demographics matter. Will their big-company relationships translate into business for a smaller shop? In most cases the honest answer is no. Their contacts will take the meeting, enjoy the lunch, and then quietly go with someone on the approved vendor list.</p>
-<h3 id="do-they-actually-expect-to-work">4. Do they actually expect to work?</h3>
+<h3 id="do-they-actually-expect-to-work">Do they actually expect to work?</h3>
 <p>At a smaller company, they can’t knock on a door, talk sports for a minute, and expect someone else to handle the rest. At their old job they probably had a solutions engineer running the sales process, an RFP team writing proposals, and a junior staffer doing all the follow-up. Are they willing to roll up their sleeves? Find out before you sign the offer letter.</p>
-<h3 id="are-they-asking-for-a-huge-base">5. Are they asking for a huge base?</h3>
+<h3 id="are-they-asking-for-a-huge-base">Are they asking for a huge base?</h3>
 <p>Be careful bringing in an outside person at a significantly higher base than your existing reps. People find out. If the Rainmaker immediately closes some big deals, great. If they don’t, you’ve just created a morale problem. Your best existing reps are now wondering why they’re making less than the new guy who hasn’t closed anything yet.</p>
-<h3 id="why-do-you-need-a-rainmaker-in-the-first-place">6. Why do you need a Rainmaker in the first place?</h3>
+<h3 id="why-do-you-need-a-rainmaker-in-the-first-place">Why do you need a Rainmaker in the first place?</h3>
 <p>This is the most important question. If you’re building on success, have a team that’s performing and some extra budget to bet on an expensive hire, go for it. But if your current team is falling behind, if you don’t have lead flow coming in, and if you’re hoping for this long-shot to carry the team, forget it.</p>
 <p>Going back to our sports analogy, expecting one new star to carry the whole roster almost never works. Without the right supporting players, the right product, and a repeatable sale driven by marketing, it’s just a Hail Mary. Listen to your current team, invest in their success, fix the problems. Grow your own stars, and then fill in the gaps once you know what works.</p>
+</div>
 <h2 id="rainmaker-usually-describes-the-past-not-the-future.">“Rainmaker” usually describes the past, not the future.</h2>
-<p>Rainmakers do exist. <strong>But it’s a term used to describe past performance, not a hiring strategy.</strong> Believe it or not, most of the Rainmakers I’ve seen in real life were hired as entry-level salespeople. They came from other roles, like technical, procurement, or operations roles within the industry that they later sold to. They took the time to find a product they believed in, learn about it, and carefully build a business around it. They took great personal pride in their reputation, and the outcomes they delivered for their customers. And the last thing they’d do is scrap all that success for a quick bump to their base salary.</p>
+<div class="rule">
+<p>Rainmakers do exist. But it’s a term used to describe past performance, not a hiring strategy.</p>
+</div>
+<p>Believe it or not, most of the Rainmakers I’ve seen in real life were hired as entry-level salespeople. They came from other roles, like technical, procurement, or operations roles within the industry that they later sold to. They took the time to find a product they believed in, learn about it, and carefully build a business around it. They took great personal pride in their reputation, and the outcomes they delivered for their customers. And the last thing they’d do is scrap all that success for a quick bump to their base salary.</p>
 <p>At Antimatter, building and coaching sales teams is core to what we do. If you’re trying to figure out what kind of sales talent you actually need, <a href="/contact">let’s talk.</a></p>
 
 </article>

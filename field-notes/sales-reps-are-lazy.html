@@ -89,6 +89,7 @@
   article .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--head);font-weight:300;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--mist);margin-bottom:34px;padding-bottom:18px;border-bottom:1px solid var(--line)}
   article p{margin:0 0 1.2em}
   article h2{font-size:30px;margin:2em 0 .7em;color:var(--mist-2)}
+  article h2 a{color:var(--mist-2);border:0}article h2 a:hover{color:var(--orange-2)}
   article h3{font-size:22px;margin:1.8em 0 .6em;color:var(--mist-2);font-weight:500}
   article strong{color:var(--ink);font-weight:600}
   article em{color:var(--ink)}
@@ -102,6 +103,54 @@
   .post-nav{max-width:720px;margin:0 auto;padding:0 28px 100px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .post-nav a{font-family:var(--head);letter-spacing:.1em;text-transform:uppercase;font-size:13px;color:var(--mist)}
   .post-nav a:hover{color:var(--ink)}
+
+  /* ---- breakouts ---- */
+  article .dialog{margin:1.6em 0 1.8em;padding:6px 0 6px 26px;border-left:3px solid var(--orange)}
+  article .dialog p{font-family:var(--head);font-weight:400;font-size:24px;line-height:1.3;letter-spacing:.01em;margin:0 0 .55em;color:var(--mist-2)}
+  article .dialog p:nth-child(even){color:var(--ink);padding-left:1.4em}
+  article .dialog p:last-child{margin-bottom:0}
+  article .punch{margin:1.4em 0 1.6em}
+  article .punch p{font-size:clamp(44px,7vw,72px);line-height:1;margin:0}
+  article .rule{margin:1.8em 0;padding:26px 30px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,rgba(22,48,90,.45),rgba(15,33,64,.25))}
+  article .rule p{font-family:var(--head);font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.2;color:var(--ink);margin:0}
+  article .rule p strong{color:var(--orange-2)}
+  article .bad,article .good{position:relative;margin:1.4em 0;padding:22px 26px 22px 30px;border-radius:8px;background:rgba(7,16,31,.7);border:1px solid var(--line);font-size:16px;line-height:1.6;color:var(--ink-dim)}
+  article .bad::before,article .good::before{content:attr(data-label);position:absolute;top:-11px;left:22px;font-family:var(--head);font-weight:500;letter-spacing:.24em;text-transform:uppercase;font-size:11px;padding:3px 10px;border-radius:2px;color:var(--navy)}
+  article .bad{border-left:4px solid var(--orange)}
+  article .bad::before{background:var(--orange)}
+  article .good{border-left:4px solid var(--mist)}
+  article .good::before{background:var(--mist)}
+  article .bad p,article .good p{margin:0 0 .6em}
+  article .bad p:last-child,article .good p:last-child{margin:0}
+  article .bad strong,article .good strong{color:var(--ink);font-weight:600}
+  article .numbered{counter-reset:nq;margin:1.2em 0}
+  article .numbered h3{counter-increment:nq;position:relative;padding-left:64px;min-height:50px;display:flex;align-items:center;margin:2.2em 0 .5em;font-size:24px}
+  article .numbered h3::before{content:counter(nq,decimal-leading-zero);position:absolute;left:0;top:-6px;font-family:var(--head);font-weight:300;font-size:52px;line-height:1;color:var(--orange);letter-spacing:.02em}
+  article .numbered h3+p{padding-left:64px}
+  article .numbered p{padding-left:64px}
+  @media (max-width:900px){
+    article .dialog p{font-size:20px}
+    article .numbered h3,article .numbered p,article .numbered h3+p{padding-left:48px}
+    article .numbered h3::before{font-size:40px;top:-2px}
+    article .rule{padding:20px 22px}
+  }
+
+  /* scene: framed magazine-style sidebar */
+  article .scene{position:relative;margin:2em 0 2.2em;padding:34px 36px 30px;border:1px solid var(--mist);outline:1px solid var(--line);outline-offset:5px;background:linear-gradient(180deg,rgba(22,48,90,.35),rgba(15,33,64,.15))}
+  article .scene .illo{float:right;width:150px;margin:-10px -8px 6px 24px;color:var(--mist)}
+  article .scene .illo svg{width:100%;height:auto;display:block}
+  article .scene > p:first-of-type{font-family:var(--head);font-weight:300;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--mist);margin:0 0 14px}
+  article .scene > p:first-of-type strong{color:var(--orange);font-weight:500}
+  article .scene p{margin:0 0 .9em;font-size:17px}
+  article .scene p > em:only-child{color:var(--ink-dim);display:block;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+  article .scene p.line{clear:right;display:grid;grid-template-columns:112px 1fr;column-gap:10px;align-items:baseline;font-family:var(--head);font-weight:400;font-size:23px;line-height:1.3;color:var(--mist-2);margin-bottom:.7em}
+  article .scene p.line strong{font-family:var(--head);font-weight:500;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--orange);padding-top:6px}
+  article .scene p:last-child{margin-bottom:0}
+  @media (max-width:900px){
+    article .scene{padding:24px 20px 20px}
+    article .scene .illo{width:96px;margin:0 0 8px 14px}
+    article .scene p.line{grid-template-columns:1fr;font-size:19px;row-gap:2px}
+  }
 
   footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
   footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
@@ -143,17 +192,22 @@
   </div></div></div></section>
 <article>
   <div class="meta"><span>Coaching</span><span>Field notes No. 01 · Steve Zeller</span></div>
-<p><strong>“We’re Not Closing Deals Because Our Sales Reps Are Lazy!”</strong></p>
+<div class="rule">
+<p>“We’re Not Closing Deals Because Our Sales Reps Are Lazy!”</p>
+</div>
 <p>I’ve heard this so many times. And you know what? It’s true. Sometimes sales reps <em>are</em> lazy. But guess what?</p>
-<p>Programmers are lazy.<br />
-Designers are lazy.<br />
-Executives are lazy.</p>
+<div class="dialog">
+<p>Programmers are lazy.</p>
+<p>Designers are lazy.</p>
+<p>Executives are lazy.</p>
+</div>
 <p>The only people who <em>are never</em> lazy are Spartan racers and UFC fighters.</p>
 <p>It’s human nature. People expect to crush it in a new job for six months to a year, then ease off a little. Maybe they want to take a long lunch or go for a walk in the park. Maybe they’ve earned it.</p>
 <p>And sales is stressful.</p>
 <p>It’s one of the only jobs where you can be smart, hardworking, and <em>still</em> underperform. You can spend six months working a huge deal, only to lose it because the company got acquired or a new CTO comes in with a different agenda.</p>
 <p>It can be brutal, even soul-crushing. But when you have a big year in sales? <strong><em>It’s incredibly fun.</em></strong></p>
 <h2 id="two-lessons">Two Lessons</h2>
+<div class="numbered">
 <h3 id="excitement">$ = Excitement</h3>
 <p>Don’t think: “My reps aren’t selling because they’re lazy.”</p>
 <p>Think: “My reps are getting lazy because they’re not selling.”</p>
@@ -166,7 +220,10 @@ Executives are lazy.</p>
 <p>Now ask yourself, would you rather have a rep who hits 200% of quota and calls in her annual review from the hottest fashion boutique in Paris?</p>
 <p>or</p>
 <p>A rep who’s making eight hours of cold calls on Christmas Eve because he’s about to get fired?</p>
-<p><strong>Like it or not, it’s <em>your</em> problem, not theirs.</strong></p>
+</div>
+<div class="rule">
+<p>Like it or not, it’s <em>your</em> problem, not theirs.</p>
+</div>
 <p>It’s your job, as leadership, to excite your salespeople:</p>
 <ul>
 <li>Show them how they can <em>win.</em></li>

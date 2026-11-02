@@ -1,14 +1,16 @@
 *The third in a [three-part series](/field-notes/qualifying-1) on how to identify prospects worth your time.*
 
-## The new SVP of Sales really pulled off those suede loafers, which seemed beyond my powers...
+::: scene
+{{illo:tablet}}
 
-Personally I thought the tailored shirt with the monogram on the cuff was a bit much, but then again, I was wearing Dr. Martens and jeans.
+**Scene 1** · A 100-person MSP shop. The new SVP of Sales has just come over from a big TelCom company.
 
-He had just come over from a big TelCom company to run sales for our 100-person MSP shop.
+*He really pulled off those suede loafers, which seemed beyond my powers. Personally I thought the tailored shirt with the monogram on the cuff was a bit much, but then again, I was wearing Dr. Martens and jeans.*
 
-"I'm bringing in an enterprise sales team," he said. "Can you help onboard them?"
+**SVP:** "I'm bringing in an enterprise sales team. Can you help onboard them?"
 
-"Sure," I said.
+**Me:** "Sure."
+:::
 
 So I made a new sales kit. I did my best to paste our biggest-sounding logos at the top and insert the word "Enterprise" into a bunch of sentences. Now we had an "Enterprise Security Solution" and "Mission-Critical 24/7 Support."
 
@@ -20,11 +22,15 @@ Surface tablets and lattes at the ready, they started laying down their battle p
 
 How many of those Fortune 500 enterprises do you think this crackerjack team closed in the next twelve months?
 
+::: punch
 Zero.
+:::
 
-## We've covered [Criticality](/field-notes/qualifying-1) and [Transition](/field-notes/qualifying-2). There's a third factor that won't win you a deal on its own, but will absolutely kill one if you ignore it.
+We've covered [Criticality](/field-notes/qualifying-1) and [Transition](/field-notes/qualifying-2). There's a third factor that won't win you a deal on its own, but will absolutely kill one if you ignore it.
 
-**Demographics.**
+::: punch
+Demographics.
+:::
 
 Is this the right size company? Is this the right type of business? Does what you're selling fill a gap in their organization, or does it compete with something they already do themselves?
 
@@ -36,7 +42,9 @@ Big companies have big internal capabilities. If what you sell is something they
 
 ## And size is only part of it.
 
+::: rule
 What you're selling can't sit inside the core competency of your customer.
+:::
 
 If you're trying to sell software development to Salesforce, or IT infrastructure to Microsoft, you may as well be selling tires to Goodyear. Those are obvious examples. But you'd be surprised how many proposals get written to sell AI services to AI companies, or security consulting to firms with 200 security engineers on staff.
 
@@ -44,6 +52,10 @@ You need the company that is big enough to have real budget and sophisticated en
 
 The four suits with the Surface tablets had Criticality. Fortune 500 companies definitely need managed services. And let's give them credit, their territory plans covered Transition too. They'd done their homework on news releases, M&A activity, new product launches. They knew why each company might need help right now.
 
-But the Demographics were completely wrong. A 100-person shop chasing the Fortune 500 list is not a sales strategy. It's a wish list.
+But the Demographics were completely wrong.
+
+::: rule
+A 100-person shop chasing the Fortune 500 list is not a sales strategy. It's a wish list.
+:::
 
 At Antimatter, we help sales teams qualify faster and stop wasting time on deals that were never going to close. If you see "qualified" deals fall through the cracks month after month, [let's talk.](/contact)

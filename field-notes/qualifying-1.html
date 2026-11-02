@@ -89,6 +89,7 @@
   article .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--head);font-weight:300;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--mist);margin-bottom:34px;padding-bottom:18px;border-bottom:1px solid var(--line)}
   article p{margin:0 0 1.2em}
   article h2{font-size:30px;margin:2em 0 .7em;color:var(--mist-2)}
+  article h2 a{color:var(--mist-2);border:0}article h2 a:hover{color:var(--orange-2)}
   article h3{font-size:22px;margin:1.8em 0 .6em;color:var(--mist-2);font-weight:500}
   article strong{color:var(--ink);font-weight:600}
   article em{color:var(--ink)}
@@ -102,6 +103,54 @@
   .post-nav{max-width:720px;margin:0 auto;padding:0 28px 100px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .post-nav a{font-family:var(--head);letter-spacing:.1em;text-transform:uppercase;font-size:13px;color:var(--mist)}
   .post-nav a:hover{color:var(--ink)}
+
+  /* ---- breakouts ---- */
+  article .dialog{margin:1.6em 0 1.8em;padding:6px 0 6px 26px;border-left:3px solid var(--orange)}
+  article .dialog p{font-family:var(--head);font-weight:400;font-size:24px;line-height:1.3;letter-spacing:.01em;margin:0 0 .55em;color:var(--mist-2)}
+  article .dialog p:nth-child(even){color:var(--ink);padding-left:1.4em}
+  article .dialog p:last-child{margin-bottom:0}
+  article .punch{margin:1.4em 0 1.6em}
+  article .punch p{font-size:clamp(44px,7vw,72px);line-height:1;margin:0}
+  article .rule{margin:1.8em 0;padding:26px 30px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,rgba(22,48,90,.45),rgba(15,33,64,.25))}
+  article .rule p{font-family:var(--head);font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.2;color:var(--ink);margin:0}
+  article .rule p strong{color:var(--orange-2)}
+  article .bad,article .good{position:relative;margin:1.4em 0;padding:22px 26px 22px 30px;border-radius:8px;background:rgba(7,16,31,.7);border:1px solid var(--line);font-size:16px;line-height:1.6;color:var(--ink-dim)}
+  article .bad::before,article .good::before{content:attr(data-label);position:absolute;top:-11px;left:22px;font-family:var(--head);font-weight:500;letter-spacing:.24em;text-transform:uppercase;font-size:11px;padding:3px 10px;border-radius:2px;color:var(--navy)}
+  article .bad{border-left:4px solid var(--orange)}
+  article .bad::before{background:var(--orange)}
+  article .good{border-left:4px solid var(--mist)}
+  article .good::before{background:var(--mist)}
+  article .bad p,article .good p{margin:0 0 .6em}
+  article .bad p:last-child,article .good p:last-child{margin:0}
+  article .bad strong,article .good strong{color:var(--ink);font-weight:600}
+  article .numbered{counter-reset:nq;margin:1.2em 0}
+  article .numbered h3{counter-increment:nq;position:relative;padding-left:64px;min-height:50px;display:flex;align-items:center;margin:2.2em 0 .5em;font-size:24px}
+  article .numbered h3::before{content:counter(nq,decimal-leading-zero);position:absolute;left:0;top:-6px;font-family:var(--head);font-weight:300;font-size:52px;line-height:1;color:var(--orange);letter-spacing:.02em}
+  article .numbered h3+p{padding-left:64px}
+  article .numbered p{padding-left:64px}
+  @media (max-width:900px){
+    article .dialog p{font-size:20px}
+    article .numbered h3,article .numbered p,article .numbered h3+p{padding-left:48px}
+    article .numbered h3::before{font-size:40px;top:-2px}
+    article .rule{padding:20px 22px}
+  }
+
+  /* scene: framed magazine-style sidebar */
+  article .scene{position:relative;margin:2em 0 2.2em;padding:34px 36px 30px;border:1px solid var(--mist);outline:1px solid var(--line);outline-offset:5px;background:linear-gradient(180deg,rgba(22,48,90,.35),rgba(15,33,64,.15))}
+  article .scene .illo{float:right;width:150px;margin:-10px -8px 6px 24px;color:var(--mist)}
+  article .scene .illo svg{width:100%;height:auto;display:block}
+  article .scene > p:first-of-type{font-family:var(--head);font-weight:300;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--mist);margin:0 0 14px}
+  article .scene > p:first-of-type strong{color:var(--orange);font-weight:500}
+  article .scene p{margin:0 0 .9em;font-size:17px}
+  article .scene p > em:only-child{color:var(--ink-dim);display:block;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+  article .scene p.line{clear:right;display:grid;grid-template-columns:112px 1fr;column-gap:10px;align-items:baseline;font-family:var(--head);font-weight:400;font-size:23px;line-height:1.3;color:var(--mist-2);margin-bottom:.7em}
+  article .scene p.line strong{font-family:var(--head);font-weight:500;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--orange);padding-top:6px}
+  article .scene p:last-child{margin-bottom:0}
+  @media (max-width:900px){
+    article .scene{padding:24px 20px 20px}
+    article .scene .illo{width:96px;margin:0 0 8px 14px}
+    article .scene p.line{grid-template-columns:1fr;font-size:19px;row-gap:2px}
+  }
 
   footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
   footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
@@ -149,22 +198,35 @@
 <p>Open TechCrunch or a prospecting tool like Seamless AI or Discover. You’ll find hundreds of tech firms. How do you separate the ones who will never buy from the ones who might? Over the next three posts we’ll cover the three criteria that answer that question. Get all three right and you’ll stop wasting time on deals that were never going anywhere, and start walking into every conversation already knowing how to position the sale.</p>
 <p>The three criteria, in order: <strong>Criticality</strong>, <strong>Transition</strong>, and <strong>Demographics</strong>.</p>
 <p>Today, <strong>#1: Criticality</strong>.</p>
-<p>A sales rep came to me once practically buzzing. “I just had the best call!” he said. “This was the nicest guy, we talked for an hour, he was super interested in our services.”</p>
-<p>“Great,” I said. “What does the company do?”</p>
-<p>“Oh they make these cool widgets and ringtones for phones. Small startup, but they’re growing fast!”</p>
-<p>This rep was selling managed services for AWS: 24/7 helpdesk, monitoring, backups, security. The minimum package cost $100K a year.</p>
-<p>I asked him one question. “What happens if those widgets go down for an hour?”</p>
-<p>He thought about it for a second.</p>
+<div class="scene">
+<div class="illo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A telephone handset">
+  <path d="M64 44 l26 -8 l18 34 l-16 14 c8 24 28 44 52 52 l14 -16 l34 18 l-8 26 c-4 10 -16 14 -28 10 c-56 -18 -96 -58 -112 -114 c-3 -10 2 -20 20 -16 z"/>
+  <path d="M150 50 a30 30 0 0 1 30 30"/>
+  <path d="M150 28 a52 52 0 0 1 52 52"/>
+</svg></div>
+<p><strong>Scene 1</strong> · A managed services shop. The minimum package costs $100K a year.</p>
+<p><em>A sales rep came to me once practically buzzing. He was selling managed services for AWS: 24/7 helpdesk, monitoring, backups, security.</em></p>
+<p class="line"><strong>Rep</strong> “I just had the best call! This was the nicest guy, we talked for an hour, he was super interested in our services.”</p>
+<p class="line"><strong>Me</strong> “Great. What does the company do?”</p>
+<p class="line"><strong>Rep</strong> “Oh they make these cool widgets and ringtones for phones. Small startup, but they’re growing fast!”</p>
+<p class="line"><strong>Me</strong> “What happens if those widgets go down for an hour?”</p>
+<p><em>He thought about it for a second.</em></p>
+</div>
 <p>The rep spent another week writing up a proposal. He was thorough, detailed, proud of it. You already know how this ends. The moment the prospect saw the price, he vanished. Never heard from him again.</p>
-<p>That’s a Criticality problem.</p>
+<div class="punch"><p class="mist">That’s a Criticality problem.</p>
+</div>
 <p>The most important question you can ask about any potential deal is whether the customer’s business is critical enough to justify what you’re selling. If their product goes down for an hour and nobody notices, nobody calls, nobody loses money, why would they spend serious dollars making sure it never goes down?</p>
+<div class="rule">
 <p>Criticality has two sides. Is what the customer does critical enough to invest in protection? And is what you’re providing critical enough to merit that investment?</p>
+</div>
 <p>Widgets, social apps, games, early-stage startups burning through seed money. These are generally not a fit for mature, expensive services like 24/7 support and enterprise security.</p>
 <p>What should this rep have been targeting? Healthcare, finance, education, B2B SaaS.</p>
 <p>Businesses where if the product goes down, people are yelling, revenue is bleeding, and someone’s job is on the line. Because then spending $100K a year to avoid losing millions is an easy conversation.</p>
 <p>One more thing worth knowing: the type of company is only part of the picture. Criticality applies to the specific project or application your sale is supporting. You can be selling into a highly critical business and still be pitching into the wrong corner of it.</p>
 <p>Watch out for back-office functions. Payroll, HR, internal communications, desktop support, anything that’s internal-facing. Companies will tell you these systems are critical, and in some sense they are. But if internal tools go down for an hour, or lose a few days of data, the business doesn’t actually lose revenue. Nobody’s customer is calling. The company is inconvenienced, not bleeding. And when budget time comes around, they’re going to spend their money protecting the things that generate revenue, not the things that process expense reports.</p>
+<div class="rule">
 <p>Criticality means the application or process your sale is supporting is essential to the customer’s ability to make money. If it goes down or gets breached, they lose revenue and customers. That’s the project you want to be attached to.</p>
+</div>
 <p>Next up: <a href="/field-notes/qualifying-2">Transition</a>. No one decides to spend money if they don’t have to. Something important has to be changing.</p>
 <p>At Antimatter, qualifying prospects is one of the first things we work on with sales teams. If your reps are spending time on deals that were never going to close, <a href="/contact">let’s talk.</a></p>
 

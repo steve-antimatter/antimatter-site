@@ -8,7 +8,11 @@ Over the last few weeks in the Sales Suicide series, we defined three total "no-
 
 Today, let's take those principles and apply to the most dreaded task of drafting a cold email.
 
-**Cold email is not going to work**. Let's just get that out in the open first of all. 80% of this stuff doesn't even hit an inbox, and the other 20% is hastily deleted. So how can we flatten that curve and give your message a (small) chance of generating business?
+::: rule
+Cold email is not going to work.
+:::
+
+Let's just get that out in the open first of all. 80% of this stuff doesn't even hit an inbox, and the other 20% is hastily deleted. So how can we flatten that curve and give your message a (small) chance of generating business?
 
 We're all saturated by LinkedIn "Other" messages & Spam email. God forbid you have a leadership title on your corporate website or your cell number is published somewhere. You may have to change your name and move. The days of most people entertaining a random call or a cold email are mostly in the past. And the critical point: as soon as you detect that what you're looking at is Spam, you're out.
 
@@ -24,15 +28,23 @@ Companies broadcast what's going on with them constantly. Press releases, Linked
 
 Here's what spray and pray looks like in practice. I got this recently:
 
-> *Subject: Let's Connect on Cloud & AI Transformation*  
-> *Hi Steve, we help enterprises drive AI-powered digital transformation with cost optimization, enhanced security, and scalability. I'd love to explore how we can support your cloud strategy.*
+::: bad
+**Subject: Let's Connect on Cloud & AI Transformation**
 
+Hi Steve, we help enterprises drive AI-powered digital transformation with cost optimization, enhanced security, and scalability. I'd love to explore how we can support your cloud strategy.
+:::
+
+::: punch
 Delete.
+:::
 
 Here's a much better approach:
 
-> *Subject: TechSmart Acquisition*  
-> *Hi Bob, I saw you guys acquired TechSmart - congrats! I wanted to ask if your team is involved in assessing and planning the future of the apps and infrastructure across both companies? That's our specialty at CloudServe. If it's relevant, is there a good time for a quick call?*
+::: good
+**Subject: TechSmart Acquisition**
+
+Hi Bob, I saw you guys acquired TechSmart - congrats! I wanted to ask if your team is involved in assessing and planning the future of the apps and infrastructure across both companies? That's our specialty at CloudServe. If it's relevant, is there a good time for a quick call?
+:::
 
 **Anyone who was just involved in M&A is going to open an email with the name of the other company in the subject.** And by asking a reasonable, informed question, you tell this person that you are writing them a personal note, not blasting Spam.
 
@@ -40,8 +52,11 @@ Here's a much better approach:
 
 The most important thing you're trying to do is write something that sounds like a real email, not a bulk blast. To understand this best, open a recent email you sent to a coworker. It's likely short, the language is plain, and you're not "demonstrating value" or "aligning on synergies." Just two people who have something real to talk about. If there are long pieces of text or bullet lists, they're probably in a forwarded message or an attachment. Here's an example of a real email:
 
-> *Subject: SOC2*  
-> *Hey Bob, can we catch up tomorrow about the SOC2 audit? Attaching the details from the CISO's office.*
+::: good
+**Subject: SOC2**
+
+Hey Bob, can we catch up tomorrow about the SOC2 audit? Attaching the details from the CISO's office.
+:::
 
 So if you're writing a long paragraph introduction followed by a bulleted list, and then a conclusion with a link, it's obviously Spam. Write your sales emails like real emails: short, factual, purpose-driven. Like you're writing to someone you actually know about something they care about.
 
@@ -59,14 +74,24 @@ Hardly. It's presumptuous and insulting. Is it possible I need help with somethi
 
 I got this the other day:
 
-> *"Hi Steve, are you interested in developing your own AI solution? We strongly believe companies shouldn't adopt third-party AI models but should create their own to protect internal IP. Otherwise your valuable IP could be accessible via a future version of ChatGPT. Let's chat."*
+::: bad
+Hi Steve, are you interested in developing your own AI solution? We strongly believe companies shouldn't adopt third-party AI models but should create their own to protect internal IP. Otherwise your valuable IP could be accessible via a future version of ChatGPT. Let's chat.
+:::
 
 Who in their right mind isn't using "third-party AI models"? What do you know about my "valuable IP"? They're now the last person I would ever hire for any data science project.
 
 How about something like this:
 
-> *Hi Bob, I see you have job postings for three ML engineers. Just to provide another option: CloudServe offers scalable "pods" of resources on a monthly basis. They're trained, certified, and ready to go if you're up against a deadline.*
+::: good
+Hi Bob, I see you have job postings for three ML engineers. Just to provide another option: CloudServe offers scalable "pods" of resources on a monthly basis. They're trained, certified, and ready to go if you're up against a deadline.
+:::
 
-Listen, the deck is still stacked against you. If your only strategy for growth is cold emails, you're in trouble. We'll talk more about the best prospecting techniques in later posts. But these principles apply to any sales communication. Be real, be simple, and don't make assumptions. You'll represent yourself and your company better, and increase your chances of breaking through.
+Listen, the deck is still stacked against you. If your only strategy for growth is cold emails, you're in trouble. We'll talk more about the best prospecting techniques in later posts. But these principles apply to any sales communication.
+
+::: rule
+Be real, be simple, and don't make assumptions.
+:::
+
+You'll represent yourself and your company better, and increase your chances of breaking through.
 
 If your marketing campaigns are bouncing all day, your comms are hitting Spam filters, and your team is not getting quality leads, [let's talk!](/contact)

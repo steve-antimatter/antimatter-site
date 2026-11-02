@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A rain cloud">
+  <!-- cloud -->
+  <path d="M66 112 a24 24 0 0 1 4 -47 a34 34 0 0 1 64 -14 a26 26 0 0 1 44 20 a20 20 0 0 1 -2 41 z"/>
+  <!-- rain -->
+  <path d="M78 132 l-8 18"/>
+  <path d="M104 132 l-8 18"/>
+  <path d="M130 132 l-8 18"/>
+  <path d="M156 132 l-8 18"/>
+  <path d="M90 158 l-8 18"/>
+  <path d="M116 158 l-8 18"/>
+  <path d="M142 158 l-8 18"/>
+</svg>

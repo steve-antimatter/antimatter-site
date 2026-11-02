@@ -1,28 +1,32 @@
-**I want you to say "I'm confident."**
+::: scene
+{{illo:chair}}
 
-He looked at me like I was crazy.
+**Scene 1** · A coaching session. 2013.
 
-"During your sales pitch," I explained. "At least three times."
+*He looked at me like I was crazy. His toes were turned in, shoulders slumped. Eyes moving back and forth from me to his shoes.*
 
-His toes were turned in, shoulders slumped. Eyes moving back and forth from me to his shoes.
+**Me:** "I want you to say 'I'm confident.' During your sales pitch. At least three times."
 
-"That's the stupidest thing I've ever heard," he said.
+**Rep:** "That's the stupidest thing I've ever heard."
 
-"Yes," I said. "I already warned you it would be the stupidest thing you've ever heard." I had already warned him.
+**Me:** "Yes. I already warned you it would be the stupidest thing you've ever heard."
 
-"Well it is," he replied.
+**Rep:** "Well it is."
 
-"Yes."
+**Me:** "Yes."
 
-"You want me to say, out loud, 'I'm confident'? THREE TIMES?"
+**Rep:** "You want me to say, out loud, 'I'm confident'? THREE TIMES?"
 
-"Yes."
+**Me:** "Yes."
+:::
 
-## Rewind. 2013.
+## Rewind.
 
 I was coaching a sales rep who checked almost every box. He was organized, technical, hard-working, and genuinely likeable. He did his research. He asked great questions. Customers liked him. But still, something was missing.
 
+::: punch
 He lacked confidence.
+:::
 
 And it showed, not in what he said, but in how he said it. He second-guessed himself. He'd rush through his pitch. His voice trailed off at the end of sentences. You could almost hear the little voice in his head saying, *"I don't really believe what I'm saying."*
 
@@ -30,7 +34,9 @@ And it was affecting his results. He brought several deals to the proposal stage
 
 So I gave him one very simple instruction.
 
-**This is going to sound like the stupidest thing you've ever heard, but I want you to say the word "confident" at least three times during your pitch.**
+::: rule
+This is going to sound like the stupidest thing you've ever heard, but I want you to say the word "confident" at least three times during your pitch.
+:::
 
 "They're going to think I'm an idiot!" he objected.
 
@@ -40,19 +46,29 @@ So I gave him one very simple instruction.
 
 And something extraordinary happened.
 
-The first time he said it, "I'm confident we're the best in the industry," he sat up a little taller in his chair. His feet straightened out. His voice took on a little more authority.
+::: numbered
+### "I'm confident we're the best in the industry."
 
-The second time he said it, "my team is confident," the customer raised his eyebrows and nodded slightly.
+The first time he said it, he sat up a little taller in his chair. His feet straightened out. His voice took on a little more authority.
 
-The third time he said it, "I'm confident this is the right choice," he looked that customer straight in the eye, and he really meant it.
+### "My team is confident."
+
+The second time he said it, the customer raised his eyebrows and nodded slightly.
+
+### "I'm confident this is the right choice."
+
+The third time he said it, he looked that customer straight in the eye, and he really meant it.
+:::
 
 You could see the deal fall into place. The customer relaxed. Here was someone who knew what he was doing. They were in good hands. They started asking buying questions. "When can you start?" "How long will the onboarding take?" He had won the deal.
 
+::: dialog
 As we were walking out, I said to the customer, "He's our newest rep, isn't he great?"
 
 And do you know what they said?
 
 "Yeah, he just seemed so confident."
+:::
 
 ## Words matter.
 

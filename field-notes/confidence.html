@@ -89,6 +89,7 @@
   article .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--head);font-weight:300;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--mist);margin-bottom:34px;padding-bottom:18px;border-bottom:1px solid var(--line)}
   article p{margin:0 0 1.2em}
   article h2{font-size:30px;margin:2em 0 .7em;color:var(--mist-2)}
+  article h2 a{color:var(--mist-2);border:0}article h2 a:hover{color:var(--orange-2)}
   article h3{font-size:22px;margin:1.8em 0 .6em;color:var(--mist-2);font-weight:500}
   article strong{color:var(--ink);font-weight:600}
   article em{color:var(--ink)}
@@ -102,6 +103,54 @@
   .post-nav{max-width:720px;margin:0 auto;padding:0 28px 100px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .post-nav a{font-family:var(--head);letter-spacing:.1em;text-transform:uppercase;font-size:13px;color:var(--mist)}
   .post-nav a:hover{color:var(--ink)}
+
+  /* ---- breakouts ---- */
+  article .dialog{margin:1.6em 0 1.8em;padding:6px 0 6px 26px;border-left:3px solid var(--orange)}
+  article .dialog p{font-family:var(--head);font-weight:400;font-size:24px;line-height:1.3;letter-spacing:.01em;margin:0 0 .55em;color:var(--mist-2)}
+  article .dialog p:nth-child(even){color:var(--ink);padding-left:1.4em}
+  article .dialog p:last-child{margin-bottom:0}
+  article .punch{margin:1.4em 0 1.6em}
+  article .punch p{font-size:clamp(44px,7vw,72px);line-height:1;margin:0}
+  article .rule{margin:1.8em 0;padding:26px 30px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,rgba(22,48,90,.45),rgba(15,33,64,.25))}
+  article .rule p{font-family:var(--head);font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.2;color:var(--ink);margin:0}
+  article .rule p strong{color:var(--orange-2)}
+  article .bad,article .good{position:relative;margin:1.4em 0;padding:22px 26px 22px 30px;border-radius:8px;background:rgba(7,16,31,.7);border:1px solid var(--line);font-size:16px;line-height:1.6;color:var(--ink-dim)}
+  article .bad::before,article .good::before{content:attr(data-label);position:absolute;top:-11px;left:22px;font-family:var(--head);font-weight:500;letter-spacing:.24em;text-transform:uppercase;font-size:11px;padding:3px 10px;border-radius:2px;color:var(--navy)}
+  article .bad{border-left:4px solid var(--orange)}
+  article .bad::before{background:var(--orange)}
+  article .good{border-left:4px solid var(--mist)}
+  article .good::before{background:var(--mist)}
+  article .bad p,article .good p{margin:0 0 .6em}
+  article .bad p:last-child,article .good p:last-child{margin:0}
+  article .bad strong,article .good strong{color:var(--ink);font-weight:600}
+  article .numbered{counter-reset:nq;margin:1.2em 0}
+  article .numbered h3{counter-increment:nq;position:relative;padding-left:64px;min-height:50px;display:flex;align-items:center;margin:2.2em 0 .5em;font-size:24px}
+  article .numbered h3::before{content:counter(nq,decimal-leading-zero);position:absolute;left:0;top:-6px;font-family:var(--head);font-weight:300;font-size:52px;line-height:1;color:var(--orange);letter-spacing:.02em}
+  article .numbered h3+p{padding-left:64px}
+  article .numbered p{padding-left:64px}
+  @media (max-width:900px){
+    article .dialog p{font-size:20px}
+    article .numbered h3,article .numbered p,article .numbered h3+p{padding-left:48px}
+    article .numbered h3::before{font-size:40px;top:-2px}
+    article .rule{padding:20px 22px}
+  }
+
+  /* scene: framed magazine-style sidebar */
+  article .scene{position:relative;margin:2em 0 2.2em;padding:34px 36px 30px;border:1px solid var(--mist);outline:1px solid var(--line);outline-offset:5px;background:linear-gradient(180deg,rgba(22,48,90,.35),rgba(15,33,64,.15))}
+  article .scene .illo{float:right;width:150px;margin:-10px -8px 6px 24px;color:var(--mist)}
+  article .scene .illo svg{width:100%;height:auto;display:block}
+  article .scene > p:first-of-type{font-family:var(--head);font-weight:300;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--mist);margin:0 0 14px}
+  article .scene > p:first-of-type strong{color:var(--orange);font-weight:500}
+  article .scene p{margin:0 0 .9em;font-size:17px}
+  article .scene p > em:only-child{color:var(--ink-dim);display:block;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+  article .scene p.line{clear:right;display:grid;grid-template-columns:112px 1fr;column-gap:10px;align-items:baseline;font-family:var(--head);font-weight:400;font-size:23px;line-height:1.3;color:var(--mist-2);margin-bottom:.7em}
+  article .scene p.line strong{font-family:var(--head);font-weight:500;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--orange);padding-top:6px}
+  article .scene p:last-child{margin-bottom:0}
+  @media (max-width:900px){
+    article .scene{padding:24px 20px 20px}
+    article .scene .illo{width:96px;margin:0 0 8px 14px}
+    article .scene p.line{grid-template-columns:1fr;font-size:19px;row-gap:2px}
+  }
 
   footer{padding:56px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim);background:var(--deep)}
   footer .top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
@@ -143,34 +192,52 @@
   </div></div></div></section>
 <article>
   <div class="meta"><span>Coaching</span><span>Field notes No. 02 · Steve Zeller</span></div>
-<p><strong>I want you to say “I’m confident.”</strong></p>
-<p>He looked at me like I was crazy.</p>
-<p>“During your sales pitch,” I explained. “At least three times.”</p>
-<p>His toes were turned in, shoulders slumped. Eyes moving back and forth from me to his shoes.</p>
-<p>“That’s the stupidest thing I’ve ever heard,” he said.</p>
-<p>“Yes,” I said. “I already warned you it would be the stupidest thing you’ve ever heard.” I had already warned him.</p>
-<p>“Well it is,” he replied.</p>
-<p>“Yes.”</p>
-<p>“You want me to say, out loud, ‘I’m confident’? THREE TIMES?”</p>
-<p>“Yes.”</p>
-<h2 id="rewind.-2013.">Rewind. 2013.</h2>
+<div class="scene">
+<div class="illo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="An office chair">
+  <path d="M84 40 h72 a6 6 0 0 1 6 6 v52 a6 6 0 0 1 -6 6 h-72 a6 6 0 0 1 -6 -6 v-52 a6 6 0 0 1 6 -6 z"/>
+  <path d="M70 104 h100 v16 h-100 z"/>
+  <path d="M120 120 v30"/>
+  <path d="M120 150 l-40 24 M120 150 l40 24 M120 150 v26"/>
+  <path d="M74 176 h12 M154 176 h12"/>
+</svg></div>
+<p><strong>Scene 1</strong> · A coaching session. 2013.</p>
+<p><em>He looked at me like I was crazy. His toes were turned in, shoulders slumped. Eyes moving back and forth from me to his shoes.</em></p>
+<p class="line"><strong>Me</strong> “I want you to say ‘I’m confident.’ During your sales pitch. At least three times.”</p>
+<p class="line"><strong>Rep</strong> “That’s the stupidest thing I’ve ever heard.”</p>
+<p class="line"><strong>Me</strong> “Yes. I already warned you it would be the stupidest thing you’ve ever heard.”</p>
+<p class="line"><strong>Rep</strong> “Well it is.”</p>
+<p class="line"><strong>Me</strong> “Yes.”</p>
+<p class="line"><strong>Rep</strong> “You want me to say, out loud, ‘I’m confident’? THREE TIMES?”</p>
+<p class="line"><strong>Me</strong> “Yes.”</p>
+</div>
+<h2 id="rewind.">Rewind.</h2>
 <p>I was coaching a sales rep who checked almost every box. He was organized, technical, hard-working, and genuinely likeable. He did his research. He asked great questions. Customers liked him. But still, something was missing.</p>
-<p>He lacked confidence.</p>
+<div class="punch"><p class="mist">He lacked confidence.</p>
+</div>
 <p>And it showed, not in what he said, but in how he said it. He second-guessed himself. He’d rush through his pitch. His voice trailed off at the end of sentences. You could almost hear the little voice in his head saying, <em>“I don’t really believe what I’m saying.”</em></p>
 <p>And it was affecting his results. He brought several deals to the proposal stage, but couldn’t close them.</p>
 <p>So I gave him one very simple instruction.</p>
-<p><strong>This is going to sound like the stupidest thing you’ve ever heard, but I want you to say the word “confident” at least three times during your pitch.</strong></p>
+<div class="rule">
+<p>This is going to sound like the stupidest thing you’ve ever heard, but I want you to say the word “confident” at least three times during your pitch.</p>
+</div>
 <p>“They’re going to think I’m an idiot!” he objected.</p>
 <p>“No they won’t. Here’s how you do it. After you give our background, you’re going to say ‘I’m confident that we’re the best cloud migration partner in the industry.’ Then when you outline your proposal you’re going to say ‘My team is confident that this is the right technical approach.’ And finally, when you give them the price, you’re going to say ‘I’m confident that this is the right choice for you.’”</p>
 <h2 id="i-went-with-him-to-his-next-sales-call.">I went with him to his next sales call.</h2>
 <p>And something extraordinary happened.</p>
-<p>The first time he said it, “I’m confident we’re the best in the industry,” he sat up a little taller in his chair. His feet straightened out. His voice took on a little more authority.</p>
-<p>The second time he said it, “my team is confident,” the customer raised his eyebrows and nodded slightly.</p>
-<p>The third time he said it, “I’m confident this is the right choice,” he looked that customer straight in the eye, and he really meant it.</p>
+<div class="numbered">
+<h3 id="im-confident-were-the-best-in-the-industry.">“I’m confident we’re the best in the industry.”</h3>
+<p>The first time he said it, he sat up a little taller in his chair. His feet straightened out. His voice took on a little more authority.</p>
+<h3 id="my-team-is-confident.">“My team is confident.”</h3>
+<p>The second time he said it, the customer raised his eyebrows and nodded slightly.</p>
+<h3 id="im-confident-this-is-the-right-choice.">“I’m confident this is the right choice.”</h3>
+<p>The third time he said it, he looked that customer straight in the eye, and he really meant it.</p>
+</div>
 <p>You could see the deal fall into place. The customer relaxed. Here was someone who knew what he was doing. They were in good hands. They started asking buying questions. “When can you start?” “How long will the onboarding take?” He had won the deal.</p>
+<div class="dialog">
 <p>As we were walking out, I said to the customer, “He’s our newest rep, isn’t he great?”</p>
 <p>And do you know what they said?</p>
 <p>“Yeah, he just seemed so confident.”</p>
+</div>
 <h2 id="words-matter.">Words matter.</h2>
 <p>Words can change how people think about you. They can even change how you think about yourself.</p>
 <p>Every rep has strengths and challenges. One of our little tricks at Antimatter is to use language to help them iron out their weak points.</p>
