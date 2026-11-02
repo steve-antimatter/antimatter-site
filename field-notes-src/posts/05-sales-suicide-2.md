@@ -1,8 +1,6 @@
 *This is the second in a series on the fastest ways to kill a sale before it ever gets started.*
 
-Last week we listened to a rep [spend four minutes of a first call](/field-notes/sales-suicide-1) reciting his company's background before the CTO asked what the call was about. He didn't listen. He figured the pitch alone would close the deal.
-
-It won't. Not for him, and not for your sales team.
+Last week we listened to a rep [spend four minutes of a first call](/field-notes/sales-suicide-1) reciting his company's background before the CTO asked what the call was about. That was Rule #1.
 
 ::: rule
 **Rule #1:** Set up your pitch by listening and asking the right questions.
@@ -17,19 +15,19 @@ How many times have you read a sales email with the word "**organization**" in i
 Can you imagine someone saying that in real life?
 
 ::: scene
-{{illo:cocktail}}
+{{illo:mail}}
 
-**Scene 1** · A bar.
+**Scene 1** · Your inbox. Tuesday morning. You're the CRO of a tech consulting company.
 
-*You're talking to Brendon. Brendon's actually pretty nice. He asked what you do for a living. You told him you're the CRO of a tech consulting company.*
+**Subject:** Partnership opportunity
 
-**Brendon:** "How does your organization obtain access to qualified decision-makers?"
+**Email:** "Hi Steve, I hope this message finds you well. How does your organization obtain access to qualified decision-makers? We enable organizations like yours to accelerate pipeline velocity through our proprietary intent-data platform. Would you be open to a brief discovery conversation?"
 :::
 
-You puke in your mouth a little bit and make a beeline for the nearest exit. You really need to find a new bar.
+Now picture the person who wrote that email at dinner with a friend. "How does your household obtain access to a reliable babysitter?" Nobody talks like that. The friend would ask if they were feeling ok.
 
 ::: rule
-**Rule #2:** Don't use a word in a sales communication that you wouldn't use in a bar.
+**Rule #2:** Don't use a word in a sales communication that you wouldn't say out loud to a friend.
 :::
 
 When people talk to their peers, they use plain conversational language. For some reason, the moment they try to sell something, they shift into this weird marketing-speak that no human being has ever used in real life.
@@ -38,9 +36,7 @@ When people talk to their peers, they use plain conversational language. For som
 "Our solutions are super modular. We've got our own gold standard tech stack, but we're also adaptable to the preferences of your team."
 :::
 
-::: punch
-It's vomit-inducing.
-:::
+Read that one out loud. It falls apart somewhere around "gold standard."
 
 ## Why does this happen?
 
@@ -62,7 +58,7 @@ Here's how Antimatter Consulting describes itself:
 
 Just kidding. See how terrible it is?
 
-We actually start by obsessively deleting every single one of those non-human words. They don't belong in websites, collateral, emails, ads. They are never good and they must die. Then we think about how real people actually talk. And we rewrite everything on that one simple principle.
+We actually start by deleting every single one of those non-human words. They don't belong in websites, collateral, emails, or ads. Then we think about how real people actually talk, and we rewrite everything on that one simple principle.
 
 There's nothing wrong with something like this:
 
@@ -76,7 +72,7 @@ Or this:
 "I saw you just acquired TechSoft. Congrats! If you need a team to look at all their tools and apps and make some recommendations, we'd love to help."
 :::
 
-It sounds almost too simple. Like it can't possibly be enough. Trust me, it is. It's the only way to not get laughed out of the room.
+It sounds almost too simple. Like it can't possibly be enough. Trust me, it is. It's the only way to get taken seriously by someone who reads fifty sales emails a week.
 
 Otherwise you're sitting there like:
 

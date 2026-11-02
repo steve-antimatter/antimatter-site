@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="An envelope">
+  <path d="M36 56 h168 a6 6 0 0 1 6 6 v84 a6 6 0 0 1 -6 6 h-168 a6 6 0 0 1 -6 -6 v-84 a6 6 0 0 1 6 -6 z"/>
+  <path d="M32 62 l88 62 l88 -62"/>
+  <path d="M32 148 l66 -50 M208 148 l-66 -50"/>
+</svg>

@@ -22,7 +22,7 @@ Reps can't win a deal on charm. But they can blow any chance of getting in the d
 
 I've sat in on that call more times than I'd like to admit. The rep wasn't lazy. He wasn't unprepared. He was over-prepared, and he had nowhere to put it.
 
-Sound familiar? Have you ever listened to one of your reps open a call and thought, "OMFG just stop talking, you're not helping!" Yeah, we've been there.
+Sound familiar? Have you ever listened to one of your reps open a call and wished you could reach through the phone and hit pause? Yeah, we've been there.
 
 Think about what the CTO is doing during those four minutes. He's deciding how painful the next few weeks are going to be if he lets this person into his calendar. Every sentence of that monologue is a vote for "very."
 

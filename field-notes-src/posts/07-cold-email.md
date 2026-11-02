@@ -3,7 +3,7 @@
 Over the last few weeks in the Sales Suicide series, we defined three total "no-no's" that will kill any chance of a deal:
 
 - **The Pitch No One Wants.** Don't jump into a pitch no one asked for. Listen first, talk about your services in a context that makes sense.
-- **Word Salad.** Don't use words in a sales meeting that you wouldn't use in a bar.
+- **Word Salad.** Don't use words in a sales email that you wouldn't say out loud to a friend.
 - **Making Assumptions.** Just because you have knowledge of an industry or technology, don't assume it's relevant to the conversation.
 
 Today, let's take those principles and apply to the most dreaded task of drafting a cold email.
