@@ -27,11 +27,17 @@ It can be brutal, even soul-crushing. But when you have a big year in sales? ***
 ::: numbered
 ### $ = Excitement
 
-Don't think: "My reps aren't selling because they're lazy."
+::: scene
+{{illo:hammock}}
 
-Think: "My reps are getting lazy because they're not selling."
+**The reframe** · Same reps. Same numbers. Different diagnosis.
 
-Or more accurately: "Doing something repetitive that rarely works is difficult and demoralizing."
+**Don't think:** "My reps aren't selling because they're lazy."
+
+**Think:** "My reps are getting lazy because they're not selling."
+
+**Or more accurately:** "Doing something repetitive that rarely works is difficult and demoralizing."
+:::
 
 When reps feel like their work isn't paying off, they get frustrated, and then they get lazy. The cure for laziness isn't being yelled at by a manager or thrown on a Performance Improvement Plan. The only cure for laziness is *excitement*. You know what excites salespeople? **Commissions.**
 

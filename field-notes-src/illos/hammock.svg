@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A hammock between two trees">
+  <path d="M36 170 V40 M204 170 V40"/>
+  <path d="M26 44 l10 -14 l10 14 M194 44 l10 -14 l10 14"/>
+  <path d="M36 70 C70 90 90 120 120 120 C150 120 170 90 204 70"/>
+  <path d="M36 70 C70 110 90 150 120 150 C150 150 170 110 204 70"/>
+  <path d="M60 94 v34 M80 112 v30 M100 118 v30 M120 120 v30 M140 118 v30 M160 112 v30 M180 94 v34"/>
+</svg>
