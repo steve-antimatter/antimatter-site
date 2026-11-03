@@ -8,11 +8,27 @@ Over the last few weeks in the Sales Suicide series, we defined three total "no-
 
 Today, let's take those principles and apply to the most dreaded task of drafting a cold email.
 
-::: rule
-Cold email is not going to work.
+::: playbook
+{{illo:mail}}
+
+**Playbook** · Writing a cold email that gets read.
+
+### Do
+
+- Find the change first. An acquisition, a launch, a funding round, a hiring spree. Put it in the subject line.
+- Pick a small list. Spend five to ten minutes on each company before you write a word.
+- Write it like an email to a coworker. Short, plain, one question.
+- Ask about something they're already dealing with, and let them tell you what they need.
+
+### Don't
+
+- Spray and pray. If you don't recognize the company, don't email it.
+- Open with "your organization," "our solutions," or "I hope this finds you well."
+- Send a paragraph, a bulleted list, and a link. That shape is Spam, whatever it says.
+- Tell them what their problem is. "AI strategy," "overspending on cloud," "scaling your team." You don't know yet.
 :::
 
-Let's just get that out in the open first of all. 80% of this stuff doesn't even hit an inbox, and the other 20% is hastily deleted. So how can we flatten that curve and give your message a (small) chance of generating business?
+Cold email is not going to work. Let's just get that out in the open first of all. 80% of this stuff doesn't even hit an inbox, and the other 20% is hastily deleted. So how can we flatten that curve and give your message a (small) chance of generating business?
 
 We're all saturated by LinkedIn "Other" messages & Spam email. God forbid you have a leadership title on your corporate website or your cell number is published somewhere. You may have to change your name and move. The days of most people entertaining a random call or a cold email are mostly in the past. And the critical point: as soon as you detect that what you're looking at is Spam, you're out.
 
@@ -82,26 +98,6 @@ How about something like this:
 
 ::: good
 Hi Bob, I see you have job postings for three ML engineers. Just to provide another option: CloudServe offers scalable "pods" of resources on a monthly basis. They're trained, certified, and ready to go if you're up against a deadline.
-:::
-
-::: playbook
-{{illo:mail}}
-
-**Playbook** · Writing a cold email that gets read.
-
-### Do
-
-- Find the change first. An acquisition, a launch, a funding round, a hiring spree. Put it in the subject line.
-- Pick a small list. Spend five to ten minutes on each company before you write a word.
-- Write it like an email to a coworker. Short, plain, one question.
-- Ask about something they're already dealing with, and let them tell you what they need.
-
-### Don't
-
-- Spray and pray. If you don't recognize the company, don't email it.
-- Open with "your organization," "our solutions," or "I hope this finds you well."
-- Send a paragraph, a bulleted list, and a link. That shape is Spam, whatever it says.
-- Tell them what their problem is. "AI strategy," "overspending on cloud," "scaling your team." You don't know yet.
 :::
 
 Listen, the deck is still stacked against you. If your only strategy for growth is cold emails, you're in trouble. We'll talk more about the best prospecting techniques in later posts. But these principles apply to any sales communication.
