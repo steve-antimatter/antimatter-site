@@ -1,16 +1,20 @@
 **There's nothing better than an inspirational leader giving a great pep talk. But if it feels like your exec team has crossed the line from optimism to fantasy, you're not alone.**
 
-> *"Q3 last year was really strong, so if we can just grow that by 25% per quarter..."*
->
-> *"Our biggest customer hasn't had to open a service ticket in six months!"*
->
-> *"We've got zero bug reports on our new platform!"*
+::: scene
+{{illo:flag}}
 
-Sound familiar? These may seem like signs of strength.
+**The leadership meeting** · Are these signs of strength, or huge red flags?
 
-::: punch
-They're not!
+**CEO:** "Q3 doubled our best quarter in history, so if we can just grow that by 25% every quarter from now on..."
+
+**CRO:** "Our biggest customer hasn't opened a ticket in six months!"
+
+**CTO:** "We got zero bug reports on our new platform."
+
+**CFO:** "Profit margins on our managed services are 95%!"
 :::
+
+Sound familiar?
 
 ## Honesty vs. Hype
 
@@ -20,7 +24,7 @@ Every exec team has to believe in their company. You've got to pitch, inspire, r
 
 Here's one I hear too often:
 
-> *"Well, Q3 last year was really strong, so if we can just grow that by 25% per quarter we'll be in great shape..."*
+> *"Q3 doubled our best quarter in history, so if we can just grow that by 25% every quarter from now on we'll be in great shape..."*
 
 Sure. That sounds nice. Except if Q3 was your only good quarter in two years, and it happened because one massive customer came through with a surprise order that you haven't seen before or since...
 
