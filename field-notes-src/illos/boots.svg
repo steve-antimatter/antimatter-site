@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A pair of lace-up boots">
+  <!-- back boot -->
+  <path d="M120 40 h34 v70 c0 8 6 12 14 14 l30 8 c10 3 14 10 14 18 v6 H120 z"/>
+  <path d="M120 156 h92 v12 H120 z"/>
+  <path d="M120 162 h92" stroke-dasharray="4 5" stroke-width="1.6"/>
+  <path d="M154 54 l-14 8 l14 8 l-14 8 l14 8 l-14 8 l14 8"/>
+  <circle cx="154" cy="54" r="2.4"/><circle cx="154" cy="70" r="2.4"/><circle cx="154" cy="86" r="2.4"/><circle cx="154" cy="102" r="2.4"/>
+  <path d="M120 40 v-10 h8 v10"/>
+  <!-- front boot -->
+  <path d="M40 52 h34 v70 c0 8 6 12 14 14 l30 8 c10 3 14 10 14 18 v6 H40 z"/>
+  <path d="M40 168 h92 v12 H40 z" fill="#0a1628"/>
+  <path d="M40 174 h92" stroke-dasharray="4 5" stroke-width="1.6"/>
+  <path d="M40 52 h34 v70 c0 8 6 12 14 14 l30 8 c10 3 14 10 14 18 v6 H40 z" fill="#0a1628"/>
+  <path d="M40 52 h34 v70 c0 8 6 12 14 14 l30 8 c10 3 14 10 14 18 v6 H40 z"/>
+  <!-- laces + eyelets on front boot -->
+  <path d="M74 66 l-14 8 l14 8 l-14 8 l14 8 l-14 8 l14 8"/>
+  <circle cx="74" cy="66" r="2.4"/><circle cx="74" cy="82" r="2.4"/><circle cx="74" cy="98" r="2.4"/><circle cx="74" cy="114" r="2.4"/>
+  <!-- heel tab -->
+  <path d="M40 52 v-10 h8 v10"/>
+</svg>

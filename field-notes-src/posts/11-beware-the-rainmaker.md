@@ -26,11 +26,7 @@ Management was pumped. This guy was going to turn everything around.
 
 Between Coca-Cola, Bank of America, and Ford, how many do you think became customers of his new shop?
 
-You guessed it...
-
-::: punch
-Zero.
-:::
+You guessed it... Zero.
 
 ## Beware the Rainmaker.
 

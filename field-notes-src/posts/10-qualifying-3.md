@@ -1,7 +1,7 @@
 *The third in a [three-part series](/field-notes/qualifying-1) on how to identify prospects worth your time.*
 
 ::: scene
-{{illo:tablet}}
+{{illo:boots}}
 
 **Scene 1** · A 100-person MSP shop. The new SVP of Sales has just come over from a big TelCom company.
 
@@ -22,9 +22,7 @@ Surface tablets and lattes at the ready, they started laying down their battle p
 
 How many of those Fortune 500 enterprises do you think this crackerjack team closed in the next twelve months?
 
-::: punch
 Zero.
-:::
 
 We've covered [Criticality](/field-notes/qualifying-1) and [Transition](/field-notes/qualifying-2). There's a third factor that won't win you a deal on its own, but will absolutely kill one if you ignore it.
 
