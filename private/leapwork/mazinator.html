@@ -593,6 +593,64 @@
   .shopcard .srow .unset{color:#9AA9B3;font-style:italic}
   .shopcard .foot{padding:14px 22px 18px;border-top:1px solid rgba(9,15,18,.12)}
   .shopcard .foot p{font-size:13px;color:var(--fog-blue);margin:0 0 10px}
+
+  /* ---------- approval overlay, approved mode, town map ---------- */
+  .btn.big{font-size:15px;padding:16px 26px;letter-spacing:.06em}
+  .btn.approve{background:#BFA66A;color:#090F12} .btn.approve:hover{background:#D3BC80}
+  #usecase.approved .chat,#brief.approved .chat{display:none}
+  #usecase.approved iframe{left:0;width:100%} #usecase.approved .uc-bar,#brief.approved .uc-bar{left:0} #brief.approved #bfMain{left:0}
+  .appr-ov{position:fixed;inset:0;z-index:50;background:rgba(0,36,35,.86);display:none;align-items:center;justify-content:center;padding:24px}
+  .appr-ov.on{display:flex;animation:fadeIn .3s}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .appr-card{width:min(600px,100%);background:#FFFDF7;border:2px solid #090F12;box-shadow:12px 12px 0 rgba(0,0,0,.25);padding:34px 38px;text-align:center}
+  .appr-card small{display:block;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--fog-blue)}
+  .appr-card h2{font-size:28px;line-height:1.2;margin:8px 0 12px;color:var(--deep-slate)}
+  .appr-card p{font-size:15px;line-height:1.55;color:var(--steel-blue);margin:0 0 16px}
+  .appr-card .warn{background:#FBF1E2;border-left:3px solid #BFA66A;color:#6B4A1A;text-align:left;padding:10px 14px;font-size:14px}
+  .appr-fields{display:grid;grid-template-columns:1fr 130px;gap:12px;text-align:left;margin:6px 0 20px}
+  .appr-fields label{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--steel-blue)}
+  .appr-fields input{font:600 18px var(--font);padding:12px 14px;border:2px solid #090F12;background:#fff}
+  #apprInit{text-align:center;letter-spacing:.2em;font-family:Georgia,serif;font-style:italic}
+  .appr-card .btn.big{width:100%;font-size:17px;padding:20px}
+  .appr-card .link{display:block;margin:14px auto 0;border:0;background:none;color:var(--fog-blue);font:600 13px var(--font);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+  .appr-err{color:#7A2F2F;font-size:14px;min-height:18px;margin:-8px 0 10px}
+  .stamp-big{display:inline-block;transform:rotate(-6deg);border:5px solid #3F7A78;color:#3F7A78;padding:10px 26px;font:900 34px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;margin:6px 0 18px;animation:stampIn .45s cubic-bezier(.2,1.6,.4,1)}
+  .stamp-big span{display:block;font:italic 600 18px Georgia,serif;letter-spacing:.2em;margin-top:6px}
+  @keyframes stampIn{from{transform:rotate(-6deg) scale(2.2);opacity:0}to{transform:rotate(-6deg) scale(1);opacity:1}}
+  .th-brief{display:flex;align-items:stretch;gap:0;background:#fff;border:1px solid rgba(9,15,18,.25);padding:0}
+  .th-brief .th-open{flex:1;text-align:left;background:none;border:0;padding:9px 12px;cursor:pointer;font:inherit}
+  .th-brief .th-open:hover{background:#F2F7F6} .th-brief.ok{border-left:4px solid var(--harbor-teal)}
+  .th-brief .btn{flex:none;padding:0 14px}
+  .dir{position:absolute;inset:0;z-index:4;background:rgba(232,238,244,.94);display:none;align-items:center;justify-content:center;padding:24px}
+  #shops.dir-on .dir{display:flex} #shops.dir-on .street-hd,#shops.dir-on .street-pan{display:none}
+  .dir-card{width:min(1180px,100%);max-height:100%;overflow:auto;background:#FFFDF7;border:2px solid #090F12;box-shadow:10px 10px 0 rgba(9,15,18,.15);padding:24px 28px}
+  .dir-hd{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:18px;flex-wrap:wrap}
+  .dir-hd small{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--fog-blue)}
+  .dir-hd h3{font-size:24px;margin:4px 0;color:var(--deep-slate)} .dir-hd p{font-size:14px;color:var(--steel-blue);margin:0}
+  .dir-legend{display:flex;gap:14px;font-size:12.5px;color:var(--steel-blue)} .dir-legend i,.unit em i{display:inline-block;width:10px;height:10px;border-radius:50%;border:1.5px solid #090F12;margin-right:5px;vertical-align:-1px}
+  .mall{background:#F1ECE0;border:3px solid #090F12;padding:14px}
+  .wing{display:grid;gap:14px}
+  .zone{background:#fff;border:2.5px solid #090F12;border-top:10px solid var(--c);padding:10px 12px 12px}
+  .zone h4{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--deep-slate);margin:2px 0 10px}
+  .units{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .unit{text-align:left;background:#FAFAF7;border:1.5px solid #090F12;padding:9px 10px 10px;cursor:pointer;font:inherit;position:relative}
+  .unit::after{content:'';position:absolute;left:50%;bottom:-2px;width:26px;height:4px;margin-left:-13px;background:#FAFAF7}
+  .unit:hover{background:#F2F7F6;box-shadow:inset 0 0 0 2px var(--c)}
+  .unit b{display:block;font-size:13.5px;line-height:1.3;color:var(--deep-slate);margin-bottom:4px}
+  .unit span{display:block;font-size:12px;color:var(--fog-blue)} .unit em{display:block;font-style:normal;font-size:12px;color:var(--steel-blue);margin-top:5px}
+  .corridor{display:flex;justify-content:space-between;align-items:center;margin:12px 0;padding:10px 16px;background:repeating-linear-gradient(90deg,#fff 0 18px,#F1ECE0 18px 30px);border:2px dashed rgba(9,15,18,.35);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--steel-blue)}
+  .corridor .here{color:#fff;background:#B8664C;padding:5px 10px;letter-spacing:.08em}
+  .dir-ft{display:flex;justify-content:flex-end;gap:10px;margin-top:16px}
+  .shopcard .asset{border-top:1px solid rgba(9,15,18,.12);padding:12px 0}
+  .shopcard .asset:first-child{border-top:0;padding-top:0}
+  .shopcard .asset h5{font-size:16px;margin:0 0 6px;color:var(--deep-slate)}
+  .shopcard .ameta{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--deep-slate)}
+  .shopcard .ameta b{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fog-blue)}
+  .shopcard .ameta i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;border:1.5px solid #090F12}
+  .shopcard details{margin-top:8px} .shopcard summary{cursor:pointer;font-size:12.5px;font-weight:600;color:var(--harbor-teal)}
+  .zone .zname{border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-transform:uppercase;letter-spacing:.12em}
+  .zone .zname:hover{color:var(--c)} .zone .zsub{font-size:12px;color:var(--fog-blue);margin:-6px 0 10px}
+  .units{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
 </style>
 </head>
 <body>
@@ -1028,7 +1086,7 @@
     <p id="thText"></p>
     <div class="th-list" id="thBriefs"></div>
     <div class="th-name" id="thNameRow" hidden><span>Your name</span><input id="thName" autocomplete="name" placeholder="So the brief shows its author"></div>
-    <div class="acts"><button class="btn teal" id="thGo" onclick="startBrief()">Start the campaign brief</button><button class="btn out" onclick="backToDock()">Back to the dock</button></div>
+    <div class="acts"><span id="thNext" style="display:contents"></span><button class="btn teal" id="thGo" onclick="startBrief()">Start the campaign brief</button><button class="btn out" onclick="backToDock()">Back to the dock</button></div>
     <p class="later" id="thLater"></p>
   </div>
 </div>
@@ -1060,13 +1118,37 @@
 <div class="view" id="shops">
   <svg id="shopScene" viewBox="0 170 1600 730" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
   <div class="street-hd"><small>Market street</small><h3 id="shopTitle"></h3><p id="shopSub"></p></div>
-  <div class="street-acts"><button class="btn out street-skip" onclick="shopSkip=true">Skip</button><button class="btn out" onclick="closeShops()">← Back to the brief</button></div>
+  <div class="street-acts"><button class="btn out street-skip" onclick="shopSkip=true">Skip</button><button class="btn out" onclick="showDirectory()">Town map</button><button class="btn out" id="shopBack" onclick="closeShops()">← Back to the brief</button></div>
   <button class="btn out street-pan l" onclick="panStreet(-700)" aria-label="Scroll left">‹</button>
   <button class="btn out street-pan r" onclick="panStreet(700)" aria-label="Scroll right">›</button>
+  <div class="dir" id="shopDir"></div>
   <div class="shopcard" role="dialog" aria-labelledby="shopName">
     <div class="top"><small id="shopKicker"></small><h3 id="shopName"></h3><div class="meta" id="shopMeta"></div></div>
     <div class="body" id="shopBody"></div>
-    <div class="foot"><p>Inside the shop, the team makes this asset with Claude and gets it approved. That part is next.</p><button class="btn out" onclick="closeShopCard()">Back to the street</button></div>
+    <div class="foot"><p>Inside the shop, the team makes these assets with Claude and gets each one approved. That part is next.</p><button class="btn out" onclick="closeShopCard()">Back to the street</button></div>
+  </div>
+</div>
+
+<!-- ================= APPROVAL ================= -->
+<div class="appr-ov" id="apprOv" role="dialog" aria-modal="true" aria-labelledby="apprTitle">
+  <div class="appr-card">
+    <div id="apprForm">
+      <small id="apprKicker">Approve this doc</small>
+      <h2 id="apprTitle"></h2>
+      <p id="apprText"></p>
+      <p class="warn" id="apprWarn" hidden></p>
+      <div class="appr-fields"><label>Your name<input id="apprName" autocomplete="name"></label><label>Initials<input id="apprInit" maxlength="4"></label></div>
+      <div class="appr-err" id="apprErr"></div>
+      <button class="btn big approve" id="apprGo" onclick="confirmApprove()">Approve and initial</button>
+      <button class="link" onclick="closeApprove()">Not yet, keep working</button>
+    </div>
+    <div id="apprDone" hidden>
+      <div class="stamp-big">Approved<span id="apprStampInit"></span></div>
+      <h2 id="apprDoneTitle"></h2>
+      <p id="apprDoneText"></p>
+      <button class="btn big teal" id="apprNext"></button>
+      <button class="link" onclick="closeApprove()">Stay here</button>
+    </div>
   </div>
 </div>
 
@@ -1541,12 +1623,12 @@ function applyFilters(refit){
   if(refit)fitAll();
 }
 function hoverIsland(c){
-  clearTimeout(hoverT);
+  if(document.getElementById('chart').classList.contains('voyage')||sailing)return;clearTimeout(hoverT);
   document.querySelectorAll('#map .island.hot').forEach(el=>el.classList.remove('hot'));
   const el=document.querySelector(`#map .island[data-id="${c.id}"]`);if(el)el.classList.add('hot');
   hoverT=setTimeout(()=>centerOn(c,false,1.15),120);
 }
-function unhover(){clearTimeout(hoverT);document.querySelectorAll('#map .island.hot').forEach(el=>el.classList.remove('hot'));hoverT=setTimeout(()=>fitAll(),250)}
+function unhover(){if(document.getElementById('chart').classList.contains('voyage'))return;clearTimeout(hoverT);document.querySelectorAll('#map .island.hot').forEach(el=>el.classList.remove('hot'));hoverT=setTimeout(()=>fitAll(),250)}
 function clearFilters(){F.status.clear();F.product.clear();islSearch.value='';fIndustry.value='';fPartner.value='';
   document.querySelectorAll('#fStatus button,#fProduct button').forEach(b=>b.classList.remove('on'));applyFilters(true)}
 function wireChips(id,set){document.getElementById(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
@@ -1556,8 +1638,12 @@ islSearch.addEventListener('keydown',e=>{if(e.key==='Enter'){const c=USECASES.fi
 // ----- picking an island: the map opens full screen, the boat sails, then the port -----
 function voyageTo(id){
   const c=USECASES.find(k=>k.id===id);if(!c||sailing)return;
-  clearTimeout(hoverT);const ch=document.getElementById('chart');ch.classList.add('voyage');
-  setTimeout(()=>{centerOn(c,false,.85);setTimeout(()=>sailTo(id),450)},560);
+  clearTimeout(hoverT);anim++;
+  // The map grows to full screen; keep the island the same size on screen and centred while it does.
+  const svg=document.getElementById('map'),s0=(svg.getScreenCTM()?.a||1)*view.k,t0=performance.now();
+  document.getElementById('chart').classList.add('voyage');
+  (function hold(t){const a=svg.getScreenCTM()?.a||1;centerOn(c,true,Math.max(.3,Math.min(2.5,s0/a)));
+    if(t-t0<640)requestAnimationFrame(hold);else setTimeout(()=>sailTo(id),120)})(t0);
 }
 function endVoyage(){const ch=document.getElementById('chart');if(!ch.classList.contains('voyage'))return;ch.classList.remove('voyage');setTimeout(()=>fitAll(),580)}
 let sailing=false;
@@ -1680,13 +1766,13 @@ function openPort(id,opts={}){
   const st=c.status,done=st==='locked';
   document.getElementById("portScene").innerHTML=buildPortScene(c.title,themeOf(c));
   ppPort.textContent=c.title;ppDoc.textContent=c.title+' Use Case Submission';
-  ppState.textContent={draft:'Draft · in progress',review:'Submitted · pending approval',locked:'Approved · on file'}[st]||st;
-  ppBox.textContent=done?'✓':'';ppStamp.textContent=done?'Cleared':st==='review'?'Awaiting approval':'Pending';ppStamp.className='stamp'+(done?' ok':'');
+  ppState.textContent=done?'Approved · on file':'Draft · in progress';
+  ppBox.textContent=done?'✓':'';ppStamp.textContent=done?'Cleared':'Pending';ppStamp.className='stamp'+(done?' ok':'');
   ppTitle.textContent=done?'Welcome back to the port.':'Welcome to the port.';
   ppActs.innerHTML=done
-    ?`<button class="btn teal" onclick="openTown(portId)">Head into town →</button><button class="btn out" onclick="portToUseCase()">View the paperwork</button><button class="link" onclick="leavePort()">Back to chart</button>`
-    :`<button class="btn teal" onclick="portToUseCase()">${st==='review'?'Review for approval':'Fill out the paperwork'}</button><button class="btn out" onclick="leavePort()">Back to chart</button>`;
-  ppLater.textContent=done?'Paperwork cleared. Town Hall is where the campaign brief gets written.':st==='review'?'Once the paperwork is approved you can head into town to write the campaign brief.':'Once the paperwork is filled out and approved, you can head into town to write the campaign brief.';
+    ?`<button class="btn big teal" onclick="openTown(portId)">Head into town →</button><button class="btn out" onclick="portToUseCase()">View the paperwork</button><button class="link" onclick="leavePort()">Back to chart</button>`
+    :`<button class="btn big teal" onclick="portToUseCase()">Fill out the paperwork →</button><button class="btn out" onclick="leavePort()">Back to chart</button>`;
+  ppLater.textContent=done?'Paperwork cleared. Town Hall is where the campaign brief gets written.':'Once the paperwork is filled out and approved, you can head into town to write the campaign brief.';
   v0.classList.toggle('still',!!opts.still);
   const v=document.getElementById('port');
   // restart the animations each visit
@@ -1805,9 +1891,10 @@ async function api(path,opts){const r=await fetch('/leapwork/api/'+path,Object.a
 function addMsg(role,text,by){const m=document.createElement('div');m.className='msg '+role;if(by){const b=document.createElement('span');b.className='by';b.textContent=by;m.appendChild(b)}m.appendChild(document.createTextNode(text));ucMsgs.appendChild(m);ucMsgs.scrollTop=ucMsgs.scrollHeight;return m}
 const UC_LABEL={draft:'Draft',review:'Pending approval',locked:'Approved'};
 let ucEvents=[],ucTodo=null;
-function setUcStatus(st){ucCur.status=st;ucPill.textContent=UC_LABEL[st]||st;ucPill.className='uc-pill '+st;
+function setUcStatus(st){if(st==='review')st='draft';ucCur.status=st;ucPill.textContent=UC_LABEL[st]||st;ucPill.className='uc-pill '+st;
   const ro=st!=='draft';ucInput.disabled=ro||ucBusy;ucSend.disabled=ro||ucBusy;
-  ucInput.placeholder=st==='review'?'Pending approval. Request changes to edit.':st==='locked'?'Approved. Reopen for edits to make changes.':'Tell Claude about this use case, or ask it to draft the next section.';
+  ucInput.placeholder=ro?'Approved. Reopen it to make changes.':'Tell Claude about this use case, or ask it to draft the next section.';
+  document.getElementById('usecase').classList.toggle('approved',ro);
   renderBar()}
 function reloadPreview(){const fr=document.getElementById('ucFrame');fr.src=ucOpen.href+'?t='+Date.now()}
 async function openUseCase(id){
@@ -1833,34 +1920,35 @@ async function sendChat(){
   }catch(e){w.remove();addMsg('err',e.message);ucInput.value=ucInput.value||text}
   ucBusy=false;setUcStatus(ucCur.status);ucInput.focus();
 }
-const STATUS_NOTE={review:'Submitted for approval. The use case is read-only until it is approved or sent back for changes.',
-  locked:'Approved. This version is saved and campaign briefs can be built from it.',draft:'Back to draft. Changes are allowed again.'};
-async function setUseCaseStatus(next){
+async function setUseCaseStatus(next,who){
   if(!ucCur||ucBusy)return;
-  try{await api('use-cases/'+encodeURIComponent(ucCur.id)+'/status',{method:'POST',body:JSON.stringify({status:next,author:author()})});
-    const d=await api('use-cases/'+encodeURIComponent(ucCur.id)+'/chat');ucEvents=d.messages.filter(m=>m.role==='event');
-    const last=ucEvents[ucEvents.length-1];if(last)addMsg('sys',last.content+(last.author?' · '+last.author:''));
-    setUcStatus(next);
-    const c=USECASES.find(k=>k.id===ucCur.id);if(c)c.status=next;reloadPreview();refreshProgress();
-  }catch(e){addMsg('err',e.message)}
+  await api('use-cases/'+encodeURIComponent(ucCur.id)+'/status',{method:'POST',body:JSON.stringify({status:next,author:who||author()})});
+  const d=await api('use-cases/'+encodeURIComponent(ucCur.id)+'/chat');ucEvents=d.messages.filter(m=>m.role==='event');
+  const last=ucEvents[ucEvents.length-1];if(last)addMsg('sys',last.content+(last.author?' · '+last.author:''));
+  const c=USECASES.find(k=>k.id===ucCur.id);if(c)c.status=next;setUcStatus(next);reloadPreview();refreshProgress();
 }
+async function reopenUseCase(){try{await setUseCaseStatus('draft')}catch(e){addMsg('err',e.message)}}
+function approveUseCase(){if(!ucCur)return;
+  openApprove({title:ucCur.title,what:'use case',
+    text:'Approving locks this version of the use case. Campaign briefs are built from it. To change it later, reopen it.',
+    warn:ucTodo&&ucTodo.length?`${ucTodo.length} section${ucTodo.length>1?'s are':' is'} not written yet: ${ucTodo.join(', ')}.`:'',
+    approve:(who)=>setUseCaseStatus('locked',who),
+    doneText:'This version is locked. Town Hall is where the campaign brief gets written.',
+    nextLabel:'Head into town →',next:ucToTown})}
+function ucToTown(){const id=ucCur.id;openTown(id);setTimeout(()=>{const v=document.getElementById('usecase');v.classList.remove('show');setTimeout(()=>v.classList.remove('on'),450)},500)}
 const fmtWhen=t=>{if(!t)return '';const d=new Date(t.replace(' ','T')+'Z');return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric'})};
 function lastEvent(prefix){for(let k=ucEvents.length-1;k>=0;k--)if(ucEvents[k].content.startsWith(prefix))return ucEvents[k];return null}
 // The bar under the page always shows the one next step.
 function renderBar(){
   if(!ucCur)return;const st=ucCur.status,say=document.getElementById('ucBarSay'),acts=document.getElementById('ucBarActs');let cls=st;
-  if(st==='draft'){
-    if(ucTodo===null){say.innerHTML='<b>Draft</b>Checking which sections are written…';acts.innerHTML=''}
-    else if(ucTodo.length){say.innerHTML=`<b>Draft · ${10-ucTodo.length} of 10 sections</b>Next: ${ucTodo[0]}. Keep going with Claude in the chat.`;
-      acts.innerHTML=`<button class="btn out" onclick="ucInput.focus()">Continue with Claude</button>`}
-    else{cls='ready';say.innerHTML='<b>Ready to submit</b>All sections are written. Read the page, then submit it for approval.';
-      acts.innerHTML=`<button class="btn teal" onclick="setUseCaseStatus('review')">Submit for approval</button>`}
-  }else if(st==='review'){const e=lastEvent('Submitted');
-    say.innerHTML=`<b>Pending approval</b>${e?`Submitted${e.author?' by '+esc(e.author):''}${fmtWhen(e.created_at)?' on '+fmtWhen(e.created_at):''}. `:''}Read-only until it is approved or sent back.`;
-    acts.innerHTML=`<button class="btn out" onclick="setUseCaseStatus('draft')">Request changes</button><button class="btn teal" onclick="setUseCaseStatus('locked')">Approve</button>`}
-  else{const e=lastEvent('Approved');
-    say.innerHTML=`<b>Approved${e?' · '+esc(e.content.replace(/^Approved\s*/,'').replace(/[()]/g,'')):''}</b>${e&&e.author?'Approved by '+esc(e.author)+'. ':''}Campaign briefs can be built from this version.`;
-    acts.innerHTML=`<button class="btn ghost" onclick="setUseCaseStatus('draft')">Reopen for edits</button>`}
+  if(st!=='locked'){
+    if(ucTodo===null){say.innerHTML='<b>Draft</b>Checking which sections are written…'}
+    else if(ucTodo.length){say.innerHTML=`<b>Draft · ${10-ucTodo.length} of 10 sections</b>Next: ${ucTodo[0]}. Ask Claude in the chat to write it.`}
+    else{cls='ready';say.innerHTML='<b>All 10 sections written</b>Read it through from top to bottom, then approve it.'}
+    acts.innerHTML=`<button class="btn big approve" onclick="approveUseCase()">Approve this doc</button>`;
+  }else{const e=lastEvent('Approved');
+    say.innerHTML=`<b>Approved${e?' · '+esc(e.content.replace(/^Approved\s*/,'').replace(/[()]/g,'')):''}</b>${e&&e.author?'Approved by '+esc(e.author)+(fmtWhen(e.created_at)?' on '+fmtWhen(e.created_at):'')+'. ':''}Locked. Campaign briefs are built from this version.`;
+    acts.innerHTML=`<button class="btn ghost" onclick="reopenUseCase()">Reopen to make changes</button><button class="btn big teal" onclick="ucToTown()">Head into town →</button>`}
   document.getElementById('ucBar').className='uc-bar '+cls;
 }
 // ----- section progress -----
@@ -1954,10 +2042,14 @@ async function loadTownBriefs(){
   const box=document.getElementById('thBriefs');box.innerHTML='';
   document.getElementById('thNameRow').hidden=!!author();
   try{const list=await api('use-cases/'+encodeURIComponent(townId)+'/briefs');
-    box.innerHTML=list.length?'<small>Campaign briefs</small>'+list.map(x=>`<button class="th-brief" onclick="openBrief('${x.id}')"><b>${escs(x.title)}</b><span>${UC_LABEL[x.status]||x.status} · ${x.done} of ${x.parts} parts filled${x.author?' · '+escs(x.author):''}</span></button>`).join(''):'';
+    box.innerHTML=list.length?'<small>Campaign briefs</small>'+list.map(x=>`<div class="th-brief ${x.status==='locked'?'ok':''}"><button class="th-open" onclick="openBrief('${x.id}')"><b>${escs(x.title)}</b><span>${x.status==='locked'?'Approved':'Draft · '+x.done+' of '+x.parts+' parts filled'}${x.author?' · '+escs(x.author):''}</span></button>${x.status==='locked'?`<button class="btn teal" onclick="openShopsFor('${x.id}')">Shops →</button>`:''}</div>`).join(''):'';
+    const ready=list.find(x=>x.status==='locked'),wip=list.find(x=>x.status!=='locked');
     thGo.textContent=list.length?'Start a new campaign brief':'Start the campaign brief';
+    thGo.className=ready||wip?'btn out':'btn big teal';
+    thNext.innerHTML=ready?`<button class="btn big teal" onclick="openShopsFor('${ready.id}')">Head to the shops →</button>`:wip?`<button class="btn big teal" onclick="openBrief('${wip.id}')">Continue the brief →</button>`:'';
   }catch(e){box.innerHTML=`<p class="later">${escs(e.message)}</p>`}
 }
+async function openShopsFor(id){try{await getSpec();bf=await api('briefs/'+encodeURIComponent(id));openShops()}catch(e){toast(e.message)}}
 async function startBrief(){
   let who=author();
   if(!who){who=thName.value.trim();if(!who){document.getElementById('thNameRow').hidden=false;thName.focus();toast('Add your name first.');return}setAuthor(who)}
@@ -2080,63 +2172,42 @@ async function sendBrief(){
 }
 document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='bfInput'&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendBrief()}});
 // ----- status -----
-function setBfStatus(st){bf.status=st;bfPill.textContent=UC_LABEL[st]||st;bfPill.className='uc-pill '+st;
+function setBfStatus(st){if(st==='review')st='draft';bf.status=st;bfPill.textContent=UC_LABEL[st]||st;bfPill.className='uc-pill '+st;
   const ro=st!=='draft';bfInput.disabled=ro||bfBusy;bfSend.disabled=ro||bfBusy;
-  bfInput.placeholder=st==='review'?'Pending approval. Request changes to edit.':st==='locked'?'Approved. Reopen for edits to make changes.':'Describe the campaign, or ask Claude to change something.';
+  bfInput.placeholder=ro?'Approved. Reopen it to make changes.':'Describe the campaign, or ask Claude to change something.';
+  document.getElementById('brief').classList.toggle('approved',ro);
   renderBfBar()}
 function bfLast(prefix){for(let k=bfEvents.length-1;k>=0;k--)if(bfEvents[k].content.startsWith(prefix))return bfEvents[k];return null}
 function renderBfBar(){if(!bf)return;const st=bf.status,say=bfBarSay,acts=bfBarActs,p=bf.progress||[],done=p.filter(x=>x.done).length;let cls=st;
-  if(st==='draft'){cls=done===p.length?'ready':'draft';
-    say.innerHTML=`<b>Draft · ${done} of ${p.length} parts filled<span class="bf-saved"></span></b>Nothing is required. Read the brief, then submit it for approval.`;
-    acts.innerHTML=`<button class="btn out" onclick="bfInput.focus()">Continue with Claude</button><button class="btn teal" onclick="setBriefStatus('review')">Submit for approval</button>`}
-  else if(st==='review'){const e=bfLast('Submitted');
-    say.innerHTML=`<b>Pending approval</b>${e?`Submitted${e.author?' by '+escs(e.author):''}${fmtWhen(e.created_at)?' on '+fmtWhen(e.created_at):''}. `:''}Read-only until it is approved or sent back.`;
-    acts.innerHTML=`<button class="btn out" onclick="setBriefStatus('draft')">Request changes</button><button class="btn teal" onclick="setBriefStatus('locked')">Approve</button>`}
+  if(st!=='locked'){cls=done===p.length?'ready':'draft';
+    say.innerHTML=`<b>Draft · ${done} of ${p.length} parts filled<span class="bf-saved"></span></b>Nothing is required. Read it through, then approve it.`;
+    acts.innerHTML=`<button class="btn big approve" onclick="approveBrief()">Approve this doc</button>`}
   else{const e=bfLast('Approved');
-    say.innerHTML=`<b>Approved${e?' · '+escs(e.content.replace(/^Approved\s*/,'').replace(/[()]/g,'')):''}</b>${e&&e.author?'Approved by '+escs(e.author)+'. ':''}Each output now has a shop on Market Street, where its asset gets made.`;
-    acts.innerHTML=`<button class="btn ghost" onclick="setBriefStatus('draft')">Reopen for edits</button><button class="btn teal" onclick="openShops()">Head to the shops →</button>`}
+    say.innerHTML=`<b>Approved${e?' · '+escs(e.content.replace(/^Approved\s*/,'').replace(/[()]/g,'')):''}</b>${e&&e.author?'Approved by '+escs(e.author)+(fmtWhen(e.created_at)?' on '+fmtWhen(e.created_at):'')+'. ':''}Locked. Each output now has a shop in town.`;
+    acts.innerHTML=`<button class="btn ghost" onclick="reopenBrief()">Reopen to make changes</button><button class="btn big teal" onclick="openShops()">Head to the shops →</button>`}
   bfBar.className='uc-bar '+cls}
-async function setBriefStatus(next){
+async function setBriefStatus(next,who){
   if(!bf||bfBusy)return;await flushNow();
-  try{await api('briefs/'+encodeURIComponent(bf.id)+'/status',{method:'POST',body:JSON.stringify({status:next,author:author()})});
-    const c=await api('briefs/'+encodeURIComponent(bf.id)+'/chat');bfEvents=c.messages.filter(m=>m.role==='event');
-    const last=bfEvents[bfEvents.length-1];if(last)bfAdd('sys',last.content+(last.author?' · '+last.author:''));
-    bf.status=next;renderBrief();setBfStatus(next);
-  }catch(e){bfAdd('err',e.message)}
+  await api('briefs/'+encodeURIComponent(bf.id)+'/status',{method:'POST',body:JSON.stringify({status:next,author:who||author()})});
+  const c=await api('briefs/'+encodeURIComponent(bf.id)+'/chat');bfEvents=c.messages.filter(m=>m.role==='event');
+  const last=bfEvents[bfEvents.length-1];if(last)bfAdd('sys',last.content+(last.author?' · '+last.author:''));
+  bf.status=next;renderBrief();setBfStatus(next);
 }
+async function reopenBrief(){try{await setBriefStatus('draft')}catch(e){bfAdd('err',e.message)}}
+function approveBrief(){if(!bf)return;const p=bf.progress||[],todo=p.filter(x=>!x.done).map(x=>x.name);
+  openApprove({title:bf.doc.core.name||'Campaign brief',what:'campaign brief',
+    text:'Approving locks this version of the brief. Every output you ticked gets a shop in town, where its asset is made. To change the brief later, reopen it.',
+    warn:todo.length?`Not filled in yet: ${todo.join(', ')}.`:'',
+    approve:(who)=>setBriefStatus('locked',who),
+    doneText:'This version is locked. Head to the shops to start making the assets.',
+    nextLabel:'Head to the shops →',next:openShops})}
 // ----- market street: one shop for every output on an approved brief -----
 const GROUP_COLOR={content:'#C97A5A',enablement:'#3F7A78',inbound:'#618FA4',outbound:'#BFA66A',customer:'#002423'};
 const STATUS_COLOR={'Not started':'#9AA6AC','In progress':'#BFA66A','Done':'#3F7A78'};
 const STREET_Y=700,WALK_Y=772;
 let SHOPS=[],shopW=0,shopCam=0,shopRAF=0,shopX=200,shopSkip=false,shopWalking=false,shopOpen=null;
 function wrapWords(t,n,max=3){const lines=[''];for(const w of String(t).split(' ')){const c=lines[lines.length-1];if(c&&(c+' '+w).length>n)lines.push(w);else lines[lines.length-1]=(c?c+' ':'')+w}return lines.slice(0,max)}
-function layoutShops(b){const items=[];let x=560;
-  for(const g of SPEC.groups){if(!b.doc.groups[g.id])continue;const os=g.outputs.filter(o=>b.doc.outputs[o.id]?.on);if(!os.length)continue;
-    items.push({sign:true,g,x});x+=140;for(const o of os){items.push({g,o,x,st:b.doc.outputs[o.id]});x+=236}x+=70}
-  return {items,width:Math.max(1600,x+260)}}
-function shopSvg(s,i){const c=GROUP_COLOR[s.g.id],w=196,h=236+(i*5%3)*26,st=s.st,lines=wrapWords(s.o.title,17),sc=STATUS_COLOR[st.status]||'#9AA6AC';
-  const stripes=[...Array(8)].map((_,k)=>k%2?'':`<rect x="${-4+k*(w+8)/8}" y="-134" width="${(w+8)/8}" height="28" fill="#FFFFFF" opacity=".85"/>`).join('');
-  const scallops=[...Array(8)].map((_,k)=>`<path d="M${-4+k*(w+8)/8} -106 q ${(w+8)/16} 14 ${(w+8)/8} 0" fill="${k%2?c:'#FFFFFF'}" stroke="#090F12" stroke-width="2"/>`).join('');
-  return `<g class="shop" id="shop-${s.o.id}" transform="translate(${s.x} ${STREET_Y})" onclick="visitShop('${s.o.id}')" role="button" aria-label="${escs(s.o.title)}">
-    <rect class="halo" x="-14" y="${-h-30}" width="${w+28}" height="${h+44}" fill="none"/>
-    <rect x="0" y="${-h}" width="${w}" height="${h}" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
-    <rect x="-8" y="${-h-16}" width="${w+16}" height="16" fill="${c}" stroke="#090F12" stroke-width="3"/>
-    <rect x="14" y="${-h+16}" width="${w-28}" height="${18+lines.length*17}" fill="#FFFDF7" stroke="#090F12" stroke-width="2.5"/>
-    ${lines.map((l,k)=>`<text x="${w/2}" y="${-h+38+k*17}" text-anchor="middle" font-size="13.5" font-weight="800" fill="#090F12">${escs(l)}</text>`).join('')}
-    <rect x="-4" y="-134" width="${w+8}" height="28" fill="${c}" stroke="#090F12" stroke-width="2.5"/>${stripes}${scallops}
-    <rect x="14" y="-92" width="96" height="72" fill="#D2E1EA" stroke="#090F12" stroke-width="2.5"/>
-    <text x="62" y="-60" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="1" fill="#4F6F82">OWNER</text>
-    ${wrapWords(st.owner||'Not set',14,2).map((l,k)=>`<text x="62" y="${-45+k*12}" text-anchor="middle" font-size="11" font-weight="700" fill="#090F12">${escs(l)}</text>`).join('')}
-    <rect x="128" y="-100" width="52" height="100" fill="#002423" stroke="#090F12" stroke-width="2.5"/><circle cx="170" cy="-50" r="3" fill="#BFA66A"/>
-    <g transform="translate(${w/2} 34)"><rect x="-58" y="-11" width="116" height="20" fill="${sc}" stroke="#090F12" stroke-width="2"/>
-      <text y="4" text-anchor="middle" font-size="10" font-weight="800" letter-spacing="1.2" fill="#FFFFFF">${escs(st.status.toUpperCase())}</text></g>
-  </g>`}
-function signSvg(s){const lines=wrapWords(s.g.title,14),c=GROUP_COLOR[s.g.id];
-  return `<g transform="translate(${s.x+50} ${STREET_Y})"><rect x="-4" y="-200" width="8" height="200" fill="#090F12"/>
-    <rect x="-62" y="-${208+lines.length*16}" width="124" height="${16+lines.length*16}" fill="${c}" stroke="#090F12" stroke-width="3"/>
-    ${lines.map((l,k)=>`<text x="0" y="${-196-lines.length*16+12+k*16}" text-anchor="middle" font-size="12" font-weight="800" fill="#FFFFFF">${escs(l.toUpperCase())}</text>`).join('')}
-    ${tree(-30,-2,1.1)}${tree(34,-2,1.3)}</g>`}
-function buildStreet(){const L=layoutShops(bf);SHOPS=L.items.filter(s=>!s.sign);shopW=L.width;
+function buildStreet(){const L=layoutShops(bf);SHOPS=L.items;shopW=L.width;
   const road=`M-200 ${WALK_Y} L${shopW+200} ${WALK_Y}`;
   return `<rect x="-200" y="-100" width="${shopW+600}" height="1200" fill="#E8EEF4"/>
   <g id="streetWorld">
@@ -2154,8 +2225,7 @@ function buildStreet(){const L=layoutShops(bf);SHOPS=L.items.filter(s=>!s.sign);
       <rect x="-86" y="-160" width="172" height="44" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
       <text x="0" y="-142" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="2" fill="#4F6F82">MARKET STREET</text>
       <text x="0" y="-125" text-anchor="middle" font-size="${(bf.doc.core.name||'').length>22?10:12}" font-weight="800" fill="#090F12">${escs((bf.doc.core.name||'Campaign').toUpperCase())}</text></g>
-    ${L.items.map((s,i)=>s.sign?signSvg(s):shopSvg(s,i)).join('')}
-    ${[...Array(Math.ceil(shopW/700))].map((_,k)=>lamp(320+k*700,STREET_Y+40)).join('')}
+    ${L.items.map((s,i)=>shopSvg(s,i)).join('')}
     <g class="walkers" id="sWalkers"><g id="sMaz">${walkerMaz()}</g><g id="sDog">${walkerDog()}</g></g>
   </g>`}
 function placeWalkers(x){shopX=x;document.getElementById('sMaz').setAttribute('transform',`translate(${x} ${WALK_Y-30})`);document.getElementById('sDog').setAttribute('transform',`translate(${x+46} ${WALK_Y-2})`)}
@@ -2169,36 +2239,132 @@ function walkTo(x,done){cancelAnimationFrame(shopRAF);const from=shopX,dist=Math
 function openShops(){
   if(!bf||bf.status!=='locked')return;closeShopCard();
   const v=document.getElementById('shops');document.getElementById('shopScene').innerHTML=buildStreet();
-  const done=SHOPS.filter(s=>s.st.status==='Done').length;
+  const all=SHOPS.flatMap(s=>s.outs),done=all.filter(a=>a.st.status==='Done').length;
   shopTitle.textContent=bf.doc.core.name||'Campaign';
-  shopSub.textContent=SHOPS.length?`${SHOPS.length} shop${SHOPS.length>1?'s':''}, one for each output in the brief · ${done} done. Click a shop to visit it.`:'No outputs are ticked in this brief, so there are no shops yet.';
+  shopSub.textContent=SHOPS.length?`${SHOPS.length} shop${SHOPS.length>1?'s':''} making ${all.length} asset${all.length>1?'s':''} · ${done} done. Click a shop to visit it.`:'No outputs are ticked in this brief, so there are no shops yet.';
+  shopBack.textContent=document.getElementById('brief').classList.contains('on')?'← Back to the brief':'← Back to Town Hall';
   v.classList.add('on');requestAnimationFrame(()=>v.classList.add('show'));
   placeWalkers(150);setCam(0);
-  if(SHOPS.length)setTimeout(()=>walkTo(SHOPS[0].x-40),400);
+  showDirectory();
 }
-function closeShops(){cancelAnimationFrame(shopRAF);closeShopCard();const v=document.getElementById('shops');v.classList.remove('show');setTimeout(()=>v.classList.remove('on'),450)}
+function closeShops(){cancelAnimationFrame(shopRAF);closeShopCard();hideDirectory();const v=document.getElementById('shops');v.classList.remove('show');setTimeout(()=>v.classList.remove('on'),450)}
 function fmtVal(f,v){if(v===null||v===undefined||v===''||(Array.isArray(v)&&!v.length))return null;
   if(f.type==='pick'){const o=bf.options[f.from]||[];return v.map(id=>(o.find(x=>x.id===id)||{}).name||id).join(', ')}
   if(f.type==='pairs')return v.map(r=>r.a+(r.b?' — '+r.b:'')).join('\n');
   if(f.type==='money')return '$'+Number(v).toLocaleString('en-US');
   if(f.type==='date')return fmtDate(v);
   return Array.isArray(v)?v.join('\n'):String(v)}
-function visitShop(id){if(shopWalking)return;const s=SHOPS.find(k=>k.o.id===id);if(!s)return;closeShopCard();
-  document.querySelectorAll('#shopScene .shop').forEach(el=>el.classList.toggle('here',el.id==='shop-'+id));
-  walkTo(s.x+150,()=>showShopCard(s))}
-function showShopCard(s){shopOpen=s.o.id;const st=s.st;
-  shopKicker.textContent=s.g.title;shopName.textContent=s.o.title;
-  shopMeta.innerHTML=`<span><b>Owner</b>${escs(st.owner||'Not set')}</span><span><b>Due</b>${st.due?escs(fmtDate(st.due)):'Not set'}</span><span><b>Status</b><i style="background:${STATUS_COLOR[st.status]}"></i>${escs(st.status)}</span>`;
-  const rows=s.o.fields.map(f=>[f.label,fmtVal(f,st.values[f.key])]);
-  shopBody.innerHTML=`<h4>From the approved brief</h4>`+rows.map(([l,v])=>`<div class="srow"><b>${escs(l)}</b><span class="${v?'':'unset'}">${v?escs(v):'Not set'}</span></div>`).join('');
-  document.getElementById('shops').classList.add('carded')}
 function closeShopCard(){shopOpen=null;document.getElementById('shops').classList.remove('carded');document.querySelectorAll('#shopScene .shop.here').forEach(el=>el.classList.remove('here'))}
+// Themed shops: each building in town makes one kind of asset.
+const SHOP_THEMES=[
+  {id:'gazette',name:'The Gazette',kind:'Newspaper',sub:'Thought leadership and content',color:'#C97A5A',outputs:['blog','pr','social','website']},
+  {id:'barber',name:'The Barbershop',kind:'Barbershop',sub:'Sales enablement: the sales team gets sharpened up here',color:'#3F7A78',outputs:['slides','battlecard','twopager','training']},
+  {id:'trading',name:'Trading Post',kind:'Trading post',sub:'Partner enablement and campaign-in-a-box',color:'#8A5A1E',outputs:['partner_enable','partner_box']},
+  {id:'signs',name:'Sign Maker',kind:'Sign maker',sub:'Ads, landing pages and creative',color:'#618FA4',outputs:['paid','landing','creative']},
+  {id:'counting',name:'Counting House',kind:'Counting house',sub:'Campaign set-up and reporting',color:'#002423',outputs:['marops']},
+  {id:'post',name:'Post Office',kind:'Post office',sub:'Account lists, SDR cadences, nurture and newsletters',color:'#4F6F82',outputs:['accounts','cadence','nurture','followup','newsletter','cust_nurture']},
+  {id:'playhouse',name:'The Playhouse',kind:'Theater',sub:'Webinars and events',color:'#B8664C',outputs:['event','cust_event']},
+  {id:'tavern',name:'The Tavern',kind:'Tavern',sub:'Where the regulars are: customer expansion and stories',color:'#BFA66A',outputs:['expansion','proof']},
+];
+function outInfo(id){for(const g of SPEC.groups){const o=g.outputs.find(x=>x.id===id);if(o)return{g,o}}return null}
+function shopStatus(outs){const ss=outs.map(a=>a.st.status);return ss.every(s=>s==='Done')?'Done':ss.some(s=>s!=='Not started')?'In progress':'Not started'}
+function layoutShops(b){const items=[];let x=600;
+  for(const t of SHOP_THEMES){const outs=t.outputs.map(id=>{const i=outInfo(id);const st=b.doc.outputs[id];return i&&st?.on&&b.doc.groups[i.g.id]?{...i,st}:null}).filter(Boolean);
+    if(!outs.length)continue;items.push({t,x,outs,status:shopStatus(outs)});x+=330}
+  return {items,width:Math.max(1600,x+300)}}
+function decor(id,w,h,c){switch(id){
+  case 'gazette':return `<g transform="translate(${w-6} ${-h+96})"><rect x="0" y="0" width="74" height="54" fill="#FFFFFF" stroke="#090F12" stroke-width="2.5" transform="rotate(6)"/>
+      <rect x="8" y="9" width="58" height="8" fill="#090F12" transform="rotate(6)"/><g transform="rotate(6)" fill="#9AA6AC"><rect x="8" y="22" width="26" height="4"/><rect x="8" y="30" width="26" height="4"/><rect x="8" y="38" width="26" height="4"/><rect x="40" y="22" width="26" height="20"/></g></g>
+      <text x="${w/2}" y="${-h-24}" text-anchor="middle" font-size="12" font-weight="800" letter-spacing="3" fill="${c}">EXTRA · EXTRA</text>`;
+  case 'barber':return `<g transform="translate(${w+16} -20)"><rect x="-9" y="-128" width="18" height="128" fill="#FFFFFF" stroke="#090F12" stroke-width="2.5"/>
+      ${[0,1,2,3,4,5,6].map(k=>`<path d="M-9 ${-120+k*18} L9 ${-132+k*18} L9 ${-124+k*18} L-9 ${-112+k*18}Z" fill="${k%2?'#B8664C':'#618FA4'}"/>`).join('')}
+      <circle cy="-136" r="11" fill="#BFA66A" stroke="#090F12" stroke-width="2.5"/><rect x="-12" y="-4" width="24" height="8" fill="#090F12"/></g>`;
+  case 'trading':return `<g transform="translate(-34 0)">${[[0,-34],[34,-34],[16,-68]].map(([x,y])=>`<g transform="translate(${x} ${y})"><rect width="34" height="34" fill="#C9A06A" stroke="#090F12" stroke-width="2.5"/><path d="M0 0 L34 34 M34 0 L0 34" stroke="#090F12" stroke-width="1.5"/></g>`).join('')}</g>`;
+  case 'signs':return `<g transform="translate(${w+6} ${-h+60})"><rect x="0" y="-4" width="46" height="6" fill="#090F12"/><path d="M8 2 v14 M40 2 v14" stroke="#090F12" stroke-width="2"/>
+      <path d="M-4 16 h52 l12 22 l-12 22 h-52 z" fill="#FFFFFF" stroke="#090F12" stroke-width="2.5"/><text x="20" y="43" text-anchor="middle" font-size="12" font-weight="800" fill="${c}">ADS</text></g>
+      <g transform="translate(-30 0)"><rect x="0" y="-26" width="22" height="26" fill="#C97A5A" stroke="#090F12" stroke-width="2"/><rect x="0" y="-30" width="22" height="6" fill="#090F12"/><path d="M4 -26 q4 10 0 18" stroke="#FFFFFF" stroke-width="3" fill="none"/></g>`;
+  case 'counting':return `${[18,w-18].map(x=>`<rect x="${x-9}" y="${-h+70}" width="18" height="${h-70}" fill="#F4F4F0" stroke="#090F12" stroke-width="2.5"/>`).join('')}
+      <polygon points="-10,${-h-16} ${w/2},${-h-60} ${w+10},${-h-16}" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/><circle cx="${w/2}" cy="${-h-32}" r="9" fill="${c}"/>`;
+  case 'post':return `<g transform="translate(${w+26} 0)"><rect x="-14" y="-52" width="28" height="44" rx="12" fill="#618FA4" stroke="#090F12" stroke-width="2.5"/><rect x="-9" y="-40" width="18" height="4" fill="#090F12"/><rect x="-3" y="-8" width="6" height="8" fill="#090F12"/></g>
+      <g transform="translate(${w-16} ${-h-16})"><rect x="-2" y="-70" width="4" height="70" fill="#090F12"/><path d="M2 -68 h36 v22 h-36z" fill="${c}" stroke="#090F12" stroke-width="2"/></g>`;
+  case 'playhouse':return `<g transform="translate(-8 ${-h+76})"><rect width="${w+16}" height="34" fill="#090F12"/>${[...Array(12)].map((_,k)=>`<circle cx="${10+k*(w-4)/11}" cy="5" r="3.2" fill="#BFA66A"/><circle cx="${10+k*(w-4)/11}" cy="29" r="3.2" fill="#BFA66A"/>`).join('')}
+      <text x="${(w+16)/2}" y="22" text-anchor="middle" font-size="11" font-weight="800" letter-spacing="3" fill="#FFFFFF">NOW SHOWING</text></g>
+      <path d="M${w/2} ${-h-50} l7 14 l15 2 l-11 11 l3 15 l-14 -7 l-14 7 l3 -15 l-11 -11 l15 -2z" fill="#BFA66A" stroke="#090F12" stroke-width="2"/>`;
+  case 'tavern':return `<g transform="translate(${w+4} ${-h+70})"><rect x="0" y="-3" width="40" height="6" fill="#090F12"/><path d="M28 3 v8" stroke="#090F12" stroke-width="2"/>
+      <rect x="14" y="11" width="26" height="30" rx="3" fill="#BFA66A" stroke="#090F12" stroke-width="2.5"/><path d="M40 18 q10 0 10 9 q0 9 -10 9" fill="none" stroke="#090F12" stroke-width="2.5"/><rect x="14" y="8" width="26" height="8" rx="4" fill="#FFFFFF" stroke="#090F12" stroke-width="2"/></g>
+      <g transform="translate(-36 0)"><ellipse cx="16" cy="-22" rx="16" ry="22" fill="#9A6A3F" stroke="#090F12" stroke-width="2.5"/><path d="M1 -32 h30 M1 -12 h30" stroke="#090F12" stroke-width="2"/></g>`;
+  default:return ''}}
+function shopSvg(s,i){const t=s.t,c=t.color,w=230,h=250+(i%3)*24,lines=wrapWords(t.name.toUpperCase(),16,2),sc=STATUS_COLOR[s.status]||'#9AA6AC';
+  const n=s.outs.length,done=s.outs.filter(a=>a.st.status==='Done').length;
+  const stripes=[...Array(8)].map((_,k)=>k%2?'':`<rect x="${-4+k*(w+8)/8}" y="-134" width="${(w+8)/8}" height="28" fill="#FFFFFF" opacity=".85"/>`).join('');
+  const scallops=[...Array(8)].map((_,k)=>`<path d="M${-4+k*(w+8)/8} -106 q ${(w+8)/16} 14 ${(w+8)/8} 0" fill="${k%2?c:'#FFFFFF'}" stroke="#090F12" stroke-width="2"/>`).join('');
+  return `<g class="shop" id="shop-${t.id}" transform="translate(${s.x} ${STREET_Y})" onclick="visitShop('${t.id}')" role="button" aria-label="${escs(t.name)}">
+    <rect class="halo" x="-50" y="${-h-80}" width="${w+100}" height="${h+130}" fill="none"/>
+    <rect x="0" y="${-h}" width="${w}" height="${h}" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
+    <rect x="-8" y="${-h-16}" width="${w+16}" height="16" fill="${c}" stroke="#090F12" stroke-width="3"/>
+    <rect x="14" y="${-h+14}" width="${w-28}" height="${16+lines.length*19}" fill="${c}" stroke="#090F12" stroke-width="2.5"/>
+    ${lines.map((l,k)=>`<text x="${w/2}" y="${-h+36+k*19}" text-anchor="middle" font-size="16" font-weight="900" letter-spacing="1.5" fill="#FFFFFF">${escs(l)}</text>`).join('')}
+    ${t.kind.toLowerCase()!==t.name.toLowerCase()?`<text x="${w/2}" y="${-h+48+lines.length*19}" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="1.5" fill="#4F6F82">${escs(t.kind.toUpperCase())}</text>`:''}
+    <rect x="-4" y="-134" width="${w+8}" height="28" fill="${c}" stroke="#090F12" stroke-width="2.5"/>${stripes}${scallops}
+    <rect x="14" y="-92" width="112" height="72" fill="#D2E1EA" stroke="#090F12" stroke-width="2.5"/>
+    <text x="70" y="-62" text-anchor="middle" font-size="22" font-weight="900" fill="#090F12">${n}</text>
+    <text x="70" y="-44" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="1" fill="#4F6F82">${n>1?'ASSETS':'ASSET'} · ${done} DONE</text>
+    <rect x="${w-74}" y="-100" width="56" height="100" fill="#002423" stroke="#090F12" stroke-width="2.5"/><circle cx="${w-28}" cy="-50" r="3" fill="#BFA66A"/>
+    ${decor(t.id,w,h,c)}
+    <g transform="translate(${w/2} 34)"><rect x="-58" y="-11" width="116" height="20" fill="${sc}" stroke="#090F12" stroke-width="2"/>
+      <text y="4" text-anchor="middle" font-size="10" font-weight="800" letter-spacing="1.2" fill="#FFFFFF">${escs(s.status.toUpperCase())}</text></g>
+  </g>`}
+function visitShop(id){if(shopWalking)return;const s=SHOPS.find(k=>k.t.id===id);if(!s)return;closeShopCard();
+  document.querySelectorAll('#shopScene .shop').forEach(el=>el.classList.toggle('here',el.id==='shop-'+id));
+  walkTo(s.x+180,()=>showShopCard(s))}
+function showShopCard(s){shopOpen=s.t.id;
+  shopKicker.textContent=s.t.kind;shopName.textContent=s.t.name;
+  shopMeta.innerHTML=`<span style="flex-basis:100%;color:var(--steel-blue)">${escs(s.t.sub)}</span><span><b>Assets</b>${s.outs.length}</span><span><b>Status</b><i style="background:${STATUS_COLOR[s.status]}"></i>${escs(s.status)}</span>`;
+  shopBody.innerHTML=s.outs.map(a=>{const st=a.st;
+    return `<div class="asset"><h5>${escs(a.o.title)}</h5><div class="ameta"><span><b>Owner</b>${escs(st.owner||'Not set')}</span><span><b>Due</b>${st.due?escs(fmtDate(st.due)):'Not set'}</span><span><b>Status</b><i style="background:${STATUS_COLOR[st.status]}"></i>${escs(st.status)}</span></div>
+      <details><summary>What the brief says</summary>${a.o.fields.map(f=>{const v=fmtVal(f,st.values[f.key]);return `<div class="srow"><b>${escs(f.label)}</b><span class="${v?'':'unset'}">${v?escs(v):'Not set'}</span></div>`}).join('')}</details></div>`}).join('');
+  document.getElementById('shops').classList.add('carded')}
+function showDirectory(){if(!bf)return;closeShopCard();
+  const zone=s=>`<div class="zone" style="--c:${s.t.color}"><h4><button class="zname" onclick="dirGo('${s.t.id}')">${escs(s.t.name)} →</button></h4><p class="zsub">${escs(s.t.sub)}</p><div class="units">${s.outs.map(a=>`<button class="unit" style="--c:${s.t.color}" onclick="dirGo('${s.t.id}')"><b>${escs(a.o.title)}</b><span>${escs(a.st.owner||'Owner not set')}${a.st.due?' · due '+escs(fmtDate(a.st.due)):''}</span><em><i style="background:${STATUS_COLOR[a.st.status]}"></i>${escs(a.st.status)}</em></button>`).join('')}</div></div>`;
+  const half=Math.ceil(SHOPS.length/2),top=SHOPS.slice(0,half),bottom=SHOPS.slice(half);
+  const wing=list=>list.length?`<div class="wing" style="grid-template-columns:repeat(${list.length},1fr)">${list.map(zone).join('')}</div>`:'';
+  shopDir.innerHTML=`<div class="dir-card"><div class="dir-hd"><div><small>Town map</small><h3>${escs(bf.doc.core.name||'Campaign')}</h3><p>${SHOPS.length?'Every shop in town and what it makes for this campaign. Click a shop to walk there.':'No outputs are ticked in this brief, so there are no shops yet.'}</p></div>
+    <div class="dir-legend">${Object.entries(STATUS_COLOR).map(([k,c])=>`<span><i style="background:${c}"></i>${k}</span>`).join('')}</div></div>
+    <div class="mall">${wing(top)}<div class="corridor"><span class="here">★ You are here · Town Hall</span><span>Market Street</span></div>${wing(bottom)}</div>
+    <div class="dir-ft"><button class="btn out" onclick="hideDirectory()">Walk the street</button></div></div>`;
+  document.getElementById('shops').classList.add('dir-on')}
+
 function panStreet(dx){if(!shopWalking)setCam(shopCam-dx)}
 (function wireStreet(){const sv=document.getElementById('shopScene');let drag=null;
   sv.addEventListener('wheel',e=>{if(shopWalking)return;e.preventDefault();const r=sv.getBoundingClientRect(),k=1600/Math.max(1,Math.min(r.width,r.height*16/9));panStreet((Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY)*k)},{passive:false});
   sv.addEventListener('pointerdown',e=>{if(e.target.closest('.shop'))return;drag={x:e.clientX,c:shopCam}});
   addEventListener('pointermove',e=>{if(!drag||shopWalking)return;const r=sv.getBoundingClientRect();setCam(drag.c+(e.clientX-drag.x)*1600/Math.max(1,r.width))});
   addEventListener('pointerup',()=>drag=null)})();
+
+// ----- approval overlay (use cases and briefs) -----
+let apprCtx=null,initTouched=false;
+function initialsOf(n){return n.trim().split(/\s+/).filter(Boolean).map(w=>w[0]).join('').slice(0,3).toUpperCase()}
+function openApprove(ctx){apprCtx=ctx;initTouched=false;
+  apprKicker.textContent='Approve this '+ctx.what;apprTitle.textContent=ctx.title;apprText.textContent=ctx.text;
+  apprWarn.textContent=ctx.warn||'';apprWarn.hidden=!ctx.warn;
+  apprName.value=author();apprInit.value=initialsOf(apprName.value);apprErr.textContent='';
+  apprForm.hidden=false;apprDone.hidden=true;apprGo.disabled=false;
+  apprOv.classList.add('on');setTimeout(()=>(apprName.value?apprGo:apprName).focus(),150)}
+function closeApprove(){apprOv.classList.remove('on');apprCtx=null}
+apprName.addEventListener('input',()=>{if(!initTouched)apprInit.value=initialsOf(apprName.value)});
+apprInit.addEventListener('input',()=>{initTouched=true;apprInit.value=apprInit.value.toUpperCase().replace(/[^A-Z]/g,'').slice(0,4)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&apprOv.classList.contains('on'))closeApprove()});
+async function confirmApprove(){if(!apprCtx)return;const name=apprName.value.trim(),ini=apprInit.value.trim();
+  if(!name){apprErr.textContent='Add your name.';apprName.focus();return}
+  if(!ini){apprErr.textContent='Add your initials.';apprInit.focus();return}
+  setAuthor(name);apprGo.disabled=true;apprErr.textContent='';
+  try{await apprCtx.approve(`${name} (${ini})`);
+    apprStampInit.textContent=ini;apprDoneTitle.textContent=apprCtx.title;apprDoneText.textContent=apprCtx.doneText;apprNext.textContent=apprCtx.nextLabel;
+    const next=apprCtx.next;apprNext.onclick=()=>{closeApprove();next()};
+    apprForm.hidden=true;apprDone.hidden=false;setTimeout(()=>apprNext.focus(),100);
+  }catch(e){apprErr.textContent=e.message;apprGo.disabled=false}}
+function hideDirectory(){document.getElementById('shops').classList.remove('dir-on')}
+function dirGo(id){hideDirectory();setTimeout(()=>visitShop(id),250)}
 </script>
 </body>
 </html>
