@@ -667,6 +667,16 @@
   #shops .spray{animation:spray 1.2s ease-in-out infinite alternate} @keyframes spray{from{opacity:.5}to{opacity:1}}
   @media (prefers-reduced-motion:reduce){.polespin,#shops .wave,#shops .extra,.bulbA,.bulbB,#shops .flag path,#shops .swing,#shops .spray{animation:none}}
   #shops.card-left .shopcard{right:auto;left:24px;top:130px;transform:translateX(-30px)} #shops.card-left.carded .shopcard{transform:none}
+  .shoptip{position:absolute;display:none;z-index:5;width:300px;background:#FFFDF7;border:2.5px solid #090F12;box-shadow:6px 6px 0 rgba(9,15,18,.2);padding:14px 16px 12px;pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .15s,transform .15s}
+  .shoptip.on{opacity:1;transform:none}
+  .shoptip small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#3F7A78} .shoptip.closed small{color:#8697A3}
+  .shoptip h4{font-size:18px;margin:3px 0 6px;color:#090F12} .shoptip p{font-size:13.5px;line-height:1.45;font-style:italic;color:#2F4754;margin:0 0 10px}
+  .shoptip .deal{display:inline-block;background:#B8664C;color:#fff;font-size:12px;font-weight:800;letter-spacing:.04em;padding:5px 10px;transform:rotate(-2deg);margin:0 0 10px}
+  .shoptip .menu{border-top:1.5px dashed rgba(9,15,18,.3);padding-top:8px;display:flex;flex-direction:column;gap:3px;font-size:13px;color:#090F12}
+  .shoptip .menu b{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#4F6F82;margin-bottom:2px}
+  .shoptip .menu i{display:inline-block;width:8px;height:8px;border-radius:50%;border:1.2px solid #090F12;margin-right:6px}
+  .shoptip.closed .menu span{color:#8697A3}
+  .shoptip .go{margin-top:8px;font-size:12px;font-weight:700;color:#3F7A78}
 </style>
 </head>
 <body>
@@ -1135,6 +1145,7 @@
   <svg id="shopScene" viewBox="0 70 1600 920" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
   <div class="street-hd"><small>Town</small><h3 id="shopTitle"></h3><p id="shopSub"></p></div>
   <div class="street-acts"><button class="btn out street-skip" onclick="shopSkip=true">Skip</button><button class="btn out" id="shopBack" onclick="closeShops()">← Back to the brief</button></div>
+  <div class="shoptip" id="shopTip" role="tooltip"></div>
   <div class="shopcard" role="dialog" aria-labelledby="shopName">
     <div class="top"><small id="shopKicker"></small><h3 id="shopName"></h3><div class="meta" id="shopMeta"></div></div>
     <div class="body" id="shopBody"></div>
@@ -2389,7 +2400,7 @@ function fmtVal(f,v){if(v===null||v===undefined||v===''||(Array.isArray(v)&&!v.l
   if(f.type==='money')return '$'+Number(v).toLocaleString('en-US');
   if(f.type==='date')return fmtDate(v);
   return Array.isArray(v)?v.join('\n'):String(v)}
-function visitShop(id){if(shopWalking)return;const s=SHOPS.find(k=>k.t.id===id);if(!s||!s.open)return;closeShopCard();
+function visitShop(id){if(shopWalking)return;hideShopTip();const s=SHOPS.find(k=>k.t.id===id);if(!s||!s.open)return;closeShopCard();
   document.querySelectorAll('#shopScene .shop').forEach(el=>el.classList.toggle('here',el.id==='shop-'+id));
   walkPath(pathTo(s.t),()=>showShopCard(s))}
 function showShopCard(s){shopOpen=s.t.id;document.getElementById('shops').classList.toggle('card-left',s.t.x>HALL_X);
@@ -2423,6 +2434,29 @@ async function confirmApprove(){if(!apprCtx)return;const name=apprName.value.tri
     const next=apprCtx.next;apprNext.onclick=()=>{closeApprove();next()};
     apprForm.hidden=true;apprDone.hidden=false;setTimeout(()=>apprNext.focus(),100);
   }catch(e){apprErr.textContent=e.message;apprGo.disabled=false}}
+
+// Hover a shop: it advertises what it makes.
+const SHOP_ADS={
+  gazette:{slogan:'Read all about it! The best blog posts, PR pitches and social posts in town.',deal:'Hot off the press'},
+  barber:{slogan:'Walk in rough, walk out ready to sell. Sharp slides, battlecards and 2-pagers while you wait.',deal:o=>`Today's special: half-price ${o[0].o.title.toLowerCase()}`},
+  bank:{slogan:'We count every dollar. Ad budgets, campaign set-up and reporting, compounded daily.',deal:'Free reports with every campaign'},
+  trading:{slogan:'Fresh partner kits, packed and ready for the trail. Fair trades with our alliance partners.',deal:'Campaign-in-a-box, buy one share many'},
+  signs:{slogan:"If it's got a headline, we'll hang it. Ads, banners and landing pages made to order.",deal:'Keywords sharpened free'},
+  post:{slogan:'Neither rain nor sleet stops our cadences. Emails, nurture and newsletters, delivered.',deal:'Same-day delivery to Tier 1 accounts'},
+  playhouse:{slogan:'Tonight only! Webinars and events that fill every seat.',deal:'Front-row seats still available'},
+};
+function showShopTip(el){const s=SHOPS.find(k=>'shop-'+k.t.id===el.id);if(!s)return;const ad=SHOP_ADS[s.t.id]||{},tip=document.getElementById('shopTip');
+  tip.className='shoptip '+(s.open?'open':'closed');
+  tip.innerHTML=`<small>${s.open?'Now open':'Closed for this campaign'}</small><h4>${escs(s.t.name)}</h4><p>${escs(ad.slogan||s.t.sub)}</p>
+    ${s.open?`<div class="deal">${escs(typeof ad.deal==='function'?ad.deal(s.outs):ad.deal||'')}</div><div class="menu"><b>On the shelves for this campaign</b>${s.outs.map(a=>`<span><i style="background:${STATUS_COLOR[a.st.status]}"></i>${escs(a.o.title)}</span>`).join('')}</div><div class="go">Click to walk over →</div>`
+      :`<div class="menu"><b>Opens when the brief ticks</b>${s.t.outputs.map(id=>outInfo(id)).filter(Boolean).map(i=>`<span>${escs(i.o.title)}</span>`).join('')}</div>`}`;
+  const r=el.querySelector('.art').getBoundingClientRect(),v=document.getElementById('shops').getBoundingClientRect();
+  tip.style.display='block';const tw=tip.offsetWidth,th=tip.offsetHeight;
+  let x=r.left+r.width/2-tw/2-v.left,y=r.top-th-14-v.top;if(y<10)y=r.bottom+14-v.top;
+  tip.style.left=Math.max(10,Math.min(v.width-tw-10,x))+'px';tip.style.top=Math.max(10,y)+'px';requestAnimationFrame(()=>tip.classList.add('on'))}
+function hideShopTip(){const tip=document.getElementById('shopTip');tip.classList.remove('on');tip.style.display='none'}
+document.getElementById('shopScene').addEventListener('mouseover',e=>{const el=e.target.closest('.shop');if(el&&!shopWalking)showShopTip(el)});
+document.getElementById('shopScene').addEventListener('mouseout',e=>{const el=e.target.closest('.shop');if(el&&!el.contains(e.relatedTarget))hideShopTip()});
 </script>
 </body>
 </html>
