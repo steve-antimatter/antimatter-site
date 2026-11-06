@@ -217,15 +217,19 @@ export async function chatTurn(env, db, id, text, author, { fetchClaude } = {}) 
 
   const changed = new Set();
   let reply = '';
+  // The system prompt (which carries the use case as it stood at the start of the turn) must stay
+  // identical for the whole turn: Claude's thinking blocks are signed against it and are sent back
+  // with every tool result. Edits made during the turn are reported in the tool results instead.
+  const system = systemPrompt(doc);
   for (let step = 0; step < MAX_STEPS; step++) {
-    const res = await call({ model: MODEL, max_tokens: 4000, system: systemPrompt(doc), tools: [...TOOLS, WEB_SEARCH], messages });
+    const res = await call({ model: MODEL, max_tokens: 8000, system, tools: [...TOOLS, WEB_SEARCH], messages });
     messages.push({ role: 'assistant', content: res.content });
     reply = res.content.filter((b) => b.type === 'text').map((b) => b.text).join('').trim() || reply;
     if (res.stop_reason === 'pause_turn') continue;
     if (res.stop_reason !== 'tool_use') break;
     const results = [];
     for (const b of res.content.filter((x) => x.type === 'tool_use')) {
-      try { changed.add(applyTool(doc, b.name, b.input || {})); results.push({ type: 'tool_result', tool_use_id: b.id, content: 'Saved.' }); }
+      try { const what = applyTool(doc, b.name, b.input || {}); changed.add(what); results.push({ type: 'tool_result', tool_use_id: b.id, content: `Saved ${what}. The page now shows it.` }); }
       catch (e) { results.push({ type: 'tool_result', tool_use_id: b.id, content: String(e.message || e), is_error: true }); }
     }
     messages.push({ role: 'user', content: results });

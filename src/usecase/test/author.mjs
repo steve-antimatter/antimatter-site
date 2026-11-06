@@ -56,3 +56,16 @@ await assert.rejects(chatTurn({}, db, id, 'change it', 'Steve', { fetchClaude: a
 await setStatus(db, id, 'draft');
 assert.equal(renderHtml(await loadDoc(db, 'governance-in-testing')), renderHtml(seed));
 console.log('authoring tests ok');
+
+// The system prompt must not change inside a turn (signed thinking blocks depend on it).
+{
+  const id2 = await createDraft(db, { title: 'Prompt stability', author: 'Steve' });
+  const seen = []; let k = 0;
+  await chatTurn({}, db, id2, 'go', 'Steve', { fetchClaude: async (body) => {
+    seen.push(body.system);
+    return k++ === 0 ? { stop_reason: 'tool_use', content: [{ type: 'thinking', thinking: 'x', signature: 's' }, { type: 'tool_use', id: 'z', name: 'set_basics', input: { problem: 'P' } }] }
+      : { stop_reason: 'end_turn', content: [{ type: 'text', text: 'ok' }] };
+  } });
+  assert.equal(seen.length, 2); assert.equal(seen[0], seen[1]);
+  console.log('stable system prompt ok');
+}
