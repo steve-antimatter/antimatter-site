@@ -1,0 +1,686 @@
+{
+  "libraries": {
+    "products": [
+      {
+        "id": "flow",
+        "name": "Leapwork Flow",
+        "logo_asset": "logos/flow.png",
+        "sort": 1,
+        "summary": "Visual, no-code test automation across web, desktop, Citrix, mainframe, SAP, Dynamics 365, Oracle and Salesforce."
+      },
+      {
+        "id": "play",
+        "name": "Leapwork Play",
+        "logo_asset": "logos/play.png",
+        "sort": 2,
+        "summary": "Governed Playwright: AI helps write tests from requirements; tests run as fixed Playwright code."
+      },
+      {
+        "id": "go",
+        "name": "Leapwork Go",
+        "logo_asset": "logos/go.png",
+        "sort": 3,
+        "summary": "Performance, load and API testing."
+      }
+    ],
+    "industries": [
+      {
+        "id": "public-companies",
+        "name": "Public companies"
+      },
+      {
+        "id": "pharma",
+        "name": "Pharma and life sciences"
+      },
+      {
+        "id": "financial-services",
+        "name": "Financial services and fintech"
+      },
+      {
+        "id": "healthcare",
+        "name": "Healthcare"
+      },
+      {
+        "id": "insurance",
+        "name": "Insurance"
+      },
+      {
+        "id": "corporate-services",
+        "name": "Corporate services"
+      }
+    ],
+    "personas": [
+      {
+        "id": "qa-leader",
+        "name": "QA leader",
+        "descriptor": "head of QA or test automation"
+      },
+      {
+        "id": "practitioner",
+        "name": "Practitioner",
+        "descriptor": "test engineer, analyst"
+      },
+      {
+        "id": "validation-lead",
+        "name": "Validation lead / quality unit",
+        "descriptor": "pharma, med-device"
+      },
+      {
+        "id": "erp-owner",
+        "name": "ERP owner / IT compliance",
+        "descriptor": "SOX companies"
+      },
+      {
+        "id": "cio",
+        "name": "CIO",
+        "descriptor": null
+      },
+      {
+        "id": "cto",
+        "name": "CTO",
+        "descriptor": null
+      }
+    ],
+    "sources": [
+      {
+        "id": "lw-security",
+        "title": "Security page",
+        "url": "https://www.leapwork.com/security",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "lw-release-2021-1",
+        "title": "2021.1 release notes",
+        "url": "https://leapwork.com/releases/2021-1-342",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "lw-traceability",
+        "title": "Traceability post",
+        "url": "https://leapwork.com/?p=13115",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "lw-healthcare",
+        "title": "Healthcare page",
+        "url": "https://www.leapwork.com/industry/healthcare-lifesciences-automation",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "lw-go-audit",
+        "title": "Go audit logs",
+        "url": "https://docs.leapwork.com/leapwork-go/latest/get-started/understand-retention-policies-and-audit-logs-in-leapwork-go",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "cs-necstgen",
+        "title": "NecstGen",
+        "url": "https://www.leapwork.com/customers/necstgen",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "cs-healthcare-provider",
+        "title": "US healthcare provider",
+        "url": "https://leapwork.com/customers/customer-story-health-care-provider",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "cs-investec",
+        "title": "Investec",
+        "url": "https://leapwork.com/customer-story-investec",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "cs-bnp-cardif",
+        "title": "BNP Paribas Cardif",
+        "url": "https://leapwork.com/customer-story-bnp-paribas-cardif-insurance",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "cs-nhs-pah",
+        "title": "NHS one-pager",
+        "url": "https://www.leapwork.com/hubfs/assets/NHS-Leapwork-one-pager-v.1.pdf",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "cs-list",
+        "title": "Case study list",
+        "url": "https://www.casestudies.com/company/leapwork",
+        "publisher": "casestudies.com"
+      },
+      {
+        "id": "cs-multinational-bank",
+        "title": "Multinational bank (Oracle HCM)",
+        "url": "https://www.casestudies.com/company/leapwork/case-study/multinational-bank-uses-leapwork-to-test-oracle-human-capital-management-cloud",
+        "publisher": "casestudies.com"
+      },
+      {
+        "id": "cs-fortune500-fintech",
+        "title": "Fortune 500 fintech",
+        "url": "https://www.casestudies.com/company/leapwork/case-study/fortune500-fintech-organization-automates-testing-for-its-core-banking-systems",
+        "publisher": "casestudies.com"
+      },
+      {
+        "id": "pt-microsoft",
+        "title": "Microsoft",
+        "url": "https://www.leapwork.com/news/leapwork-enters-strategic-partnership-with-microsoft",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "pt-platform",
+        "title": "Platform partners",
+        "url": "https://leapwork.com/partners/",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "pt-hso-tmf",
+        "title": "HSO and TMF Group",
+        "url": "https://leapwork.com/news/hso-leapwork-partnership",
+        "publisher": "Leapwork"
+      },
+      {
+        "id": "pt-pharmait",
+        "title": "Pharma IT managed service",
+        "url": "https://pharmait.dk/automation-analytics/leapwork/",
+        "publisher": "Pharma IT"
+      },
+      {
+        "id": "sox-solarwinds",
+        "title": "SolarWinds",
+        "url": "https://www.solarwinds.com/blog/itsm-for-financial-services-change-management-audit-trails-and-what-regulators-actually-want",
+        "publisher": "SolarWinds"
+      },
+      {
+        "id": "sox-onapsis",
+        "title": "Onapsis",
+        "url": "https://onapsis.com/blog/mastering-sap-itgc-sox-compliance/",
+        "publisher": "Onapsis"
+      },
+      {
+        "id": "gxp-sii",
+        "title": "Sii case study",
+        "url": "https://sii.pl/en/case-study/test-automation-in-a-gxp-regulated-environment-tricentis-tosca-implementation/",
+        "publisher": "Sii"
+      },
+      {
+        "id": "gxp-yash",
+        "title": "YASH",
+        "url": "https://www.yash.com/blog/rethinking-gxp-validation-in-a-modern-sap-landscape/",
+        "publisher": "YASH"
+      },
+      {
+        "id": "gxp-ttms",
+        "title": "TTMS pharma tools",
+        "url": "https://ttms.com/top-7-ai-qa-tools-for-pharma-in-2026/",
+        "publisher": "TTMS"
+      },
+      {
+        "id": "cmp-tricentis-vera",
+        "title": "Tricentis Vera",
+        "url": "https://www.tricentis.com/products/digital-validation-vera",
+        "publisher": "Tricentis"
+      },
+      {
+        "id": "cmp-opkey",
+        "title": "Opkey",
+        "url": "https://www.opkey.com/compliance",
+        "publisher": "Opkey"
+      },
+      {
+        "id": "cmp-worksoft",
+        "title": "Worksoft",
+        "url": "https://www.worksoft.com/",
+        "publisher": "Worksoft"
+      }
+    ],
+    "partners": [
+      {
+        "id": "microsoft",
+        "name": "Microsoft",
+        "program": "Strategic partner for Dynamics 365 and Power Platform since 2023, and a Playwright launch partner.",
+        "source_id": "pt-microsoft"
+      },
+      {
+        "id": "oracle",
+        "name": "Oracle",
+        "program": "Platform partner covering Oracle Health and Oracle Fusion.",
+        "source_id": "pt-platform"
+      },
+      {
+        "id": "sap",
+        "name": "SAP",
+        "program": "Platform partner covering core SAP processes and integrations.",
+        "source_id": "pt-platform"
+      },
+      {
+        "id": "salesforce",
+        "name": "Salesforce",
+        "program": "Platform partner.",
+        "source_id": "pt-platform"
+      },
+      {
+        "id": "google",
+        "name": "Google",
+        "program": "Features Leapwork Play as a testing software partner.",
+        "source_id": null
+      }
+    ],
+    "competitors": [
+      {
+        "id": "tricentis",
+        "name": "Tricentis",
+        "products": "Tosca, qTest, Vera",
+        "url": "https://www.tricentis.com/"
+      },
+      {
+        "id": "opkey",
+        "name": "Opkey",
+        "products": null,
+        "url": "https://www.opkey.com/"
+      },
+      {
+        "id": "worksoft",
+        "name": "Worksoft",
+        "products": null,
+        "url": "https://www.worksoft.com/"
+      }
+    ],
+    "customers": [
+      {
+        "id": "necstgen",
+        "name": "NecstGen",
+        "display_name": "NecstGen",
+        "anonymous": false,
+        "industry_id": "pharma",
+        "descriptor": "Dutch cell and gene therapy center"
+      },
+      {
+        "id": "us-healthcare-provider",
+        "name": "Major US healthcare provider",
+        "display_name": "Major US healthcare provider",
+        "anonymous": true,
+        "industry_id": "healthcare",
+        "descriptor": null
+      },
+      {
+        "id": "pah-nhs",
+        "name": "Princess Alexandra Hospital NHS Trust",
+        "display_name": "Princess Alexandra Hospital NHS Trust",
+        "anonymous": false,
+        "industry_id": "healthcare",
+        "descriptor": null
+      },
+      {
+        "id": "investec",
+        "name": "Investec",
+        "display_name": "Investec",
+        "anonymous": false,
+        "industry_id": "financial-services",
+        "descriptor": null
+      },
+      {
+        "id": "bnp-cardif",
+        "name": "BNP Paribas Cardif",
+        "display_name": "BNP Paribas Cardif",
+        "anonymous": false,
+        "industry_id": "insurance",
+        "descriptor": null
+      },
+      {
+        "id": "tmf-group",
+        "name": "TMF Group",
+        "display_name": "TMF Group",
+        "anonymous": false,
+        "industry_id": "corporate-services",
+        "descriptor": null
+      },
+      {
+        "id": "multinational-bank",
+        "name": "Multinational bank",
+        "display_name": "Multinational bank",
+        "anonymous": true,
+        "industry_id": "financial-services",
+        "descriptor": null
+      },
+      {
+        "id": "fortune500-fintech",
+        "name": "Fortune 500 fintech",
+        "display_name": "Fortune 500 fintech",
+        "anonymous": true,
+        "industry_id": "financial-services",
+        "descriptor": null
+      }
+    ],
+    "quotes": [
+      {
+        "id": "q-necstgen-word-excel",
+        "customer_id": "necstgen",
+        "text": "Now, it's like using Word or Excel for us.",
+        "speaker_name": "Kees Mensch",
+        "speaker_title": null,
+        "source_id": "cs-necstgen"
+      },
+      {
+        "id": "q-uhp-crisis",
+        "customer_id": "us-healthcare-provider",
+        "text": "It's imperative that these systems work. If they don't, it's crisis mode.",
+        "speaker_name": null,
+        "speaker_title": "QA Program Manager",
+        "source_id": "cs-healthcare-provider"
+      },
+      {
+        "id": "q-pah-maintenance",
+        "customer_id": "pah-nhs",
+        "text": "Leapwork has minimum maintenance and less dependency on the infrastructure team.",
+        "speaker_name": "Liz Barber",
+        "speaker_title": "ICT Testing Manager",
+        "source_id": "cs-nhs-pah"
+      },
+      {
+        "id": "q-investec-roi",
+        "customer_id": "investec",
+        "text": "The ROI is a no-brainer.",
+        "speaker_name": "David Pound",
+        "speaker_title": "Head of Lending Technology",
+        "source_id": "cs-investec"
+      },
+      {
+        "id": "q-cardif-three-fold",
+        "customer_id": "bnp-cardif",
+        "text": "…testing time has been dramatically reduced, the speed of delivery has increased three-fold.",
+        "speaker_name": "Johan Stolk",
+        "speaker_title": null,
+        "source_id": "cs-bnp-cardif"
+      },
+      {
+        "id": "q-tmf-quality",
+        "customer_id": "tmf-group",
+        "text": "…optimize business processes while ensuring the highest standards of quality and efficiency.",
+        "speaker_name": "Natalija Kuzovic",
+        "speaker_title": "Group Finance Director",
+        "source_id": "pt-hso-tmf"
+      }
+    ]
+  },
+  "use_case": {
+    "id": "governance-in-testing",
+    "title": "Governance in Testing",
+    "author": "Steve Zeller",
+    "created_on": "2026-11-05",
+    "status": "locked",
+    "problem": "Regulated companies have to prove that every software change was tested and approved before release. Most test automation doesn't produce that proof on its own: scripts can be changed by anyone, evidence is collected by hand, and AI-written tests can behave differently from run to run. The result is slow releases, audit findings, or both.",
+    "position": "Leapwork helps regulated enterprises test with control: standards enforced through review and approval, every test change logged and versioned, and deterministic tests that run the same way every time.",
+    "industries": [
+      {
+        "industry_id": "public-companies",
+        "drives_need": "SOX: auditors sample changes to financial systems and expect proof each was tested and approved before release."
+      },
+      {
+        "industry_id": "pharma",
+        "drives_need": "GxP: systems used in regulated work must be validated, with documented test evidence and approvals."
+      },
+      {
+        "industry_id": "financial-services",
+        "drives_need": "Change control and resilience rules: DORA in the EU requires testing changes before release plus end-to-end and performance testing; PCI DSS requires approved, tested changes to card systems."
+      },
+      {
+        "industry_id": "healthcare",
+        "drives_need": "Patient safety: NHS organizations can't deploy health IT without clinical safety sign-off; EHR upgrades and migrations need full regression. US HIPAA is about data protection, a weaker driver."
+      }
+    ],
+    "personas": [
+      {
+        "persona_id": "qa-leader",
+        "role_in_deal": "Buyer and champion",
+        "cares_about": "One standard across teams; releases they can sign off."
+      },
+      {
+        "persona_id": "practitioner",
+        "role_in_deal": "Evaluator and daily user",
+        "cares_about": "Stable tests; less evidence paperwork."
+      },
+      {
+        "persona_id": "validation-lead",
+        "role_in_deal": "Approver; can block the deal",
+        "cares_about": "Evidence that satisfies FDA and EU rules."
+      },
+      {
+        "persona_id": "erp-owner",
+        "role_in_deal": "Influencer on ERP deals",
+        "cares_about": "Proof every change was tested and approved."
+      },
+      {
+        "persona_id": "cio",
+        "role_in_deal": "Signs off large deals",
+        "cares_about": "Audit findings, release risk, cost."
+      },
+      {
+        "persona_id": "cto",
+        "role_in_deal": "Sponsor where engineering reports to a CTO (mainly software companies)",
+        "cares_about": "Engineering speed, safe AI adoption."
+      }
+    ],
+    "pain_points": [
+      {
+        "id": "git-flow-1",
+        "product_id": "flow",
+        "title": "Proving every change was tested and approved.",
+        "detail": "Auditors sample changes and expect a test record and sign-off for each.",
+        "fix": "Versioned tests that move from draft to review to published; only authorized roles can publish."
+      },
+      {
+        "id": "git-flow-2",
+        "product_id": "flow",
+        "title": "Gathering audit evidence by hand.",
+        "detail": "SAP teams spend weeks collecting screenshots for SOX.",
+        "fix": "Every run keeps the test version, logs and a video, exportable via API."
+      },
+      {
+        "id": "git-flow-3",
+        "product_id": "flow",
+        "title": "Slow, manual validation.",
+        "detail": "GxP tests are run and documented by hand, and the tool itself must be validated.",
+        "fix": "No-code automation across SAP, Oracle, Dynamics, Salesforce and desktop apps; GxP-validated managed service via Pharma IT."
+      },
+      {
+        "id": "git-play-1",
+        "product_id": "play",
+        "title": "Playwright tests with no controls.",
+        "detail": "Code-based suites lack approvals, roles and an audit trail.",
+        "fix": "Adds login, roles, scheduling, approvals and audit logs around Playwright."
+      },
+      {
+        "id": "git-play-2",
+        "product_id": "play",
+        "title": "AI-written tests that vary run to run.",
+        "detail": "A growing concern for QA leaders adopting AI.",
+        "fix": "AI writes tests from requirements and links each to its source; tests run as fixed code with no AI at runtime."
+      },
+      {
+        "id": "git-go-1",
+        "product_id": "go",
+        "title": "Performance testing outside the audit trail.",
+        "detail": "DORA requires performance testing, often run in a separate, ungoverned tool.",
+        "fix": "Performance, load and API testing with role-based access and exportable audit logs."
+      }
+    ],
+    "pain_points_note": "Review, approval and role-based access in Flow are Enterprise Edition features.",
+    "customers": [
+      {
+        "customer_id": "necstgen",
+        "quote_id": "q-necstgen-word-excel",
+        "what_they_did": "Tests its Salesforce-based quality and lab system in a GxP environment. 110 test flows, 270 fully compliant features, running within 14 days.",
+        "source_id": "cs-necstgen",
+        "source_label": "Case study"
+      },
+      {
+        "customer_id": "us-healthcare-provider",
+        "quote_id": "q-uhp-crisis",
+        "what_they_did": "Monitors tier-one apps, including EHR, around the clock. 11 apps automated in a year, about 30 workflows each; results feed BI dashboards.",
+        "source_id": "cs-healthcare-provider",
+        "source_label": "Case study"
+      },
+      {
+        "customer_id": "pah-nhs",
+        "quote_id": "q-pah-maintenance",
+        "what_they_did": "Daily checks across 27 apps used to take 3 people half a day. Release testing cut from a week to 2 hours; 76 tests run daily.",
+        "source_id": "cs-nhs-pah",
+        "source_label": "NHS one-pager"
+      },
+      {
+        "customer_id": "investec",
+        "quote_id": "q-investec-roi",
+        "what_they_did": "Private bank. Automated 95% of regression and built it into CI/CD. 3–4x faster time to market; tests run 24/7.",
+        "source_id": "cs-investec",
+        "source_label": "Case study"
+      },
+      {
+        "customer_id": "bnp-cardif",
+        "quote_id": "q-cardif-three-fold",
+        "what_they_did": "Insurer. Automated regression for its policy system. Releases went from quarterly to monthly.",
+        "source_id": "cs-bnp-cardif",
+        "source_label": "Case study"
+      },
+      {
+        "customer_id": "tmf-group",
+        "quote_id": "q-tmf-quality",
+        "what_they_did": "Dynamics 365 program delivered with partner HSO.",
+        "source_id": "pt-hso-tmf",
+        "source_label": "Announcement"
+      },
+      {
+        "customer_id": "multinational-bank",
+        "quote_id": null,
+        "what_they_did": "Tests Oracle HCM Cloud.",
+        "source_id": "cs-multinational-bank",
+        "source_label": "Case study"
+      },
+      {
+        "customer_id": "fortune500-fintech",
+        "quote_id": null,
+        "what_they_did": "Regression testing for core banking and securities trading.",
+        "source_id": "cs-fortune500-fintech",
+        "source_label": "Case study"
+      }
+    ],
+    "partners": [
+      {
+        "partner_id": "microsoft",
+        "why_it_matters": "Monthly D365 updates each need regression testing before release; D365 Finance is often in SOX scope. Microsoft builds Playwright, so the launch partnership backs Play."
+      },
+      {
+        "partner_id": "oracle",
+        "why_it_matters": "Oracle Health is a common EHR in healthcare; Fusion is ERP for SOX companies."
+      },
+      {
+        "partner_id": "sap",
+        "why_it_matters": "SAP finance is the most common SOX testing target."
+      },
+      {
+        "partner_id": "salesforce",
+        "why_it_matters": "NecstGen runs its GxP quality system on Salesforce."
+      },
+      {
+        "partner_id": "google",
+        "why_it_matters": "Outside backing for Play with teams adopting AI-assisted testing."
+      }
+    ],
+    "competitors": [
+      {
+        "competitor_id": "tricentis",
+        "url": "https://www.tricentis.com/products/digital-validation-vera",
+        "their_pitch": "Full validation toolchain; Vera adds Part 11 e-signatures and approval routing.",
+        "how_we_win": "One platform instead of three products; faster to stand up without a dedicated center of excellence."
+      },
+      {
+        "competitor_id": "opkey",
+        "url": "https://www.opkey.com/compliance",
+        "their_pitch": "GxP and Part 11 out of the box; deep in Veeva, Oracle and Workday.",
+        "how_we_win": "Broader coverage beyond packaged ERP: desktop, Citrix, custom web, Salesforce."
+      },
+      {
+        "competitor_id": "worksoft",
+        "url": "https://www.worksoft.com/",
+        "their_pitch": "SAP and Oracle process testing with SOX evidence.",
+        "how_we_win": "Same process depth, plus coverage outside the ERP core."
+      }
+    ],
+    "objections": [
+      {
+        "objection": "We already have a validation tool.",
+        "response": "Keep it for sign-off. Leapwork automates the testing it documents, across more apps than ERP-only tools."
+      },
+      {
+        "objection": "The tool itself would need validating.",
+        "response": "Pharma IT offers Leapwork as a GxP-validated managed service."
+      },
+      {
+        "objection": "No-code can't handle our complex apps.",
+        "response": "Customers run it on SAP, Oracle, Dynamics, Salesforce, Citrix and EHRs. Offer a proof of concept on their hardest process."
+      },
+      {
+        "objection": "We'll build governance on Playwright ourselves.",
+        "response": "Play adds approvals, roles and audit logs to Playwright, so the team doesn't build and maintain them."
+      },
+      {
+        "objection": "AI in testing is a compliance risk.",
+        "response": "AI helps write tests; tests run as fixed steps with no AI at runtime, and each links back to its requirement."
+      }
+    ],
+    "sources": [
+      {
+        "grp": "Leapwork",
+        "ids": [
+          "lw-security",
+          "lw-release-2021-1",
+          "lw-traceability",
+          "lw-healthcare",
+          "lw-go-audit"
+        ]
+      },
+      {
+        "grp": "Customers",
+        "ids": [
+          "cs-necstgen",
+          "cs-healthcare-provider",
+          "cs-investec",
+          "cs-bnp-cardif",
+          "cs-nhs-pah",
+          "cs-list"
+        ]
+      },
+      {
+        "grp": "Partners",
+        "ids": [
+          "pt-microsoft",
+          "pt-platform",
+          "pt-hso-tmf",
+          "pt-pharmait"
+        ]
+      },
+      {
+        "grp": "SOX",
+        "ids": [
+          "sox-solarwinds",
+          "sox-onapsis"
+        ]
+      },
+      {
+        "grp": "GxP",
+        "ids": [
+          "gxp-sii",
+          "gxp-yash",
+          "gxp-ttms"
+        ]
+      },
+      {
+        "grp": "Competitors",
+        "ids": [
+          "cmp-tricentis-vera",
+          "cmp-opkey",
+          "cmp-worksoft"
+        ]
+      }
+    ]
+  }
+}
