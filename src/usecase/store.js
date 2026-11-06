@@ -111,16 +111,25 @@ export async function loadDoc(db, id) {
   };
 }
 
-// Islands for the chart: one per use case, with its tags for filters.
+// Islands for the chart: one per use case, with its tags for filters and grouping.
 export async function listIslands(db) {
-  const rows = (await db.prepare('SELECT id, title, status, map_x, map_y, map_seed, updated_at FROM use_cases ORDER BY created_on').all()).results;
-  const tags = (await db.prepare('SELECT use_case_id, kind, tag FROM use_case_tags').all()).results;
-  const products = Object.fromEntries((await db.prepare('SELECT id, name FROM products').all()).results.map((r) => [r.id, r.name]));
+  const all = async (sql) => (await db.prepare(sql).all()).results;
+  const rows = await all('SELECT id, title, status, author, created_on, map_x, map_y, map_seed, updated_at FROM use_cases ORDER BY title COLLATE NOCASE');
+  const names = {};
+  for (const t of ['products', 'industries', 'partners']) names[t] = Object.fromEntries((await all(`SELECT id, name FROM ${t}`)).map((r) => [r.id, r.name]));
+  const pp = await all('SELECT use_case_id, product_id, COUNT(*) AS n, MIN(sort) AS first FROM pain_points GROUP BY use_case_id, product_id');
+  const ind = await all('SELECT use_case_id, industry_id, label FROM use_case_industries ORDER BY use_case_id, sort');
+  const par = await all('SELECT use_case_id, partner_id FROM use_case_partners ORDER BY use_case_id, sort');
   return rows.map((r) => {
-    const t = tags.filter((x) => x.use_case_id === r.id);
-    const pick = (k) => t.filter((x) => x.kind === k).map((x) => x.tag).sort();
-    return { id: r.id, title: r.title, status: r.status, x: r.map_x, y: r.map_y, seed: r.map_seed, updated_at: r.updated_at,
-      products: pick('product').map((p) => ({ id: p, name: products[p] || p })), industries: pick('industry'), partners: pick('partner') };
+    const prods = pp.filter((x) => x.use_case_id === r.id).sort((a, b) => b.n - a.n || a.first - b.first);
+    const inds = ind.filter((x) => x.use_case_id === r.id);
+    return {
+      id: r.id, title: r.title, status: r.status, author: r.author, created_on: r.created_on, updated_at: r.updated_at,
+      x: r.map_x, y: r.map_y, seed: r.map_seed,
+      products: prods.map((x) => ({ id: x.product_id, name: names.products[x.product_id] || x.product_id })),
+      industries: inds.map((x) => ({ id: x.industry_id, name: x.label || names.industries[x.industry_id] || x.industry_id })),
+      partners: par.filter((x) => x.use_case_id === r.id).map((x) => ({ id: x.partner_id, name: names.partners[x.partner_id] || x.partner_id })),
+    };
   });
 }
 

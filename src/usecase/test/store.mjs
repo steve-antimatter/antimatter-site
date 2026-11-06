@@ -17,6 +17,6 @@ for (const k of Object.keys(seed.use_case)) {
 }
 assert.equal(renderHtml(back), renderHtml(seed), 'page from database differs from page from seed');
 const islands = await listIslands(db);
-console.log('round trip ok;', islands.length, 'island:', JSON.stringify(islands[0]));
+console.log('round trip ok;', islands.length, 'island:', JSON.stringify(islands[0]).slice(0, 300));
 try { await db.batch([db.prepare("INSERT INTO pain_points VALUES ('x', ?, 'flow', 9, 'a', 'b', 'c')").bind(seed.use_case.id)]); console.log('max-3 rule FAILED'); }
 catch (e) { console.log('max-3 rule ok:', e.message); }
