@@ -274,6 +274,13 @@
   #usecase .chat .hd small{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fog-blue)}
   .uc-pill{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--deep-slate)}
   .uc-pill.locked{background:#002423;color:#fff;border-color:#002423} .uc-pill.draft{background:#fff} .uc-pill.review{background:var(--accent-gold);color:#fff;border-color:var(--accent-gold)}
+  .uc-prog{padding:10px 20px 12px;border-bottom:1px solid rgba(9,15,18,.08);font-size:12.5px;color:var(--fog-blue)}
+  .uc-prog .bar{height:4px;background:rgba(9,15,18,.08);margin-top:6px}.uc-prog .bar i{display:block;height:100%;background:var(--harbor-teal);transition:width .4s}
+  .uc-prog b{color:var(--deep-slate);font-weight:600}
+  .msg.done{align-self:stretch;background:#fff;border:2px solid var(--harbor-teal);white-space:normal}
+  .msg.done h4{margin:0 0 6px;font-size:14px;color:var(--deep-slate)} .msg.done ol{margin:6px 0 10px;padding-left:18px} .msg.done li{margin:3px 0}
+  .msg.done .acts{display:flex;gap:8px;flex-wrap:wrap}
+  .btn.teal{background:var(--harbor-teal)} .btn.out{background:#fff;color:var(--deep-slate);border:1px solid var(--deep-slate)}
   #ucMsgs{flex:1;overflow:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px}
   .msg{max-width:92%;padding:10px 12px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
   .msg.user{align-self:flex-end;background:var(--deep-slate);color:#fff}
@@ -775,6 +782,7 @@
   </div>
   <aside class="chat" aria-label="Authoring chat">
     <div class="hd"><small>Write with Claude</small><span class="uc-pill" id="ucPill">Draft</span></div>
+    <div class="uc-prog" id="ucProg"><span id="ucProgText">Checking sections…</span><div class="bar"><i id="ucProgBar" style="width:0"></i></div></div>
     <div id="ucMsgs" aria-live="polite"></div>
     <form id="ucForm" onsubmit="event.preventDefault();sendChat()">
       <textarea id="ucInput" rows="3" placeholder="Tell Claude about this use case, or ask it to draft the next section."></textarea>
@@ -1201,7 +1209,7 @@ const setAuthor=v=>{try{localStorage.setItem('mazinator.author',v)}catch(e){}};
 async function api(path,opts){const r=await fetch('/leapwork/api/'+path,Object.assign({credentials:'same-origin',headers:{'content-type':'application/json'}},opts||{}));const d=await r.json().catch(()=>({error:'The server sent an unexpected reply ('+r.status+').'}));if(!r.ok||d.error)throw new Error(d.error||('Request failed ('+r.status+')'));return d}
 function addMsg(role,text,by){const m=document.createElement('div');m.className='msg '+role;if(by){const b=document.createElement('span');b.className='by';b.textContent=by;m.appendChild(b)}m.appendChild(document.createTextNode(text));ucMsgs.appendChild(m);ucMsgs.scrollTop=ucMsgs.scrollHeight;return m}
 function setUcStatus(st){ucCur.status=st;const labels={draft:'Draft',review:'In review',locked:'Locked'};ucPill.textContent=labels[st]||st;ucPill.className='uc-pill '+st;
-  const locked=st==='locked';ucLock.textContent=locked?'Unlock to edit':'Lock';ucInput.disabled=locked||ucBusy;ucSend.disabled=locked||ucBusy;
+  const locked=st==='locked';ucLock.textContent={draft:'Send for review',review:'Approve & lock',locked:'Unlock to edit'}[st]||'Lock';ucInput.disabled=locked||ucBusy;ucSend.disabled=locked||ucBusy;
   ucInput.placeholder=locked?'Locked. Unlock to make changes.':'Tell Claude about this use case, or ask it to draft the next section.'}
 function reloadPreview(){const fr=document.getElementById('ucFrame');fr.src=ucOpen.href+'?t='+Date.now()}
 async function openUseCase(id){
@@ -1213,6 +1221,7 @@ async function openUseCase(id){
     d.messages.forEach(m=>addMsg(m.role,m.content,m.role==='user'?m.author:null));
     if(!d.messages.length)addMsg('sys',d.status==='locked'?'This use case is locked. Unlock it to make changes with Claude.':"Start by describing the use case in your own words: who has the problem, what it costs them, and which Leapwork product fixes it. Claude will draft each section with you and check the facts.");
   }catch(e){addMsg('err',e.message)}
+  refreshProgress();
   if(ucCur.status!=='locked')setTimeout(()=>ucInput.focus(),400);
 }
 async function sendChat(){
@@ -1221,16 +1230,43 @@ async function sendChat(){
   ucInput.value='';addMsg('user',text,who||null);ucBusy=true;setUcStatus(ucCur.status);
   const w=addMsg('sys','Claude is working (searches can take up to a minute)');w.classList.add('dots');
   try{const d=await api('use-cases/'+encodeURIComponent(ucCur.id)+'/chat',{method:'POST',body:JSON.stringify({text,author:who})});
-    w.remove();addMsg('assistant',d.reply);if(d.changed&&d.changed.length)reloadPreview();
+    w.remove();addMsg('assistant',d.reply);if(d.changed&&d.changed.length){reloadPreview();refreshProgress()}
   }catch(e){w.remove();addMsg('err',e.message);ucInput.value=ucInput.value||text}
   ucBusy=false;setUcStatus(ucCur.status);ucInput.focus();
 }
-async function toggleLock(){
-  if(!ucCur||ucBusy)return;const next=ucCur.status==='locked'?'draft':'locked';
+const NEXT={draft:'review',review:'locked',locked:'draft'};
+const STATUS_NOTE={review:'Sent for review. Share the full page link with whoever needs to check it; you can keep editing with Claude meanwhile.',locked:'Approved and locked. This version is saved and ready for campaign briefs. Unlock it if anything needs to change.',draft:'Unlocked. Changes are allowed again.'};
+async function setUseCaseStatus(next){
+  if(!ucCur||ucBusy)return;
   try{await api('use-cases/'+encodeURIComponent(ucCur.id)+'/status',{method:'POST',body:JSON.stringify({status:next,author:author()})});
-    setUcStatus(next);addMsg('sys',next==='locked'?'Locked. This version is saved and can no longer be edited.':'Unlocked. Changes are allowed again.');
-    const c=USECASES.find(k=>k.id===ucCur.id);if(c)c.status=next;reloadPreview();
+    setUcStatus(next);addMsg('sys',STATUS_NOTE[next]);
+    const c=USECASES.find(k=>k.id===ucCur.id);if(c)c.status=next;reloadPreview();refreshProgress();
   }catch(e){addMsg('err',e.message)}
+}
+function toggleLock(){if(ucCur)setUseCaseStatus(NEXT[ucCur.status]||'review')}
+// ----- section progress and the finish card -----
+const SECTIONS=[['Problem',u=>u.problem],['Position',u=>u.position],['Industries',u=>u.industries.length],['Personas',u=>u.personas.length],
+  ['Pain points',u=>u.pain_points.length],['Customers',u=>u.customers.length],['Partners',u=>u.partners.length],['Competitors',u=>u.competitors.length],
+  ['Objections',u=>u.objections.length],['Sources',u=>u.sources.length]];
+async function refreshProgress(){
+  if(!ucCur)return;
+  try{const d=await api('use-cases/'+encodeURIComponent(ucCur.id));const u=d.use_case;
+    const todo=SECTIONS.filter(([,f])=>!f(u)).map(([n])=>n),done=SECTIONS.length-todo.length;
+    ucProgBar.style.width=(done/SECTIONS.length*100)+'%';
+    ucProgText.innerHTML=todo.length?`<b>${done} of ${SECTIONS.length}</b> sections written · Next: ${todo[0]}`:`<b>All ${SECTIONS.length} sections written</b>`;
+    const card=document.getElementById('ucDone');
+    if(!todo.length&&ucCur.status==='draft'&&!card)showFinish();
+    if(card&&(todo.length||ucCur.status!=='draft'))card.remove();
+  }catch(e){ucProgText.textContent='Could not check sections: '+e.message}
+}
+function showFinish(){
+  const m=document.createElement('div');m.className='msg done';m.id='ucDone';
+  m.innerHTML=`<h4>The use case is complete</h4>What to do now:<ol>
+    <li>Read the page on the right from top to bottom. Ask Claude for any changes.</li>
+    <li>Send it for review so the team can check it (share the full page link).</li>
+    <li>Once it's approved, lock it. Locked use cases are the ones campaign briefs are built from.</li></ol>
+    <div class="acts"><button class="btn teal" onclick="setUseCaseStatus('review')">Send for review</button><button class="btn out" onclick="setUseCaseStatus('locked')">Approve &amp; lock now</button></div>`;
+  ucMsgs.appendChild(m);ucMsgs.scrollTop=ucMsgs.scrollHeight;
 }
 document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='ucInput'&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}});
 function backFromUseCase(){const v=document.getElementById('usecase');v.classList.remove('show');setTimeout(()=>{v.classList.remove('on');loadUseCases();renderMap()},450)}

@@ -173,6 +173,7 @@ HOW TO WORK:
 - Plain language. Short sentences. No jargon the buyer would not use, no hype, no internal notes (nothing like "to confirm" or "TBD" in the use case itself). Avoid repeating the same point across sections.
 - Keep chat replies short: what you changed (one line) and the next question. Do not paste whole sections back into the chat; the author sees the page update beside the chat.
 - Tools replace a whole section, so always send the complete list for that section, including items you are keeping.
+- When every section is filled in, stop asking questions. Tell the author the use case is complete, offer one or two specific improvements if you see any, and explain the next step: read the page on the right from top to bottom, then click "Send for review" at the top so the team can check it. Once it is approved, "Approve & lock" saves that version for campaign briefs.
 
 LEAPWORK PRODUCTS: ${names('products', (p) => `${p.id} = ${p.name}: ${p.summary || ''}`)}
 STRATEGIC PARTNERS (ids you may use): ${names('partners', (p) => `${p.id} (${p.name}: ${p.program})`)}
