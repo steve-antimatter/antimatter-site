@@ -2234,7 +2234,7 @@ const SHOP_THEMES=[
   {id:'bank',name:'Budget & Ad Spend',kind:'Bank',sub:'Campaign set-up, budget and reporting',x:1120,y:ROW1,w:230,outputs:['marops']},
   {id:'trading',name:'Alliance Trading Post',kind:'Trading post',sub:'Partner enablement and campaign-in-a-box',x:1400,y:ROW1,w:220,outputs:['partner_enable','partner_box']},
   {id:'signs',name:'Ads, Banners & Pages',kind:'Sign maker',sub:'Paid ads, keywords, landing pages and creative',x:200,y:ROW2,w:200,outputs:['paid','landing','creative']},
-  {id:'post',name:'Leapwork Customers Post Office',kind:'Post office',sub:'Account lists, SDR cadences, nurture and customer newsletters',x:510,y:ROW2,w:240,outputs:['accounts','cadence','nurture','followup','newsletter','cust_nurture']},
+  {id:'post',name:'Post Office',kind:'Post office',sub:'All things email: SDR cadences, nurture, newsletters and the account lists behind them',x:510,y:ROW2,w:240,outputs:['accounts','cadence','nurture','followup','newsletter','cust_nurture']},
   {id:'playhouse',name:'Webinars & Events Playhouse',kind:'Theater',sub:'Webinars, field events and customer events',x:1180,y:ROW2,w:300,outputs:['event','cust_event']},
 ];
 let SHOPS=[],shopRAF=0,shopPos={x:HALL_X,y:ROW1+8},shopSkip=false,shopWalking=false,shopOpen=null;
@@ -2308,7 +2308,7 @@ function DRAW(id,w){switch(id){
     <path d="M${-w/2} -12 V${-h} H${-w/2+30} V${-h-14} H${-30} V${-h-30} H30 V${-h-14} H${w/2-30} V${-h} H${w/2} V-12Z" fill="#F4F1EA" stroke="${K}" stroke-width="3"/>
     <rect x="${-w/2}" y="${-h+8}" width="${w}" height="10" fill="#618FA4" stroke="${K}" stroke-width="2"/><rect x="${-w/2}" y="${-h+22}" width="${w}" height="4" fill="#002423"/>
     <g class="flag" transform="translate(0 ${-h-30})"><rect x="-2" y="-70" width="4" height="70" fill="${K}"/><path d="M2 -68 h44 v26 h-44z" fill="#3F7A78" stroke="${K}" stroke-width="2"/><path d="M8 -61 h8 M8 -55 h14 M8 -49 h10" stroke="#FFFFFF" stroke-width="2.5"/></g>
-    <text y="${-h+44}" text-anchor="middle" font-size="10" font-weight="800" letter-spacing="4" fill="#4F6F82">LEAPWORK CUSTOMERS</text>
+    <text y="${-h+44}" text-anchor="middle" font-size="10" font-weight="800" letter-spacing="4" fill="#4F6F82">ALL THINGS EMAIL</text>
     <text y="${-h+70}" text-anchor="middle" font-family="'Limelight',Georgia,serif" font-size="25" letter-spacing="2" fill="#002423">POST OFFICE</text>
     ${[-w/2+16,w/2-26].map(x=>`<rect x="${x}" y="${-h+80}" width="10" height="${h-92}" fill="#E9E4D8" stroke="${K}" stroke-width="2"/>`).join('')}
     ${win(-w/2+34,-84,46,58)}${win(w/2-80,-84,46,58)}
