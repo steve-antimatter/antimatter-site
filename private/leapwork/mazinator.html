@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Mazinator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Permanent+Marker&family=Rye&family=UnifrakturMaguntia&family=Limelight&display=swap" rel="stylesheet">
 <style>
   :root{
     /* Leapwork core palette (Brand Styleguide v02, Color System) */
@@ -2218,14 +2218,13 @@ function approveBrief(){if(!bf)return;const p=bf.progress||[],todo=p.filter(x=>!
 const STATUS_COLOR={'Not started':'#9AA6AC','In progress':'#BFA66A','Done':'#3F7A78'};
 const ROW1=470,ROW2=880,ST1=530,ST2=940,HALL_X=800;
 const SHOP_THEMES=[
-  {id:'gazette',name:'The Gazette',kind:'Newspaper',sub:'Thought leadership and content',x:215,y:ROW1,w:230,outputs:['blog','pr','social','website']},
-  {id:'barber',name:'The Barbershop',kind:'Barbershop',sub:'Sales enablement: the sales team gets sharpened up here',x:480,y:ROW1,w:170,outputs:['slides','battlecard','twopager','training']},
-  {id:'bank',name:'The Bank',kind:'Bank',sub:'Campaign set-up and reporting: where the numbers are kept',x:1120,y:ROW1,w:220,outputs:['marops']},
-  {id:'trading',name:'Trading Post',kind:'Trading post',sub:'Partner enablement and campaign-in-a-box',x:1390,y:ROW1,w:220,outputs:['partner_enable','partner_box']},
-  {id:'signs',name:'Sign Maker',kind:'Sign maker',sub:'Ads, landing pages and creative',x:200,y:ROW2,w:200,outputs:['paid','landing','creative']},
-  {id:'post',name:'Post Office',kind:'Post office',sub:'Account lists, SDR cadences, nurture and newsletters',x:480,y:ROW2,w:210,outputs:['accounts','cadence','nurture','followup','newsletter','cust_nurture']},
-  {id:'playhouse',name:'The Playhouse',kind:'Theater',sub:'Webinars and events',x:1110,y:ROW2,w:300,outputs:['event','cust_event']},
-  {id:'tavern',name:'The Tavern',kind:'Tavern',sub:'Where the regulars are: customer expansion and stories',x:1420,y:ROW2,w:200,outputs:['expansion','proof']},
+  {id:'gazette',name:'Content & PR',kind:'Newspaper',sub:'Thought leadership, blog posts, PR, social and the website',x:215,y:ROW1,w:230,outputs:['blog','pr','social','website']},
+  {id:'barber',name:"Sales Stylin'",kind:'Barbershop',sub:'Sales enablement and expansion plays: the sales team gets sharpened up here',x:500,y:ROW1,w:190,outputs:['slides','battlecard','twopager','training','expansion']},
+  {id:'bank',name:'Budget & Ad Spend',kind:'Bank',sub:'Campaign set-up, budget and reporting',x:1120,y:ROW1,w:230,outputs:['marops']},
+  {id:'trading',name:'Alliance Trading Post',kind:'Trading post',sub:'Partner enablement and campaign-in-a-box',x:1400,y:ROW1,w:220,outputs:['partner_enable','partner_box']},
+  {id:'signs',name:'Ads, Banners & Pages',kind:'Sign maker',sub:'Paid ads, keywords, landing pages and creative',x:200,y:ROW2,w:200,outputs:['paid','landing','creative']},
+  {id:'post',name:'Leapwork Customers Post Office',kind:'Post office',sub:'Account lists, SDR cadences, nurture and customer newsletters',x:510,y:ROW2,w:240,outputs:['accounts','cadence','nurture','followup','newsletter','cust_nurture']},
+  {id:'playhouse',name:'Webinars & Events Playhouse',kind:'Theater',sub:'Webinars, field events and customer events',x:1180,y:ROW2,w:300,outputs:['event','cust_event']},
 ];
 let SHOPS=[],shopRAF=0,shopPos={x:HALL_X,y:ROW1+8},shopSkip=false,shopWalking=false,shopOpen=null;
 function outInfo(id){for(const g of SPEC.groups){const o=g.outputs.find(x=>x.id===id);if(o)return{g,o}}return null}
@@ -2251,33 +2250,37 @@ function newsboy(x){return `<g transform="translate(${x} 0)">
 function DRAW(id,w){switch(id){
   case 'gazette':{const h=170;return `${roof(w,h,'#5A3A2A')}<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#B8664C" stroke="${K}" stroke-width="3"/>${bricks(w,h)}
     <rect x="${-w/2-6}" y="${-h}" width="${w+12}" height="10" fill="#FFFDF7" stroke="${K}" stroke-width="2.5"/>
-    <rect x="${-w/2+14}" y="${-h+18}" width="${w-28}" height="34" fill="${K}"/><text y="${-h+42}" text-anchor="middle" font-family="Georgia,serif" font-size="21" font-weight="700" fill="#F4F1EA">The Gazette</text>
+    <rect x="${-w/2+12}" y="${-h+16}" width="${w-24}" height="40" fill="${K}"/><text y="${-h+45}" text-anchor="middle" font-family="'UnifrakturMaguntia',Georgia,serif" font-size="26" fill="#F4F1EA">Content &amp; PR</text>
     ${win(-w/2+18,-h+64,38,34)}${win(-19,-h+64,38,34)}${win(w/2-56,-h+64,38,34)}
     ${win(-w/2+16,-70,96,56,'#F4F1EA')}<g fill="#FFFFFF" stroke="${K}" stroke-width="1.2">${[0,1,2,3].map(k=>`<rect x="${-w/2+26+k*20}" y="${-36-k%2*4}" width="16" height="${18+k%2*4}"/>`).join('')}</g>
-    <text x="${-w/2+64}" y="-50" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-style="italic" fill="${K}">Daily · Est. 1898</text>${door(w/2-40)}${newsboy(-w/2-46)}`}
-  case 'barber':{const h=150;return `${roof(w,h,'#2F4754')}<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#FFFFFF" stroke="${K}" stroke-width="3"/>
-    <rect x="${-w/2+12}" y="${-h+14}" width="${w-24}" height="28" fill="#3F7A78" stroke="${K}" stroke-width="2"/><text y="${-h+34}" text-anchor="middle" font-size="15" font-weight="900" letter-spacing="3" fill="#FFFFFF">BARBERSHOP</text>
-    ${[...Array(7)].map((_,k)=>`<path d="M${-w/2-4+k*(w+8)/7} -98 h${(w+8)/7} v18 q${-(w+8)/14} 10 ${-(w+8)/7} 0z" fill="${k%2?'#FFFFFF':'#B8664C'}" stroke="${K}" stroke-width="1.8"/>`).join('')}
-    ${win(-w/2+12,-74,88,58)}<text x="${-w/2+56}" y="-52" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" font-weight="700" fill="#BFA66A">Shaves</text>
-    <path d="M${-w/2+40} -18 v-14 h22 v-8 h8 v22" fill="none" stroke="${K}" stroke-width="3"/>${door(w/2-30,38,74)}
+    <text x="${-w/2+64}" y="-50" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-style="italic" fill="${K}">Hot off the press</text>${door(w/2-40)}${newsboy(-w/2-46)}`}
+  case 'barber':{const h=160;return `${roof(w,h,'#2F4754')}<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#7C8A92" stroke="${K}" stroke-width="3"/>${bricks(w,h)}
+    ${[...Array(10)].map((_,k)=>`<path d="M${-w/2+(k%2?10:24)+((k*37)%(w-40))} ${-h+14+Math.floor(k/2)*14} v14" stroke="rgba(9,15,18,.18)"/>`).join('')}
+    <g transform="translate(0 ${-h+48}) rotate(-6)"><text text-anchor="middle" font-family="'Permanent Marker','Marker Felt',cursive" font-size="34" fill="#3F7A78" stroke="${K}" stroke-width="6" stroke-linejoin="round">Sales Stylin'</text>
+      <text text-anchor="middle" font-family="'Permanent Marker','Marker Felt',cursive" font-size="34" fill="#C97A5A" stroke="#FFFDF7" stroke-width="1.5">Sales Stylin'</text>
+      <path d="M-62 4 v12 M-20 6 v18 M36 4 v10 M70 2 v14" stroke="#C97A5A" stroke-width="3" stroke-linecap="round"/><path d="M-80 -30 l6 8 l8 -10 M84 -26 l-6 10" stroke="#BFA66A" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+    ${[...Array(8)].map((_,k)=>`<path d="M${-w/2-4+k*(w+8)/8} -98 h${(w+8)/8} v18 q${-(w+8)/16} 10 ${-(w+8)/8} 0z" fill="${k%2?'#FFFFFF':'#B8664C'}" stroke="${K}" stroke-width="1.8"/>`).join('')}
+    ${win(-w/2+12,-74,96,58)}<text x="${-w/2+60}" y="-50" text-anchor="middle" font-family="'Permanent Marker',cursive" font-size="12" fill="#B8664C">Fresh cuts</text><text x="${-w/2+60}" y="-34" text-anchor="middle" font-family="'Permanent Marker',cursive" font-size="11" fill="#3F7A78">for sales</text>
+    ${door(w/2-34,40,76)}
     <g transform="translate(${-w/2-26} 0)"><rect x="-6" y="-12" width="12" height="12" fill="${K}"/>
-      <defs><clipPath id="poleClip"><rect x="-13" y="-170" width="26" height="150" rx="13"/></clipPath></defs>
-      <rect x="-13" y="-170" width="26" height="150" rx="13" fill="#FFFFFF" stroke="${K}" stroke-width="3"/>
-      <g clip-path="url(#poleClip)"><g class="polespin">${[...Array(12)].map((_,k)=>`<path d="M-20 ${-200+k*24} L20 ${-224+k*24} L20 ${-212+k*24} L-20 ${-188+k*24}Z" fill="${k%2?'#618FA4':'#B8664C'}"/>`).join('')}</g></g>
-      <rect x="-13" y="-170" width="26" height="150" rx="13" fill="none" stroke="${K}" stroke-width="3"/>
-      <rect x="-17" y="-184" width="34" height="16" rx="4" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/><circle cy="-192" r="9" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/>
-      <rect x="-17" y="-24" width="34" height="14" rx="4" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/></g>`}
+      <defs><clipPath id="poleClip"><rect x="-14" y="-190" width="28" height="168" rx="14"/></clipPath></defs>
+      <rect x="-14" y="-190" width="28" height="168" rx="14" fill="#FFFFFF" stroke="${K}" stroke-width="3"/>
+      <g clip-path="url(#poleClip)"><g class="polespin">${[...Array(14)].map((_,k)=>`<path d="M-20 ${-224+k*24} L20 ${-248+k*24} L20 ${-236+k*24} L-20 ${-212+k*24}Z" fill="${k%2?'#618FA4':'#B8664C'}"/>`).join('')}</g></g>
+      <rect x="-14" y="-190" width="28" height="168" rx="14" fill="none" stroke="${K}" stroke-width="3"/>
+      <rect x="-18" y="-204" width="36" height="16" rx="4" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/><circle cy="-212" r="10" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/>
+      <rect x="-18" y="-26" width="36" height="14" rx="4" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/></g>`}
   case 'bank':{const h=170;return `<rect x="${-w/2-14}" y="-14" width="${w+28}" height="14" fill="#E9E4D8" stroke="${K}" stroke-width="2.5"/><rect x="${-w/2-6}" y="-26" width="${w+12}" height="12" fill="#E9E4D8" stroke="${K}" stroke-width="2.5"/>
     <rect x="${-w/2}" y="${-h}" width="${w}" height="${h-26}" fill="#F4F1EA" stroke="${K}" stroke-width="3"/>
-    <rect x="${-w/2-10}" y="${-h-14}" width="${w+20}" height="18" fill="#E9E4D8" stroke="${K}" stroke-width="3"/><text y="${-h}" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="700" letter-spacing="8" fill="${K}">BANK</text>
-    <polygon points="${-w/2-14},${-h-14} 0,${-h-66} ${w/2+14},${-h-14}" fill="#F4F1EA" stroke="${K}" stroke-width="3"/>
+    <rect x="${-w/2-10}" y="${-h-14}" width="${w+20}" height="18" fill="#E9E4D8" stroke="${K}" stroke-width="3"/><text y="${-h+0.5}" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" font-weight="700" letter-spacing="2.5" fill="${K}">BUDGET &amp; AD SPEND</text>
+    <polygon points="${-w/2-14},${-h-14} 0,${-h-66} ${w/2+14},${-h-14}" fill="#F4F1EA" stroke="${K}" stroke-width="3"/><text y="${-h-50}" text-anchor="middle" font-family="Georgia,serif" font-size="8" font-weight="700" letter-spacing="3" fill="${K}">BANK</text>
     <circle cy="${-h-34}" r="14" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/><text y="${-h-29}" text-anchor="middle" font-family="Georgia,serif" font-size="15" font-weight="700" fill="${K}">$</text>
     ${[-80,-40,40,80].map(x=>`<rect x="${x-9}" y="${-h+4}" width="18" height="${h-30}" fill="#FFFFFF" stroke="${K}" stroke-width="2.5"/><rect x="${x-12}" y="${-h+4}" width="24" height="7" fill="#E9E4D8" stroke="${K}" stroke-width="1.5"/>`).join('')}
     ${door(0,46,90,'#5A3A2A')}<path d="M0 -116 v26" stroke="${K}" stroke-width="2"/>`}
   case 'trading':{const h=130;return `<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#9A6A3F" stroke="${K}" stroke-width="3"/>
     ${[...Array(10)].map((_,k)=>`<path d="M${-w/2+k*w/10} ${-h} v${h}" stroke="rgba(9,15,18,.28)" stroke-width="1.5"/>`).join('')}
-    <path d="M${-w/2+10} ${-h} V${-h-50} H${-w/2+40} V${-h-62} H${w/2-40} V${-h-50} H${w/2-10} V${-h}" fill="#B07A48" stroke="${K}" stroke-width="3"/>
-    <text y="${-h-26}" text-anchor="middle" font-family="Rockwell,'Courier New',serif" font-size="20" font-weight="900" letter-spacing="2" fill="#FFFDF7" stroke="${K}" stroke-width=".6">TRADING POST</text>
+    <path d="M${-w/2+6} ${-h} V${-h-62} H${-w/2+36} V${-h-78} H${w/2-36} V${-h-62} H${w/2-6} V${-h}" fill="#B07A48" stroke="${K}" stroke-width="3"/>
+    <text y="${-h-50}" text-anchor="middle" font-family="'Rye',Rockwell,serif" font-size="14" letter-spacing="3" fill="#FFFDF7" stroke="${K}" stroke-width=".5">ALLIANCE</text>
+    <text y="${-h-22}" text-anchor="middle" font-family="'Rye',Rockwell,serif" font-size="21" letter-spacing="1" fill="#FFFDF7" stroke="${K}" stroke-width=".7">TRADING POST</text>
     <rect x="${-w/2-8}" y="-92" width="${w+16}" height="12" fill="#5A3A2A" stroke="${K}" stroke-width="2.5"/>${[-w/2,-w/6,w/6,w/2].map(x=>`<rect x="${x-4}" y="-80" width="8" height="80" fill="#5A3A2A" stroke="${K}" stroke-width="1.5"/>`).join('')}
     ${win(-w/2+20,-70,50,40,'#F2D9A6')}${door(10,40,70,'#5A3A2A')}${win(w/2-70,-70,50,40,'#F2D9A6')}
     <path d="M${-w/2-30} -26 h40 M${-w/2-26} -26 v26 M${-w/2+6} -26 v26" stroke="#5A3A2A" stroke-width="5"/>
@@ -2285,21 +2288,27 @@ function DRAW(id,w){switch(id){
       ${[-16,0,16].map((x,k)=>`<path d="M${x} -78 q-9 4 -8 18 l-4 6 l6 -2 q2 20 6 26 q4 -6 6 -26 l6 2 l-4 -6 q1 -14 -8 -18z" fill="${['#7A4A2A','#A87A4A','#5A3A2A'][k]}" stroke="${K}" stroke-width="1.5"/>`).join('')}</g>
     <g transform="translate(${-w/2-62} 0)"><ellipse cx="0" cy="-20" rx="13" ry="20" fill="#9A6A3F" stroke="${K}" stroke-width="2.5"/><path d="M-13 -28 h26 M-13 -12 h26" stroke="${K}" stroke-width="2"/></g>`}
   case 'signs':{const h=140;return `${roof(w,h,'#4F6F82')}<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#F4F1EA" stroke="${K}" stroke-width="3"/>
-    <g transform="translate(-10 ${-h-70})"><rect x="-4" y="40" width="8" height="34" fill="${K}"/><path d="M-80 0 h130 l30 26 l-30 26 h-130z" fill="#618FA4" stroke="${K}" stroke-width="3"/><text x="-14" y="34" text-anchor="middle" font-size="22" font-weight="900" letter-spacing="3" fill="#FFFFFF">SIGNS</text></g>
-    ${win(-w/2+14,-h+20,w-28,40,'#FFFFFF')}<text y="${-h+45}" text-anchor="middle" font-size="10.5" font-weight="800" letter-spacing="1" fill="#618FA4">ADS · BANNERS · PAGES</text>
+    <g transform="translate(-10 ${-h-70})"><rect x="-4" y="40" width="8" height="34" fill="${K}"/><path d="M-80 0 h130 l30 26 l-30 26 h-130z" fill="#618FA4" stroke="${K}" stroke-width="3"/><text x="-14" y="34" text-anchor="middle" font-size="24" font-weight="900" letter-spacing="3" fill="#FFFFFF">ADS</text></g>
+    ${win(-w/2+14,-h+20,w-28,40,'#FFFFFF')}<text y="${-h+46}" text-anchor="middle" font-size="13" font-weight="900" letter-spacing="1.5" fill="#618FA4">BANNERS &amp; PAGES</text>
     ${win(-w/2+14,-70,70,50)}${door(w/2-40,44,76,'#4F6F82')}
     <g transform="translate(${-w/2-56} 0) rotate(-8)"><rect x="-26" y="-92" width="70" height="56" fill="#FFFFFF" stroke="${K}" stroke-width="2.5"/><text x="9" y="-58" text-anchor="middle" font-size="16" font-weight="900" fill="#C97A5A">AD</text><path d="M-20 -36 l-6 36 M38 -36 l6 36" stroke="${K}" stroke-width="3"/></g>
     ${[0,1].map(k=>`<g transform="translate(${w/2+18+k*24} 0)"><rect x="0" y="-22" width="18" height="22" fill="${k?'#C97A5A':'#618FA4'}" stroke="${K}" stroke-width="2"/><rect x="0" y="-26" width="18" height="5" fill="${K}"/></g>`).join('')}`}
-  case 'post':{const h=160;return `${roof(w,h,'#5A3A2A')}<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#C97A5A" stroke="${K}" stroke-width="3"/>${bricks(w,h)}
-    <g class="flag" transform="translate(${w/2-20} ${-h-34})"><rect x="-2" y="-80" width="4" height="80" fill="${K}"/><path d="M2 -78 h44 v26 h-44z" fill="#618FA4" stroke="${K}" stroke-width="2"/><path d="M2 -78 h18 v12 h-18z" fill="#FFFFFF"/></g>
-    <rect x="${-w/2+12}" y="${-h+14}" width="${w-24}" height="28" fill="#FFFDF7" stroke="${K}" stroke-width="2"/><text y="${-h+34}" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" letter-spacing="3" fill="${K}">POST OFFICE</text>
-    <circle cy="-100" r="11" fill="#FFFFFF" stroke="${K}" stroke-width="2.5"/><path d="M0 -100 v-7 M0 -100 h6" stroke="${K}" stroke-width="2"/>
-    ${win(-w/2+14,-84,52,44)}${win(w/2-66,-84,52,44)}${door(0,42,82,'#002423')}
-    <g transform="translate(${w/2+26} 0)"><rect x="-15" y="-56" width="30" height="46" rx="13" fill="#618FA4" stroke="${K}" stroke-width="2.5"/><rect x="-9" y="-42" width="18" height="4" fill="${K}"/><rect x="-3" y="-10" width="6" height="10" fill="${K}"/></g>
-    <g transform="translate(${-w/2-24} 0)"><path d="M-14 0 q-4 -26 6 -30 l4 -6 l8 0 l4 6 q10 4 6 30z" fill="#E9E4D8" stroke="${K}" stroke-width="2"/></g>`}
+  case 'post':{const h=170;return `<rect x="${-w/2-10}" y="-12" width="${w+20}" height="12" fill="#E9E4D8" stroke="${K}" stroke-width="2.5"/>
+    <path d="M${-w/2} -12 V${-h} H${-w/2+30} V${-h-14} H${-30} V${-h-30} H30 V${-h-14} H${w/2-30} V${-h} H${w/2} V-12Z" fill="#F4F1EA" stroke="${K}" stroke-width="3"/>
+    <rect x="${-w/2}" y="${-h+8}" width="${w}" height="10" fill="#618FA4" stroke="${K}" stroke-width="2"/><rect x="${-w/2}" y="${-h+22}" width="${w}" height="4" fill="#002423"/>
+    <g class="flag" transform="translate(0 ${-h-30})"><rect x="-2" y="-70" width="4" height="70" fill="${K}"/><path d="M2 -68 h44 v26 h-44z" fill="#3F7A78" stroke="${K}" stroke-width="2"/><path d="M8 -61 h8 M8 -55 h14 M8 -49 h10" stroke="#FFFFFF" stroke-width="2.5"/></g>
+    <text y="${-h+44}" text-anchor="middle" font-size="10" font-weight="800" letter-spacing="4" fill="#4F6F82">LEAPWORK CUSTOMERS</text>
+    <text y="${-h+70}" text-anchor="middle" font-family="'Limelight',Georgia,serif" font-size="25" letter-spacing="2" fill="#002423">POST OFFICE</text>
+    ${[-w/2+16,w/2-26].map(x=>`<rect x="${x}" y="${-h+80}" width="10" height="${h-92}" fill="#E9E4D8" stroke="${K}" stroke-width="2"/>`).join('')}
+    ${win(-w/2+34,-84,46,58)}${win(w/2-80,-84,46,58)}
+    <path d="M-28 -12 V-70 Q0 -98 28 -70 V-12Z" fill="#002423" stroke="${K}" stroke-width="3"/><path d="M-22 -70 Q0 -92 22 -70Z" fill="#BFA66A" stroke="${K}" stroke-width="2"/>${[-12,0,12].map(x=>`<path d="M0 -70 L${x} -86" stroke="${K}" stroke-width="1.5"/>`).join('')}
+    <path d="M0 -66 V-12" stroke="#4F6F82" stroke-width="2"/>
+    <g transform="translate(${w/2+26} 0)"><rect x="-16" y="-58" width="32" height="48" rx="14" fill="#618FA4" stroke="${K}" stroke-width="2.5"/><rect x="-10" y="-44" width="20" height="4" fill="${K}"/><text y="-22" text-anchor="middle" font-size="7" font-weight="800" fill="#FFFFFF">MAIL</text><rect x="-3" y="-10" width="6" height="10" fill="${K}"/></g>
+    <g transform="translate(${-w/2-22} 0)"><path d="M-14 0 q-4 -26 6 -30 l4 -6 l8 0 l4 6 q10 4 6 30z" fill="#E9E4D8" stroke="${K}" stroke-width="2"/><path d="M-6 -16 h12" stroke="#4F6F82" stroke-width="2"/></g>`}
   case 'playhouse':{const h=210;return `<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#8C3B2E" stroke="${K}" stroke-width="3"/>
     <path d="M${-w/2-10} ${-h} V${-h-20} Q0 ${-h-70} ${w/2+10} ${-h-20} V${-h}Z" fill="#B8664C" stroke="${K}" stroke-width="3"/>
-    <g transform="translate(0 ${-h-40})"><circle cx="-14" cy="0" r="13" fill="#FFFDF7" stroke="${K}" stroke-width="2"/><path d="M-19 -2 h3 M-11 -2 h3 M-20 5 q6 6 12 0" stroke="${K}" stroke-width="2" fill="none"/>
+    <text y="${-h-8}" text-anchor="middle" font-family="'Limelight',Georgia,serif" font-size="17" letter-spacing="2" fill="#FFFDF7">WEBINARS &amp; EVENTS</text>
+    <g transform="translate(0 ${-h-46}) scale(.8)"><circle cx="-14" cy="0" r="13" fill="#FFFDF7" stroke="${K}" stroke-width="2"/><path d="M-19 -2 h3 M-11 -2 h3 M-20 5 q6 6 12 0" stroke="${K}" stroke-width="2" fill="none"/>
       <circle cx="14" cy="0" r="13" fill="#BFA66A" stroke="${K}" stroke-width="2"/><path d="M8 -2 h3 M17 -2 h3 M8 8 q6 -6 12 0" stroke="${K}" stroke-width="2" fill="none"/></g>
     <g transform="translate(${w/2-26} ${-h-12})"><rect x="-15" y="0" width="30" height="116" fill="#FFFDF7" stroke="${K}" stroke-width="2.5"/>${[...'PLAYHOUSE'].map((c,k)=>`<text x="0" y="${15+k*11.6}" text-anchor="middle" font-size="10.5" font-weight="900" fill="#8C3B2E">${c}</text>`).join('')}</g>
     ${[-w/2+30,-w/2+92].map(x=>`<path d="M${x} ${-h+90} v-40 q24 -26 48 0 v40z" fill="#B8664C" stroke="${K}" stroke-width="2.5"/><path d="M${x} ${-h+50} q12 30 0 40 M${x+48} ${-h+50} q-12 30 0 40" fill="#5A1F18"/>`).join('')}
@@ -2316,15 +2325,15 @@ function DRAW(id,w){switch(id){
     <g transform="translate(${w/2+30} 0)">${[[-14,0],[14,0],[0,-34]].map(([x,y])=>`<g transform="translate(${x} ${y})"><ellipse cx="0" cy="-17" rx="13" ry="17" fill="#9A6A3F" stroke="${K}" stroke-width="2.5"/><path d="M-13 -24 h26 M-13 -10 h26" stroke="${K}" stroke-width="2"/></g>`).join('')}</g>
     <path d="M${-w/2-60} -14 h40 M${-w/2-56} -14 v14 M${-w/2-24} -14 v14" stroke="#5A3A2A" stroke-width="5"/>`}
 }}
-function shopG(s){const t=s.t,sc=s.open?STATUS_COLOR[s.status]:'#C8CFD3',n=s.outs.length,done=s.outs.filter(a=>a.st.status==='Done').length;
+function shopG(s){const t=s.t,pw=Math.max(172,t.name.length*7.6+28),sc=s.open?STATUS_COLOR[s.status]:'#C8CFD3',n=s.outs.length,done=s.outs.filter(a=>a.st.status==='Done').length;
   const label=s.open?`${n} asset${n>1?'s':''} · ${escs(s.status)}`:'Not in this campaign';
   return `<g class="shop ${s.open?'open':'closed'}" id="shop-${t.id}" transform="translate(${t.x} ${t.y})" ${s.open?`onclick="visitShop('${t.id}')" role="button" aria-label="${escs(t.name)}"`:''}>
     <ellipse cx="0" cy="4" rx="${t.w/2+40}" ry="12" fill="rgba(9,15,18,.12)"/>
     <rect class="halo" x="${-t.w/2-70}" y="-300" width="${t.w+140}" height="340" rx="8" fill="none"/>
     <g class="art">${DRAW(t.id,t.w)}</g>
-    <g transform="translate(0 30)"><rect x="-86" y="-14" width="172" height="40" rx="4" fill="#FFFDF7" stroke="${K}" stroke-width="2"/>
+    <g transform="translate(0 30)"><rect x="${-pw/2}" y="-14" width="${pw}" height="40" rx="4" fill="#FFFDF7" stroke="${K}" stroke-width="2"/>
       <text y="2" text-anchor="middle" font-size="13" font-weight="800" fill="${K}">${escs(t.name)}</text>
-      <circle cx="-64" cy="14" r="4.5" fill="${sc}" stroke="${K}" stroke-width="1.2"/><text x="-54" y="18" font-size="10.5" font-weight="600" fill="#4F6F82">${label}</text></g></g>`}
+      <circle cx="${-pw/2+22}" cy="14" r="4.5" fill="${sc}" stroke="${K}" stroke-width="1.2"/><text x="${-pw/2+32}" y="18" font-size="10.5" font-weight="600" fill="#4F6F82">${label}</text></g></g>`}
 function buildTown(){SHOPS=townShops(bf);const name=(bf.doc.core.name||'').toUpperCase(),ev=(bf.doc.outputs.event?.values?.name||bf.doc.outputs.cust_event?.values?.title||'Webinars & events').toUpperCase();
   const tree=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="2" rx="18" ry="5" fill="rgba(9,15,18,.15)"/><rect x="-3" y="-14" width="6" height="16" fill="#5A3A2A"/><circle cy="-30" r="20" fill="#3F7A78" stroke="${K}" stroke-width="2"/><circle cx="-8" cy="-36" r="7" fill="#5C9A8E"/></g>`;
   return `<defs><pattern id="grass" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="#B9C98F"/><path d="M8 12 l2 -5 l2 5 M28 30 l2 -5 l2 5" stroke="#9DB273" stroke-width="1.5" fill="none"/></pattern></defs>
@@ -2337,7 +2346,7 @@ function buildTown(){SHOPS=townShops(bf);const name=(bf.doc.core.name||'').toUpp
   <ellipse cx="${HALL_X}" cy="${(ST1+ST2)/2+4}" rx="150" ry="70" fill="#E9E4D8" stroke="${K}" stroke-width="3"/>
   <g transform="translate(${HALL_X} ${(ST1+ST2)/2+4})"><ellipse rx="56" ry="24" fill="#D2E1EA" stroke="${K}" stroke-width="3"/><ellipse rx="40" ry="16" fill="#9FC3D6"/><rect x="-6" y="-38" width="12" height="38" fill="#FFFFFF" stroke="${K}" stroke-width="2.5"/>
     <path class="spray" d="M0 -40 q-18 -26 -30 4 M0 -40 q18 -26 30 4 M0 -40 v-18" stroke="#618FA4" stroke-width="3" fill="none" stroke-linecap="round"/></g>
-  ${tree(330,ROW1-10,.9)}${tree(640,ROW1-200,.8)}${tree(985,ROW1-200,.8)}${tree(1265,ROW1-6,.85)}${tree(40,ROW2-20)}${tree(345,ROW2-6,.85)}${tree(640,ROW2-180)}${tree(960-0,ROW2-250,.8)}${tree(1560,ROW2-20,.9)}${tree(640,ROW2-20,.9)}${tree(965,ROW2-10,.7)}
+  ${tree(330,ROW1-10,.9)}${tree(640,ROW1-200,.8)}${tree(985,ROW1-200,.8)}${tree(1265,ROW1-6,.85)}${tree(40,ROW2-20)}${tree(345,ROW2-6,.85)}${tree(640,ROW2-180)}${tree(960-0,ROW2-250,.8)}${tree(1470,ROW2-30,1.1)}${tree(1540,ROW2-90,.9)}${tree(1420,ROW2-120,.8)}${tree(1560,ROW2-10,.9)}${tree(640,ROW2-20,.9)}${tree(965,ROW2-10,.7)}
   ${[[90,ST1-34],[700,ST1-34],[900,ST1-34],[1560,ST1-34],[90,ST2-34],[700,ST2-34],[900,ST2-34],[1580,ST2-34]].map(([x,y])=>`<g transform="translate(${x} ${y})"><rect x="-2" y="-58" width="4" height="58" fill="${K}"/><rect x="-7" y="-68" width="14" height="12" fill="#BFA66A" stroke="${K}" stroke-width="2"/></g>`).join('')}
   <!-- Town Hall -->
   <g transform="translate(${HALL_X} ${ROW1})"><ellipse cy="4" rx="190" ry="12" fill="rgba(9,15,18,.12)"/>

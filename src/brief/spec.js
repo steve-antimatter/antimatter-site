@@ -139,9 +139,6 @@ export const GROUPS = [
       f('customer_speaker', 'text', 'Customer speaker')]),
     o('cust_nurture', 'Customer nurture', 'Field Marketing', [
       f('steps', 'list', 'Steps', { ai: true })]),
-    o('proof', 'Proof asks', 'Field Marketing', [
-      f('case_study', 'text', 'Case study request'), f('win_wire', 'text', 'Win wire'),
-      f('cab_topic', 'text', 'Customer advisory board topic')]),
   ] },
 ];
 
