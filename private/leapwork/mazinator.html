@@ -651,6 +651,22 @@
   .zone .zname{border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-transform:uppercase;letter-spacing:.12em}
   .zone .zname:hover{color:var(--c)} .zone .zsub{font-size:12px;color:var(--fog-blue);margin:-6px 0 10px}
   .units{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+  /* ---------- town from above ---------- */
+  #shops{background:#B9C98F}
+  #shops svg{cursor:default}
+  #shops .shop.open{cursor:pointer} #shops .shop .halo{transition:fill .2s}
+  #shops .shop.open:hover .halo{fill:rgba(255,253,247,.35)} #shops .shop.here .halo{fill:rgba(255,253,247,.5)}
+  #shops .shop.open:hover .art{filter:drop-shadow(0 0 6px rgba(191,166,106,.9))}
+  #shops .shop.closed .art{opacity:.38;filter:grayscale(1)} #shops .shop.closed{opacity:.85}
+  .polespin{animation:polespin 1.1s linear infinite} @keyframes polespin{from{transform:translateY(0)}to{transform:translateY(48px)}}
+  .newsboy .wave,#shops .wave{transform-box:fill-box;transform-origin:0% 100%;animation:wave 1.4s ease-in-out infinite alternate} @keyframes wave{from{transform:rotate(-8deg)}to{transform:rotate(10deg)}}
+  #shops .extra{animation:pop 2.8s ease-in-out infinite} @keyframes pop{0%,60%,100%{opacity:1}75%{opacity:0}}
+  .bulbA{animation:bulb .7s steps(1) infinite} .bulbB{animation:bulb .7s steps(1) infinite reverse} @keyframes bulb{0%{fill:#BFA66A}50%{fill:#FFF3C4}}
+  #shops .flag path:first-of-type{transform-box:fill-box;transform-origin:0 50%;animation:flag 1.6s ease-in-out infinite alternate} @keyframes flag{from{transform:skewY(-4deg)}to{transform:skewY(5deg)}}
+  #shops .swing{transform-box:fill-box;transform-origin:50% 0;animation:swing 2.4s ease-in-out infinite alternate} @keyframes swing{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+  #shops .spray{animation:spray 1.2s ease-in-out infinite alternate} @keyframes spray{from{opacity:.5}to{opacity:1}}
+  @media (prefers-reduced-motion:reduce){.polespin,#shops .wave,#shops .extra,.bulbA,.bulbB,#shops .flag path,#shops .swing,#shops .spray{animation:none}}
+  #shops.card-left .shopcard{right:auto;left:24px;top:130px;transform:translateX(-30px)} #shops.card-left.carded .shopcard{transform:none}
 </style>
 </head>
 <body>
@@ -1116,16 +1132,13 @@
 
 <!-- ================= MARKET STREET (SHOPS) ================= -->
 <div class="view" id="shops">
-  <svg id="shopScene" viewBox="0 170 1600 730" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
-  <div class="street-hd"><small>Market street</small><h3 id="shopTitle"></h3><p id="shopSub"></p></div>
-  <div class="street-acts"><button class="btn out street-skip" onclick="shopSkip=true">Skip</button><button class="btn out" onclick="showDirectory()">Town map</button><button class="btn out" id="shopBack" onclick="closeShops()">← Back to the brief</button></div>
-  <button class="btn out street-pan l" onclick="panStreet(-700)" aria-label="Scroll left">‹</button>
-  <button class="btn out street-pan r" onclick="panStreet(700)" aria-label="Scroll right">›</button>
-  <div class="dir" id="shopDir"></div>
+  <svg id="shopScene" viewBox="0 70 1600 920" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+  <div class="street-hd"><small>Town</small><h3 id="shopTitle"></h3><p id="shopSub"></p></div>
+  <div class="street-acts"><button class="btn out street-skip" onclick="shopSkip=true">Skip</button><button class="btn out" id="shopBack" onclick="closeShops()">← Back to the brief</button></div>
   <div class="shopcard" role="dialog" aria-labelledby="shopName">
     <div class="top"><small id="shopKicker"></small><h3 id="shopName"></h3><div class="meta" id="shopMeta"></div></div>
     <div class="body" id="shopBody"></div>
-    <div class="foot"><p>Inside the shop, the team makes these assets with Claude and gets each one approved. That part is next.</p><button class="btn out" onclick="closeShopCard()">Back to the street</button></div>
+    <div class="foot"><p>Inside the shop, the team makes these assets with Claude and gets each one approved. That part is next.</p><button class="btn out" onclick="closeShopCard()">Back to town</button></div>
   </div>
 </div>
 
@@ -2201,145 +2214,183 @@ function approveBrief(){if(!bf)return;const p=bf.progress||[],todo=p.filter(x=>!
     approve:(who)=>setBriefStatus('locked',who),
     doneText:'This version is locked. Head to the shops to start making the assets.',
     nextLabel:'Head to the shops →',next:openShops})}
-// ----- market street: one shop for every output on an approved brief -----
-const GROUP_COLOR={content:'#C97A5A',enablement:'#3F7A78',inbound:'#618FA4',outbound:'#BFA66A',customer:'#002423'};
+// ----- the town, seen from above: every shop makes one kind of asset -----
 const STATUS_COLOR={'Not started':'#9AA6AC','In progress':'#BFA66A','Done':'#3F7A78'};
-const STREET_Y=700,WALK_Y=772;
-let SHOPS=[],shopW=0,shopCam=0,shopRAF=0,shopX=200,shopSkip=false,shopWalking=false,shopOpen=null;
-function wrapWords(t,n,max=3){const lines=[''];for(const w of String(t).split(' ')){const c=lines[lines.length-1];if(c&&(c+' '+w).length>n)lines.push(w);else lines[lines.length-1]=(c?c+' ':'')+w}return lines.slice(0,max)}
-function buildStreet(){const L=layoutShops(bf);SHOPS=L.items;shopW=L.width;
-  const road=`M-200 ${WALK_Y} L${shopW+200} ${WALK_Y}`;
-  return `<rect x="-200" y="-100" width="${shopW+600}" height="1200" fill="#E8EEF4"/>
-  <g id="streetWorld">
-    ${[200,900,1700,2500,3300,4100,4900].filter(x=>x<shopW).map((x,k)=>cloud(x,140+(k%2)*60,120+(k%3)*30)).join('')}
-    <path d="M-200 560 Q 400 430 900 520 T 2000 480 T ${shopW+200} 500 L ${shopW+200} 720 L -200 720 Z" fill="#B9D3C8" opacity=".5"/>
-    <rect x="-200" y="${STREET_Y}" width="${shopW+400}" height="400" fill="#ABBE8A"/>
-    <rect x="-200" y="${STREET_Y}" width="${shopW+400}" height="44" fill="#F4F1EA" stroke="#090F12" stroke-width="3"/>
-    <path d="${road}" stroke="#FFFFFF" stroke-width="58"/><path d="${road}" stroke="#D2E1EA" stroke-width="3" stroke-dasharray="16 18"/>
-    <!-- back of Town Hall -->
-    <g transform="translate(150 ${STREET_Y})"><rect x="-150" y="-260" width="300" height="260" fill="#FFFFFF" stroke="#090F12" stroke-width="4"/>
-      <polygon points="-170,-260 0,-330 170,-260" fill="#FFFFFF" stroke="#090F12" stroke-width="4"/>
-      <text x="0" y="-272" text-anchor="middle" font-size="13" font-weight="800" letter-spacing="5" fill="#090F12">TOWN HALL</text>
-      <rect x="-30" y="-110" width="60" height="110" fill="#BFA66A" stroke="#090F12" stroke-width="3"/></g>
-    <g transform="translate(420 ${STREET_Y})"><rect x="-3" y="-120" width="6" height="120" fill="#090F12"/>
-      <rect x="-86" y="-160" width="172" height="44" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
-      <text x="0" y="-142" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="2" fill="#4F6F82">MARKET STREET</text>
-      <text x="0" y="-125" text-anchor="middle" font-size="${(bf.doc.core.name||'').length>22?10:12}" font-weight="800" fill="#090F12">${escs((bf.doc.core.name||'Campaign').toUpperCase())}</text></g>
-    ${L.items.map((s,i)=>shopSvg(s,i)).join('')}
-    <g class="walkers" id="sWalkers"><g id="sMaz">${walkerMaz()}</g><g id="sDog">${walkerDog()}</g></g>
-  </g>`}
-function placeWalkers(x){shopX=x;document.getElementById('sMaz').setAttribute('transform',`translate(${x} ${WALK_Y-30})`);document.getElementById('sDog').setAttribute('transform',`translate(${x+46} ${WALK_Y-2})`)}
-function setCam(c){shopCam=Math.max(1600-shopW,Math.min(0,c));const w=document.getElementById('streetWorld');if(w)w.setAttribute('transform',`translate(${shopCam} 0)`)}
-function walkTo(x,done){cancelAnimationFrame(shopRAF);const from=shopX,dist=Math.abs(x-from),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const dur=reduced?0:Math.min(5200,Math.max(500,dist*1.6)),t0=performance.now(),walkers=document.getElementById('sWalkers');
-  const flip=x<from;document.getElementById('sMaz').firstElementChild.setAttribute('transform',flip?'scale(-1 1)':'');document.getElementById('sDog').firstElementChild.setAttribute('transform',flip?'scale(-1 1)':'');
-  shopWalking=true;shopSkip=false;walkers.classList.add('walking');document.getElementById('shops').classList.add('walking-on');
-  (function step(t){const e=shopSkip||!dur?1:Math.min(1,(t-t0)/dur),q=e<.5?2*e*e:1-Math.pow(-2*e+2,2)/2;const px=from+(x-from)*q;placeWalkers(px);setCam(800-px);
-    if(e<1)shopRAF=requestAnimationFrame(step);else{walkers.classList.remove('walking');shopWalking=false;document.getElementById('shops').classList.remove('walking-on');done&&done()}})(t0)}
+const ROW1=470,ROW2=880,ST1=530,ST2=940,HALL_X=800;
+const SHOP_THEMES=[
+  {id:'gazette',name:'The Gazette',kind:'Newspaper',sub:'Thought leadership and content',x:215,y:ROW1,w:230,outputs:['blog','pr','social','website']},
+  {id:'barber',name:'The Barbershop',kind:'Barbershop',sub:'Sales enablement: the sales team gets sharpened up here',x:480,y:ROW1,w:170,outputs:['slides','battlecard','twopager','training']},
+  {id:'bank',name:'The Bank',kind:'Bank',sub:'Campaign set-up and reporting: where the numbers are kept',x:1120,y:ROW1,w:220,outputs:['marops']},
+  {id:'trading',name:'Trading Post',kind:'Trading post',sub:'Partner enablement and campaign-in-a-box',x:1390,y:ROW1,w:220,outputs:['partner_enable','partner_box']},
+  {id:'signs',name:'Sign Maker',kind:'Sign maker',sub:'Ads, landing pages and creative',x:200,y:ROW2,w:200,outputs:['paid','landing','creative']},
+  {id:'post',name:'Post Office',kind:'Post office',sub:'Account lists, SDR cadences, nurture and newsletters',x:480,y:ROW2,w:210,outputs:['accounts','cadence','nurture','followup','newsletter','cust_nurture']},
+  {id:'playhouse',name:'The Playhouse',kind:'Theater',sub:'Webinars and events',x:1110,y:ROW2,w:300,outputs:['event','cust_event']},
+  {id:'tavern',name:'The Tavern',kind:'Tavern',sub:'Where the regulars are: customer expansion and stories',x:1420,y:ROW2,w:200,outputs:['expansion','proof']},
+];
+let SHOPS=[],shopRAF=0,shopPos={x:HALL_X,y:ROW1+8},shopSkip=false,shopWalking=false,shopOpen=null;
+function outInfo(id){for(const g of SPEC.groups){const o=g.outputs.find(x=>x.id===id);if(o)return{g,o}}return null}
+function shopStatus(outs){const ss=outs.map(a=>a.st.status);return ss.every(s=>s==='Done')?'Done':ss.some(s=>s!=='Not started')?'In progress':'Not started'}
+function townShops(b){return SHOP_THEMES.map(t=>{const outs=t.outputs.map(id=>{const i=outInfo(id),st=b.doc.outputs[id];return i&&st?.on&&b.doc.groups[i.g.id]?{...i,st}:null}).filter(Boolean);
+  return {t,outs,open:outs.length>0,status:outs.length?shopStatus(outs):null}})}
+// --- drawing helpers (origin = middle of the shop's front, at ground level) ---
+const K='#090F12';
+function roof(w,h,col,d=34){return `<polygon points="${-w/2-6},${-h} ${-w/2+10},${-h-d} ${w/2-10},${-h-d} ${w/2+6},${-h}" fill="${col}" stroke="${K}" stroke-width="3"/>`}
+function win(x,y,w,h,fill='#D2E1EA'){return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${K}" stroke-width="2.5"/>`}
+function door(x,w=40,h=70,fill='#002423'){return `<rect x="${x-w/2}" y="${-h}" width="${w}" height="${h}" fill="${fill}" stroke="${K}" stroke-width="2.5"/><circle cx="${x+w/2-8}" cy="${-h/2}" r="2.5" fill="#BFA66A"/>`}
+function bricks(w,h){let s='';for(let y=-h+14;y<0;y+=14){s+=`<path d="M${-w/2} ${y} H${w/2}" stroke="rgba(9,15,18,.18)" stroke-width="1"/>`}return s}
+function newsboy(x){return `<g transform="translate(${x} 0)">
+  <rect x="-22" y="-16" width="26" height="16" fill="#FFFFFF" stroke="${K}" stroke-width="2"/><path d="M-22 -10 h26 M-22 -5 h26" stroke="${K}" stroke-width="1"/>
+  <rect x="6" y="-30" width="6" height="30" fill="${K}"/><rect x="15" y="-30" width="6" height="30" fill="${K}"/>
+  <rect x="3" y="-62" width="22" height="34" rx="3" fill="#8A5A1E" stroke="${K}" stroke-width="2"/>
+  <rect x="10" y="-70" width="8" height="9" fill="#E9CABD"/><circle cx="14" cy="-80" r="11" fill="#E9CABD" stroke="${K}" stroke-width="1.5"/>
+  <path d="M2 -84 q12 -14 26 -2 l6 2 h-32z" fill="#4F6F82" stroke="${K}" stroke-width="1.5"/><circle cx="18" cy="-80" r="1.4" fill="${K}"/>
+  <path d="M15 -73 q4 3 7 0" fill="none" stroke="${K}" stroke-width="1.4"/>
+  <g class="wave"><path d="M24 -58 l14 -26" stroke="#8A5A1E" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(30 -112) rotate(-12)"><rect width="34" height="26" fill="#FFFFFF" stroke="${K}" stroke-width="2"/><rect x="4" y="4" width="26" height="5" fill="${K}"/><path d="M4 13 h12 M4 18 h12 M19 13 h11 M19 18 h11" stroke="${K}" stroke-width="1.2"/></g></g>
+  <g class="extra" transform="translate(-40 -112)"><path d="M0 0 h56 v22 h-30 l-8 8 v-8 h-18z" fill="#FFFDF7" stroke="${K}" stroke-width="2"/><text x="28" y="15" text-anchor="middle" font-size="11" font-weight="900" fill="${K}">EXTRA!</text></g></g>`}
+function DRAW(id,w){switch(id){
+  case 'gazette':{const h=170;return `${roof(w,h,'#5A3A2A')}<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#B8664C" stroke="${K}" stroke-width="3"/>${bricks(w,h)}
+    <rect x="${-w/2-6}" y="${-h}" width="${w+12}" height="10" fill="#FFFDF7" stroke="${K}" stroke-width="2.5"/>
+    <rect x="${-w/2+14}" y="${-h+18}" width="${w-28}" height="34" fill="${K}"/><text y="${-h+42}" text-anchor="middle" font-family="Georgia,serif" font-size="21" font-weight="700" fill="#F4F1EA">The Gazette</text>
+    ${win(-w/2+18,-h+64,38,34)}${win(-19,-h+64,38,34)}${win(w/2-56,-h+64,38,34)}
+    ${win(-w/2+16,-70,96,56,'#F4F1EA')}<g fill="#FFFFFF" stroke="${K}" stroke-width="1.2">${[0,1,2,3].map(k=>`<rect x="${-w/2+26+k*20}" y="${-36-k%2*4}" width="16" height="${18+k%2*4}"/>`).join('')}</g>
+    <text x="${-w/2+64}" y="-50" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-style="italic" fill="${K}">Daily · Est. 1898</text>${door(w/2-40)}${newsboy(-w/2-46)}`}
+  case 'barber':{const h=150;return `${roof(w,h,'#2F4754')}<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#FFFFFF" stroke="${K}" stroke-width="3"/>
+    <rect x="${-w/2+12}" y="${-h+14}" width="${w-24}" height="28" fill="#3F7A78" stroke="${K}" stroke-width="2"/><text y="${-h+34}" text-anchor="middle" font-size="15" font-weight="900" letter-spacing="3" fill="#FFFFFF">BARBERSHOP</text>
+    ${[...Array(7)].map((_,k)=>`<path d="M${-w/2-4+k*(w+8)/7} -98 h${(w+8)/7} v18 q${-(w+8)/14} 10 ${-(w+8)/7} 0z" fill="${k%2?'#FFFFFF':'#B8664C'}" stroke="${K}" stroke-width="1.8"/>`).join('')}
+    ${win(-w/2+12,-74,88,58)}<text x="${-w/2+56}" y="-52" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" font-weight="700" fill="#BFA66A">Shaves</text>
+    <path d="M${-w/2+40} -18 v-14 h22 v-8 h8 v22" fill="none" stroke="${K}" stroke-width="3"/>${door(w/2-30,38,74)}
+    <g transform="translate(${-w/2-26} 0)"><rect x="-6" y="-12" width="12" height="12" fill="${K}"/>
+      <defs><clipPath id="poleClip"><rect x="-13" y="-170" width="26" height="150" rx="13"/></clipPath></defs>
+      <rect x="-13" y="-170" width="26" height="150" rx="13" fill="#FFFFFF" stroke="${K}" stroke-width="3"/>
+      <g clip-path="url(#poleClip)"><g class="polespin">${[...Array(12)].map((_,k)=>`<path d="M-20 ${-200+k*24} L20 ${-224+k*24} L20 ${-212+k*24} L-20 ${-188+k*24}Z" fill="${k%2?'#618FA4':'#B8664C'}"/>`).join('')}</g></g>
+      <rect x="-13" y="-170" width="26" height="150" rx="13" fill="none" stroke="${K}" stroke-width="3"/>
+      <rect x="-17" y="-184" width="34" height="16" rx="4" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/><circle cy="-192" r="9" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/>
+      <rect x="-17" y="-24" width="34" height="14" rx="4" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/></g>`}
+  case 'bank':{const h=170;return `<rect x="${-w/2-14}" y="-14" width="${w+28}" height="14" fill="#E9E4D8" stroke="${K}" stroke-width="2.5"/><rect x="${-w/2-6}" y="-26" width="${w+12}" height="12" fill="#E9E4D8" stroke="${K}" stroke-width="2.5"/>
+    <rect x="${-w/2}" y="${-h}" width="${w}" height="${h-26}" fill="#F4F1EA" stroke="${K}" stroke-width="3"/>
+    <rect x="${-w/2-10}" y="${-h-14}" width="${w+20}" height="18" fill="#E9E4D8" stroke="${K}" stroke-width="3"/><text y="${-h}" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="700" letter-spacing="8" fill="${K}">BANK</text>
+    <polygon points="${-w/2-14},${-h-14} 0,${-h-66} ${w/2+14},${-h-14}" fill="#F4F1EA" stroke="${K}" stroke-width="3"/>
+    <circle cy="${-h-34}" r="14" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/><text y="${-h-29}" text-anchor="middle" font-family="Georgia,serif" font-size="15" font-weight="700" fill="${K}">$</text>
+    ${[-80,-40,40,80].map(x=>`<rect x="${x-9}" y="${-h+4}" width="18" height="${h-30}" fill="#FFFFFF" stroke="${K}" stroke-width="2.5"/><rect x="${x-12}" y="${-h+4}" width="24" height="7" fill="#E9E4D8" stroke="${K}" stroke-width="1.5"/>`).join('')}
+    ${door(0,46,90,'#5A3A2A')}<path d="M0 -116 v26" stroke="${K}" stroke-width="2"/>`}
+  case 'trading':{const h=130;return `<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#9A6A3F" stroke="${K}" stroke-width="3"/>
+    ${[...Array(10)].map((_,k)=>`<path d="M${-w/2+k*w/10} ${-h} v${h}" stroke="rgba(9,15,18,.28)" stroke-width="1.5"/>`).join('')}
+    <path d="M${-w/2+10} ${-h} V${-h-50} H${-w/2+40} V${-h-62} H${w/2-40} V${-h-50} H${w/2-10} V${-h}" fill="#B07A48" stroke="${K}" stroke-width="3"/>
+    <text y="${-h-26}" text-anchor="middle" font-family="Rockwell,'Courier New',serif" font-size="20" font-weight="900" letter-spacing="2" fill="#FFFDF7" stroke="${K}" stroke-width=".6">TRADING POST</text>
+    <rect x="${-w/2-8}" y="-92" width="${w+16}" height="12" fill="#5A3A2A" stroke="${K}" stroke-width="2.5"/>${[-w/2,-w/6,w/6,w/2].map(x=>`<rect x="${x-4}" y="-80" width="8" height="80" fill="#5A3A2A" stroke="${K}" stroke-width="1.5"/>`).join('')}
+    ${win(-w/2+20,-70,50,40,'#F2D9A6')}${door(10,40,70,'#5A3A2A')}${win(w/2-70,-70,50,40,'#F2D9A6')}
+    <path d="M${-w/2-30} -26 h40 M${-w/2-26} -26 v26 M${-w/2+6} -26 v26" stroke="#5A3A2A" stroke-width="5"/>
+    <g transform="translate(${w/2+42} 0)"><path d="M-30 0 L-18 -96 L-6 0 M6 0 L18 -96 L30 0 M-24 -80 H24" stroke="#5A3A2A" stroke-width="5" fill="none"/>
+      ${[-16,0,16].map((x,k)=>`<path d="M${x} -78 q-9 4 -8 18 l-4 6 l6 -2 q2 20 6 26 q4 -6 6 -26 l6 2 l-4 -6 q1 -14 -8 -18z" fill="${['#7A4A2A','#A87A4A','#5A3A2A'][k]}" stroke="${K}" stroke-width="1.5"/>`).join('')}</g>
+    <g transform="translate(${-w/2-62} 0)"><ellipse cx="0" cy="-20" rx="13" ry="20" fill="#9A6A3F" stroke="${K}" stroke-width="2.5"/><path d="M-13 -28 h26 M-13 -12 h26" stroke="${K}" stroke-width="2"/></g>`}
+  case 'signs':{const h=140;return `${roof(w,h,'#4F6F82')}<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#F4F1EA" stroke="${K}" stroke-width="3"/>
+    <g transform="translate(-10 ${-h-70})"><rect x="-4" y="40" width="8" height="34" fill="${K}"/><path d="M-80 0 h130 l30 26 l-30 26 h-130z" fill="#618FA4" stroke="${K}" stroke-width="3"/><text x="-14" y="34" text-anchor="middle" font-size="22" font-weight="900" letter-spacing="3" fill="#FFFFFF">SIGNS</text></g>
+    ${win(-w/2+14,-h+20,w-28,40,'#FFFFFF')}<text y="${-h+45}" text-anchor="middle" font-size="10.5" font-weight="800" letter-spacing="1" fill="#618FA4">ADS · BANNERS · PAGES</text>
+    ${win(-w/2+14,-70,70,50)}${door(w/2-40,44,76,'#4F6F82')}
+    <g transform="translate(${-w/2-56} 0) rotate(-8)"><rect x="-26" y="-92" width="70" height="56" fill="#FFFFFF" stroke="${K}" stroke-width="2.5"/><text x="9" y="-58" text-anchor="middle" font-size="16" font-weight="900" fill="#C97A5A">AD</text><path d="M-20 -36 l-6 36 M38 -36 l6 36" stroke="${K}" stroke-width="3"/></g>
+    ${[0,1].map(k=>`<g transform="translate(${w/2+18+k*24} 0)"><rect x="0" y="-22" width="18" height="22" fill="${k?'#C97A5A':'#618FA4'}" stroke="${K}" stroke-width="2"/><rect x="0" y="-26" width="18" height="5" fill="${K}"/></g>`).join('')}`}
+  case 'post':{const h=160;return `${roof(w,h,'#5A3A2A')}<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#C97A5A" stroke="${K}" stroke-width="3"/>${bricks(w,h)}
+    <g class="flag" transform="translate(${w/2-20} ${-h-34})"><rect x="-2" y="-80" width="4" height="80" fill="${K}"/><path d="M2 -78 h44 v26 h-44z" fill="#618FA4" stroke="${K}" stroke-width="2"/><path d="M2 -78 h18 v12 h-18z" fill="#FFFFFF"/></g>
+    <rect x="${-w/2+12}" y="${-h+14}" width="${w-24}" height="28" fill="#FFFDF7" stroke="${K}" stroke-width="2"/><text y="${-h+34}" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" letter-spacing="3" fill="${K}">POST OFFICE</text>
+    <circle cy="-100" r="11" fill="#FFFFFF" stroke="${K}" stroke-width="2.5"/><path d="M0 -100 v-7 M0 -100 h6" stroke="${K}" stroke-width="2"/>
+    ${win(-w/2+14,-84,52,44)}${win(w/2-66,-84,52,44)}${door(0,42,82,'#002423')}
+    <g transform="translate(${w/2+26} 0)"><rect x="-15" y="-56" width="30" height="46" rx="13" fill="#618FA4" stroke="${K}" stroke-width="2.5"/><rect x="-9" y="-42" width="18" height="4" fill="${K}"/><rect x="-3" y="-10" width="6" height="10" fill="${K}"/></g>
+    <g transform="translate(${-w/2-24} 0)"><path d="M-14 0 q-4 -26 6 -30 l4 -6 l8 0 l4 6 q10 4 6 30z" fill="#E9E4D8" stroke="${K}" stroke-width="2"/></g>`}
+  case 'playhouse':{const h=210;return `<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#8C3B2E" stroke="${K}" stroke-width="3"/>
+    <path d="M${-w/2-10} ${-h} V${-h-20} Q0 ${-h-70} ${w/2+10} ${-h-20} V${-h}Z" fill="#B8664C" stroke="${K}" stroke-width="3"/>
+    <g transform="translate(0 ${-h-40})"><circle cx="-14" cy="0" r="13" fill="#FFFDF7" stroke="${K}" stroke-width="2"/><path d="M-19 -2 h3 M-11 -2 h3 M-20 5 q6 6 12 0" stroke="${K}" stroke-width="2" fill="none"/>
+      <circle cx="14" cy="0" r="13" fill="#BFA66A" stroke="${K}" stroke-width="2"/><path d="M8 -2 h3 M17 -2 h3 M8 8 q6 -6 12 0" stroke="${K}" stroke-width="2" fill="none"/></g>
+    <g transform="translate(${w/2-26} ${-h-12})"><rect x="-15" y="0" width="30" height="116" fill="#FFFDF7" stroke="${K}" stroke-width="2.5"/>${[...'PLAYHOUSE'].map((c,k)=>`<text x="0" y="${15+k*11.6}" text-anchor="middle" font-size="10.5" font-weight="900" fill="#8C3B2E">${c}</text>`).join('')}</g>
+    ${[-w/2+30,-w/2+92].map(x=>`<path d="M${x} ${-h+90} v-40 q24 -26 48 0 v40z" fill="#B8664C" stroke="${K}" stroke-width="2.5"/><path d="M${x} ${-h+50} q12 30 0 40 M${x+48} ${-h+50} q-12 30 0 40" fill="#5A1F18"/>`).join('')}
+    <g transform="translate(0 -100)"><rect x="${-w/2+6}" y="0" width="${w-12}" height="40" fill="${K}" stroke="${K}" stroke-width="2"/>
+      ${[...Array(22)].map((_,k)=>`<circle class="${k%2?'bulbA':'bulbB'}" cx="${-w/2+16+k*(w-32)/21}" cy="5" r="3.3" fill="#BFA66A"/><circle class="${k%2?'bulbB':'bulbA'}" cx="${-w/2+16+k*(w-32)/21}" cy="35" r="3.3" fill="#BFA66A"/>`).join('')}
+      <text y="17" text-anchor="middle" font-size="9" font-weight="800" letter-spacing="3" fill="#BFA66A">NOW SHOWING</text><text id="marqueeText" y="31" text-anchor="middle" font-size="11" font-weight="900" letter-spacing="1.5" fill="#FFFFFF"></text></g>
+    ${door(-34,48,60,'#5A1F18')}${door(34,48,60,'#5A1F18')}
+    ${[-w/2+12,w/2-42].map(x=>`<rect x="${x}" y="-56" width="30" height="40" fill="#FFFDF7" stroke="${K}" stroke-width="2"/><path d="M${x+5} -48 h20 M${x+5} -42 h14" stroke="#8C3B2E" stroke-width="3"/>`).join('')}`}
+  case 'tavern':{const h=150;return `${roof(w,h,'#2F4754',40)}<rect x="${-w/2}" y="${-h}" width="${w}" height="${h}" fill="#F4F1EA" stroke="${K}" stroke-width="3"/>
+    <g stroke="#5A3A2A" stroke-width="7"><path d="M${-w/2} ${-h+56} H${w/2}"/><path d="M${-w/2+4} ${-h} V0 M${w/2-4} ${-h} V0 M0 ${-h} V${-h+56}"/><path d="M${-w/2+8} ${-h+4} L-6 ${-h+52} M${w/2-8} ${-h+4} L6 ${-h+52}"/></g>
+    ${win(-w/2+20,-h+70,52,40,'#F2C46A')}${win(w/2-72,-h+70,52,40,'#F2C46A')}${door(0,44,70,'#5A3A2A')}
+    <g transform="translate(${-w/2-6} ${-h+60})"><rect x="-44" y="-3" width="50" height="6" fill="${K}"/><path d="M-30 3 v8" stroke="${K}" stroke-width="2"/>
+      <g class="swing"><rect x="-44" y="11" width="30" height="32" rx="3" fill="#BFA66A" stroke="${K}" stroke-width="2.5"/><path d="M-14 18 q10 0 10 9 q0 9 -10 9" fill="none" stroke="${K}" stroke-width="2.5"/><rect x="-44" y="8" width="30" height="8" rx="4" fill="#FFFFFF" stroke="${K}" stroke-width="2"/></g></g>
+    <g transform="translate(${w/2+30} 0)">${[[-14,0],[14,0],[0,-34]].map(([x,y])=>`<g transform="translate(${x} ${y})"><ellipse cx="0" cy="-17" rx="13" ry="17" fill="#9A6A3F" stroke="${K}" stroke-width="2.5"/><path d="M-13 -24 h26 M-13 -10 h26" stroke="${K}" stroke-width="2"/></g>`).join('')}</g>
+    <path d="M${-w/2-60} -14 h40 M${-w/2-56} -14 v14 M${-w/2-24} -14 v14" stroke="#5A3A2A" stroke-width="5"/>`}
+}}
+function shopG(s){const t=s.t,sc=s.open?STATUS_COLOR[s.status]:'#C8CFD3',n=s.outs.length,done=s.outs.filter(a=>a.st.status==='Done').length;
+  const label=s.open?`${n} asset${n>1?'s':''} · ${escs(s.status)}`:'Not in this campaign';
+  return `<g class="shop ${s.open?'open':'closed'}" id="shop-${t.id}" transform="translate(${t.x} ${t.y})" ${s.open?`onclick="visitShop('${t.id}')" role="button" aria-label="${escs(t.name)}"`:''}>
+    <ellipse cx="0" cy="4" rx="${t.w/2+40}" ry="12" fill="rgba(9,15,18,.12)"/>
+    <rect class="halo" x="${-t.w/2-70}" y="-300" width="${t.w+140}" height="340" rx="8" fill="none"/>
+    <g class="art">${DRAW(t.id,t.w)}</g>
+    <g transform="translate(0 30)"><rect x="-86" y="-14" width="172" height="40" rx="4" fill="#FFFDF7" stroke="${K}" stroke-width="2"/>
+      <text y="2" text-anchor="middle" font-size="13" font-weight="800" fill="${K}">${escs(t.name)}</text>
+      <circle cx="-64" cy="14" r="4.5" fill="${sc}" stroke="${K}" stroke-width="1.2"/><text x="-54" y="18" font-size="10.5" font-weight="600" fill="#4F6F82">${label}</text></g></g>`}
+function buildTown(){SHOPS=townShops(bf);const name=(bf.doc.core.name||'').toUpperCase(),ev=(bf.doc.outputs.event?.values?.name||bf.doc.outputs.cust_event?.values?.title||'Webinars & events').toUpperCase();
+  const tree=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="2" rx="18" ry="5" fill="rgba(9,15,18,.15)"/><rect x="-3" y="-14" width="6" height="16" fill="#5A3A2A"/><circle cy="-30" r="20" fill="#3F7A78" stroke="${K}" stroke-width="2"/><circle cx="-8" cy="-36" r="7" fill="#5C9A8E"/></g>`;
+  return `<defs><pattern id="grass" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="#B9C98F"/><path d="M8 12 l2 -5 l2 5 M28 30 l2 -5 l2 5" stroke="#9DB273" stroke-width="1.5" fill="none"/></pattern></defs>
+  <rect x="-400" y="-300" width="2400" height="1600" fill="url(#grass)"/>
+  <!-- streets -->
+  <rect x="-400" y="${ST1-26}" width="2400" height="56" fill="#F4F1EA" stroke="${K}" stroke-width="3"/><path d="M-400 ${ST1+2} H2000" stroke="#D2E1EA" stroke-width="3" stroke-dasharray="18 16"/>
+  <rect x="-400" y="${ST2-26}" width="2400" height="56" fill="#F4F1EA" stroke="${K}" stroke-width="3"/><path d="M-400 ${ST2+2} H2000" stroke="#D2E1EA" stroke-width="3" stroke-dasharray="18 16"/>
+  <rect x="${HALL_X-28}" y="${ROW1}" width="56" height="${ST2-ROW1}" fill="#F4F1EA"/><path d="M${HALL_X-28} ${ST1+30} V${ST2-26} M${HALL_X+28} ${ST1+30} V${ST2-26}" stroke="${K}" stroke-width="3"/>
+  <!-- plaza and fountain -->
+  <ellipse cx="${HALL_X}" cy="${(ST1+ST2)/2+4}" rx="150" ry="70" fill="#E9E4D8" stroke="${K}" stroke-width="3"/>
+  <g transform="translate(${HALL_X} ${(ST1+ST2)/2+4})"><ellipse rx="56" ry="24" fill="#D2E1EA" stroke="${K}" stroke-width="3"/><ellipse rx="40" ry="16" fill="#9FC3D6"/><rect x="-6" y="-38" width="12" height="38" fill="#FFFFFF" stroke="${K}" stroke-width="2.5"/>
+    <path class="spray" d="M0 -40 q-18 -26 -30 4 M0 -40 q18 -26 30 4 M0 -40 v-18" stroke="#618FA4" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+  ${tree(330,ROW1-10,.9)}${tree(640,ROW1-200,.8)}${tree(985,ROW1-200,.8)}${tree(1265,ROW1-6,.85)}${tree(40,ROW2-20)}${tree(345,ROW2-6,.85)}${tree(640,ROW2-180)}${tree(960-0,ROW2-250,.8)}${tree(1560,ROW2-20,.9)}${tree(640,ROW2-20,.9)}${tree(965,ROW2-10,.7)}
+  ${[[90,ST1-34],[700,ST1-34],[900,ST1-34],[1560,ST1-34],[90,ST2-34],[700,ST2-34],[900,ST2-34],[1580,ST2-34]].map(([x,y])=>`<g transform="translate(${x} ${y})"><rect x="-2" y="-58" width="4" height="58" fill="${K}"/><rect x="-7" y="-68" width="14" height="12" fill="#BFA66A" stroke="${K}" stroke-width="2"/></g>`).join('')}
+  <!-- Town Hall -->
+  <g transform="translate(${HALL_X} ${ROW1})"><ellipse cy="4" rx="190" ry="12" fill="rgba(9,15,18,.12)"/>
+    <rect x="-150" y="-16" width="300" height="16" fill="#FFFFFF" stroke="${K}" stroke-width="3"/><rect x="-130" y="-200" width="260" height="184" fill="#FFFFFF" stroke="${K}" stroke-width="3"/>
+    ${[-100,-50,50,100].map(x=>`<rect x="${x-10}" y="-192" width="20" height="176" fill="#F4F4F0" stroke="${K}" stroke-width="2.5"/>`).join('')}
+    <rect x="-28" y="-100" width="56" height="84" fill="#BFA66A" stroke="${K}" stroke-width="3"/>
+    <rect x="-146" y="-220" width="292" height="22" fill="#FFFFFF" stroke="${K}" stroke-width="3"/><text y="-204" text-anchor="middle" font-size="13" font-weight="800" letter-spacing="6" fill="${K}">TOWN HALL</text>
+    <polygon points="-156,-220 0,-290 156,-220" fill="#FFFFFF" stroke="${K}" stroke-width="3"/><circle cy="-248" r="16" fill="#FFFFFF" stroke="${K}" stroke-width="2.5"/><path d="M0 -248 v-10 M0 -248 h8" stroke="${K}" stroke-width="2.5"/>
+    <rect x="-2.5" y="-360" width="5" height="70" fill="${K}"/><path d="M2 -358 l44 12 l-44 12z" fill="#3F7A78"/>
+</g>
+  ${SHOPS.map(shopG).join('')}
+  <g class="walkers" id="sWalkers"><g id="sMaz">${walkerMaz()}</g><g id="sDog">${walkerDog()}</g></g>`.replace('<text id="marqueeText" y="31" text-anchor="middle" font-size="11" font-weight="900" letter-spacing="1.5" fill="#FFFFFF"></text>',`<text y="31" text-anchor="middle" font-size="${ev.length>30?8.5:11}" font-weight="900" letter-spacing="1.2" fill="#FFFFFF">${escs(ev.slice(0,40))}</text>`)}
+function placeWalkers(x,y,flip){shopPos={x,y};const f=flip?'scale(-.55 .55)':'scale(.55)';
+  document.getElementById('sMaz').setAttribute('transform',`translate(${x} ${y}) ${f}`);document.getElementById('sDog').setAttribute('transform',`translate(${x+(flip?-26:26)} ${y+12}) ${f}`)}
+function pathTo(t){const p=[{...shopPos}],st=t.y===ROW1?ST1:ST2,cur=shopPos;
+  const curSt=Math.abs(cur.y-ST1)<60||cur.y<=ROW1+20?ST1:ST2;
+  if(Math.abs(cur.x-HALL_X)>2||Math.abs(cur.y-curSt)>2){p.push({x:cur.x,y:curSt})}
+  if(curSt!==st){p.push({x:HALL_X,y:curSt});p.push({x:HALL_X,y:st})}
+  p.push({x:t.x,y:st});p.push({x:t.x,y:t.y+8});return p}
+function walkPath(pts,done){cancelAnimationFrame(shopRAF);const segs=[];let L=0;for(let i=1;i<pts.length;i++){const d=Math.hypot(pts[i].x-pts[i-1].x,pts[i].y-pts[i-1].y);segs.push({a:pts[i-1],b:pts[i],d,s:L});L+=d}
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,dur=reduced?0:Math.min(4200,Math.max(600,L*2.4)),t0=performance.now(),walkers=document.getElementById('sWalkers'),v=document.getElementById('shops');
+  shopWalking=true;shopSkip=false;walkers.classList.add('walking');v.classList.add('walking-on');
+  (function step(t){const e=shopSkip||!dur||!L?1:Math.min(1,(t-t0)/dur),q=e<.5?2*e*e:1-Math.pow(-2*e+2,2)/2,at=q*L;
+    const sg=segs.find(g=>at<=g.s+g.d)||segs[segs.length-1];if(sg){const k=sg.d?(at-sg.s)/sg.d:1;placeWalkers(sg.a.x+(sg.b.x-sg.a.x)*Math.min(1,k),sg.a.y+(sg.b.y-sg.a.y)*Math.min(1,k),sg.b.x<sg.a.x)}
+    if(e<1)shopRAF=requestAnimationFrame(step);else{walkers.classList.remove('walking');shopWalking=false;v.classList.remove('walking-on');done&&done()}})(t0)}
 function openShops(){
   if(!bf||bf.status!=='locked')return;closeShopCard();
-  const v=document.getElementById('shops');document.getElementById('shopScene').innerHTML=buildStreet();
-  const all=SHOPS.flatMap(s=>s.outs),done=all.filter(a=>a.st.status==='Done').length;
+  const v=document.getElementById('shops');document.getElementById('shopScene').innerHTML=buildTown();
+  const open=SHOPS.filter(s=>s.open),all=open.flatMap(s=>s.outs),done=all.filter(a=>a.st.status==='Done').length;
   shopTitle.textContent=bf.doc.core.name||'Campaign';
-  shopSub.textContent=SHOPS.length?`${SHOPS.length} shop${SHOPS.length>1?'s':''} making ${all.length} asset${all.length>1?'s':''} · ${done} done. Click a shop to visit it.`:'No outputs are ticked in this brief, so there are no shops yet.';
+  shopSub.textContent=open.length?`${open.length} shop${open.length>1?'s':''} open, making ${all.length} asset${all.length>1?'s':''} · ${done} done. Click a shop to visit it.`:'No outputs are ticked in this brief, so every shop is closed.';
   shopBack.textContent=document.getElementById('brief').classList.contains('on')?'← Back to the brief':'← Back to Town Hall';
+  placeWalkers(HALL_X,ROW1+8,false);
   v.classList.add('on');requestAnimationFrame(()=>v.classList.add('show'));
-  placeWalkers(150);setCam(0);
-  showDirectory();
 }
-function closeShops(){cancelAnimationFrame(shopRAF);closeShopCard();hideDirectory();const v=document.getElementById('shops');v.classList.remove('show');setTimeout(()=>v.classList.remove('on'),450)}
+function closeShops(){cancelAnimationFrame(shopRAF);closeShopCard();const v=document.getElementById('shops');v.classList.remove('show');setTimeout(()=>v.classList.remove('on'),450)}
 function fmtVal(f,v){if(v===null||v===undefined||v===''||(Array.isArray(v)&&!v.length))return null;
   if(f.type==='pick'){const o=bf.options[f.from]||[];return v.map(id=>(o.find(x=>x.id===id)||{}).name||id).join(', ')}
   if(f.type==='pairs')return v.map(r=>r.a+(r.b?' — '+r.b:'')).join('\n');
   if(f.type==='money')return '$'+Number(v).toLocaleString('en-US');
   if(f.type==='date')return fmtDate(v);
   return Array.isArray(v)?v.join('\n'):String(v)}
-function closeShopCard(){shopOpen=null;document.getElementById('shops').classList.remove('carded');document.querySelectorAll('#shopScene .shop.here').forEach(el=>el.classList.remove('here'))}
-// Themed shops: each building in town makes one kind of asset.
-const SHOP_THEMES=[
-  {id:'gazette',name:'The Gazette',kind:'Newspaper',sub:'Thought leadership and content',color:'#C97A5A',outputs:['blog','pr','social','website']},
-  {id:'barber',name:'The Barbershop',kind:'Barbershop',sub:'Sales enablement: the sales team gets sharpened up here',color:'#3F7A78',outputs:['slides','battlecard','twopager','training']},
-  {id:'trading',name:'Trading Post',kind:'Trading post',sub:'Partner enablement and campaign-in-a-box',color:'#8A5A1E',outputs:['partner_enable','partner_box']},
-  {id:'signs',name:'Sign Maker',kind:'Sign maker',sub:'Ads, landing pages and creative',color:'#618FA4',outputs:['paid','landing','creative']},
-  {id:'counting',name:'Counting House',kind:'Counting house',sub:'Campaign set-up and reporting',color:'#002423',outputs:['marops']},
-  {id:'post',name:'Post Office',kind:'Post office',sub:'Account lists, SDR cadences, nurture and newsletters',color:'#4F6F82',outputs:['accounts','cadence','nurture','followup','newsletter','cust_nurture']},
-  {id:'playhouse',name:'The Playhouse',kind:'Theater',sub:'Webinars and events',color:'#B8664C',outputs:['event','cust_event']},
-  {id:'tavern',name:'The Tavern',kind:'Tavern',sub:'Where the regulars are: customer expansion and stories',color:'#BFA66A',outputs:['expansion','proof']},
-];
-function outInfo(id){for(const g of SPEC.groups){const o=g.outputs.find(x=>x.id===id);if(o)return{g,o}}return null}
-function shopStatus(outs){const ss=outs.map(a=>a.st.status);return ss.every(s=>s==='Done')?'Done':ss.some(s=>s!=='Not started')?'In progress':'Not started'}
-function layoutShops(b){const items=[];let x=600;
-  for(const t of SHOP_THEMES){const outs=t.outputs.map(id=>{const i=outInfo(id);const st=b.doc.outputs[id];return i&&st?.on&&b.doc.groups[i.g.id]?{...i,st}:null}).filter(Boolean);
-    if(!outs.length)continue;items.push({t,x,outs,status:shopStatus(outs)});x+=330}
-  return {items,width:Math.max(1600,x+300)}}
-function decor(id,w,h,c){switch(id){
-  case 'gazette':return `<g transform="translate(${w-6} ${-h+96})"><rect x="0" y="0" width="74" height="54" fill="#FFFFFF" stroke="#090F12" stroke-width="2.5" transform="rotate(6)"/>
-      <rect x="8" y="9" width="58" height="8" fill="#090F12" transform="rotate(6)"/><g transform="rotate(6)" fill="#9AA6AC"><rect x="8" y="22" width="26" height="4"/><rect x="8" y="30" width="26" height="4"/><rect x="8" y="38" width="26" height="4"/><rect x="40" y="22" width="26" height="20"/></g></g>
-      <text x="${w/2}" y="${-h-24}" text-anchor="middle" font-size="12" font-weight="800" letter-spacing="3" fill="${c}">EXTRA · EXTRA</text>`;
-  case 'barber':return `<g transform="translate(${w+16} -20)"><rect x="-9" y="-128" width="18" height="128" fill="#FFFFFF" stroke="#090F12" stroke-width="2.5"/>
-      ${[0,1,2,3,4,5,6].map(k=>`<path d="M-9 ${-120+k*18} L9 ${-132+k*18} L9 ${-124+k*18} L-9 ${-112+k*18}Z" fill="${k%2?'#B8664C':'#618FA4'}"/>`).join('')}
-      <circle cy="-136" r="11" fill="#BFA66A" stroke="#090F12" stroke-width="2.5"/><rect x="-12" y="-4" width="24" height="8" fill="#090F12"/></g>`;
-  case 'trading':return `<g transform="translate(-34 0)">${[[0,-34],[34,-34],[16,-68]].map(([x,y])=>`<g transform="translate(${x} ${y})"><rect width="34" height="34" fill="#C9A06A" stroke="#090F12" stroke-width="2.5"/><path d="M0 0 L34 34 M34 0 L0 34" stroke="#090F12" stroke-width="1.5"/></g>`).join('')}</g>`;
-  case 'signs':return `<g transform="translate(${w+6} ${-h+60})"><rect x="0" y="-4" width="46" height="6" fill="#090F12"/><path d="M8 2 v14 M40 2 v14" stroke="#090F12" stroke-width="2"/>
-      <path d="M-4 16 h52 l12 22 l-12 22 h-52 z" fill="#FFFFFF" stroke="#090F12" stroke-width="2.5"/><text x="20" y="43" text-anchor="middle" font-size="12" font-weight="800" fill="${c}">ADS</text></g>
-      <g transform="translate(-30 0)"><rect x="0" y="-26" width="22" height="26" fill="#C97A5A" stroke="#090F12" stroke-width="2"/><rect x="0" y="-30" width="22" height="6" fill="#090F12"/><path d="M4 -26 q4 10 0 18" stroke="#FFFFFF" stroke-width="3" fill="none"/></g>`;
-  case 'counting':return `${[18,w-18].map(x=>`<rect x="${x-9}" y="${-h+70}" width="18" height="${h-70}" fill="#F4F4F0" stroke="#090F12" stroke-width="2.5"/>`).join('')}
-      <polygon points="-10,${-h-16} ${w/2},${-h-60} ${w+10},${-h-16}" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/><circle cx="${w/2}" cy="${-h-32}" r="9" fill="${c}"/>`;
-  case 'post':return `<g transform="translate(${w+26} 0)"><rect x="-14" y="-52" width="28" height="44" rx="12" fill="#618FA4" stroke="#090F12" stroke-width="2.5"/><rect x="-9" y="-40" width="18" height="4" fill="#090F12"/><rect x="-3" y="-8" width="6" height="8" fill="#090F12"/></g>
-      <g transform="translate(${w-16} ${-h-16})"><rect x="-2" y="-70" width="4" height="70" fill="#090F12"/><path d="M2 -68 h36 v22 h-36z" fill="${c}" stroke="#090F12" stroke-width="2"/></g>`;
-  case 'playhouse':return `<g transform="translate(-8 ${-h+76})"><rect width="${w+16}" height="34" fill="#090F12"/>${[...Array(12)].map((_,k)=>`<circle cx="${10+k*(w-4)/11}" cy="5" r="3.2" fill="#BFA66A"/><circle cx="${10+k*(w-4)/11}" cy="29" r="3.2" fill="#BFA66A"/>`).join('')}
-      <text x="${(w+16)/2}" y="22" text-anchor="middle" font-size="11" font-weight="800" letter-spacing="3" fill="#FFFFFF">NOW SHOWING</text></g>
-      <path d="M${w/2} ${-h-50} l7 14 l15 2 l-11 11 l3 15 l-14 -7 l-14 7 l3 -15 l-11 -11 l15 -2z" fill="#BFA66A" stroke="#090F12" stroke-width="2"/>`;
-  case 'tavern':return `<g transform="translate(${w+4} ${-h+70})"><rect x="0" y="-3" width="40" height="6" fill="#090F12"/><path d="M28 3 v8" stroke="#090F12" stroke-width="2"/>
-      <rect x="14" y="11" width="26" height="30" rx="3" fill="#BFA66A" stroke="#090F12" stroke-width="2.5"/><path d="M40 18 q10 0 10 9 q0 9 -10 9" fill="none" stroke="#090F12" stroke-width="2.5"/><rect x="14" y="8" width="26" height="8" rx="4" fill="#FFFFFF" stroke="#090F12" stroke-width="2"/></g>
-      <g transform="translate(-36 0)"><ellipse cx="16" cy="-22" rx="16" ry="22" fill="#9A6A3F" stroke="#090F12" stroke-width="2.5"/><path d="M1 -32 h30 M1 -12 h30" stroke="#090F12" stroke-width="2"/></g>`;
-  default:return ''}}
-function shopSvg(s,i){const t=s.t,c=t.color,w=230,h=250+(i%3)*24,lines=wrapWords(t.name.toUpperCase(),16,2),sc=STATUS_COLOR[s.status]||'#9AA6AC';
-  const n=s.outs.length,done=s.outs.filter(a=>a.st.status==='Done').length;
-  const stripes=[...Array(8)].map((_,k)=>k%2?'':`<rect x="${-4+k*(w+8)/8}" y="-134" width="${(w+8)/8}" height="28" fill="#FFFFFF" opacity=".85"/>`).join('');
-  const scallops=[...Array(8)].map((_,k)=>`<path d="M${-4+k*(w+8)/8} -106 q ${(w+8)/16} 14 ${(w+8)/8} 0" fill="${k%2?c:'#FFFFFF'}" stroke="#090F12" stroke-width="2"/>`).join('');
-  return `<g class="shop" id="shop-${t.id}" transform="translate(${s.x} ${STREET_Y})" onclick="visitShop('${t.id}')" role="button" aria-label="${escs(t.name)}">
-    <rect class="halo" x="-50" y="${-h-80}" width="${w+100}" height="${h+130}" fill="none"/>
-    <rect x="0" y="${-h}" width="${w}" height="${h}" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
-    <rect x="-8" y="${-h-16}" width="${w+16}" height="16" fill="${c}" stroke="#090F12" stroke-width="3"/>
-    <rect x="14" y="${-h+14}" width="${w-28}" height="${16+lines.length*19}" fill="${c}" stroke="#090F12" stroke-width="2.5"/>
-    ${lines.map((l,k)=>`<text x="${w/2}" y="${-h+36+k*19}" text-anchor="middle" font-size="16" font-weight="900" letter-spacing="1.5" fill="#FFFFFF">${escs(l)}</text>`).join('')}
-    ${t.kind.toLowerCase()!==t.name.toLowerCase()?`<text x="${w/2}" y="${-h+48+lines.length*19}" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="1.5" fill="#4F6F82">${escs(t.kind.toUpperCase())}</text>`:''}
-    <rect x="-4" y="-134" width="${w+8}" height="28" fill="${c}" stroke="#090F12" stroke-width="2.5"/>${stripes}${scallops}
-    <rect x="14" y="-92" width="112" height="72" fill="#D2E1EA" stroke="#090F12" stroke-width="2.5"/>
-    <text x="70" y="-62" text-anchor="middle" font-size="22" font-weight="900" fill="#090F12">${n}</text>
-    <text x="70" y="-44" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="1" fill="#4F6F82">${n>1?'ASSETS':'ASSET'} · ${done} DONE</text>
-    <rect x="${w-74}" y="-100" width="56" height="100" fill="#002423" stroke="#090F12" stroke-width="2.5"/><circle cx="${w-28}" cy="-50" r="3" fill="#BFA66A"/>
-    ${decor(t.id,w,h,c)}
-    <g transform="translate(${w/2} 34)"><rect x="-58" y="-11" width="116" height="20" fill="${sc}" stroke="#090F12" stroke-width="2"/>
-      <text y="4" text-anchor="middle" font-size="10" font-weight="800" letter-spacing="1.2" fill="#FFFFFF">${escs(s.status.toUpperCase())}</text></g>
-  </g>`}
-function visitShop(id){if(shopWalking)return;const s=SHOPS.find(k=>k.t.id===id);if(!s)return;closeShopCard();
+function visitShop(id){if(shopWalking)return;const s=SHOPS.find(k=>k.t.id===id);if(!s||!s.open)return;closeShopCard();
   document.querySelectorAll('#shopScene .shop').forEach(el=>el.classList.toggle('here',el.id==='shop-'+id));
-  walkTo(s.x+180,()=>showShopCard(s))}
-function showShopCard(s){shopOpen=s.t.id;
+  walkPath(pathTo(s.t),()=>showShopCard(s))}
+function showShopCard(s){shopOpen=s.t.id;document.getElementById('shops').classList.toggle('card-left',s.t.x>HALL_X);
   shopKicker.textContent=s.t.kind;shopName.textContent=s.t.name;
   shopMeta.innerHTML=`<span style="flex-basis:100%;color:var(--steel-blue)">${escs(s.t.sub)}</span><span><b>Assets</b>${s.outs.length}</span><span><b>Status</b><i style="background:${STATUS_COLOR[s.status]}"></i>${escs(s.status)}</span>`;
   shopBody.innerHTML=s.outs.map(a=>{const st=a.st;
     return `<div class="asset"><h5>${escs(a.o.title)}</h5><div class="ameta"><span><b>Owner</b>${escs(st.owner||'Not set')}</span><span><b>Due</b>${st.due?escs(fmtDate(st.due)):'Not set'}</span><span><b>Status</b><i style="background:${STATUS_COLOR[st.status]}"></i>${escs(st.status)}</span></div>
       <details><summary>What the brief says</summary>${a.o.fields.map(f=>{const v=fmtVal(f,st.values[f.key]);return `<div class="srow"><b>${escs(f.label)}</b><span class="${v?'':'unset'}">${v?escs(v):'Not set'}</span></div>`}).join('')}</details></div>`}).join('');
   document.getElementById('shops').classList.add('carded')}
-function showDirectory(){if(!bf)return;closeShopCard();
-  const zone=s=>`<div class="zone" style="--c:${s.t.color}"><h4><button class="zname" onclick="dirGo('${s.t.id}')">${escs(s.t.name)} →</button></h4><p class="zsub">${escs(s.t.sub)}</p><div class="units">${s.outs.map(a=>`<button class="unit" style="--c:${s.t.color}" onclick="dirGo('${s.t.id}')"><b>${escs(a.o.title)}</b><span>${escs(a.st.owner||'Owner not set')}${a.st.due?' · due '+escs(fmtDate(a.st.due)):''}</span><em><i style="background:${STATUS_COLOR[a.st.status]}"></i>${escs(a.st.status)}</em></button>`).join('')}</div></div>`;
-  const half=Math.ceil(SHOPS.length/2),top=SHOPS.slice(0,half),bottom=SHOPS.slice(half);
-  const wing=list=>list.length?`<div class="wing" style="grid-template-columns:repeat(${list.length},1fr)">${list.map(zone).join('')}</div>`:'';
-  shopDir.innerHTML=`<div class="dir-card"><div class="dir-hd"><div><small>Town map</small><h3>${escs(bf.doc.core.name||'Campaign')}</h3><p>${SHOPS.length?'Every shop in town and what it makes for this campaign. Click a shop to walk there.':'No outputs are ticked in this brief, so there are no shops yet.'}</p></div>
-    <div class="dir-legend">${Object.entries(STATUS_COLOR).map(([k,c])=>`<span><i style="background:${c}"></i>${k}</span>`).join('')}</div></div>
-    <div class="mall">${wing(top)}<div class="corridor"><span class="here">★ You are here · Town Hall</span><span>Market Street</span></div>${wing(bottom)}</div>
-    <div class="dir-ft"><button class="btn out" onclick="hideDirectory()">Walk the street</button></div></div>`;
-  document.getElementById('shops').classList.add('dir-on')}
-
-function panStreet(dx){if(!shopWalking)setCam(shopCam-dx)}
-(function wireStreet(){const sv=document.getElementById('shopScene');let drag=null;
-  sv.addEventListener('wheel',e=>{if(shopWalking)return;e.preventDefault();const r=sv.getBoundingClientRect(),k=1600/Math.max(1,Math.min(r.width,r.height*16/9));panStreet((Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY)*k)},{passive:false});
-  sv.addEventListener('pointerdown',e=>{if(e.target.closest('.shop'))return;drag={x:e.clientX,c:shopCam}});
-  addEventListener('pointermove',e=>{if(!drag||shopWalking)return;const r=sv.getBoundingClientRect();setCam(drag.c+(e.clientX-drag.x)*1600/Math.max(1,r.width))});
-  addEventListener('pointerup',()=>drag=null)})();
+function closeShopCard(){shopOpen=null;document.getElementById('shops').classList.remove('carded');document.querySelectorAll('#shopScene .shop.here').forEach(el=>el.classList.remove('here'))}
 
 // ----- approval overlay (use cases and briefs) -----
 let apprCtx=null,initTouched=false;
@@ -2363,8 +2414,6 @@ async function confirmApprove(){if(!apprCtx)return;const name=apprName.value.tri
     const next=apprCtx.next;apprNext.onclick=()=>{closeApprove();next()};
     apprForm.hidden=true;apprDone.hidden=false;setTimeout(()=>apprNext.focus(),100);
   }catch(e){apprErr.textContent=e.message;apprGo.disabled=false}}
-function hideDirectory(){document.getElementById('shops').classList.remove('dir-on')}
-function dirGo(id){hideDirectory();setTimeout(()=>visitShop(id),250)}
 </script>
 </body>
 </html>
