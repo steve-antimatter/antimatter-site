@@ -4,7 +4,8 @@
 // (LEAPWORK_PASSWORD); the files live under /private/leapwork/ and are only
 // reachable through this script.
 
-import { ensureSchema, saveDoc, loadDoc, listIslands } from './src/usecase/store.js';
+import { ensureSchema, saveDoc, loadDoc, listIslands, createDraft, setStatus, getChat } from './src/usecase/store.js';
+import { chatTurn } from './src/usecase/author.js';
 import { renderHtml } from './src/usecase/render-html.js';
 import governanceSeed from './db/seed/governance-in-testing.json';
 
@@ -68,7 +69,35 @@ async function mazinator(req, env, p) {
     }
     if (p === '/leapwork/api/islands') return json(await listIslands(env.DB));
 
-    let m = p.match(/^\/leapwork\/api\/use-cases\/([a-z0-9-]+)$/);
+    const body = req.method === 'POST' ? await req.json().catch(() => ({})) : null;
+
+    // New draft use case (a new island).
+    if (p === '/leapwork/api/use-cases' && req.method === 'POST') {
+      const id = await createDraft(env.DB, { title: body.title, author: body.author });
+      return json({ id, islands: await listIslands(env.DB) });
+    }
+
+    let m = p.match(/^\/leapwork\/api\/use-cases\/([a-z0-9-]+)\/(chat|status)$/);
+    if (m) {
+      const [, id, what] = m;
+      if (what === 'chat' && req.method === 'GET') {
+        const uc = await env.DB.prepare('SELECT status FROM use_cases WHERE id = ?').bind(id).first();
+        if (!uc) return json({ error: 'Not found' }, 404);
+        return json({ status: uc.status, messages: await getChat(env.DB, id) });
+      }
+      if (what === 'chat' && req.method === 'POST') {
+        const text = String(body.text || '').trim();
+        if (!text) return json({ error: 'Empty message' }, 400);
+        return json(await chatTurn(env, env.DB, id, text, String(body.author || '').slice(0, 80)));
+      }
+      if (what === 'status' && req.method === 'POST') {
+        const version = await setStatus(env.DB, id, String(body.status || ''), String(body.author || ''));
+        return json({ ok: true, status: body.status, version });
+      }
+      return json({ error: 'Method not allowed' }, 405);
+    }
+
+    m = p.match(/^\/leapwork\/api\/use-cases\/([a-z0-9-]+)$/);
     if (m) {
       const doc = await loadDoc(env.DB, m[1]);
       return doc ? json(doc) : json({ error: 'Not found' }, 404);
@@ -77,7 +106,7 @@ async function mazinator(req, env, p) {
     if (m) {
       const doc = await loadDoc(env.DB, m[1]);
       if (!doc) return new Response('Not found', { status: 404 });
-      return noStore(new Response(renderHtml(doc), { headers: { 'content-type': 'text/html; charset=utf-8' } }));
+      return noStore(new Response(renderHtml(doc, { draft: doc.use_case.status !== 'locked' }), { headers: { 'content-type': 'text/html; charset=utf-8' } }));
     }
     return json({ error: 'Not found' }, 404);
   } catch (e) {

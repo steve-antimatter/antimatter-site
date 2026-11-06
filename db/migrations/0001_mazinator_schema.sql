@@ -201,3 +201,14 @@ CREATE VIEW IF NOT EXISTS use_case_tags AS
   SELECT DISTINCT use_case_id, 'product'  AS kind, product_id  AS tag FROM pain_points
   UNION SELECT use_case_id, 'industry', industry_id FROM use_case_industries
   UNION SELECT use_case_id, 'partner',  partner_id  FROM use_case_partners;
+
+-- Authoring chat: what was said about each use case (text only; edits are applied to the tables).
+CREATE TABLE IF NOT EXISTS chat_messages (
+  use_case_id  TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE,
+  seq          INTEGER NOT NULL,
+  role         TEXT NOT NULL,            -- 'user' | 'assistant'
+  content      TEXT NOT NULL,
+  author       TEXT,
+  created_at   TEXT NOT NULL DEFAULT (datetime('now')),
+  PRIMARY KEY (use_case_id, seq)
+);

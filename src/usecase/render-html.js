@@ -13,8 +13,11 @@ const table = (cls, head, rows) =>
 const section = (title, body, cls) => `<section${cls ? ` class="${cls}"` : ''}><h2>${esc(title)}</h2>${body}</section>`;
 
 // Logos: a map of product id -> image URL. Defaults to the embedded ones.
-export function renderHtml(doc, { logos = PRODUCT_LOGOS } = {}) {
+// draft: show 'Not written yet' for empty sections (preview beside the authoring chat).
+export function renderHtml(doc, { logos = PRODUCT_LOGOS, draft = false } = {}) {
   const v = resolve(doc);
+  const TODO = '<p class="note todo">Not written yet.</p>';
+  const or = (empty, html) => (empty ? (draft ? TODO : '') : html);
 
   const pains = v.pain_groups.flatMap((g) => g.items.map((it, i) =>
     `<tr${i === 0 ? ' class="grp"' : ''}><td><strong>${esc(it.title)}</strong> ${esc(it.detail)}</td>` +
@@ -27,28 +30,28 @@ export function renderHtml(doc, { logos = PRODUCT_LOGOS } = {}) {
     `<td>${esc(c.what_they_did)}</td><td class="src">${link(esc(c.source_label), c.source_url)}</td></tr>`).join('');
 
   const body = [
-    section('Problem', `\n<p class="lead">${esc(v.problem)}</p>`),
-    section('Position', `\n<p class="position">${esc(v.position)}</p>`),
-    section('Industries', table('k', ['Industry', 'What drives the need'],
-      v.industries.map((r) => [`<strong>${esc(r.name)}</strong>`, esc(r.drives_need)]))),
-    section('Personas', table('k', ['Persona', 'Role in the deal', 'Cares about'],
+    section('Problem', or(!v.problem, `\n<p class="lead">${esc(v.problem)}</p>`)),
+    section('Position', or(!v.position, `\n<p class="position">${esc(v.position)}</p>`)),
+    section('Industries', or(!v.industries.length, table('k', ['Industry', 'What drives the need'],
+      v.industries.map((r) => [`<strong>${esc(r.name)}</strong>`, esc(r.drives_need)])))),
+    section('Personas', or(!v.personas.length, table('k', ['Persona', 'Role in the deal', 'Cares about'],
       v.personas.map((p) => [`<strong>${esc(p.name)}</strong>${p.descriptor ? ` <span class="muted">${esc(p.descriptor)}</span>` : ''}`,
-        esc(p.role_in_deal), esc(p.cares_about)])), 'tight pb2'),
-    section('Pain points and how we fix them',
+        esc(p.role_in_deal), esc(p.cares_about)]))), 'tight pb2'),
+    section('Pain points and how we fix them', or(!v.pain_groups.length,
       `\n<div class="tw"><table class="pain"><thead><tr><th>Pain point</th><th class="p">Product</th><th>How we fix it</th></tr></thead><tbody>${pains}</tbody></table></div>` +
-      (v.pain_points_note ? `\n<p class="note">${esc(v.pain_points_note)}</p>` : ''), 'tight'),
-    section('Customers, case studies and quotes',
-      `\n<div class="tw"><table><thead><tr><th>Quote and attribution</th><th>What they did</th><th>Source</th></tr></thead><tbody>${customers}</tbody></table></div>\n`),
-    section('Partners and alliances', table('k', ['Partner', 'Program', 'Why it matters here'],
+      (v.pain_points_note ? `\n<p class="note">${esc(v.pain_points_note)}</p>` : '')), 'tight'),
+    section('Customers, case studies and quotes', or(!v.customers.length,
+      `\n<div class="tw"><table><thead><tr><th>Quote and attribution</th><th>What they did</th><th>Source</th></tr></thead><tbody>${customers}</tbody></table></div>\n`)),
+    section('Partners and alliances', or(!v.partners.length, table('k', ['Partner', 'Program', 'Why it matters here'],
       v.partners.map((p) => [p.url ? link(`<strong>${esc(p.name)}</strong>`, p.url) : `<strong>${esc(p.name)}</strong>`,
-        esc(p.program), esc(p.why_it_matters)]))),
-    section('Competitors', table('k', ['Competitor', 'Their pitch', 'How Leapwork wins'],
+        esc(p.program), esc(p.why_it_matters)])))),
+    section('Competitors', or(!v.competitors.length, table('k', ['Competitor', 'Their pitch', 'How Leapwork wins'],
       v.competitors.map((c) => [link(`<strong>${esc(c.name)}</strong>`, c.url) + (c.products ? ` <span class="muted">${esc(c.products)}</span>` : ''),
-        esc(c.their_pitch), esc(c.how_we_win)]))),
-    section('Common objections', table('k obj', ['Objection', 'Suggested response'],
-      v.objections.map((o) => [`“${esc(o.objection)}”`, esc(o.response)]))),
-    section('Sources', `<ul class="src-list">${v.sources.map((g) =>
-      `<li><span>${esc(g.group)}</span>${g.links.map((l) => link(esc(l.title), l.url)).join(' · ')}</li>`).join('')}</ul>`),
+        esc(c.their_pitch), esc(c.how_we_win)])))),
+    section('Common objections', or(!v.objections.length, table('k obj', ['Objection', 'Suggested response'],
+      v.objections.map((o) => [`“${esc(o.objection)}”`, esc(o.response)])))),
+    section('Sources', or(!v.sources.length, `<ul class="src-list">${v.sources.map((g) =>
+      `<li><span>${esc(g.group)}</span>${g.links.map((l) => link(esc(l.title), l.url)).join(' · ')}</li>`).join('')}</ul>`)),
   ].join('\n');
 
   return `<!DOCTYPE html>
@@ -56,7 +59,7 @@ export function renderHtml(doc, { logos = PRODUCT_LOGOS } = {}) {
 <title>${esc(v.title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>${CSS}</style></head><body>
+<style>${CSS}.todo{font-style:italic;color:#9AA6AC}</style></head><body>
 <header>
 ${HEADER_BG}
 <div class="wrap hd">

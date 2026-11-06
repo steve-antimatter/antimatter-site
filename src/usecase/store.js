@@ -47,7 +47,7 @@ export async function saveDoc(db, doc) {
        ON CONFLICT(id) DO UPDATE SET title=excluded.title, author=excluded.author, created_on=excluded.created_on,
          status=excluded.status, problem=excluded.problem, position=excluded.position, pain_points_note=excluded.pain_points_note,
          map_x=excluded.map_x, map_y=excluded.map_y, map_seed=excluded.map_seed, updated_at=excluded.updated_at`,
-    [id, u.title, u.author, u.created_on, u.status || 'draft', u.problem, u.position, u.pain_points_note, m.x, m.y, m.seed]);
+    [id, u.title, u.author, u.created_on, u.status || 'draft', u.problem || '', u.position || '', u.pain_points_note, m.x, m.y, m.seed]);
   (u.industries || []).forEach((r, i) => add('INSERT INTO use_case_industries (use_case_id, industry_id, sort, label, drives_need) VALUES (?, ?, ?, ?, ?)',
     [id, r.industry_id, i + 1, r.label, r.drives_need]));
   (u.personas || []).forEach((r, i) => add('INSERT INTO use_case_personas (use_case_id, persona_id, sort, descriptor, role_in_deal, cares_about) VALUES (?, ?, ?, ?, ?, ?)',
@@ -122,4 +122,54 @@ export async function listIslands(db) {
     return { id: r.id, title: r.title, status: r.status, x: r.map_x, y: r.map_y, seed: r.map_seed, updated_at: r.updated_at,
       products: pick('product').map((p) => ({ id: p, name: products[p] || p })), industries: pick('industry'), partners: pick('partner') };
   });
+}
+
+// ---------- drafts, status, chat ----------
+
+export const slugify = (s) => String(s || '').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+  .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'item';
+
+// Open spots on the chart, clear of the boat's home port, compass and the example islands.
+const SLOTS = [[560, 640], [1060, 540], [330, 520], [1320, 430], [700, 200], [1010, 170], [1180, 760], [420, 690], [560, 230], [1450, 560]];
+
+export async function createDraft(db, { title, author }) {
+  title = String(title || '').trim(); author = String(author || '').trim();
+  if (!title) throw new Error('A use case needs a name.');
+  const base = slugify(title); let id = base, n = 1;
+  while (await db.prepare('SELECT 1 FROM use_cases WHERE id = ?').bind(id).first()) id = `${base}-${++n}`;
+  const taken = (await db.prepare('SELECT map_x, map_y FROM use_cases').all()).results;
+  const free = SLOTS.find(([x, y]) => taken.every((t) => Math.hypot(t.map_x - x, t.map_y - y) > 200)) || SLOTS[taken.length % SLOTS.length];
+  const today = new Date().toISOString().slice(0, 10);
+  await db.prepare(`INSERT INTO use_cases (id, title, author, created_on, status, problem, position, map_x, map_y, map_seed)
+    VALUES (?, ?, ?, ?, 'draft', '', '', ?, ?, ?)`).bind(id, title, author || 'Unknown', today, free[0], free[1], 2 + (taken.length * 3) % 11).run();
+  return id;
+}
+
+// draft -> review -> locked. Locking keeps a snapshot of exactly what was approved.
+export async function setStatus(db, id, status, who) {
+  if (!['draft', 'review', 'locked'].includes(status)) throw new Error('Unknown status');
+  if (status === 'locked') {
+    const doc = await loadDoc(db, id);
+    if (!doc) throw new Error('Not found');
+    const v = await db.prepare('SELECT COALESCE(MAX(version), 0) + 1 AS v FROM use_case_versions WHERE use_case_id = ?').bind(id).first();
+    await db.batch([
+      db.prepare('INSERT INTO use_case_versions (use_case_id, version, snapshot, locked_by) VALUES (?, ?, ?, ?)')
+        .bind(id, v.v, JSON.stringify(doc.use_case), who || 'Unknown'),
+      db.prepare("UPDATE use_cases SET status = 'locked', updated_at = datetime('now') WHERE id = ?").bind(id),
+    ]);
+    return v.v;
+  }
+  await db.prepare("UPDATE use_cases SET status = ?, updated_at = datetime('now') WHERE id = ?").bind(status, id).run();
+  return null;
+}
+
+export async function getChat(db, id) {
+  return (await db.prepare('SELECT seq, role, content, author, created_at FROM chat_messages WHERE use_case_id = ? ORDER BY seq').bind(id).all()).results;
+}
+
+export async function appendChat(db, id, entries) {
+  const last = await db.prepare('SELECT COALESCE(MAX(seq), 0) AS s FROM chat_messages WHERE use_case_id = ?').bind(id).first();
+  let seq = last.s;
+  await db.batch(entries.map((e) => db.prepare('INSERT INTO chat_messages (use_case_id, seq, role, content, author) VALUES (?, ?, ?, ?, ?)')
+    .bind(id, ++seq, e.role, e.content, e.author || null)));
 }

@@ -268,7 +268,26 @@
   #campaign.on{display:block} #campaign.show{opacity:1}
   #usecase{display:none;background:#FFFFFF;z-index:8;opacity:0;transition:opacity .5s}
   #usecase.on{display:block} #usecase.show{opacity:1}
-  #usecase iframe{position:absolute;top:84px;left:0;width:100%;height:calc(100% - 84px);border:0;background:#FFFFFF}
+  #usecase iframe{position:absolute;top:84px;left:400px;width:calc(100% - 400px);height:calc(100% - 84px);border:0;background:#FFFFFF}
+  #usecase .chat{position:absolute;top:84px;left:0;width:400px;bottom:0;display:flex;flex-direction:column;background:var(--mist-light);border-right:1px solid rgba(9,15,18,.1)}
+  #usecase .chat .hd{padding:16px 20px 12px;border-bottom:1px solid rgba(9,15,18,.08);display:flex;justify-content:space-between;align-items:center}
+  #usecase .chat .hd small{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fog-blue)}
+  .uc-pill{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--deep-slate)}
+  .uc-pill.locked{background:#002423;color:#fff;border-color:#002423} .uc-pill.draft{background:#fff} .uc-pill.review{background:var(--accent-gold);color:#fff;border-color:var(--accent-gold)}
+  #ucMsgs{flex:1;overflow:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+  .msg{max-width:92%;padding:10px 12px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+  .msg.user{align-self:flex-end;background:var(--deep-slate);color:#fff}
+  .msg.assistant{align-self:flex-start;background:#fff;border:1px solid rgba(9,15,18,.1);color:var(--deep-slate)}
+  .msg.sys{align-self:center;background:transparent;color:var(--fog-blue);font-size:12.5px;text-align:center}
+  .msg.err{align-self:stretch;background:#FBEBEB;color:#7A2F2F;font-size:13px}
+  .msg .by{display:block;font-size:11px;opacity:.7;margin-bottom:2px}
+  .chat form{padding:12px 16px 16px;border-top:1px solid rgba(9,15,18,.08);display:flex;flex-direction:column;gap:8px;background:var(--mist-light)}
+  .chat textarea{width:100%;resize:none;min-height:64px;max-height:180px;padding:10px 12px;font:14px/1.45 var(--font);border:1px solid rgba(9,15,18,.2);background:#fff}
+  .chat textarea:focus{outline:2px solid var(--atlantic);outline-offset:-1px}
+  .chat .row{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:var(--fog-blue)}
+  .chat .btn:disabled{opacity:.45;cursor:default}
+  .dots::after{content:'';animation:dots 1.2s steps(4) infinite}@keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
+  @media (max-width:900px){#usecase .chat{width:100%;bottom:45%}#usecase iframe{left:0;width:100%;top:55%;height:45%}}
   #usecase .ctop .crumbs{color:var(--light-blue,#9FBFCC)} #usecase .ctop .crumbs b{color:#FFFFFF}
   .chero{background:var(--dark-teal);color:var(--mist);padding:110px 36px 36px;position:relative;overflow:hidden}
   .chero .pat{position:absolute;inset:0;opacity:.05;pointer-events:none}
@@ -592,6 +611,22 @@
 <div class="ribbon" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 </div>
 <div class="toast" id="toast"></div>
+<div class="modal" id="nuModal" onclick="if(event.target===this)closeNewUseCase()">
+  <div class="card form">
+    <button class="x" onclick="closeNewUseCase()" aria-label="Close">×</button>
+    <div class="cap">
+      <small>New use case</small>
+      <h3>Chart a new island</h3>
+      <label class="fl" for="nuName">Use case name</label>
+      <input id="nuName" placeholder="e.g. AI testing for Playwright teams">
+      <label class="fl" for="nuAuthor">Your name</label>
+      <input id="nuAuthor" placeholder="Shown as the author">
+      <p class="help">Claude will interview you section by section and fill in the use case as you go.</p>
+      <div class="err" id="nuErr"></div>
+      <button class="btn go" id="nuGo" onclick="submitNewUseCase()">Start writing</button>
+    </div>
+  </div>
+</div>
 <div class="modal" id="newModal" onclick="if(event.target===this)closeNew()">
   <div class="card form">
     <button class="x" onclick="closeNew()" aria-label="Close">×</button>
@@ -736,9 +771,17 @@
 <div class="view" id="usecase">
   <div class="ctop" style="background:var(--dark-teal);border-bottom-color:rgba(210,225,234,.15)">
     <div class="brandrow" id="ucBrand"><span class="crumbs">Use case · <b id="ucCrumb"></b></span></div>
-    <div style="display:flex;gap:10px"><a class="btn ghost" id="ucOpen" target="_blank" rel="noopener" style="text-decoration:none">Open full page ↗</a><button class="btn ghost" onclick="backFromUseCase()">← Back to chart</button></div>
+    <div style="display:flex;gap:10px"><button class="btn ghost" id="ucLock" onclick="toggleLock()">Lock</button><a class="btn ghost" id="ucOpen" target="_blank" rel="noopener" style="text-decoration:none">Open full page ↗</a><button class="btn ghost" onclick="backFromUseCase()">← Back to chart</button></div>
   </div>
-  <iframe id="ucFrame" title="Use case"></iframe>
+  <aside class="chat" aria-label="Authoring chat">
+    <div class="hd"><small>Write with Claude</small><span class="uc-pill" id="ucPill">Draft</span></div>
+    <div id="ucMsgs" aria-live="polite"></div>
+    <form id="ucForm" onsubmit="event.preventDefault();sendChat()">
+      <textarea id="ucInput" rows="3" placeholder="Tell Claude about this use case, or ask it to draft the next section."></textarea>
+      <div class="row"><span id="ucHint">Enter to send · Shift+Enter for a new line</span><button class="btn" id="ucSend" type="submit">Send</button></div>
+    </form>
+  </aside>
+  <iframe id="ucFrame" title="Use case preview"></iframe>
 </div>
 
 <!-- ================= CAMPAIGN ================= -->
@@ -1065,7 +1108,7 @@ function renderMap(){
       <text class="chip" x="0" y="128" text-anchor="middle" fill="${stKey(c)==='idea'?'#090F12':'#FFFFFF'}">${sn.toUpperCase()}</text>
     </g>`;
   });
-  out+=`<g class="island" id="addIsland" transform="translate(360 220)"><path d="${islandPath(2,52)}" fill="#FFFFFF" fill-opacity=".5" stroke="#090F12" stroke-dasharray="7 6" stroke-width="2.5"/><text x="0" y="10" text-anchor="middle" font-size="34" font-weight="400" fill="#090F12">+</text><text class="sub" x="0" y="82" text-anchor="middle" fill="#090F12">NEW CAMPAIGN</text></g>`;
+  out+=`<g class="island" id="addIsland" transform="translate(360 220)"><path d="${islandPath(2,52)}" fill="#FFFFFF" fill-opacity=".5" stroke="#090F12" stroke-dasharray="7 6" stroke-width="2.5"/><text x="0" y="10" text-anchor="middle" font-size="34" font-weight="400" fill="#090F12">+</text><text class="sub" x="0" y="82" text-anchor="middle" fill="#090F12">NEW USE CASE</text></g>`;
   // compass rose with the logomark
   out+=`<g transform="translate(1480 180)"><circle r="62" fill="#FFFFFF" stroke="#090F12" stroke-width="2.5"/>
         ${[0,45,90,135,180,225,270,315].map(a=>`<polygon points="0,-54 ${a%90?4:7},0 0,0 ${a%90?-4:-7},0" fill="${a%90?'#618FA4':'#090F12'}" transform="rotate(${a})"/>`).join('')}
@@ -1084,7 +1127,7 @@ function renderMap(){
   svg.innerHTML=out;
   svg.querySelectorAll('.island[data-id]').forEach(el=>el.addEventListener('click',()=>sailTo(el.dataset.id)));
   document.getElementById('homePort').addEventListener('click',()=>fromChart('deck'));
-  document.getElementById('addIsland').addEventListener('click',openNew);
+  document.getElementById('addIsland').addEventListener('click',openNewUseCase);
 }
 let sailing=false;
 function sailTo(id){
@@ -1151,14 +1194,60 @@ function openCampaign(id){
   renderFlow();
   const v=document.getElementById('campaign');v.classList.add('on');v.scrollTop=0;requestAnimationFrame(()=>{v.classList.add('show');drawWires()});
 }
-function openUseCase(id){
-  const c=USECASES.find(k=>k.id===id);if(!c)return;
-  const url='/leapwork/use-cases/'+encodeURIComponent(id);
-  ucCrumb.textContent=c.title;ucOpen.href=url;
-  const fr=document.getElementById('ucFrame');if(fr.dataset.src!==url){fr.src=url;fr.dataset.src=url}
+// ----- use case view: chat on the left, live page on the right -----
+let ucCur=null,ucBusy=false;
+const author=()=>{try{return localStorage.getItem('mazinator.author')||''}catch(e){return ''}};
+const setAuthor=v=>{try{localStorage.setItem('mazinator.author',v)}catch(e){}};
+async function api(path,opts){const r=await fetch('/leapwork/api/'+path,Object.assign({credentials:'same-origin',headers:{'content-type':'application/json'}},opts||{}));const d=await r.json().catch(()=>({error:'The server sent an unexpected reply ('+r.status+').'}));if(!r.ok||d.error)throw new Error(d.error||('Request failed ('+r.status+')'));return d}
+function addMsg(role,text,by){const m=document.createElement('div');m.className='msg '+role;if(by){const b=document.createElement('span');b.className='by';b.textContent=by;m.appendChild(b)}m.appendChild(document.createTextNode(text));ucMsgs.appendChild(m);ucMsgs.scrollTop=ucMsgs.scrollHeight;return m}
+function setUcStatus(st){ucCur.status=st;const labels={draft:'Draft',review:'In review',locked:'Locked'};ucPill.textContent=labels[st]||st;ucPill.className='uc-pill '+st;
+  const locked=st==='locked';ucLock.textContent=locked?'Unlock to edit':'Lock';ucInput.disabled=locked||ucBusy;ucSend.disabled=locked||ucBusy;
+  ucInput.placeholder=locked?'Locked. Unlock to make changes.':'Tell Claude about this use case, or ask it to draft the next section.'}
+function reloadPreview(){const fr=document.getElementById('ucFrame');fr.src=ucOpen.href+'?t='+Date.now()}
+async function openUseCase(id){
+  const c=USECASES.find(k=>k.id===id);if(!c)return;ucCur={id,title:c.title,status:c.status};
+  ucCrumb.textContent=c.title;ucOpen.href='/leapwork/use-cases/'+encodeURIComponent(id);
+  ucMsgs.innerHTML='';setUcStatus(c.status);reloadPreview();
   const v=document.getElementById('usecase');v.classList.add('on');requestAnimationFrame(()=>v.classList.add('show'));
+  try{const d=await api('use-cases/'+encodeURIComponent(id)+'/chat');setUcStatus(d.status);
+    d.messages.forEach(m=>addMsg(m.role,m.content,m.role==='user'?m.author:null));
+    if(!d.messages.length)addMsg('sys',d.status==='locked'?'This use case is locked. Unlock it to make changes with Claude.':"Start by describing the use case in your own words: who has the problem, what it costs them, and which Leapwork product fixes it. Claude will draft each section with you and check the facts.");
+  }catch(e){addMsg('err',e.message)}
+  if(ucCur.status!=='locked')setTimeout(()=>ucInput.focus(),400);
 }
-function backFromUseCase(){const v=document.getElementById('usecase');v.classList.remove('show');setTimeout(()=>{v.classList.remove('on');renderMap()},450)}
+async function sendChat(){
+  const text=ucInput.value.trim();if(!text||ucBusy||!ucCur)return;
+  const who=author();
+  ucInput.value='';addMsg('user',text,who||null);ucBusy=true;setUcStatus(ucCur.status);
+  const w=addMsg('sys','Claude is working (searches can take up to a minute)');w.classList.add('dots');
+  try{const d=await api('use-cases/'+encodeURIComponent(ucCur.id)+'/chat',{method:'POST',body:JSON.stringify({text,author:who})});
+    w.remove();addMsg('assistant',d.reply);if(d.changed&&d.changed.length)reloadPreview();
+  }catch(e){w.remove();addMsg('err',e.message);ucInput.value=ucInput.value||text}
+  ucBusy=false;setUcStatus(ucCur.status);ucInput.focus();
+}
+async function toggleLock(){
+  if(!ucCur||ucBusy)return;const next=ucCur.status==='locked'?'draft':'locked';
+  try{await api('use-cases/'+encodeURIComponent(ucCur.id)+'/status',{method:'POST',body:JSON.stringify({status:next,author:author()})});
+    setUcStatus(next);addMsg('sys',next==='locked'?'Locked. This version is saved and can no longer be edited.':'Unlocked. Changes are allowed again.');
+    const c=USECASES.find(k=>k.id===ucCur.id);if(c)c.status=next;reloadPreview();
+  }catch(e){addMsg('err',e.message)}
+}
+document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='ucInput'&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}});
+function backFromUseCase(){const v=document.getElementById('usecase');v.classList.remove('show');setTimeout(()=>{v.classList.remove('on');loadUseCases();renderMap()},450)}
+// ----- new use case -----
+function openNewUseCase(){nuName.value='';nuAuthor.value=author();nuErr.textContent='';nuModal.classList.add('on');setTimeout(()=>nuName.focus(),250)}
+function closeNewUseCase(){nuModal.classList.remove('on')}
+async function submitNewUseCase(){
+  const title=nuName.value.trim(),who=nuAuthor.value.trim();
+  if(!title){nuErr.textContent='Give the use case a name.';nuName.focus();return}
+  if(!who){nuErr.textContent='Add your name so the use case shows its author.';nuAuthor.focus();return}
+  setAuthor(who);nuGo.disabled=true;nuErr.textContent='';
+  try{const d=await api('use-cases',{method:'POST',body:JSON.stringify({title,author:who})});
+    USECASES=d.islands.filter(u=>u.x!=null).map(u=>Object.assign(u,{kind:'usecase',seed:u.seed||9}));
+    closeNewUseCase();renderMap();setTimeout(()=>sailTo(d.id),400);
+  }catch(e){nuErr.textContent=e.message}
+  nuGo.disabled=false;
+}
 function backToChart(){const v=document.getElementById('campaign');v.classList.remove('show');setTimeout(()=>{v.classList.remove('on');renderMap()},450)}
 function nodeHtml(key,name,type,extra){
   const d=cget(cur.id);const a=d.appr[key]||{};
