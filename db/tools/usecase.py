@@ -35,10 +35,11 @@ def statements(doc):
     u = doc["use_case"]
     uid = u["id"]
     yield ("DELETE FROM use_cases WHERE id = ?", [uid])  # cascades to every child table
-    yield ("INSERT INTO use_cases (id, title, author, created_on, status, problem, position, pain_points_note) "
-           "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+    m = u.get("map") or {}
+    yield ("INSERT INTO use_cases (id, title, author, created_on, status, problem, position, pain_points_note, map_x, map_y, map_seed) "
+           "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
            [uid, u["title"], u["author"], u["created_on"], u.get("status", "draft"),
-            u["problem"], u["position"], u.get("pain_points_note")])
+            u["problem"], u["position"], u.get("pain_points_note"), m.get("x"), m.get("y"), m.get("seed")])
     for i, r in enumerate(u.get("industries", []), 1):
         yield ("INSERT INTO use_case_industries (use_case_id, industry_id, sort, label, drives_need) VALUES (?, ?, ?, ?, ?)",
                [uid, r["industry_id"], i, r.get("label"), r["drives_need"]])
@@ -107,6 +108,7 @@ def export(db, uid):
     u = u[0]
     u.pop("updated_at", None)
     out = {k: u[k] for k in ["id", "title", "author", "created_on", "status", "problem", "position"]}
+    out["map"] = {"x": u["map_x"], "y": u["map_y"], "seed": u["map_seed"]}
     out["industries"] = q("SELECT industry_id, label, drives_need FROM use_case_industries WHERE use_case_id=? ORDER BY sort", uid)
     out["personas"] = q("SELECT persona_id, descriptor, role_in_deal, cares_about FROM use_case_personas WHERE use_case_id=? ORDER BY sort", uid)
     pps = q("SELECT id, product_id, title, detail, fix FROM pain_points WHERE use_case_id=? ORDER BY sort", uid)

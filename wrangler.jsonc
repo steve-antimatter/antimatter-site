@@ -3,6 +3,13 @@
   "name": "antimatter-site",
   "compatibility_date": "2026-11-01",
   "main": "worker.js",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mazinator",
+      "database_id": "2e1d077a-b29e-46d2-ac58-08ffd778f12e"
+    }
+  ],
   "assets": {
     "directory": ".",
     "binding": "ASSETS",

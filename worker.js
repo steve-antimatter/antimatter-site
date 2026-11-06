@@ -4,6 +4,10 @@
 // (LEAPWORK_PASSWORD); the files live under /private/leapwork/ and are only
 // reachable through this script.
 
+import { ensureSchema, saveDoc, loadDoc, listIslands } from './src/usecase/store.js';
+import { renderHtml } from './src/usecase/render-html.js';
+import governanceSeed from './db/seed/governance-in-testing.json';
+
 const COOKIE = 'lw_session';
 const MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 
@@ -38,12 +42,53 @@ async function leapwork(req, env, url, p) {
 
   if (!(await authed(req, secret))) return page(login(false), 401);
 
+  if (p.startsWith('/leapwork/api/') || p.startsWith('/leapwork/use-cases/')) return mazinator(req, env, p);
+
   // /leapwork        -> /private/leapwork/  (index.html)
   // /leapwork/x.pdf  -> /private/leapwork/x.pdf
   const rest = p === '/leapwork' ? '/' : p.slice('/leapwork'.length);
   const target = new URL(url.origin + '/private/leapwork' + rest + url.search);
   const res = await env.ASSETS.fetch(new Request(target, { method: 'GET', headers: req.headers }));
   return noStore(res);
+}
+
+// ---- Mazinator data (behind the Leapwork login) ---------------------------
+
+let schemaReady = false;
+
+async function mazinator(req, env, p) {
+  if (!env.DB) return json({ error: 'Database not connected' }, 503);
+  try {
+    if (!schemaReady) { await ensureSchema(env.DB); schemaReady = true; }
+    // One-time (and repeatable) setup: create tables, load Governance in Testing.
+    if (p === '/leapwork/api/setup') {
+      await ensureSchema(env.DB);
+      await saveDoc(env.DB, governanceSeed);
+      return json({ ok: true, islands: await listIslands(env.DB) });
+    }
+    if (p === '/leapwork/api/islands') return json(await listIslands(env.DB));
+
+    let m = p.match(/^\/leapwork\/api\/use-cases\/([a-z0-9-]+)$/);
+    if (m) {
+      const doc = await loadDoc(env.DB, m[1]);
+      return doc ? json(doc) : json({ error: 'Not found' }, 404);
+    }
+    m = p.match(/^\/leapwork\/use-cases\/([a-z0-9-]+)$/);
+    if (m) {
+      const doc = await loadDoc(env.DB, m[1]);
+      if (!doc) return new Response('Not found', { status: 404 });
+      return noStore(new Response(renderHtml(doc), { headers: { 'content-type': 'text/html; charset=utf-8' } }));
+    }
+    return json({ error: 'Not found' }, 404);
+  } catch (e) {
+    return json({ error: String(e && e.message || e) }, 500);
+  }
+}
+
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
+  });
 }
 
 async function protectedAsset(req, env, url, p) {

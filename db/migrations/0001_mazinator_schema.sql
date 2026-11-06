@@ -17,7 +17,7 @@ PRAGMA foreign_keys = ON;
 
 -- ---------- Shared libraries ----------
 
-CREATE TABLE products (
+CREATE TABLE IF NOT EXISTS products (
   id          TEXT PRIMARY KEY,          -- 'flow', 'play', 'go'
   name        TEXT NOT NULL,             -- 'Leapwork Flow'
   summary     TEXT,
@@ -25,18 +25,18 @@ CREATE TABLE products (
   sort        INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE TABLE industries (
+CREATE TABLE IF NOT EXISTS industries (
   id    TEXT PRIMARY KEY,                -- 'pharma'
   name  TEXT NOT NULL
 );
 
-CREATE TABLE personas (
+CREATE TABLE IF NOT EXISTS personas (
   id          TEXT PRIMARY KEY,          -- 'qa-leader'
   name        TEXT NOT NULL,             -- 'QA leader'
   descriptor  TEXT                       -- 'Head of QA or test automation'
 );
 
-CREATE TABLE sources (
+CREATE TABLE IF NOT EXISTS sources (
   id         TEXT PRIMARY KEY,
   title      TEXT NOT NULL,
   url        TEXT NOT NULL UNIQUE,
@@ -44,21 +44,21 @@ CREATE TABLE sources (
   checked_on TEXT                        -- ISO date the claim was last verified
 );
 
-CREATE TABLE partners (
+CREATE TABLE IF NOT EXISTS partners (
   id         TEXT PRIMARY KEY,           -- 'microsoft'
   name       TEXT NOT NULL,
   program    TEXT NOT NULL,              -- the strategic program, same for every use case
   source_id  TEXT REFERENCES sources(id)
 );
 
-CREATE TABLE competitors (
+CREATE TABLE IF NOT EXISTS competitors (
   id         TEXT PRIMARY KEY,           -- 'tricentis'
   name       TEXT NOT NULL,
   products   TEXT,                       -- 'Tosca, qTest, Vera'
   url        TEXT
 );
 
-CREATE TABLE customers (
+CREATE TABLE IF NOT EXISTS customers (
   id           TEXT PRIMARY KEY,         -- 'investec'
   name         TEXT NOT NULL,            -- real name, even when anonymous
   display_name TEXT NOT NULL,            -- what the page shows ('Multinational bank')
@@ -67,7 +67,7 @@ CREATE TABLE customers (
   descriptor   TEXT                      -- 'Private bank', 'Dutch cell and gene therapy center'
 );
 
-CREATE TABLE quotes (
+CREATE TABLE IF NOT EXISTS quotes (
   id             TEXT PRIMARY KEY,
   customer_id    TEXT NOT NULL REFERENCES customers(id),
   text           TEXT NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE quotes (
 
 -- ---------- Use cases ----------
 
-CREATE TABLE use_cases (
+CREATE TABLE IF NOT EXISTS use_cases (
   id                 TEXT PRIMARY KEY,   -- 'governance-in-testing'
   title              TEXT NOT NULL,
   author             TEXT NOT NULL,
@@ -88,10 +88,13 @@ CREATE TABLE use_cases (
   problem            TEXT NOT NULL,
   position           TEXT NOT NULL,
   pain_points_note   TEXT,               -- e.g. the Enterprise Edition line
+  map_x              INTEGER,            -- island position on the chart
+  map_y              INTEGER,
+  map_seed           INTEGER,            -- island outline shape
   updated_at         TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
-CREATE TABLE use_case_industries (
+CREATE TABLE IF NOT EXISTS use_case_industries (
   use_case_id   TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE,
   industry_id   TEXT NOT NULL REFERENCES industries(id),
   sort          INTEGER NOT NULL,
@@ -100,7 +103,7 @@ CREATE TABLE use_case_industries (
   PRIMARY KEY (use_case_id, industry_id)
 );
 
-CREATE TABLE use_case_personas (
+CREATE TABLE IF NOT EXISTS use_case_personas (
   use_case_id   TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE,
   persona_id    TEXT NOT NULL REFERENCES personas(id),
   sort          INTEGER NOT NULL,
@@ -110,7 +113,7 @@ CREATE TABLE use_case_personas (
   PRIMARY KEY (use_case_id, persona_id)
 );
 
-CREATE TABLE pain_points (
+CREATE TABLE IF NOT EXISTS pain_points (
   id            TEXT PRIMARY KEY,
   use_case_id   TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE,
   product_id    TEXT NOT NULL REFERENCES products(id),
@@ -120,24 +123,24 @@ CREATE TABLE pain_points (
   fix           TEXT NOT NULL            -- 'How we fix it'
 );
 -- Template rule: at most three pain points per product per use case.
-CREATE TRIGGER pain_points_max_three BEFORE INSERT ON pain_points
+CREATE TRIGGER IF NOT EXISTS pain_points_max_three BEFORE INSERT ON pain_points
 WHEN (SELECT COUNT(*) FROM pain_points
       WHERE use_case_id = NEW.use_case_id AND product_id = NEW.product_id) >= 3
 BEGIN SELECT RAISE(ABORT, 'max three pain points per product'); END;
 
 -- Who feels each pain point. Empty in v1; ready for brief targeting later.
-CREATE TABLE pain_point_personas (
+CREATE TABLE IF NOT EXISTS pain_point_personas (
   pain_point_id TEXT NOT NULL REFERENCES pain_points(id) ON DELETE CASCADE,
   persona_id    TEXT NOT NULL REFERENCES personas(id),
   PRIMARY KEY (pain_point_id, persona_id)
 );
-CREATE TABLE pain_point_industries (
+CREATE TABLE IF NOT EXISTS pain_point_industries (
   pain_point_id TEXT NOT NULL REFERENCES pain_points(id) ON DELETE CASCADE,
   industry_id   TEXT NOT NULL REFERENCES industries(id),
   PRIMARY KEY (pain_point_id, industry_id)
 );
 
-CREATE TABLE use_case_customers (
+CREATE TABLE IF NOT EXISTS use_case_customers (
   use_case_id    TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE,
   customer_id    TEXT NOT NULL REFERENCES customers(id),
   sort           INTEGER NOT NULL,
@@ -148,7 +151,7 @@ CREATE TABLE use_case_customers (
   PRIMARY KEY (use_case_id, customer_id)
 );
 
-CREATE TABLE use_case_partners (
+CREATE TABLE IF NOT EXISTS use_case_partners (
   use_case_id     TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE,
   partner_id      TEXT NOT NULL REFERENCES partners(id),
   sort            INTEGER NOT NULL,
@@ -156,7 +159,7 @@ CREATE TABLE use_case_partners (
   PRIMARY KEY (use_case_id, partner_id)
 );
 
-CREATE TABLE use_case_competitors (
+CREATE TABLE IF NOT EXISTS use_case_competitors (
   use_case_id    TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE,
   competitor_id  TEXT NOT NULL REFERENCES competitors(id),
   sort           INTEGER NOT NULL,
@@ -166,7 +169,7 @@ CREATE TABLE use_case_competitors (
   PRIMARY KEY (use_case_id, competitor_id)
 );
 
-CREATE TABLE objections (
+CREATE TABLE IF NOT EXISTS objections (
   id           TEXT PRIMARY KEY,
   use_case_id  TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE,
   sort         INTEGER NOT NULL,
@@ -174,7 +177,7 @@ CREATE TABLE objections (
   response     TEXT NOT NULL
 );
 
-CREATE TABLE use_case_sources (
+CREATE TABLE IF NOT EXISTS use_case_sources (
   use_case_id  TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE,
   source_id    TEXT NOT NULL REFERENCES sources(id),
   grp          TEXT NOT NULL,            -- 'Leapwork', 'Customers', 'SOX', ...
@@ -183,7 +186,7 @@ CREATE TABLE use_case_sources (
 );
 
 -- Locked snapshots: the exact record behind a published page/PDF.
-CREATE TABLE use_case_versions (
+CREATE TABLE IF NOT EXISTS use_case_versions (
   use_case_id  TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE,
   version      INTEGER NOT NULL,
   snapshot     TEXT NOT NULL,            -- full use case as JSON
@@ -194,7 +197,7 @@ CREATE TABLE use_case_versions (
 );
 
 -- Map filters: every product, industry and partner a use case touches.
-CREATE VIEW use_case_tags AS
+CREATE VIEW IF NOT EXISTS use_case_tags AS
   SELECT DISTINCT use_case_id, 'product'  AS kind, product_id  AS tag FROM pain_points
   UNION SELECT use_case_id, 'industry', industry_id FROM use_case_industries
   UNION SELECT use_case_id, 'partner',  partner_id  FROM use_case_partners;

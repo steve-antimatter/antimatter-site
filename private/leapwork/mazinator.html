@@ -266,6 +266,10 @@
   /* ================= CAMPAIGN ================= */
   #campaign{display:none;background:var(--mist-light);z-index:7;opacity:0;transition:opacity .5s;overflow:auto}
   #campaign.on{display:block} #campaign.show{opacity:1}
+  #usecase{display:none;background:#FFFFFF;z-index:8;opacity:0;transition:opacity .5s}
+  #usecase.on{display:block} #usecase.show{opacity:1}
+  #usecase iframe{position:absolute;top:84px;left:0;width:100%;height:calc(100% - 84px);border:0;background:#FFFFFF}
+  #usecase .ctop .crumbs{color:var(--light-blue,#9FBFCC)} #usecase .ctop .crumbs b{color:#FFFFFF}
   .chero{background:var(--dark-teal);color:var(--mist);padding:110px 36px 36px;position:relative;overflow:hidden}
   .chero .pat{position:absolute;inset:0;opacity:.05;pointer-events:none}
   .chero small{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--atlantic);position:relative}
@@ -724,8 +728,17 @@
       <button class="btn light" onclick="fromChart('deck')">← Back on deck</button>
     </div>
   </div>
-  <div class="chead"><h2>Campaign chart</h2><p>Every campaign is an island. Click one and the Mazinator sails over.</p></div>
-  <div class="legend"><i style="background:var(--fog-blue)"></i><span>Generating</span><i style="background:var(--mist);border:1px solid var(--atlantic)"></i><span>Draft</span><i style="background:var(--atlantic)"></i><span>In progress</span><i style="background:var(--accent-gold)"></i><span>In review</span><i style="background:var(--harbor-teal)"></i><span>Approved</span></div>
+  <div class="chead"><h2>Campaign chart</h2><p>Use cases and campaigns are islands. Click one and the Mazinator sails over.</p></div>
+  <div class="legend"><i style="background:var(--fog-blue)"></i><span>Generating</span><i style="background:var(--mist);border:1px solid var(--atlantic)"></i><span>Draft</span><i style="background:var(--atlantic)"></i><span>In progress</span><i style="background:var(--accent-gold)"></i><span>In review</span><i style="background:var(--harbor-teal)"></i><span>Approved</span><i style="background:#002423"></i><span>Locked use case</span></div>
+</div>
+
+<!-- ================= USE CASE ================= -->
+<div class="view" id="usecase">
+  <div class="ctop" style="background:var(--dark-teal);border-bottom-color:rgba(210,225,234,.15)">
+    <div class="brandrow" id="ucBrand"><span class="crumbs">Use case · <b id="ucCrumb"></b></span></div>
+    <div style="display:flex;gap:10px"><a class="btn ghost" id="ucOpen" target="_blank" rel="noopener" style="text-decoration:none">Open full page ↗</a><button class="btn ghost" onclick="backFromUseCase()">← Back to chart</button></div>
+  </div>
+  <iframe id="ucFrame" title="Use case"></iframe>
 </div>
 
 <!-- ================= CAMPAIGN ================= -->
@@ -976,7 +989,20 @@ function cget(id){return cdata[id]||(cdata[id]={appr:{},final:false})}
 
 // island outline: blobby polygon from a seed
 function fmtDate(d){if(!d)return 'date TBD';const dt=new Date(d+'T12:00:00');return isNaN(dt)?d:dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}
-function subline(c){return 'Campaign · '+fmtDate(c.launch)}
+function subline(c){return c.kind==='usecase'?'Use case · '+(c.products||[]).map(p=>p.name.replace(/^Leapwork /,'')).join(' · '):'Campaign · '+fmtDate(c.launch)}
+// Use cases come from the Mazinator database; campaigns (for now) from this browser.
+STATUS.locked=['Locked','#002423'];
+let USECASES=[];
+function stKey(c){return c.kind==='usecase'?({locked:'locked',review:'review',draft:'idea'}[c.status]||'idea'):c.status}
+function allIslands(){return USECASES.concat(CAMPAIGNS)}
+async function loadUseCases(){
+  try{const r=await fetch('/leapwork/api/islands',{credentials:'same-origin'});if(!r.ok)return;
+    USECASES=(await r.json()).filter(u=>u.x!=null&&u.y!=null).map(u=>Object.assign(u,{kind:'usecase',seed:u.seed||9}));
+    if(document.getElementById('chart').classList.contains('on'))renderMap();
+  }catch(e){}
+}
+loadUseCases();
+document.addEventListener('DOMContentLoaded',()=>{const img=document.querySelector('#campaign .brandrow img');if(img)document.getElementById('ucBrand').prepend(img.cloneNode(true))});
 function islandPath(seed,r=70){
   let d='';const n=14;
   for(let i=0;i<n;i++){const a=i/n*Math.PI*2;const k=1+.22*Math.sin(a*3+seed)+.14*Math.cos(a*5+seed*1.7)+.08*Math.sin(a*7+seed*.3);
@@ -1016,8 +1042,8 @@ function renderMap(){
       <rect x="210" y="160" width="130" height="12" fill="#090F12"/>${[0,1,2,3,4].map(i=>`<rect x="${218+i*28}" y="172" width="5" height="16" fill="#090F12"/>`).join('')}
       <text x="12" y="210" font-size="11" font-weight="700" letter-spacing="2" fill="#4F6F82">NEWPORT · HOME PORT</text><text x="12" y="226" font-size="9" font-weight="600" letter-spacing="2" fill="#618FA4">← BACK TO THE SHIP</text></g>`;
   // islands
-  CAMPAIGNS.forEach(c=>{
-    const p=islandPath(c.seed),[sn,sc]=STATUS[c.status];const sw=Math.max(176,Math.max(c.title.length*9.6,subline(c).length*7.4)+36);
+  allIslands().forEach(c=>{
+    const p=islandPath(c.seed),[sn,sc]=STATUS[stKey(c)];const sw=Math.max(176,Math.max(c.title.length*9.6,subline(c).length*7.4)+36);
     out+=`<g class="island" data-id="${c.id}" transform="translate(${c.x} ${c.y})">
       <path d="${p}" fill="none" stroke="#FFFFFF" stroke-width="3" transform="scale(1.3)"/>
       <path d="${p}" fill="none" stroke="#FFFFFF" stroke-width="3" transform="scale(1.15)"/>
@@ -1036,7 +1062,7 @@ function renderMap(){
       <text class="lbl" x="0" y="82" text-anchor="middle">${esc(c.title)}</text>
       <text class="sub" x="0" y="99" text-anchor="middle">${esc(subline(c)).toUpperCase()}</text>
       <rect x="-42" y="114" width="84" height="20" fill="${sc}" stroke="#090F12" stroke-width="2"/>
-      <text class="chip" x="0" y="128" text-anchor="middle" fill="${c.status==='idea'?'#090F12':'#FFFFFF'}">${sn.toUpperCase()}</text>
+      <text class="chip" x="0" y="128" text-anchor="middle" fill="${stKey(c)==='idea'?'#090F12':'#FFFFFF'}">${sn.toUpperCase()}</text>
     </g>`;
   });
   out+=`<g class="island" id="addIsland" transform="translate(360 220)"><path d="${islandPath(2,52)}" fill="#FFFFFF" fill-opacity=".5" stroke="#090F12" stroke-dasharray="7 6" stroke-width="2.5"/><text x="0" y="10" text-anchor="middle" font-size="34" font-weight="400" fill="#090F12">+</text><text class="sub" x="0" y="82" text-anchor="middle" fill="#090F12">NEW CAMPAIGN</text></g>`;
@@ -1062,7 +1088,7 @@ function renderMap(){
 }
 let sailing=false;
 function sailTo(id){
-  if(sailing)return;const c=CAMPAIGNS.find(k=>k.id===id);if(!c)return;
+  if(sailing)return;const c=allIslands().find(k=>k.id===id);if(!c)return;
   // dock point: just off the island on the side facing the boat
   const dx=c.x-boat.x,dy=c.y-boat.y,L=Math.hypot(dx,dy);const ux=dx/L,uy=dy/L;
   const tx=c.x-ux*118,ty=c.y-uy*118;
@@ -1077,7 +1103,7 @@ function sailTo(id){
     const bob=Math.sin(t*22)*1.5;
     m.setAttribute('transform',`translate(${x} ${y}) rotate(${ang+bob})`);
     w.setAttribute('d',`M${sx} ${sy} L${x} ${y}`);
-    if(t<1)requestAnimationFrame(step);else{boat.x=x;boat.y=y;boat.ang=ang;sailing=false;setTimeout(()=>openCampaign(id),350)}
+    if(t<1)requestAnimationFrame(step);else{boat.x=x;boat.y=y;boat.ang=ang;sailing=false;setTimeout(()=>c.kind==='usecase'?openUseCase(id):openCampaign(id),350)}
   }
   requestAnimationFrame(step);
 }
@@ -1125,6 +1151,14 @@ function openCampaign(id){
   renderFlow();
   const v=document.getElementById('campaign');v.classList.add('on');v.scrollTop=0;requestAnimationFrame(()=>{v.classList.add('show');drawWires()});
 }
+function openUseCase(id){
+  const c=USECASES.find(k=>k.id===id);if(!c)return;
+  const url='/leapwork/use-cases/'+encodeURIComponent(id);
+  ucCrumb.textContent=c.title;ucOpen.href=url;
+  const fr=document.getElementById('ucFrame');if(fr.dataset.src!==url){fr.src=url;fr.dataset.src=url}
+  const v=document.getElementById('usecase');v.classList.add('on');requestAnimationFrame(()=>v.classList.add('show'));
+}
+function backFromUseCase(){const v=document.getElementById('usecase');v.classList.remove('show');setTimeout(()=>{v.classList.remove('on');renderMap()},450)}
 function backToChart(){const v=document.getElementById('campaign');v.classList.remove('show');setTimeout(()=>{v.classList.remove('on');renderMap()},450)}
 function nodeHtml(key,name,type,extra){
   const d=cget(cur.id);const a=d.appr[key]||{};
