@@ -1,4 +1,4 @@
-// Generated from db/migrations/0001_mazinator_schema.sql by db/tools/schema_js.py. Do not edit.
+// Generated from db/migrations/*.sql by db/tools/schema_js.py. Do not edit.
 export const SCHEMA = [
  "CREATE TABLE IF NOT EXISTS products ( id TEXT PRIMARY KEY, name TEXT NOT NULL, summary TEXT, logo_asset TEXT, sort INTEGER NOT NULL DEFAULT 0 )",
  "CREATE TABLE IF NOT EXISTS industries ( id TEXT PRIMARY KEY, name TEXT NOT NULL )",
@@ -22,5 +22,9 @@ export const SCHEMA = [
  "CREATE TABLE IF NOT EXISTS use_case_sources ( use_case_id TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE, source_id TEXT NOT NULL REFERENCES sources(id), grp TEXT NOT NULL, sort INTEGER NOT NULL, PRIMARY KEY (use_case_id, source_id) )",
  "CREATE TABLE IF NOT EXISTS use_case_versions ( use_case_id TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE, version INTEGER NOT NULL, snapshot TEXT NOT NULL, locked_by TEXT NOT NULL, locked_at TEXT NOT NULL DEFAULT (datetime('now')), note TEXT, PRIMARY KEY (use_case_id, version) )",
  "CREATE VIEW IF NOT EXISTS use_case_tags AS SELECT DISTINCT use_case_id, 'product' AS kind, product_id AS tag FROM pain_points UNION SELECT use_case_id, 'industry', industry_id FROM use_case_industries UNION SELECT use_case_id, 'partner', partner_id FROM use_case_partners",
- "CREATE TABLE IF NOT EXISTS chat_messages ( use_case_id TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE, seq INTEGER NOT NULL, role TEXT NOT NULL, content TEXT NOT NULL, author TEXT, created_at TEXT NOT NULL DEFAULT (datetime('now')), PRIMARY KEY (use_case_id, seq) )"
+ "CREATE TABLE IF NOT EXISTS chat_messages ( use_case_id TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE, seq INTEGER NOT NULL, role TEXT NOT NULL, content TEXT NOT NULL, author TEXT, created_at TEXT NOT NULL DEFAULT (datetime('now')), PRIMARY KEY (use_case_id, seq) )",
+ "CREATE TABLE IF NOT EXISTS campaign_briefs ( id TEXT PRIMARY KEY, use_case_id TEXT NOT NULL REFERENCES use_cases(id) ON DELETE CASCADE, use_case_version INTEGER, title TEXT NOT NULL, author TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'draft', doc TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT (datetime('now')), updated_at TEXT NOT NULL DEFAULT (datetime('now')) )",
+ "CREATE INDEX IF NOT EXISTS campaign_briefs_use_case ON campaign_briefs(use_case_id)",
+ "CREATE TABLE IF NOT EXISTS campaign_brief_versions ( brief_id TEXT NOT NULL REFERENCES campaign_briefs(id) ON DELETE CASCADE, version INTEGER NOT NULL, snapshot TEXT NOT NULL, locked_by TEXT NOT NULL, locked_at TEXT NOT NULL DEFAULT (datetime('now')), PRIMARY KEY (brief_id, version) )",
+ "CREATE TABLE IF NOT EXISTS brief_chat ( brief_id TEXT NOT NULL REFERENCES campaign_briefs(id) ON DELETE CASCADE, seq INTEGER NOT NULL, role TEXT NOT NULL, content TEXT NOT NULL, author TEXT, created_at TEXT NOT NULL DEFAULT (datetime('now')), PRIMARY KEY (brief_id, seq) )"
 ];

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Regenerate src/usecase/schema.js from db/migrations/0001_mazinator_schema.sql."""
+"""Regenerate src/usecase/schema.js from every file in db/migrations (in name order)."""
 import json, re, pathlib
 root = pathlib.Path(__file__).resolve().parents[2]
-s = (root / 'db/migrations/0001_mazinator_schema.sql').read_text()
+s = '\n'.join(f.read_text() for f in sorted((root / 'db/migrations').glob('*.sql')))
 body = re.sub(r'--[^\n]*', '', s)
 stmts, buf = [], ''
 for part in body.split(';'):
@@ -15,6 +15,6 @@ for part in body.split(';'):
         stmts.append(t)
     buf = ''
 (root / 'src/usecase/schema.js').write_text(
-    '// Generated from db/migrations/0001_mazinator_schema.sql by db/tools/schema_js.py. Do not edit.\n'
+    '// Generated from db/migrations/*.sql by db/tools/schema_js.py. Do not edit.\n'
     'export const SCHEMA = ' + json.dumps(stmts, indent=1) + ';\n')
 print(len(stmts), 'statements')

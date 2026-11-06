@@ -483,6 +483,87 @@
   .links input{flex:1;padding:10px 12px;border:1px solid rgba(9,15,18,.2);font:14px var(--font)}
   .links a{display:block;padding:10px 12px;background:var(--mist-light);font-size:13px;color:var(--deep-slate);text-decoration:none;margin-bottom:6px}
   .links a:hover{background:var(--mist)}
+  /* ---------- campaign brief (Town Hall) ---------- */
+  .th-list{margin:0 0 14px;max-height:200px;overflow:auto;display:flex;flex-direction:column;gap:6px}
+  .th-list small{margin-bottom:2px}
+  .th-brief{text-align:left;background:#fff;border:1px solid rgba(9,15,18,.25);padding:9px 12px;cursor:pointer;font:inherit}
+  .th-brief:hover{border-color:var(--harbor-teal);background:#F2F7F6}
+  .th-brief b{display:block;font-size:14px;color:var(--deep-slate)} .th-brief span{font-size:12.5px;color:var(--fog-blue)}
+  .th-name{display:flex;gap:8px;align-items:center;margin:0 0 12px;font-size:13px;color:var(--steel-blue)}
+  .th-name[hidden]{display:none}
+  .th-name input{flex:1;padding:8px 10px;font:14px var(--font);border:1px solid rgba(9,15,18,.3)}
+  #brief{display:none;background:#FFFFFF;z-index:10;opacity:0;transition:opacity .5s}
+  #brief.on{display:block} #brief.show{opacity:1}
+  #brief .ctop .crumbs{color:#9FBFCC} #brief .ctop .crumbs b{color:#FFFFFF}
+  #brief .chat{position:absolute;top:84px;left:0;width:400px;bottom:0;display:flex;flex-direction:column;background:var(--mist-light);border-right:1px solid rgba(9,15,18,.1)}
+  #brief .chat .hd{padding:16px 20px 12px;border-bottom:1px solid rgba(9,15,18,.08);display:flex;justify-content:space-between;align-items:center}
+  #brief .chat .hd small{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fog-blue)}
+  #bfMsgs{flex:1;overflow:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+  #brief .uc-bar{left:400px}
+  #bfMain{position:absolute;top:84px;left:400px;right:0;bottom:76px;overflow:auto;padding:28px 40px 60px;background:#F7F9FA}
+  #bfMain>*{max-width:980px;margin-left:auto;margin-right:auto}
+  #bfMain.busy::before{content:'Claude is drafting the brief…';position:sticky;top:-28px;display:block;margin:-28px auto 16px;padding:10px 14px;background:var(--dark-teal);color:#fff;font-size:13px;z-index:2;max-width:980px}
+  .bf-loading{color:var(--fog-blue)}
+  .bf-uc{display:flex;gap:24px;justify-content:space-between;align-items:flex-start;background:#fff;border:1px solid rgba(9,15,18,.12);border-left:4px solid var(--harbor-teal);padding:20px 24px;margin-bottom:18px}
+  .bf-uc small,.bf-sec .tag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--fog-blue)}
+  .bf-uc h2{font-size:22px;margin:4px 0 8px;color:var(--deep-slate)}
+  .bf-uc p{font-size:14px;line-height:1.55;color:var(--steel-blue);margin:0 0 6px} .bf-uc p.pos{color:var(--deep-slate);font-weight:600}
+  .bf-uc .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px} .bf-uc .tags span{font-size:12px;padding:3px 8px;background:var(--mist-light);color:var(--steel-blue)}
+  .bf-uc .tags span.p{background:#E3EFEC;color:#1F4F4D;font-weight:600}
+  .bf-uc .btn{flex:none}
+  .bf-describe{background:var(--dark-teal);color:#fff;padding:22px 24px;margin-bottom:18px}
+  .bf-describe h3{font-size:18px;margin:0 0 6px} .bf-describe p{font-size:14px;line-height:1.5;color:#D2E1EA;margin:0 0 12px}
+  .bf-describe textarea{width:100%;min-height:110px;padding:12px 14px;font:15px/1.5 var(--font);border:0;resize:vertical;margin-bottom:12px}
+  .bf-describe .btn{background:#C97A5A} .bf-describe .btn:hover{background:#B8664C}
+  .bf-sec{background:#fff;border:1px solid rgba(9,15,18,.12);margin-bottom:18px}
+  .bf-sec>h3{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--dark-teal);margin:0;padding:11px 20px;display:flex;align-items:center;gap:10px}
+  .bf-sec>h3::before{content:'';width:7px;height:7px;border-radius:50%;background:#C97A5A;flex:none}
+  .bf-sec>h3 .tag{color:#9FBFCC;letter-spacing:.14em}
+  .bf-sec .sub{font-size:13.5px;color:var(--fog-blue);margin:14px 20px 0}
+  .bf-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;padding:18px 20px 20px}
+  .fl{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--steel-blue)}
+  .fl.wide{grid-column:1/-1}
+  .fl .hint{font-weight:400;letter-spacing:0;color:var(--fog-blue);font-size:12px}
+  .fl .ai{font-weight:600;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9A5A3F;margin-left:6px}
+  .fl input,.fl textarea,.fl select{font:14px/1.45 var(--font);padding:8px 10px;border:1px solid rgba(9,15,18,.2);background:#fff;width:100%}
+  .fl textarea{resize:vertical;min-height:62px}
+  .fl input:focus,.fl textarea:focus,.fl select:focus{outline:2px solid var(--atlantic);outline-offset:-1px}
+  .fl ::placeholder{color:#9AA9B3;opacity:1;font-style:italic}
+  .fl .money{position:relative} .fl .money::before{content:'$';position:absolute;left:10px;top:8px;font-size:14px;color:var(--fog-blue)} .fl .money input{padding-left:22px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  #bfMain .chip{font:13px var(--font);letter-spacing:0;text-transform:none;padding:6px 10px;border:1px solid rgba(9,15,18,.25);background:#fff;color:var(--steel-blue);cursor:pointer}
+  #bfMain .chip.on{background:var(--harbor-teal);border-color:var(--harbor-teal);color:#fff}
+  .chips .none{font-size:13px;color:#9AA9B3;font-style:italic;font-weight:400}
+  .pairs{display:grid;grid-template-columns:1fr 1.4fr;gap:6px 8px} .pairs .ph{font-size:11px;font-weight:600;color:var(--fog-blue);letter-spacing:.04em}
+  .bf-menu{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:16px 20px 20px}
+  .mg{border:1px solid rgba(9,15,18,.15);padding:12px 12px 10px;background:#fff}
+  .mg.on{border-color:var(--harbor-teal);background:#F2F7F6;box-shadow:inset 0 3px 0 var(--harbor-teal)}
+  .mg .gh{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;font-weight:700;color:var(--deep-slate);margin-bottom:8px;cursor:pointer;line-height:1.3}
+  .mg .mo{display:flex;gap:7px;align-items:flex-start;font-size:12.5px;color:var(--steel-blue);margin:6px 0;cursor:pointer;line-height:1.3}
+  .mg .mo i{display:block;font-style:normal;font-size:11px;color:#8697A3}
+  .mg input[type=checkbox]{margin-top:2px;accent-color:var(--harbor-teal);flex:none}
+  .mg:not(.on) .mo{opacity:.6}
+  .bf-out{border-top:1px solid rgba(9,15,18,.1)}
+  .bf-out:first-of-type{border-top:0}
+  .bf-out .oh{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:16px 20px 0;flex-wrap:wrap}
+  .bf-out h4{font-size:16px;color:var(--deep-slate);margin:0}
+  .bf-out .meta{display:flex;gap:10px}
+  .bf-out .meta label{display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:600;color:var(--fog-blue);letter-spacing:.04em}
+  .bf-out .meta input,.bf-out .meta select{font:13px var(--font);padding:5px 8px;border:1px solid rgba(9,15,18,.2);background:#fff}
+  .bf-out .meta input[data-k=owner]{width:170px}
+  .bf-empty{padding:16px 20px;color:var(--fog-blue);font-size:14px}
+  #bfMain.ro input,#bfMain.ro textarea,#bfMain.ro select{background:#F4F6F7;color:var(--steel-blue)}
+  #bfMain.ro .chip:not(.on){display:none} #bfMain.ro .chip{cursor:default}
+  #bfMain.ro .mg:not(.on){display:none} #bfMain.ro .bf-menu{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+  .bf-saved{font-size:12px;color:var(--fog-blue);margin-left:10px;font-weight:400;letter-spacing:0;text-transform:none}
+  .bf-drawer{position:fixed;top:0;right:0;bottom:0;width:min(900px,72vw);background:#fff;z-index:30;box-shadow:-10px 0 30px rgba(9,15,18,.2);transform:translateX(105%);transition:transform .35s;display:flex;flex-direction:column}
+  .bf-drawer.on{transform:none}
+  .bf-drawer .hd{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--dark-teal);color:#fff;gap:12px}
+  .bf-drawer .hd b{font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+  .bf-drawer .hd a{color:#D2E1EA;font-size:13px;margin-left:auto}
+  .bf-drawer iframe{flex:1;border:0;width:100%}
+  @media (max-width:1200px){.bf-menu{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:900px){#brief .chat{width:100%;bottom:55%}#bfMain{left:0;top:45%}#brief .uc-bar{left:0}.bf-grid{grid-template-columns:1fr}.bf-menu{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -916,8 +997,33 @@
     <small id="thKicker">Town Hall</small>
     <h3 id="thTitle">Welcome to Town Hall.</h3>
     <p id="thText"></p>
+    <div class="th-list" id="thBriefs"></div>
+    <div class="th-name" id="thNameRow" hidden><span>Your name</span><input id="thName" autocomplete="name" placeholder="So the brief shows its author"></div>
     <div class="acts"><button class="btn teal" id="thGo" onclick="startBrief()">Start the campaign brief</button><button class="btn out" onclick="backToDock()">Back to the dock</button></div>
     <p class="later" id="thLater"></p>
+  </div>
+</div>
+
+<!-- ================= CAMPAIGN BRIEF (TOWN HALL) ================= -->
+<div class="view" id="brief">
+  <div class="ctop" style="background:var(--dark-teal);border-bottom-color:rgba(210,225,234,.15)">
+    <div class="brandrow"><span class="crumbs">Town Hall · <span id="bfUcName"></span> · <b id="bfCrumb">Campaign brief</b></span></div>
+    <div style="display:flex;gap:10px"><button class="btn ghost" onclick="backToTown()">← Back to Town Hall</button></div>
+  </div>
+  <aside class="chat" aria-label="Brief chat">
+    <div class="hd"><small>Write with Claude</small><span class="uc-pill" id="bfPill">Draft</span></div>
+    <div class="uc-prog"><span id="bfProgText">Checking the brief…</span><div class="bar"><i id="bfProgBar" style="width:0"></i></div></div>
+    <div id="bfMsgs" aria-live="polite"></div>
+    <form onsubmit="event.preventDefault();sendBrief()">
+      <textarea id="bfInput" rows="3" placeholder="Describe the campaign, or ask Claude to change something."></textarea>
+      <div class="row"><span>Enter to send · Shift+Enter for a new line</span><button class="btn" id="bfSend" type="submit">Send</button></div>
+    </form>
+  </aside>
+  <main id="bfMain"></main>
+  <div class="uc-bar draft" id="bfBar" aria-live="polite"><div class="say" id="bfBarSay"></div><div class="acts" id="bfBarActs"></div></div>
+  <div class="bf-drawer" id="bfDrawer" aria-hidden="true">
+    <div class="hd"><b>Approved use case</b><a id="bfUcOpen" target="_blank" rel="noopener">Open full page ↗</a><button class="btn ghost" onclick="closeUcDrawer()">Close</button></div>
+    <iframe id="bfUcFrame" title="Approved use case"></iframe>
   </div>
 </div>
 
@@ -1629,7 +1735,7 @@ function openTown(id){
   document.getElementById('townScene').innerHTML=buildTownScene(c.title,themeOf(c));
   thKicker.textContent='Town Hall · '+c.title;thTitle.textContent='Welcome to Town Hall.';
   thText.textContent=`Maz and Gladys made it. This is where the campaign brief for ${c.title} gets written: who the campaign is for, what it says, where it runs and when.`;
-  thLater.textContent='The campaign brief template is the next thing we build.';thGo.disabled=true;
+  thLater.textContent='';thGo.disabled=false;loadTownBriefs();
   v.classList.add('on');requestAnimationFrame(()=>v.classList.add('show'));
   setTimeout(()=>{document.getElementById('port').classList.remove('show','on')},500);
   walk();
@@ -1646,7 +1752,6 @@ function walk(){
     if(e<1)walkRAF=requestAnimationFrame(step);else{walkers.classList.remove('walking');setTimeout(()=>document.getElementById('town').classList.add('arrived'),walkSkip?0:350)}})(t0);
 }
 function skipWalk(){walkSkip=true}
-function startBrief(){}
 function backToDock(){const v=document.getElementById('town');cancelAnimationFrame(walkRAF);openPort(townId,{still:true});setTimeout(()=>{v.classList.remove('show');setTimeout(()=>v.classList.remove('on','arrived'),450)},50)}
 
 // ----- use case view: chat on the left, live page on the right -----
@@ -1798,6 +1903,164 @@ function fromChart(where){
   },500);
 }
 if(location.hash==='#chart'){document.body.classList.add('skip');goChart()}
+// ----- campaign brief (Town Hall) -----
+let SPEC=null,bf=null,bfBusy=false,bfEvents=[],bfUserMsgs=0,bfPending={},bfTimer=null,bfRerender=false;
+const escs=v=>esc(String(v??''));
+async function getSpec(){return SPEC||(SPEC=await api('brief-spec'))}
+async function loadTownBriefs(){
+  const box=document.getElementById('thBriefs');box.innerHTML='';
+  document.getElementById('thNameRow').hidden=!!author();
+  try{const list=await api('use-cases/'+encodeURIComponent(townId)+'/briefs');
+    box.innerHTML=list.length?'<small>Campaign briefs</small>'+list.map(x=>`<button class="th-brief" onclick="openBrief('${x.id}')"><b>${escs(x.title)}</b><span>${UC_LABEL[x.status]||x.status} · ${x.done} of ${x.parts} parts filled${x.author?' · '+escs(x.author):''}</span></button>`).join(''):'';
+    thGo.textContent=list.length?'Start a new campaign brief':'Start the campaign brief';
+  }catch(e){box.innerHTML=`<p class="later">${escs(e.message)}</p>`}
+}
+async function startBrief(){
+  let who=author();
+  if(!who){who=thName.value.trim();if(!who){document.getElementById('thNameRow').hidden=false;thName.focus();toast('Add your name first.');return}setAuthor(who)}
+  thGo.disabled=true;
+  try{const d=await api('use-cases/'+encodeURIComponent(townId)+'/briefs',{method:'POST',body:JSON.stringify({author:who})});await openBrief(d.id)}
+  catch(e){toast(e.message)}
+  thGo.disabled=false;
+}
+function bfAdd(role,text,by){const m=document.createElement('div');m.className='msg '+role;if(by){const b=document.createElement('span');b.className='by';b.textContent=by;m.appendChild(b)}m.appendChild(document.createTextNode(text));bfMsgs.appendChild(m);bfMsgs.scrollTop=bfMsgs.scrollHeight;return m}
+async function openBrief(id){
+  try{await getSpec()}catch(e){toast(e.message);return}
+  const v=document.getElementById('brief');v.classList.add('on');requestAnimationFrame(()=>v.classList.add('show'));
+  bfMsgs.innerHTML='';bfMain.innerHTML='<p class="bf-loading">Opening the brief…</p>';bf=null;bfPending={};
+  try{bf=await api('briefs/'+encodeURIComponent(id));const c=await api('briefs/'+encodeURIComponent(id)+'/chat');
+    bfEvents=c.messages.filter(m=>m.role==='event');bfUserMsgs=c.messages.filter(m=>m.role==='user').length;
+    c.messages.forEach(m=>m.role==='event'?bfAdd('sys',m.content+(m.author?' · '+m.author:'')):bfAdd(m.role,m.content,m.role==='user'?m.author:null));
+    if(!c.messages.length)bfAdd('sys','Describe the campaign in the box on the right (or here). Claude takes a first pass at the whole brief from the approved use case. Then change anything, by hand or by asking.');
+    bfUcName.textContent=bf.use_case.title;bfUcOpen.href='/leapwork/use-cases/'+encodeURIComponent(bf.use_case_id);
+    renderBrief();setBfStatus(bf.status);
+  }catch(e){bfMain.innerHTML='';bfAdd('err',e.message)}
+}
+function backToTown(){flushNow();closeUcDrawer();const v=document.getElementById('brief');v.classList.remove('show');setTimeout(()=>v.classList.remove('on'),450);loadTownBriefs()}
+function openUcDrawer(){if(!bf)return;const f=document.getElementById('bfUcFrame');if(!f.src.includes(bf.use_case_id))f.src='/leapwork/use-cases/'+encodeURIComponent(bf.use_case_id);bfDrawer.classList.add('on');bfDrawer.setAttribute('aria-hidden','false')}
+function closeUcDrawer(){bfDrawer.classList.remove('on');bfDrawer.setAttribute('aria-hidden','true')}
+// ----- drawing the brief -----
+function whenOk(f,ctx){return !f.when||Object.entries(f.when).every(([k,v])=>v.includes(ctx[k]))}
+function bfField(f,val,scope,ctx){
+  if(!whenOk(f,ctx))return '';
+  const a=`data-s="${scope}" data-k="${f.key}" data-t="${f.type}"`,ph=f.ai?'Not set · Claude can draft this':'Not set';
+  const wide=['textarea','list','pairs','multi','pick'].includes(f.type);
+  const head=`<span>${escs(f.label)}${f.ai?'<em class="ai">Claude drafts</em>':''}</span>${f.hint?`<span class="hint">${escs(f.hint)}</span>`:''}`;
+  let ctl;
+  switch(f.type){
+    case 'text':ctl=`<input type="text" ${a} value="${escs(val)}" placeholder="${ph}">`;break;
+    case 'textarea':ctl=`<textarea ${a} rows="2" placeholder="${ph}">${escs(val)}</textarea>`;break;
+    case 'list':ctl=`<textarea ${a} rows="${Math.max(2,Math.min(8,(val||[]).length+1))}" placeholder="${ph} · one per line">${escs((val||[]).join('\n'))}</textarea>`;break;
+    case 'number':ctl=`<input type="number" min="0" step="1" ${a} value="${val??''}" placeholder="Not set">`;break;
+    case 'money':ctl=`<div class="money"><input type="number" min="0" step="any" ${a} value="${val??''}" placeholder="Not set"></div>`;break;
+    case 'date':ctl=`<input type="date" ${a} value="${escs(val)}">`;break;
+    case 'choice':ctl=`<select ${a}><option value="">Not set</option>${f.options.map(o=>`<option ${o===val?'selected':''}>${escs(o)}</option>`).join('')}</select>`;break;
+    case 'multi':case 'pick':{const opts=f.type==='multi'?f.options.map(o=>({id:o,name:o})):(bf.options[f.from]||[]);const cur=val||[];
+      ctl=`<div class="chips" ${a}>${opts.length?opts.map(o=>`<button type="button" class="chip ${cur.includes(o.id)?'on':''}" data-v="${escs(o.id)}">${escs(o.name)}</button>`).join(''):'<span class="none">Nothing in the use case to pick from.</span>'}</div>`;break}
+    case 'pairs':{const rows=val||[];let r='';for(let i=0;i<(f.max||3);i++){const x=rows[i]||{};r+=`<input type="text" data-row="${i}" data-col="a" value="${escs(x.a)}" placeholder="${ph}"><input type="text" data-row="${i}" data-col="b" value="${escs(x.b)}" placeholder="Not set">`}
+      ctl=`<div class="pairs" ${a}><span class="ph">${escs(f.labels[0])}</span><span class="ph">${escs(f.labels[1])}</span>${r}</div>`;break}
+  }
+  const tag=['multi','pick','pairs'].includes(f.type)?'div':'label';
+  return `<${tag} class="fl ${wide?'wide':''}">${head}${ctl}</${tag}>`;
+}
+function bfSection(id,title,inner,tag){return `<section class="bf-sec" id="sec-${id}"><h3>${tag?`<span class="tag">${tag}</span>`:''}${escs(title)}</h3>${inner}</section>`}
+function bfOutput(o){const st=bf.doc.outputs[o.id],s='meta:'+o.id;
+  return `<div class="bf-out" id="out-${o.id}"><div class="oh"><h4>${escs(o.title)}</h4><div class="meta">
+    <label>Owner<input type="text" data-s="${s}" data-k="owner" data-t="text" value="${escs(st.owner)}" placeholder="Not set"></label>
+    <label>Due<input type="date" data-s="${s}" data-k="due" data-t="date" value="${escs(st.due)}"></label>
+    <label>Status<select data-s="${s}" data-k="status" data-t="choice">${SPEC.statuses.map(x=>`<option ${x===st.status?'selected':''}>${x}</option>`).join('')}</select></label></div></div>
+    <div class="bf-grid">${o.fields.map(f=>bfField(f,st.values[f.key],'out:'+o.id,st.values)).join('')}</div></div>`}
+function bfMenu(){const d=bf.doc;
+  return bfSection('menu','What does this campaign include?',`<p class="sub">Tick a group to add its section below, then untick any outputs you don't need. Owners come from Leapwork's campaign structure and can be changed.</p>
+    <div class="bf-menu">${SPEC.groups.map(g=>{const on=!!d.groups[g.id];return `<div class="mg ${on?'on':''}"><label class="gh"><input type="checkbox" data-g="${g.id}" ${on?'checked':''}>${escs(g.title)}</label>
+      ${g.outputs.map(o=>`<label class="mo"><input type="checkbox" data-o="${o.id}" ${on&&d.outputs[o.id]?.on?'checked':''}><span>${escs(o.title)}<i>${escs(d.outputs[o.id]?.owner||o.owner)}</i></span></label>`).join('')}</div>`}).join('')}</div>`)}
+function renderBrief(){
+  if(!bf)return;const st=bfMain.scrollTop,d=bf.doc,u=bf.use_case,ro=bf.status!=='draft';
+  bfCrumb.textContent=d.core.name||'New campaign brief';
+  let h=`<section class="bf-uc"><div><small>Built from the approved use case${bf.use_case_version?' · version '+bf.use_case_version:''}</small><h2>${escs(u.title)}</h2>
+    <p class="pos">${escs(u.position)}</p><p>${escs(u.problem)}</p>
+    <div class="tags">${u.products.map(p=>`<span class="p">${escs(p)}</span>`).join('')}${u.personas.map(p=>`<span>${escs(p)}</span>`).join('')}</div></div>
+    <button class="btn out" onclick="openUcDrawer()">View use case</button></section>`;
+  if(!bfUserMsgs&&!ro)h+=`<section class="bf-describe"><h3>Describe the campaign</h3>
+    <p>In your own words: who it's for, what it should say, which channels and activities, and dates and budget if you know them. Claude takes a first pass at the whole brief from the approved use case: it fills in the sections below, ticks the activities and drafts headlines, keywords and copy. Anything it can't work out stays "Not set".</p>
+    <textarea id="bfDescribe" placeholder="e.g. Q1 push to EU banks ahead of the DORA deadline. Webinar with Microsoft in February, LinkedIn and Google ads, SDR outreach to Tier 1 accounts. About $40K."></textarea>
+    <button class="btn" onclick="describeGo()">Draft the brief with Claude</button></section>`;
+  h+=SPEC.core.map(s=>bfSection(s.id,s.title,`<div class="bf-grid">${s.fields.map(f=>bfField(f,d.core[f.key],'core',d.core)).join('')}</div>`)).join('');
+  h+=bfMenu();
+  for(const g of SPEC.groups){if(!d.groups[g.id])continue;const outs=g.outputs.filter(o=>d.outputs[o.id]?.on);
+    h+=bfSection(g.id,g.title,outs.length?outs.map(bfOutput).join(''):'<p class="bf-empty">No outputs ticked. Pick them in the menu above.</p>','Activity')}
+  h+=bfSection('comms',SPEC.comms.title,`<div class="bf-grid">${SPEC.comms.fields.map(f=>bfField(f,d.comms[f.key],'comms',d.comms)).join('')}</div>`);
+  bfMain.innerHTML=h;bfMain.classList.toggle('ro',ro);
+  if(ro)bfMain.querySelectorAll('input,textarea,select,.chip').forEach(el=>{if(!el.closest('.bf-uc'))el.disabled=true});
+  bfMain.scrollTop=st;bfProgress();
+}
+function bfProgress(){if(!bf)return;const p=bf.progress||[],done=p.filter(x=>x.done).length,next=p.find(x=>!x.done);
+  bfProgBar.style.width=(p.length?done/p.length*100:0)+'%';
+  bfProgText.innerHTML=`<b>${done} of ${p.length}</b> parts filled${next?' · Not set yet: '+escs(next.name):''}`;renderBfBar()}
+// ----- editing -----
+function valOf(el){const t=el.dataset.t;
+  if(t==='pairs'){const rows=[];el.querySelectorAll('input').forEach(i=>{const r=+i.dataset.row;(rows[r]||(rows[r]={a:'',b:''}))[i.dataset.col]=i.value});return rows.filter(r=>r&&(r.a.trim()||r.b.trim()))}
+  if(t==='list')return el.value.split('\n').map(s=>s.trim()).filter(Boolean);
+  if(t==='multi'||t==='pick')return [...el.querySelectorAll('.chip.on')].map(b=>b.dataset.v);
+  return el.value}
+function addPatch(scope,key,v){
+  if(scope==='core'||scope==='comms'){(bfPending[scope]||(bfPending[scope]={}))[key]=v;return}
+  const [kind,id]=scope.split(':');const o=(bfPending.outputs||(bfPending.outputs={}))[id]||(bfPending.outputs[id]={});
+  if(kind==='meta')o[key]=v;else(o.values||(o.values={}))[key]=v}
+function queue(el,now,rerender){addPatch(el.dataset.s,el.dataset.k,valOf(el));bfRerender=bfRerender||rerender;clearTimeout(bfTimer);bfTimer=setTimeout(flushNow,now?0:700);bfSaving('Saving…')}
+function flushNow(){clearTimeout(bfTimer);if(!bf||!Object.keys(bfPending).length)return Promise.resolve();const p=bfPending,r=bfRerender;bfPending={};bfRerender=false;return savePatch(p,r)}
+async function savePatch(patch,rerender){
+  try{const d=await api('briefs/'+encodeURIComponent(bf.id),{method:'PUT',body:JSON.stringify({patch})});
+    bf.doc=d.doc;bf.progress=d.progress;if(rerender)renderBrief();else bfProgress();bfSaving('Saved')}
+  catch(e){toast(e.message);bfSaving('');try{bf=await api('briefs/'+encodeURIComponent(bf.id));renderBrief()}catch(_){}}
+}
+let bfSavedT;function bfSaving(t){const s=document.querySelector('#bfBarSay .bf-saved');if(s)s.textContent=t;clearTimeout(bfSavedT);if(t==='Saved')bfSavedT=setTimeout(()=>{const x=document.querySelector('#bfBarSay .bf-saved');if(x)x.textContent=''},1500)}
+document.getElementById('bfMain').addEventListener('change',e=>{const t=e.target;if(!bf||bf.status!=='draft')return;
+  if(t.dataset.g){const g=SPEC.groups.find(x=>x.id===t.dataset.g),p={groups:{[g.id]:t.checked}};
+    if(t.checked&&!g.outputs.some(o=>bf.doc.outputs[o.id]?.on)){p.outputs={};g.outputs.forEach(o=>p.outputs[o.id]={on:true})}
+    flushNow().then(()=>savePatch(p,true));return}
+  if(t.dataset.o){flushNow().then(()=>savePatch({outputs:{[t.dataset.o]:{on:t.checked}}},true));return}
+  const el=t.closest('[data-s]');if(el)queue(el,true,el.dataset.k==='audience')});
+document.getElementById('bfMain').addEventListener('input',e=>{const t=e.target;if(!bf||bf.status!=='draft'||t.tagName==='SELECT'||t.type==='date'||t.type==='checkbox'||t.id==='bfDescribe')return;const el=t.closest('[data-s]');if(el)queue(el,false,false)});
+document.getElementById('bfMain').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c||c.disabled||!bf||bf.status!=='draft')return;c.classList.toggle('on');queue(c.closest('[data-s]'),true,false)});
+// ----- chat -----
+function describeGo(){const t=document.getElementById('bfDescribe');if(!t||!t.value.trim()){t&&t.focus();return}bfInput.value=t.value;sendBrief()}
+async function sendBrief(){
+  const text=bfInput.value.trim();if(!text||bfBusy||!bf)return;await flushNow();
+  const who=author();bfInput.value='';bfAdd('user',text,who||null);bfUserMsgs++;bfBusy=true;setBfStatus(bf.status);
+  const d0=document.querySelector('.bf-describe');if(d0)d0.remove();bfMain.classList.add('busy');bfMain.scrollTop=0;
+  const w=bfAdd('sys','Claude is working on the brief (a first pass can take a minute)');w.classList.add('dots');
+  try{const d=await api('briefs/'+encodeURIComponent(bf.id)+'/chat',{method:'POST',body:JSON.stringify({text,author:who})});
+    w.remove();bfAdd('assistant',d.reply);if(d.changed&&d.changed.length){bf=await api('briefs/'+encodeURIComponent(bf.id))}
+  }catch(e){w.remove();bfAdd('err',e.message);bfInput.value=bfInput.value||text}
+  bfBusy=false;bfMain.classList.remove('busy');renderBrief();setBfStatus(bf.status);bfInput.focus();
+}
+document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='bfInput'&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendBrief()}});
+// ----- status -----
+function setBfStatus(st){bf.status=st;bfPill.textContent=UC_LABEL[st]||st;bfPill.className='uc-pill '+st;
+  const ro=st!=='draft';bfInput.disabled=ro||bfBusy;bfSend.disabled=ro||bfBusy;
+  bfInput.placeholder=st==='review'?'Pending approval. Request changes to edit.':st==='locked'?'Approved. Reopen for edits to make changes.':'Describe the campaign, or ask Claude to change something.';
+  renderBfBar()}
+function bfLast(prefix){for(let k=bfEvents.length-1;k>=0;k--)if(bfEvents[k].content.startsWith(prefix))return bfEvents[k];return null}
+function renderBfBar(){if(!bf)return;const st=bf.status,say=bfBarSay,acts=bfBarActs,p=bf.progress||[],done=p.filter(x=>x.done).length;let cls=st;
+  if(st==='draft'){cls=done===p.length?'ready':'draft';
+    say.innerHTML=`<b>Draft · ${done} of ${p.length} parts filled<span class="bf-saved"></span></b>Nothing is required. Read the brief, then submit it for approval.`;
+    acts.innerHTML=`<button class="btn out" onclick="bfInput.focus()">Continue with Claude</button><button class="btn teal" onclick="setBriefStatus('review')">Submit for approval</button>`}
+  else if(st==='review'){const e=bfLast('Submitted');
+    say.innerHTML=`<b>Pending approval</b>${e?`Submitted${e.author?' by '+escs(e.author):''}${fmtWhen(e.created_at)?' on '+fmtWhen(e.created_at):''}. `:''}Read-only until it is approved or sent back.`;
+    acts.innerHTML=`<button class="btn out" onclick="setBriefStatus('draft')">Request changes</button><button class="btn teal" onclick="setBriefStatus('locked')">Approve</button>`}
+  else{const e=bfLast('Approved');
+    say.innerHTML=`<b>Approved${e?' · '+escs(e.content.replace(/^Approved\s*/,'').replace(/[()]/g,'')):''}</b>${e&&e.author?'Approved by '+escs(e.author)+'. ':''}This is the brief the campaign's assets are built from.`;
+    acts.innerHTML=`<button class="btn ghost" onclick="setBriefStatus('draft')">Reopen for edits</button>`}
+  bfBar.className='uc-bar '+cls}
+async function setBriefStatus(next){
+  if(!bf||bfBusy)return;await flushNow();
+  try{await api('briefs/'+encodeURIComponent(bf.id)+'/status',{method:'POST',body:JSON.stringify({status:next,author:author()})});
+    const c=await api('briefs/'+encodeURIComponent(bf.id)+'/chat');bfEvents=c.messages.filter(m=>m.role==='event');
+    const last=bfEvents[bfEvents.length-1];if(last)bfAdd('sys',last.content+(last.author?' · '+last.author:''));
+    bf.status=next;renderBrief();setBfStatus(next);
+  }catch(e){bfAdd('err',e.message)}
+}
 </script>
 </body>
 </html>

@@ -7,6 +7,9 @@
 import { ensureSchema, saveDoc, loadDoc, listIslands, createDraft, setStatus, getChat } from './src/usecase/store.js';
 import { chatTurn } from './src/usecase/author.js';
 import { renderHtml } from './src/usecase/render-html.js';
+import { listBriefs, createBrief, loadBrief, patchBrief, setBriefStatus, getBriefChat } from './src/brief/store.js';
+import { briefChatTurn } from './src/brief/author.js';
+import { CORE, GROUPS, COMMS, STATUSES } from './src/brief/spec.js';
 import governanceSeed from './db/seed/governance-in-testing.json';
 
 const COOKIE = 'lw_session';
@@ -69,7 +72,37 @@ async function mazinator(req, env, p) {
     }
     if (p === '/leapwork/api/islands') return json(await listIslands(env.DB));
 
-    const body = req.method === 'POST' ? await req.json().catch(() => ({})) : null;
+    const body = req.method === 'POST' || req.method === 'PUT' ? await req.json().catch(() => ({})) : null;
+
+    // ---- campaign briefs (Town Hall) ----
+    if (p === '/leapwork/api/brief-spec') return json({ core: CORE, groups: GROUPS, comms: COMMS, statuses: STATUSES });
+    let b = p.match(/^\/leapwork\/api\/use-cases\/([a-z0-9-]+)\/briefs$/);
+    if (b) {
+      if (req.method === 'GET') return json(await listBriefs(env.DB, b[1]));
+      if (req.method === 'POST') return json({ id: await createBrief(env.DB, b[1], String(body.author || '')) });
+      return json({ error: 'Method not allowed' }, 405);
+    }
+    b = p.match(/^\/leapwork\/api\/briefs\/([a-z0-9-]+)(?:\/(chat|status))?$/);
+    if (b) {
+      const [, id, what] = b;
+      if (!what && req.method === 'GET') {
+        const r = await loadBrief(env.DB, id);
+        if (!r) return json({ error: 'Not found' }, 404);
+        delete r._ucDoc; return json(r);
+      }
+      if (!what && req.method === 'PUT') return json(await patchBrief(env.DB, id, body.patch || {}));
+      if (what === 'chat' && req.method === 'GET') return json({ messages: await getBriefChat(env.DB, id) });
+      if (what === 'chat' && req.method === 'POST') {
+        const text = String(body.text || '').trim();
+        if (!text) return json({ error: 'Empty message' }, 400);
+        return json(await briefChatTurn(env, env.DB, id, text, String(body.author || '').slice(0, 80)));
+      }
+      if (what === 'status' && req.method === 'POST') {
+        const version = await setBriefStatus(env.DB, id, String(body.status || ''), String(body.author || ''));
+        return json({ ok: true, status: body.status, version });
+      }
+      return json({ error: 'Method not allowed' }, 405);
+    }
 
     // New draft use case (a new island).
     if (p === '/leapwork/api/use-cases' && req.method === 'POST') {
