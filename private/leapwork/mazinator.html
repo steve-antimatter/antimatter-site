@@ -266,6 +266,32 @@
   /* ================= CAMPAIGN ================= */
   #campaign{display:none;background:var(--mist-light);z-index:7;opacity:0;transition:opacity .5s;overflow:auto}
   #campaign.on{display:block} #campaign.show{opacity:1}
+  /* ---------- port arrival ---------- */
+  #port{display:none;background:#D2E1EA;z-index:8;opacity:0;transition:opacity .5s;overflow:hidden}
+  #port.on{display:block} #port.show{opacity:1}
+  #port svg{position:absolute;inset:0;width:100%;height:100%}
+  #portBoat{animation:dockIn 3.2s cubic-bezier(.2,.7,.25,1) .3s both}
+  @keyframes dockIn{from{transform:translateX(-900px)}to{transform:translateX(0)}}
+  #portBob{animation:bob 2.6s ease-in-out 3.5s infinite}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(4px) rotate(.6deg)}}
+  #portBob{transform-box:fill-box;transform-origin:50% 100%}
+  .wakeline{stroke-dasharray:14 12;animation:wake 3.2s linear .3s both}
+  @keyframes wake{from{opacity:.9;stroke-dashoffset:0}to{opacity:0;stroke-dashoffset:-120}}
+  #portRope{opacity:0;animation:fadeIn .4s ease 3.5s both}
+  @keyframes fadeIn{to{opacity:1}}
+  .paper{position:absolute;right:6%;top:50%;width:min(440px,88vw);transform:translateY(-40%);background:#FFFDF7;border:2px solid #090F12;box-shadow:8px 8px 0 rgba(9,15,18,.18);
+    padding:26px 28px 24px;opacity:0;animation:paperIn .6s cubic-bezier(.2,.8,.3,1) 3.9s both}
+  @keyframes paperIn{from{opacity:0;transform:translateY(-30%) rotate(-2deg)}to{opacity:1;transform:translateY(-40%) rotate(-.6deg)}}
+  .paper small{display:block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--fog-blue)}
+  .paper h3{margin:6px 0 12px;font-size:24px;line-height:1.15;color:var(--deep-slate)}
+  .paper p{margin:0 0 14px;font-size:15px;line-height:1.5;color:var(--steel-blue)}
+  .paper .doc{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px dashed var(--fog-blue);background:#fff;margin-bottom:18px}
+  .paper .doc .box{width:20px;height:20px;border:2px solid #090F12;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .paper .doc b{display:block;font-size:15px;color:var(--deep-slate)} .paper .doc span{font-size:12px;color:var(--fog-blue)}
+  .paper .stamp{position:absolute;right:-14px;top:-16px;background:#FFFDF7;transform:rotate(8deg);border:3px solid var(--terracotta);color:var(--terracotta);font-weight:800;letter-spacing:.12em;font-size:13px;padding:4px 10px;text-transform:uppercase;opacity:.85}
+  .paper .stamp.ok{border-color:var(--harbor-teal);color:var(--harbor-teal)}
+  .paper .acts{display:flex;gap:10px;flex-wrap:wrap}
+  @media (prefers-reduced-motion:reduce){#portBoat,#portBob,.wakeline,#portRope,.paper{animation:none!important;opacity:1}}
   #usecase{display:none;background:#FFFFFF;z-index:8;opacity:0;transition:opacity .5s}
   #usecase.on{display:block} #usecase.show{opacity:1}
   #usecase iframe{position:absolute;top:84px;left:400px;width:calc(100% - 400px);height:calc(100% - 84px);border:0;background:#FFFFFF}
@@ -774,6 +800,19 @@
   <div class="legend"><i style="background:var(--fog-blue)"></i><span>Generating</span><i style="background:var(--mist);border:1px solid var(--atlantic)"></i><span>Draft</span><i style="background:var(--atlantic)"></i><span>In progress</span><i style="background:var(--accent-gold)"></i><span>In review</span><i style="background:var(--harbor-teal)"></i><span>Approved</span><i style="background:#002423"></i><span>Locked use case</span></div>
 </div>
 
+<!-- ================= PORT ARRIVAL ================= -->
+<div class="view" id="port">
+  <svg id="portScene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+  <div class="paper" role="dialog" aria-labelledby="ppTitle">
+    <div class="stamp" id="ppStamp">Pending</div>
+    <small>Harbormaster · Port of <span id="ppPort"></span></small>
+    <h3 id="ppTitle">Welcome to the port.</h3>
+    <p>To dock your ship we need the following paperwork:</p>
+    <div class="doc"><div class="box" id="ppBox"></div><div><b id="ppDoc"></b><span id="ppState"></span></div></div>
+    <div class="acts"><button class="btn teal" id="ppGo" onclick="portToUseCase()">Fill out the paperwork</button><button class="btn out" onclick="leavePort()">Back to chart</button></div>
+  </div>
+</div>
+
 <!-- ================= USE CASE ================= -->
 <div class="view" id="usecase">
   <div class="ctop" style="background:var(--dark-teal);border-bottom-color:rgba(210,225,234,.15)">
@@ -1154,7 +1193,7 @@ function sailTo(id){
     const bob=Math.sin(t*22)*1.5;
     m.setAttribute('transform',`translate(${x} ${y}) rotate(${ang+bob})`);
     w.setAttribute('d',`M${sx} ${sy} L${x} ${y}`);
-    if(t<1)requestAnimationFrame(step);else{boat.x=x;boat.y=y;boat.ang=ang;sailing=false;setTimeout(()=>c.kind==='usecase'?openUseCase(id):openCampaign(id),350)}
+    if(t<1)requestAnimationFrame(step);else{boat.x=x;boat.y=y;boat.ang=ang;sailing=false;setTimeout(()=>c.kind==='usecase'?openPort(id):openCampaign(id),350)}
   }
   requestAnimationFrame(step);
 }
@@ -1202,6 +1241,72 @@ function openCampaign(id){
   renderFlow();
   const v=document.getElementById('campaign');v.classList.add('on');v.scrollTop=0;requestAnimationFrame(()=>{v.classList.add('show');drawWires()});
 }
+// ----- arriving at a use case island: dock, then the paperwork -----
+let portId=null;
+function buildPortScene(title){
+  const waves=[...Array(14)].map((_,i)=>`<path d="M${(i*137)%1600} ${520+(i*61)%360} q14 -10 28 0 t28 0" fill="none" stroke="#FFFFFF" stroke-width="3" opacity=".8"/>`).join('');
+  const posts=[0,1,2,3,4,5].map(i=>`<rect x="${880+i*56}" y="600" width="12" height="90" fill="#090F12"/>`).join('');
+  return `
+  <rect width="1600" height="900" fill="#D2E1EA"/>${waves}
+  <g transform="translate(-300 0)">
+  <!-- island -->
+  <path d="M760 560 C820 380 980 300 1180 300 C1380 300 1540 380 1600 470 L1600 620 L760 620 Z" fill="#ECE4D2" stroke="#090F12" stroke-width="4"/>
+  <path d="M860 560 C910 430 1030 370 1190 370 C1350 370 1480 430 1560 520 L1560 600 L860 600 Z" fill="#8F9B7A"/>
+  ${tree(960,520,2.2)}${tree(1040,470,2.6)}${tree(1110,500,2)}${tree(1420,470,2.4,'#3F7A78')}${tree(1500,520,2)}${tree(1360,520,1.8)}
+  <!-- lighthouse -->
+  <g transform="translate(1240 470)"><polygon points="-26,0 26,0 18,-150 -18,-150" fill="#FFFFFF" stroke="#090F12" stroke-width="4"/>
+    <rect x="-23" y="-60" width="46" height="18" fill="#B8664C"/><rect x="-21" y="-110" width="42" height="18" fill="#B8664C"/>
+    <rect x="-28" y="-178" width="56" height="28" fill="#090F12"/><rect x="-18" y="-174" width="36" height="20" fill="#BFA66A"/>
+    <polygon points="-32,-178 32,-178 0,-206" fill="#090F12"/></g>
+  <!-- harbormaster hut + flag -->
+  <g transform="translate(1180 600)"><rect x="0" y="-80" width="110" height="80" fill="#FFFFFF" stroke="#090F12" stroke-width="4"/>
+    <polygon points="-10,-80 55,-122 120,-80" fill="#B8664C" stroke="#090F12" stroke-width="4"/>
+    <rect x="18" y="-58" width="26" height="22" fill="#D2E1EA" stroke="#090F12" stroke-width="3"/><rect x="64" y="-50" width="28" height="50" fill="#002423"/>
+    <rect x="130" y="-170" width="5" height="170" fill="#090F12"/><path d="M135 -168 l46 12 l-46 12 z" fill="#3F7A78"/></g>
+  <!-- dock -->
+  <rect x="860" y="588" width="360" height="22" fill="#B8664C" stroke="#090F12" stroke-width="4"/>${posts}
+  <!-- port sign -->
+  <g transform="translate(860 470)"><rect x="-6" y="40" width="10" height="80" fill="#090F12"/>
+    <rect x="-150" y="0" width="300" height="56" fill="#FFFFFF" stroke="#090F12" stroke-width="4"/>
+    <text x="0" y="22" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="3" fill="#4F6F82">PORT OF</text>
+    <text x="0" y="44" text-anchor="middle" font-size="${title.length>24?15:19}" font-weight="700" fill="#090F12">${esc(title)}</text></g>
+  </g>
+  <!-- wake -->
+  <path class="wakeline" d="M-400 690 L-100 690" stroke="#FFFFFF" stroke-width="5" fill="none"/>
+  <path class="wakeline" d="M-380 712 L-120 712" stroke="#FFFFFF" stroke-width="4" fill="none"/>
+  <!-- the Mazinator, side view -->
+  <g id="portBoat"><g transform="translate(290 690)"><g id="portBob">
+    <path d="M-250 -40 L250 -40 L210 30 L-220 30 Z" fill="#090F12"/>
+    <rect x="-250" y="-46" width="500" height="10" fill="#B8664C"/>
+    <rect x="-200" y="-150" width="330" height="104" fill="#FFFFFF" stroke="#090F12" stroke-width="5"/>
+    <rect x="-180" y="-124" width="54" height="40" fill="#D2E1EA" stroke="#090F12" stroke-width="3"/><rect x="-110" y="-124" width="54" height="40" fill="#D2E1EA" stroke="#090F12" stroke-width="3"/>
+    <rect x="-40" y="-124" width="54" height="40" fill="#D2E1EA" stroke="#090F12" stroke-width="3"/><rect x="40" y="-126" width="56" height="80" fill="#002423"/>
+    <rect x="-210" y="-164" width="350" height="16" fill="#090F12"/>
+    <rect x="150" y="-110" width="70" height="64" fill="#FFFFFF" stroke="#090F12" stroke-width="5"/><rect x="162" y="-98" width="46" height="26" fill="#D2E1EA"/>
+    <circle cx="-150" cy="-14" r="10" fill="#BFA66A"/><circle cx="-110" cy="-14" r="10" fill="#BFA66A"/><circle cx="-70" cy="-14" r="10" fill="#BFA66A"/>
+    <text x="-20" y="10" font-size="22" font-weight="800" letter-spacing="4" fill="#FFFFFF">MAZINATOR</text>
+  </g></g></g>
+  <!-- mooring line -->
+  <path id="portRope" d="M500 650 Q540 690 570 600" stroke="#090F12" stroke-width="4" fill="none"/>`;
+}
+function openPort(id){
+  const c=USECASES.find(k=>k.id===id);if(!c)return;portId=id;
+  const st=c.status,done=st==='locked';
+  document.getElementById("portScene").innerHTML=buildPortScene(c.title);
+  ppPort.textContent=c.title;ppDoc.textContent=c.title+' Use Case Submission';
+  ppState.textContent={draft:'Draft · in progress',review:'Submitted · in review',locked:'Approved · on file'}[st]||st;
+  ppBox.textContent=done?'✓':'';ppStamp.textContent=done?'Cleared':st==='review'?'In review':'Pending';ppStamp.className='stamp'+(done?' ok':'');
+  ppTitle.textContent=done?'Welcome back to the port.':'Welcome to the port.';
+  ppGo.textContent=done?'View the paperwork':st==='review'?'Review the paperwork':'Fill out the paperwork';
+  const v=document.getElementById('port');
+  // restart the animations each visit
+  v.querySelectorAll('#portBoat,#portBob,.wakeline,#portRope,.paper').forEach(el=>{el.style.animation='none';void el.getBoundingClientRect();el.style.animation=''});
+  v.classList.add('on');requestAnimationFrame(()=>v.classList.add('show'));
+}
+function closePortView(){const v=document.getElementById('port');v.classList.remove('show');setTimeout(()=>v.classList.remove('on'),450)}
+function portToUseCase(){const id=portId;openUseCase(id);setTimeout(closePortView,500)}
+function leavePort(){closePortView();setTimeout(renderMap,450)}
+
 // ----- use case view: chat on the left, live page on the right -----
 let ucCur=null,ucBusy=false;
 const author=()=>{try{return localStorage.getItem('mazinator.author')||''}catch(e){return ''}};
