@@ -51,9 +51,16 @@ assert.ok(html.includes('It just works.') && html.includes('Not written yet.'));
 
 // History, locking, locked refusal; Governance untouched
 assert.equal((await getChat(db, id)).length, 4);
-assert.equal(await setStatus(db, id, 'locked', 'Steve'), 1);
-await assert.rejects(chatTurn({}, db, id, 'change it', 'Steve', { fetchClaude: async () => done('x') }), /locked/);
-await setStatus(db, id, 'draft');
+await setStatus(db, id, 'review', 'Steve');
+await assert.rejects(chatTurn({}, db, id, 'change it', 'Steve', { fetchClaude: async () => done('x') }), /pending approval/);
+assert.equal(await setStatus(db, id, 'locked', 'Maz'), 1);
+await assert.rejects(chatTurn({}, db, id, 'change it', 'Steve', { fetchClaude: async () => done('x') }), /approved/);
+await setStatus(db, id, 'draft', 'Steve');
+const ev = (await getChat(db, id)).filter((m) => m.role === 'event').map((m) => m.content);
+assert.deepEqual(ev, ['Submitted for approval', 'Approved (version 1)', 'Reopened for edits']);
+// events are not sent to Claude
+calls = 0;
+await chatTurn({}, db, id, 'hi', 'Steve', { fetchClaude: async (body) => { assert.ok(body.messages.every((m) => m.role !== 'event')); return done('hello'); } });
 assert.equal(renderHtml(await loadDoc(db, 'governance-in-testing')), renderHtml(seed));
 console.log('authoring tests ok');
 

@@ -14,7 +14,8 @@ const section = (title, body, cls) => `<section${cls ? ` class="${cls}"` : ''}><
 
 // Logos: a map of product id -> image URL. Defaults to the embedded ones.
 // draft: show 'Not written yet' for empty sections (preview beside the authoring chat).
-export function renderHtml(doc, { logos = PRODUCT_LOGOS, draft = false } = {}) {
+// banner: 'draft' | 'review' adds a status strip across the top of the page.
+export function renderHtml(doc, { logos = PRODUCT_LOGOS, draft = false, banner = null } = {}) {
   const v = resolve(doc);
   const TODO = '<p class="note todo">Not written yet.</p>';
   const or = (empty, html) => (empty ? (draft ? TODO : '') : html);
@@ -59,7 +60,13 @@ export function renderHtml(doc, { logos = PRODUCT_LOGOS, draft = false } = {}) {
 <title>${esc(v.title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>${CSS}.todo{font-style:italic;color:#9AA6AC}</style></head><body>
+<style>${CSS}.todo{font-style:italic;color:#9AA6AC}
+.status-strip{position:sticky;top:0;z-index:5;padding:10px 24px;text-align:center;font:600 12.5px/1.3 var(--body);letter-spacing:.14em;text-transform:uppercase}
+.status-strip.draft{background:#E8EEF4;color:#4F6F82;border-bottom:1px solid #D2E1EA}
+.status-strip.review{background:#FBF1E2;color:#8A5A1E;border-bottom:1px solid #EBD3A8}
+body.pending main{opacity:.92}
+@media print{.status-strip{display:none}}</style></head><body${banner === 'review' ? ' class="pending"' : ''}>
+${banner === 'review' ? '<div class="status-strip review">Pending approval · not final</div>' : banner === 'draft' ? '<div class="status-strip draft">Draft · not submitted</div>' : ''}
 <header>
 ${HEADER_BG}
 <div class="wrap hd">

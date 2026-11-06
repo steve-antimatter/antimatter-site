@@ -146,8 +146,14 @@ export async function createDraft(db, { title, author }) {
 }
 
 // draft -> review -> locked. Locking keeps a snapshot of exactly what was approved.
+// Status in the app: draft = being written, review = pending approval (read-only), locked = approved.
 export async function setStatus(db, id, status, who) {
   if (!['draft', 'review', 'locked'].includes(status)) throw new Error('Unknown status');
+  const cur = await db.prepare('SELECT status FROM use_cases WHERE id = ?').bind(id).first();
+  if (!cur) throw new Error('Not found');
+  const event = status === 'review' ? 'Submitted for approval'
+    : status === 'locked' ? 'Approved'
+    : cur.status === 'review' ? 'Changes requested; back to draft' : 'Reopened for edits';
   if (status === 'locked') {
     const doc = await loadDoc(db, id);
     if (!doc) throw new Error('Not found');
@@ -157,9 +163,11 @@ export async function setStatus(db, id, status, who) {
         .bind(id, v.v, JSON.stringify(doc.use_case), who || 'Unknown'),
       db.prepare("UPDATE use_cases SET status = 'locked', updated_at = datetime('now') WHERE id = ?").bind(id),
     ]);
+    await appendChat(db, id, [{ role: 'event', content: `Approved (version ${v.v})`, author: who }]);
     return v.v;
   }
   await db.prepare("UPDATE use_cases SET status = ?, updated_at = datetime('now') WHERE id = ?").bind(status, id).run();
+  await appendChat(db, id, [{ role: 'event', content: event, author: who }]);
   return null;
 }
 

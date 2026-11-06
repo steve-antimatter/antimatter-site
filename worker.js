@@ -106,7 +106,7 @@ async function mazinator(req, env, p) {
     if (m) {
       const doc = await loadDoc(env.DB, m[1]);
       if (!doc) return new Response('Not found', { status: 404 });
-      return noStore(new Response(renderHtml(doc, { draft: doc.use_case.status !== 'locked' }), { headers: { 'content-type': 'text/html; charset=utf-8' } }));
+      return noStore(new Response(renderHtml(doc, { draft: doc.use_case.status !== 'locked', banner: doc.use_case.status === 'locked' ? null : doc.use_case.status }), { headers: { 'content-type': 'text/html; charset=utf-8' } }));
     }
     return json({ error: 'Not found' }, 404);
   } catch (e) {

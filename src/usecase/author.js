@@ -173,7 +173,7 @@ HOW TO WORK:
 - Plain language. Short sentences. No jargon the buyer would not use, no hype, no internal notes (nothing like "to confirm" or "TBD" in the use case itself). Avoid repeating the same point across sections.
 - Keep chat replies short: what you changed (one line) and the next question. Do not paste whole sections back into the chat; the author sees the page update beside the chat.
 - Tools replace a whole section, so always send the complete list for that section, including items you are keeping.
-- When every section is filled in, stop asking questions. Tell the author the use case is complete, offer one or two specific improvements if you see any, and explain the next step: read the page on the right from top to bottom, then click "Send for review" at the top so the team can check it. Once it is approved, "Approve & lock" saves that version for campaign briefs.
+- When every section is filled in, stop asking questions. Tell the author the use case is complete, offer one or two specific improvements if you see any, and explain the next step: read the page on the right from top to bottom, then click "Submit for approval" at the bottom of the page. While it is pending approval it cannot be edited; the approver either approves it (it becomes the version campaign briefs are built from) or requests changes.
 
 LEAPWORK PRODUCTS: ${names('products', (p) => `${p.id} = ${p.name}: ${p.summary || ''}`)}
 STRATEGIC PARTNERS (ids you may use): ${names('partners', (p) => `${p.id} (${p.name}: ${p.program})`)}
@@ -210,9 +210,10 @@ export async function chatTurn(env, db, id, text, author, { fetchClaude } = {}) 
   const call = fetchClaude || ((body) => callClaude(env, body));
   const doc = await loadDoc(db, id);
   if (!doc) throw new Error('Use case not found');
-  if (doc.use_case.status === 'locked') throw new Error('This use case is locked. Unlock it to make changes.');
+  if (doc.use_case.status === 'locked') throw new Error('This use case is approved. Reopen it for edits to make changes.');
+  if (doc.use_case.status === 'review') throw new Error('This use case is pending approval. Request changes to edit it.');
 
-  const history = (await getChat(db, id)).slice(-30);
+  const history = (await getChat(db, id)).filter((m) => m.role === 'user' || m.role === 'assistant').slice(-30);
   const messages = history.map((m) => ({ role: m.role, content: m.content }));
   messages.push({ role: 'user', content: text });
 

@@ -294,7 +294,16 @@
   @media (prefers-reduced-motion:reduce){#portBoat,#portBob,.wakeline,#portRope,.paper{animation:none!important;opacity:1}}
   #usecase{display:none;background:#FFFFFF;z-index:8;opacity:0;transition:opacity .5s}
   #usecase.on{display:block} #usecase.show{opacity:1}
-  #usecase iframe{position:absolute;top:84px;left:400px;width:calc(100% - 400px);height:calc(100% - 84px);border:0;background:#FFFFFF}
+  #usecase iframe{position:absolute;top:84px;left:400px;width:calc(100% - 400px);height:calc(100% - 84px - 76px);border:0;background:#FFFFFF}
+  .uc-bar{position:absolute;left:400px;right:0;bottom:0;height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 28px;
+    border-top:1px solid rgba(9,15,18,.12);background:#FFFFFF;z-index:2}
+  .uc-bar .say{font-size:14px;line-height:1.4;color:var(--steel-blue)} .uc-bar .say b{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--deep-slate)}
+  .uc-bar .acts{display:flex;gap:10px;flex:none}
+  .uc-bar.draft{background:#FFFFFF} .uc-bar.ready{background:#EAF3EE;border-top:2px solid var(--harbor-teal)}
+  .uc-bar.review{background:#FBF1E2;border-top:2px solid var(--accent-gold)} .uc-bar.review .say b{color:#8A5A1E}
+  .uc-bar.locked{background:#002423;border-top:0} .uc-bar.locked .say{color:#D2E1EA} .uc-bar.locked .say b{color:#FFFFFF}
+  .btn.gold{background:#8A5A1E}
+  .uc-pill.review{background:#FBF1E2!important;color:#8A5A1E!important;border-color:var(--accent-gold)!important}
   #usecase .chat{position:absolute;top:84px;left:0;width:400px;bottom:0;display:flex;flex-direction:column;background:var(--mist-light);border-right:1px solid rgba(9,15,18,.1)}
   #usecase .chat .hd{padding:16px 20px 12px;border-bottom:1px solid rgba(9,15,18,.08);display:flex;justify-content:space-between;align-items:center}
   #usecase .chat .hd small{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fog-blue)}
@@ -320,7 +329,7 @@
   .chat .row{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:var(--fog-blue)}
   .chat .btn:disabled{opacity:.45;cursor:default}
   .dots::after{content:'';animation:dots 1.2s steps(4) infinite}@keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
-  @media (max-width:900px){#usecase .chat{width:100%;bottom:45%}#usecase iframe{left:0;width:100%;top:55%;height:45%}}
+  @media (max-width:900px){#usecase .chat{width:100%;bottom:45%}#usecase iframe{left:0;width:100%;top:55%;height:calc(45% - 76px)}.uc-bar{left:0}}
   #usecase .ctop .crumbs{color:var(--light-blue,#9FBFCC)} #usecase .ctop .crumbs b{color:#FFFFFF}
   .chero{background:var(--dark-teal);color:var(--mist);padding:110px 36px 36px;position:relative;overflow:hidden}
   .chero .pat{position:absolute;inset:0;opacity:.05;pointer-events:none}
@@ -797,7 +806,7 @@
     </div>
   </div>
   <div class="chead"><h2>Campaign chart</h2><p>Use cases and campaigns are islands. Click one and the Mazinator sails over.</p></div>
-  <div class="legend"><i style="background:var(--fog-blue)"></i><span>Generating</span><i style="background:var(--mist);border:1px solid var(--atlantic)"></i><span>Draft</span><i style="background:var(--atlantic)"></i><span>In progress</span><i style="background:var(--accent-gold)"></i><span>In review</span><i style="background:var(--harbor-teal)"></i><span>Approved</span><i style="background:#002423"></i><span>Locked use case</span></div>
+  <div class="legend"><i style="background:var(--fog-blue)"></i><span>Generating</span><i style="background:var(--mist);border:1px solid var(--atlantic)"></i><span>Draft</span><i style="background:var(--atlantic)"></i><span>In progress</span><i style="background:var(--accent-gold)"></i><span>In review</span><i style="background:var(--harbor-teal)"></i><span>Approved</span><i style="background:#002423"></i><span>Approved use case</span></div>
 </div>
 
 <!-- ================= PORT ARRIVAL ================= -->
@@ -817,7 +826,7 @@
 <div class="view" id="usecase">
   <div class="ctop" style="background:var(--dark-teal);border-bottom-color:rgba(210,225,234,.15)">
     <div class="brandrow" id="ucBrand"><span class="crumbs">Use case · <b id="ucCrumb"></b></span></div>
-    <div style="display:flex;gap:10px"><button class="btn ghost" id="ucLock" onclick="toggleLock()">Lock</button><a class="btn ghost" id="ucOpen" target="_blank" rel="noopener" style="text-decoration:none">Open full page ↗</a><button class="btn ghost" onclick="backFromUseCase()">← Back to chart</button></div>
+    <div style="display:flex;gap:10px"><a class="btn ghost" id="ucOpen" target="_blank" rel="noopener" style="text-decoration:none">Open full page ↗</a><button class="btn ghost" onclick="backFromUseCase()">← Back to chart</button></div>
   </div>
   <aside class="chat" aria-label="Authoring chat">
     <div class="hd"><small>Write with Claude</small><span class="uc-pill" id="ucPill">Draft</span></div>
@@ -829,6 +838,7 @@
     </form>
   </aside>
   <iframe id="ucFrame" title="Use case preview"></iframe>
+  <div class="uc-bar draft" id="ucBar" aria-live="polite"><div class="say" id="ucBarSay"></div><div class="acts" id="ucBarActs"></div></div>
 </div>
 
 <!-- ================= CAMPAIGN ================= -->
@@ -1081,9 +1091,9 @@ function cget(id){return cdata[id]||(cdata[id]={appr:{},final:false})}
 function fmtDate(d){if(!d)return 'date TBD';const dt=new Date(d+'T12:00:00');return isNaN(dt)?d:dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}
 function subline(c){return c.kind==='usecase'?'Use case · '+(c.products||[]).map(p=>p.name.replace(/^Leapwork /,'')).join(' · '):'Campaign · '+fmtDate(c.launch)}
 // Use cases come from the Mazinator database; campaigns (for now) from this browser.
-STATUS.locked=['Locked','#002423'];
+STATUS.locked=['Approved','#002423'];STATUS.pending=['Pending','#BFA66A'];
 let USECASES=[];
-function stKey(c){return c.kind==='usecase'?({locked:'locked',review:'review',draft:'idea'}[c.status]||'idea'):c.status}
+function stKey(c){return c.kind==='usecase'?({locked:'locked',review:'pending',draft:'idea'}[c.status]||'idea'):c.status}
 function allIslands(){return USECASES.concat(CAMPAIGNS)}
 async function loadUseCases(){
   try{const r=await fetch('/leapwork/api/islands',{credentials:'same-origin'});if(!r.ok)return;
@@ -1294,10 +1304,10 @@ function openPort(id){
   const st=c.status,done=st==='locked';
   document.getElementById("portScene").innerHTML=buildPortScene(c.title);
   ppPort.textContent=c.title;ppDoc.textContent=c.title+' Use Case Submission';
-  ppState.textContent={draft:'Draft · in progress',review:'Submitted · in review',locked:'Approved · on file'}[st]||st;
-  ppBox.textContent=done?'✓':'';ppStamp.textContent=done?'Cleared':st==='review'?'In review':'Pending';ppStamp.className='stamp'+(done?' ok':'');
+  ppState.textContent={draft:'Draft · in progress',review:'Submitted · pending approval',locked:'Approved · on file'}[st]||st;
+  ppBox.textContent=done?'✓':'';ppStamp.textContent=done?'Cleared':st==='review'?'Awaiting approval':'Pending';ppStamp.className='stamp'+(done?' ok':'');
   ppTitle.textContent=done?'Welcome back to the port.':'Welcome to the port.';
-  ppGo.textContent=done?'View the paperwork':st==='review'?'Review the paperwork':'Fill out the paperwork';
+  ppGo.textContent=done?'View the paperwork':st==='review'?'Review for approval':'Fill out the paperwork';
   const v=document.getElementById('port');
   // restart the animations each visit
   v.querySelectorAll('#portBoat,#portBob,.wakeline,#portRope,.paper').forEach(el=>{el.style.animation='none';void el.getBoundingClientRect();el.style.animation=''});
@@ -1313,18 +1323,22 @@ const author=()=>{try{return localStorage.getItem('mazinator.author')||''}catch(
 const setAuthor=v=>{try{localStorage.setItem('mazinator.author',v)}catch(e){}};
 async function api(path,opts){const r=await fetch('/leapwork/api/'+path,Object.assign({credentials:'same-origin',headers:{'content-type':'application/json'}},opts||{}));const d=await r.json().catch(()=>({error:'The server sent an unexpected reply ('+r.status+').'}));if(!r.ok||d.error)throw new Error(d.error||('Request failed ('+r.status+')'));return d}
 function addMsg(role,text,by){const m=document.createElement('div');m.className='msg '+role;if(by){const b=document.createElement('span');b.className='by';b.textContent=by;m.appendChild(b)}m.appendChild(document.createTextNode(text));ucMsgs.appendChild(m);ucMsgs.scrollTop=ucMsgs.scrollHeight;return m}
-function setUcStatus(st){ucCur.status=st;const labels={draft:'Draft',review:'In review',locked:'Locked'};ucPill.textContent=labels[st]||st;ucPill.className='uc-pill '+st;
-  const locked=st==='locked';ucLock.textContent={draft:'Send for review',review:'Approve & lock',locked:'Unlock to edit'}[st]||'Lock';ucInput.disabled=locked||ucBusy;ucSend.disabled=locked||ucBusy;
-  ucInput.placeholder=locked?'Locked. Unlock to make changes.':'Tell Claude about this use case, or ask it to draft the next section.'}
+const UC_LABEL={draft:'Draft',review:'Pending approval',locked:'Approved'};
+let ucEvents=[],ucTodo=null;
+function setUcStatus(st){ucCur.status=st;ucPill.textContent=UC_LABEL[st]||st;ucPill.className='uc-pill '+st;
+  const ro=st!=='draft';ucInput.disabled=ro||ucBusy;ucSend.disabled=ro||ucBusy;
+  ucInput.placeholder=st==='review'?'Pending approval. Request changes to edit.':st==='locked'?'Approved. Reopen for edits to make changes.':'Tell Claude about this use case, or ask it to draft the next section.';
+  renderBar()}
 function reloadPreview(){const fr=document.getElementById('ucFrame');fr.src=ucOpen.href+'?t='+Date.now()}
 async function openUseCase(id){
   const c=USECASES.find(k=>k.id===id);if(!c)return;ucCur={id,title:c.title,status:c.status};
   ucCrumb.textContent=c.title;ucOpen.href='/leapwork/use-cases/'+encodeURIComponent(id);
   ucMsgs.innerHTML='';setUcStatus(c.status);reloadPreview();
   const v=document.getElementById('usecase');v.classList.add('on');requestAnimationFrame(()=>v.classList.add('show'));
-  try{const d=await api('use-cases/'+encodeURIComponent(id)+'/chat');setUcStatus(d.status);
-    d.messages.forEach(m=>addMsg(m.role,m.content,m.role==='user'?m.author:null));
-    if(!d.messages.length)addMsg('sys',d.status==='locked'?'This use case is locked. Unlock it to make changes with Claude.':"Start by describing the use case in your own words: who has the problem, what it costs them, and which Leapwork product fixes it. Claude will draft each section with you and check the facts.");
+  ucEvents=[];ucTodo=null;
+  try{const d=await api('use-cases/'+encodeURIComponent(id)+'/chat');ucEvents=d.messages.filter(m=>m.role==='event');setUcStatus(d.status);
+    d.messages.forEach(m=>m.role==='event'?addMsg('sys',m.content+(m.author?' · '+m.author:'')):addMsg(m.role,m.content,m.role==='user'?m.author:null));
+    if(!d.messages.length)addMsg('sys',d.status==='locked'?'This use case is approved. Reopen it for edits to make changes with Claude.':"Start by describing the use case in your own words: who has the problem, what it costs them, and which Leapwork product fixes it. Claude will draft each section with you and check the facts.");
   }catch(e){addMsg('err',e.message)}
   refreshProgress();
   if(ucCur.status!=='locked')setTimeout(()=>ucInput.focus(),400);
@@ -1339,39 +1353,48 @@ async function sendChat(){
   }catch(e){w.remove();addMsg('err',e.message);ucInput.value=ucInput.value||text}
   ucBusy=false;setUcStatus(ucCur.status);ucInput.focus();
 }
-const NEXT={draft:'review',review:'locked',locked:'draft'};
-const STATUS_NOTE={review:'Sent for review. Share the full page link with whoever needs to check it; you can keep editing with Claude meanwhile.',locked:'Approved and locked. This version is saved and ready for campaign briefs. Unlock it if anything needs to change.',draft:'Unlocked. Changes are allowed again.'};
+const STATUS_NOTE={review:'Submitted for approval. The use case is read-only until it is approved or sent back for changes.',
+  locked:'Approved. This version is saved and campaign briefs can be built from it.',draft:'Back to draft. Changes are allowed again.'};
 async function setUseCaseStatus(next){
   if(!ucCur||ucBusy)return;
   try{await api('use-cases/'+encodeURIComponent(ucCur.id)+'/status',{method:'POST',body:JSON.stringify({status:next,author:author()})});
-    setUcStatus(next);addMsg('sys',STATUS_NOTE[next]);
+    const d=await api('use-cases/'+encodeURIComponent(ucCur.id)+'/chat');ucEvents=d.messages.filter(m=>m.role==='event');
+    const last=ucEvents[ucEvents.length-1];if(last)addMsg('sys',last.content+(last.author?' · '+last.author:''));
+    setUcStatus(next);
     const c=USECASES.find(k=>k.id===ucCur.id);if(c)c.status=next;reloadPreview();refreshProgress();
   }catch(e){addMsg('err',e.message)}
 }
-function toggleLock(){if(ucCur)setUseCaseStatus(NEXT[ucCur.status]||'review')}
-// ----- section progress and the finish card -----
+const fmtWhen=t=>{if(!t)return '';const d=new Date(t.replace(' ','T')+'Z');return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric'})};
+function lastEvent(prefix){for(let k=ucEvents.length-1;k>=0;k--)if(ucEvents[k].content.startsWith(prefix))return ucEvents[k];return null}
+// The bar under the page always shows the one next step.
+function renderBar(){
+  if(!ucCur)return;const st=ucCur.status,say=document.getElementById('ucBarSay'),acts=document.getElementById('ucBarActs');let cls=st;
+  if(st==='draft'){
+    if(ucTodo===null){say.innerHTML='<b>Draft</b>Checking which sections are written…';acts.innerHTML=''}
+    else if(ucTodo.length){say.innerHTML=`<b>Draft · ${10-ucTodo.length} of 10 sections</b>Next: ${ucTodo[0]}. Keep going with Claude in the chat.`;
+      acts.innerHTML=`<button class="btn out" onclick="ucInput.focus()">Continue with Claude</button>`}
+    else{cls='ready';say.innerHTML='<b>Ready to submit</b>All sections are written. Read the page, then submit it for approval.';
+      acts.innerHTML=`<button class="btn teal" onclick="setUseCaseStatus('review')">Submit for approval</button>`}
+  }else if(st==='review'){const e=lastEvent('Submitted');
+    say.innerHTML=`<b>Pending approval</b>${e?`Submitted${e.author?' by '+esc(e.author):''}${fmtWhen(e.created_at)?' on '+fmtWhen(e.created_at):''}. `:''}Read-only until it is approved or sent back.`;
+    acts.innerHTML=`<button class="btn out" onclick="setUseCaseStatus('draft')">Request changes</button><button class="btn teal" onclick="setUseCaseStatus('locked')">Approve</button>`}
+  else{const e=lastEvent('Approved');
+    say.innerHTML=`<b>Approved${e?' · '+esc(e.content.replace(/^Approved\s*/,'').replace(/[()]/g,'')):''}</b>${e&&e.author?'Approved by '+esc(e.author)+'. ':''}Campaign briefs can be built from this version.`;
+    acts.innerHTML=`<button class="btn ghost" onclick="setUseCaseStatus('draft')">Reopen for edits</button>`}
+  document.getElementById('ucBar').className='uc-bar '+cls;
+}
+// ----- section progress -----
 const SECTIONS=[['Problem',u=>u.problem],['Position',u=>u.position],['Industries',u=>u.industries.length],['Personas',u=>u.personas.length],
   ['Pain points',u=>u.pain_points.length],['Customers',u=>u.customers.length],['Partners',u=>u.partners.length],['Competitors',u=>u.competitors.length],
   ['Objections',u=>u.objections.length],['Sources',u=>u.sources.length]];
 async function refreshProgress(){
   if(!ucCur)return;
   try{const d=await api('use-cases/'+encodeURIComponent(ucCur.id));const u=d.use_case;
-    const todo=SECTIONS.filter(([,f])=>!f(u)).map(([n])=>n),done=SECTIONS.length-todo.length;
+    ucTodo=SECTIONS.filter(([,f])=>!f(u)).map(([n])=>n);const done=SECTIONS.length-ucTodo.length;
     ucProgBar.style.width=(done/SECTIONS.length*100)+'%';
-    ucProgText.innerHTML=todo.length?`<b>${done} of ${SECTIONS.length}</b> sections written · Next: ${todo[0]}`:`<b>All ${SECTIONS.length} sections written</b>`;
-    const card=document.getElementById('ucDone');
-    if(!todo.length&&ucCur.status==='draft'&&!card)showFinish();
-    if(card&&(todo.length||ucCur.status!=='draft'))card.remove();
+    ucProgText.innerHTML=ucTodo.length?`<b>${done} of ${SECTIONS.length}</b> sections written · Next: ${ucTodo[0]}`:`<b>All ${SECTIONS.length} sections written</b>`;
+    renderBar();
   }catch(e){ucProgText.textContent='Could not check sections: '+e.message}
-}
-function showFinish(){
-  const m=document.createElement('div');m.className='msg done';m.id='ucDone';
-  m.innerHTML=`<h4>The use case is complete</h4>What to do now:<ol>
-    <li>Read the page on the right from top to bottom. Ask Claude for any changes.</li>
-    <li>Send it for review so the team can check it (share the full page link).</li>
-    <li>Once it's approved, lock it. Locked use cases are the ones campaign briefs are built from.</li></ol>
-    <div class="acts"><button class="btn teal" onclick="setUseCaseStatus('review')">Send for review</button><button class="btn out" onclick="setUseCaseStatus('locked')">Approve &amp; lock now</button></div>`;
-  ucMsgs.appendChild(m);ucMsgs.scrollTop=ucMsgs.scrollHeight;
 }
 document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='ucInput'&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}});
 function backFromUseCase(){const v=document.getElementById('usecase');v.classList.remove('show');setTimeout(()=>{v.classList.remove('on');loadUseCases();renderMap()},450)}
