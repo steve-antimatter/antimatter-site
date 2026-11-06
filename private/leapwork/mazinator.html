@@ -564,6 +564,35 @@
   .bf-drawer iframe{flex:1;border:0;width:100%}
   @media (max-width:1200px){.bf-menu{grid-template-columns:repeat(3,1fr)}}
   @media (max-width:900px){#brief .chat{width:100%;bottom:55%}#bfMain{left:0;top:45%}#brief .uc-bar{left:0}.bf-grid{grid-template-columns:1fr}.bf-menu{grid-template-columns:1fr 1fr}}
+  /* ---------- market street ---------- */
+  #shops{display:none;background:#E8EEF4;z-index:12;opacity:0;transition:opacity .5s;overflow:hidden}
+  #shops.on{display:block} #shops.show{opacity:1}
+  #shops svg{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:none}
+  #shops .shop{cursor:pointer} #shops .shop .halo{transition:fill .2s}
+  #shops .shop:hover .halo{fill:rgba(191,166,106,.25)} #shops .shop.here .halo{fill:rgba(63,122,120,.22)}
+  .street-hd{position:absolute;left:28px;top:24px;background:#FFFDF7;border:2px solid #090F12;box-shadow:6px 6px 0 rgba(9,15,18,.15);padding:14px 18px;max-width:min(520px,60vw);z-index:2}
+  .street-hd small{display:block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--fog-blue)}
+  .street-hd h3{font-size:20px;margin:4px 0 4px;color:var(--deep-slate)} .street-hd p{font-size:13.5px;color:var(--steel-blue);margin:0}
+  .street-acts{position:absolute;right:24px;top:24px;display:flex;gap:10px;z-index:2}
+  #shops:not(.walking-on) .street-skip{display:none}
+  .street-pan{position:absolute;bottom:24px;z-index:2;width:44px;height:44px;font-size:22px;line-height:1;padding:0}
+  .street-pan.l{left:24px} .street-pan.r{right:24px} #shops.carded .street-pan.r{right:calc(min(460px,92vw) + 40px)}
+  .shopcard{position:absolute;right:24px;top:96px;bottom:24px;width:min(460px,92vw);background:#FFFDF7;border:2px solid #090F12;box-shadow:8px 8px 0 rgba(9,15,18,.18);
+    display:flex;flex-direction:column;opacity:0;transform:translateX(30px);pointer-events:none;transition:opacity .35s,transform .35s;z-index:3}
+  #shops.carded .shopcard{opacity:1;transform:none;pointer-events:auto}
+  .shopcard .top{padding:18px 22px 14px;border-bottom:1px solid rgba(9,15,18,.12)}
+  .shopcard small{display:block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--fog-blue)}
+  .shopcard h3{font-size:22px;margin:4px 0 12px;color:var(--deep-slate)}
+  .shopcard .meta{display:flex;gap:18px;flex-wrap:wrap;font-size:13.5px;color:var(--deep-slate)}
+  .shopcard .meta b{display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fog-blue)}
+  .shopcard .meta i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;border:1.5px solid #090F12;vertical-align:-1px}
+  .shopcard .body{flex:1;overflow:auto;padding:14px 22px}
+  .shopcard .body h4{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fog-blue);margin:0 0 8px}
+  .shopcard .srow{padding:8px 0;border-top:1px solid rgba(9,15,18,.08);font-size:14px;line-height:1.45;color:var(--deep-slate)}
+  .shopcard .srow b{display:block;font-size:12px;color:var(--steel-blue);margin-bottom:2px} .shopcard .srow span{white-space:pre-wrap}
+  .shopcard .srow .unset{color:#9AA9B3;font-style:italic}
+  .shopcard .foot{padding:14px 22px 18px;border-top:1px solid rgba(9,15,18,.12)}
+  .shopcard .foot p{font-size:13px;color:var(--fog-blue);margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -1024,6 +1053,20 @@
   <div class="bf-drawer" id="bfDrawer" aria-hidden="true">
     <div class="hd"><b>Approved use case</b><a id="bfUcOpen" target="_blank" rel="noopener">Open full page ↗</a><button class="btn ghost" onclick="closeUcDrawer()">Close</button></div>
     <iframe id="bfUcFrame" title="Approved use case"></iframe>
+  </div>
+</div>
+
+<!-- ================= MARKET STREET (SHOPS) ================= -->
+<div class="view" id="shops">
+  <svg id="shopScene" viewBox="0 170 1600 730" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+  <div class="street-hd"><small>Market street</small><h3 id="shopTitle"></h3><p id="shopSub"></p></div>
+  <div class="street-acts"><button class="btn out street-skip" onclick="shopSkip=true">Skip</button><button class="btn out" onclick="closeShops()">← Back to the brief</button></div>
+  <button class="btn out street-pan l" onclick="panStreet(-700)" aria-label="Scroll left">‹</button>
+  <button class="btn out street-pan r" onclick="panStreet(700)" aria-label="Scroll right">›</button>
+  <div class="shopcard" role="dialog" aria-labelledby="shopName">
+    <div class="top"><small id="shopKicker"></small><h3 id="shopName"></h3><div class="meta" id="shopMeta"></div></div>
+    <div class="body" id="shopBody"></div>
+    <div class="foot"><p>Inside the shop, the team makes this asset with Claude and gets it approved. That part is next.</p><button class="btn out" onclick="closeShopCard()">Back to the street</button></div>
   </div>
 </div>
 
@@ -2050,8 +2093,8 @@ function renderBfBar(){if(!bf)return;const st=bf.status,say=bfBarSay,acts=bfBarA
     say.innerHTML=`<b>Pending approval</b>${e?`Submitted${e.author?' by '+escs(e.author):''}${fmtWhen(e.created_at)?' on '+fmtWhen(e.created_at):''}. `:''}Read-only until it is approved or sent back.`;
     acts.innerHTML=`<button class="btn out" onclick="setBriefStatus('draft')">Request changes</button><button class="btn teal" onclick="setBriefStatus('locked')">Approve</button>`}
   else{const e=bfLast('Approved');
-    say.innerHTML=`<b>Approved${e?' · '+escs(e.content.replace(/^Approved\s*/,'').replace(/[()]/g,'')):''}</b>${e&&e.author?'Approved by '+escs(e.author)+'. ':''}This is the brief the campaign's assets are built from.`;
-    acts.innerHTML=`<button class="btn ghost" onclick="setBriefStatus('draft')">Reopen for edits</button>`}
+    say.innerHTML=`<b>Approved${e?' · '+escs(e.content.replace(/^Approved\s*/,'').replace(/[()]/g,'')):''}</b>${e&&e.author?'Approved by '+escs(e.author)+'. ':''}Each output now has a shop on Market Street, where its asset gets made.`;
+    acts.innerHTML=`<button class="btn ghost" onclick="setBriefStatus('draft')">Reopen for edits</button><button class="btn teal" onclick="openShops()">Head to the shops →</button>`}
   bfBar.className='uc-bar '+cls}
 async function setBriefStatus(next){
   if(!bf||bfBusy)return;await flushNow();
@@ -2061,6 +2104,101 @@ async function setBriefStatus(next){
     bf.status=next;renderBrief();setBfStatus(next);
   }catch(e){bfAdd('err',e.message)}
 }
+// ----- market street: one shop for every output on an approved brief -----
+const GROUP_COLOR={content:'#C97A5A',enablement:'#3F7A78',inbound:'#618FA4',outbound:'#BFA66A',customer:'#002423'};
+const STATUS_COLOR={'Not started':'#9AA6AC','In progress':'#BFA66A','Done':'#3F7A78'};
+const STREET_Y=700,WALK_Y=772;
+let SHOPS=[],shopW=0,shopCam=0,shopRAF=0,shopX=200,shopSkip=false,shopWalking=false,shopOpen=null;
+function wrapWords(t,n,max=3){const lines=[''];for(const w of String(t).split(' ')){const c=lines[lines.length-1];if(c&&(c+' '+w).length>n)lines.push(w);else lines[lines.length-1]=(c?c+' ':'')+w}return lines.slice(0,max)}
+function layoutShops(b){const items=[];let x=560;
+  for(const g of SPEC.groups){if(!b.doc.groups[g.id])continue;const os=g.outputs.filter(o=>b.doc.outputs[o.id]?.on);if(!os.length)continue;
+    items.push({sign:true,g,x});x+=140;for(const o of os){items.push({g,o,x,st:b.doc.outputs[o.id]});x+=236}x+=70}
+  return {items,width:Math.max(1600,x+260)}}
+function shopSvg(s,i){const c=GROUP_COLOR[s.g.id],w=196,h=236+(i*5%3)*26,st=s.st,lines=wrapWords(s.o.title,17),sc=STATUS_COLOR[st.status]||'#9AA6AC';
+  const stripes=[...Array(8)].map((_,k)=>k%2?'':`<rect x="${-4+k*(w+8)/8}" y="-134" width="${(w+8)/8}" height="28" fill="#FFFFFF" opacity=".85"/>`).join('');
+  const scallops=[...Array(8)].map((_,k)=>`<path d="M${-4+k*(w+8)/8} -106 q ${(w+8)/16} 14 ${(w+8)/8} 0" fill="${k%2?c:'#FFFFFF'}" stroke="#090F12" stroke-width="2"/>`).join('');
+  return `<g class="shop" id="shop-${s.o.id}" transform="translate(${s.x} ${STREET_Y})" onclick="visitShop('${s.o.id}')" role="button" aria-label="${escs(s.o.title)}">
+    <rect class="halo" x="-14" y="${-h-30}" width="${w+28}" height="${h+44}" fill="none"/>
+    <rect x="0" y="${-h}" width="${w}" height="${h}" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
+    <rect x="-8" y="${-h-16}" width="${w+16}" height="16" fill="${c}" stroke="#090F12" stroke-width="3"/>
+    <rect x="14" y="${-h+16}" width="${w-28}" height="${18+lines.length*17}" fill="#FFFDF7" stroke="#090F12" stroke-width="2.5"/>
+    ${lines.map((l,k)=>`<text x="${w/2}" y="${-h+38+k*17}" text-anchor="middle" font-size="13.5" font-weight="800" fill="#090F12">${escs(l)}</text>`).join('')}
+    <rect x="-4" y="-134" width="${w+8}" height="28" fill="${c}" stroke="#090F12" stroke-width="2.5"/>${stripes}${scallops}
+    <rect x="14" y="-92" width="96" height="72" fill="#D2E1EA" stroke="#090F12" stroke-width="2.5"/>
+    <text x="62" y="-60" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="1" fill="#4F6F82">OWNER</text>
+    ${wrapWords(st.owner||'Not set',14,2).map((l,k)=>`<text x="62" y="${-45+k*12}" text-anchor="middle" font-size="11" font-weight="700" fill="#090F12">${escs(l)}</text>`).join('')}
+    <rect x="128" y="-100" width="52" height="100" fill="#002423" stroke="#090F12" stroke-width="2.5"/><circle cx="170" cy="-50" r="3" fill="#BFA66A"/>
+    <g transform="translate(${w/2} 34)"><rect x="-58" y="-11" width="116" height="20" fill="${sc}" stroke="#090F12" stroke-width="2"/>
+      <text y="4" text-anchor="middle" font-size="10" font-weight="800" letter-spacing="1.2" fill="#FFFFFF">${escs(st.status.toUpperCase())}</text></g>
+  </g>`}
+function signSvg(s){const lines=wrapWords(s.g.title,14),c=GROUP_COLOR[s.g.id];
+  return `<g transform="translate(${s.x+50} ${STREET_Y})"><rect x="-4" y="-200" width="8" height="200" fill="#090F12"/>
+    <rect x="-62" y="-${208+lines.length*16}" width="124" height="${16+lines.length*16}" fill="${c}" stroke="#090F12" stroke-width="3"/>
+    ${lines.map((l,k)=>`<text x="0" y="${-196-lines.length*16+12+k*16}" text-anchor="middle" font-size="12" font-weight="800" fill="#FFFFFF">${escs(l.toUpperCase())}</text>`).join('')}
+    ${tree(-30,-2,1.1)}${tree(34,-2,1.3)}</g>`}
+function buildStreet(){const L=layoutShops(bf);SHOPS=L.items.filter(s=>!s.sign);shopW=L.width;
+  const road=`M-200 ${WALK_Y} L${shopW+200} ${WALK_Y}`;
+  return `<rect x="-200" y="-100" width="${shopW+600}" height="1200" fill="#E8EEF4"/>
+  <g id="streetWorld">
+    ${[200,900,1700,2500,3300,4100,4900].filter(x=>x<shopW).map((x,k)=>cloud(x,140+(k%2)*60,120+(k%3)*30)).join('')}
+    <path d="M-200 560 Q 400 430 900 520 T 2000 480 T ${shopW+200} 500 L ${shopW+200} 720 L -200 720 Z" fill="#B9D3C8" opacity=".5"/>
+    <rect x="-200" y="${STREET_Y}" width="${shopW+400}" height="400" fill="#ABBE8A"/>
+    <rect x="-200" y="${STREET_Y}" width="${shopW+400}" height="44" fill="#F4F1EA" stroke="#090F12" stroke-width="3"/>
+    <path d="${road}" stroke="#FFFFFF" stroke-width="58"/><path d="${road}" stroke="#D2E1EA" stroke-width="3" stroke-dasharray="16 18"/>
+    <!-- back of Town Hall -->
+    <g transform="translate(150 ${STREET_Y})"><rect x="-150" y="-260" width="300" height="260" fill="#FFFFFF" stroke="#090F12" stroke-width="4"/>
+      <polygon points="-170,-260 0,-330 170,-260" fill="#FFFFFF" stroke="#090F12" stroke-width="4"/>
+      <text x="0" y="-272" text-anchor="middle" font-size="13" font-weight="800" letter-spacing="5" fill="#090F12">TOWN HALL</text>
+      <rect x="-30" y="-110" width="60" height="110" fill="#BFA66A" stroke="#090F12" stroke-width="3"/></g>
+    <g transform="translate(420 ${STREET_Y})"><rect x="-3" y="-120" width="6" height="120" fill="#090F12"/>
+      <rect x="-86" y="-160" width="172" height="44" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
+      <text x="0" y="-142" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="2" fill="#4F6F82">MARKET STREET</text>
+      <text x="0" y="-125" text-anchor="middle" font-size="${(bf.doc.core.name||'').length>22?10:12}" font-weight="800" fill="#090F12">${escs((bf.doc.core.name||'Campaign').toUpperCase())}</text></g>
+    ${L.items.map((s,i)=>s.sign?signSvg(s):shopSvg(s,i)).join('')}
+    ${[...Array(Math.ceil(shopW/700))].map((_,k)=>lamp(320+k*700,STREET_Y+40)).join('')}
+    <g class="walkers" id="sWalkers"><g id="sMaz">${walkerMaz()}</g><g id="sDog">${walkerDog()}</g></g>
+  </g>`}
+function placeWalkers(x){shopX=x;document.getElementById('sMaz').setAttribute('transform',`translate(${x} ${WALK_Y-30})`);document.getElementById('sDog').setAttribute('transform',`translate(${x+46} ${WALK_Y-2})`)}
+function setCam(c){shopCam=Math.max(1600-shopW,Math.min(0,c));const w=document.getElementById('streetWorld');if(w)w.setAttribute('transform',`translate(${shopCam} 0)`)}
+function walkTo(x,done){cancelAnimationFrame(shopRAF);const from=shopX,dist=Math.abs(x-from),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dur=reduced?0:Math.min(5200,Math.max(500,dist*1.6)),t0=performance.now(),walkers=document.getElementById('sWalkers');
+  const flip=x<from;document.getElementById('sMaz').firstElementChild.setAttribute('transform',flip?'scale(-1 1)':'');document.getElementById('sDog').firstElementChild.setAttribute('transform',flip?'scale(-1 1)':'');
+  shopWalking=true;shopSkip=false;walkers.classList.add('walking');document.getElementById('shops').classList.add('walking-on');
+  (function step(t){const e=shopSkip||!dur?1:Math.min(1,(t-t0)/dur),q=e<.5?2*e*e:1-Math.pow(-2*e+2,2)/2;const px=from+(x-from)*q;placeWalkers(px);setCam(800-px);
+    if(e<1)shopRAF=requestAnimationFrame(step);else{walkers.classList.remove('walking');shopWalking=false;document.getElementById('shops').classList.remove('walking-on');done&&done()}})(t0)}
+function openShops(){
+  if(!bf||bf.status!=='locked')return;closeShopCard();
+  const v=document.getElementById('shops');document.getElementById('shopScene').innerHTML=buildStreet();
+  const done=SHOPS.filter(s=>s.st.status==='Done').length;
+  shopTitle.textContent=bf.doc.core.name||'Campaign';
+  shopSub.textContent=SHOPS.length?`${SHOPS.length} shop${SHOPS.length>1?'s':''}, one for each output in the brief · ${done} done. Click a shop to visit it.`:'No outputs are ticked in this brief, so there are no shops yet.';
+  v.classList.add('on');requestAnimationFrame(()=>v.classList.add('show'));
+  placeWalkers(150);setCam(0);
+  if(SHOPS.length)setTimeout(()=>walkTo(SHOPS[0].x-40),400);
+}
+function closeShops(){cancelAnimationFrame(shopRAF);closeShopCard();const v=document.getElementById('shops');v.classList.remove('show');setTimeout(()=>v.classList.remove('on'),450)}
+function fmtVal(f,v){if(v===null||v===undefined||v===''||(Array.isArray(v)&&!v.length))return null;
+  if(f.type==='pick'){const o=bf.options[f.from]||[];return v.map(id=>(o.find(x=>x.id===id)||{}).name||id).join(', ')}
+  if(f.type==='pairs')return v.map(r=>r.a+(r.b?' — '+r.b:'')).join('\n');
+  if(f.type==='money')return '$'+Number(v).toLocaleString('en-US');
+  if(f.type==='date')return fmtDate(v);
+  return Array.isArray(v)?v.join('\n'):String(v)}
+function visitShop(id){if(shopWalking)return;const s=SHOPS.find(k=>k.o.id===id);if(!s)return;closeShopCard();
+  document.querySelectorAll('#shopScene .shop').forEach(el=>el.classList.toggle('here',el.id==='shop-'+id));
+  walkTo(s.x+150,()=>showShopCard(s))}
+function showShopCard(s){shopOpen=s.o.id;const st=s.st;
+  shopKicker.textContent=s.g.title;shopName.textContent=s.o.title;
+  shopMeta.innerHTML=`<span><b>Owner</b>${escs(st.owner||'Not set')}</span><span><b>Due</b>${st.due?escs(fmtDate(st.due)):'Not set'}</span><span><b>Status</b><i style="background:${STATUS_COLOR[st.status]}"></i>${escs(st.status)}</span>`;
+  const rows=s.o.fields.map(f=>[f.label,fmtVal(f,st.values[f.key])]);
+  shopBody.innerHTML=`<h4>From the approved brief</h4>`+rows.map(([l,v])=>`<div class="srow"><b>${escs(l)}</b><span class="${v?'':'unset'}">${v?escs(v):'Not set'}</span></div>`).join('');
+  document.getElementById('shops').classList.add('carded')}
+function closeShopCard(){shopOpen=null;document.getElementById('shops').classList.remove('carded');document.querySelectorAll('#shopScene .shop.here').forEach(el=>el.classList.remove('here'))}
+function panStreet(dx){if(!shopWalking)setCam(shopCam-dx)}
+(function wireStreet(){const sv=document.getElementById('shopScene');let drag=null;
+  sv.addEventListener('wheel',e=>{if(shopWalking)return;e.preventDefault();const r=sv.getBoundingClientRect(),k=1600/Math.max(1,Math.min(r.width,r.height*16/9));panStreet((Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY)*k)},{passive:false});
+  sv.addEventListener('pointerdown',e=>{if(e.target.closest('.shop'))return;drag={x:e.clientX,c:shopCam}});
+  addEventListener('pointermove',e=>{if(!drag||shopWalking)return;const r=sv.getBoundingClientRect();setCam(drag.c+(e.clientX-drag.x)*1600/Math.max(1,r.width))});
+  addEventListener('pointerup',()=>drag=null)})();
 </script>
 </body>
 </html>
