@@ -336,6 +336,32 @@
   .paper .stamp.ok{border-color:var(--harbor-teal);color:var(--harbor-teal)}
   .paper .acts{display:flex;gap:10px;flex-wrap:wrap}
   @media (prefers-reduced-motion:reduce){#portBoat,#portBob,.wakeline,#portRope,.paper{animation:none!important;opacity:1}}
+  #port.still #portBoat,#port.still #portBob,#port.still .wakeline,#port.still #portRope,#port.still .paper{animation:none!important;opacity:1}
+  #port.still #portBob{animation:bob 2.6s ease-in-out infinite!important}
+  .paper .later{margin:12px 0 0;font-size:12.5px;color:var(--fog-blue)}
+  .paper .acts .link{border:0;background:none;color:var(--fog-blue);font:600 12px var(--font);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;padding:0 4px}
+  /* ---------- into town: Maz and Gladys walk to Town Hall ---------- */
+  #town{display:none;background:#E8EEF4;z-index:9;opacity:0;transition:opacity .5s;overflow:hidden}
+  #town.on{display:block} #town.show{opacity:1}
+  #town svg{position:absolute;inset:0;width:100%;height:100%}
+  .walking .legA{animation:stepA .42s ease-in-out infinite alternate} .walking .legB{animation:stepA .42s ease-in-out infinite alternate-reverse}
+  @keyframes stepA{from{transform:rotate(16deg)}to{transform:rotate(-16deg)}}
+  .walking .trot{animation:trot .26s ease-in-out infinite alternate}
+  @keyframes trot{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+  .walking .bobw{animation:trot .42s ease-in-out infinite alternate}
+  .legA,.legB{transform-box:fill-box;transform-origin:50% 0}
+  #hallDoor{transition:fill .6s} #town.arrived #hallDoor{fill:#BFA66A}
+  #town .walkers{transition:opacity .6s} #town.arrived .walkers{opacity:0}
+  .hallcard{position:absolute;left:5%;bottom:9%;transform:translateY(20px);width:min(520px,90vw);background:#FFFDF7;border:2px solid #090F12;box-shadow:8px 8px 0 rgba(9,15,18,.18);
+    padding:22px 26px;opacity:0;pointer-events:none;transition:opacity .5s,transform .5s}
+  #town.arrived .hallcard{opacity:1;transform:none;pointer-events:auto}
+  #town.arrived .town-skip{display:none}
+  #thGo:disabled{opacity:.55;cursor:default}
+  .hallcard small{display:block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--fog-blue)}
+  .hallcard h3{margin:6px 0 8px;font-size:24px;color:var(--deep-slate)} .hallcard p{margin:0 0 16px;font-size:15px;line-height:1.5;color:var(--steel-blue)}
+  .hallcard .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .town-skip{position:absolute;right:24px;top:24px;z-index:2}
+  @media (prefers-reduced-motion:reduce){.walking .legA,.walking .legB,.walking .trot,.walking .bobw{animation:none}}
   #usecase{display:none;background:#FFFFFF;z-index:8;opacity:0;transition:opacity .5s}
   #usecase.on{display:block} #usecase.show{opacity:1}
   #usecase iframe{position:absolute;top:84px;left:400px;width:calc(100% - 400px);height:calc(100% - 84px - 76px);border:0;background:#FFFFFF}
@@ -877,7 +903,21 @@
     <h3 id="ppTitle">Welcome to the port.</h3>
     <p>To dock your ship we need the following paperwork:</p>
     <div class="doc"><div class="box" id="ppBox"></div><div><b id="ppDoc"></b><span id="ppState"></span></div></div>
-    <div class="acts"><button class="btn teal" id="ppGo" onclick="portToUseCase()">Fill out the paperwork</button><button class="btn out" onclick="leavePort()">Back to chart</button></div>
+    <div class="acts" id="ppActs"></div>
+    <p class="later" id="ppLater"></p>
+  </div>
+</div>
+
+<!-- ================= INTO TOWN ================= -->
+<div class="view" id="town">
+  <svg id="townScene" viewBox="0 170 1600 730" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+  <button class="btn out town-skip" onclick="skipWalk()">Skip</button>
+  <div class="hallcard" role="dialog" aria-labelledby="thTitle">
+    <small id="thKicker">Town Hall</small>
+    <h3 id="thTitle">Welcome to Town Hall.</h3>
+    <p id="thText"></p>
+    <div class="acts"><button class="btn teal" id="thGo" onclick="startBrief()">Start the campaign brief</button><button class="btn out" onclick="backToDock()">Back to the dock</button></div>
+    <p class="later" id="thLater"></p>
   </div>
 </div>
 
@@ -1486,15 +1526,19 @@ function buildPortScene(title,theme){
   <!-- mooring line -->
   <path id="portRope" d="M500 650 Q540 690 570 600" stroke="#090F12" stroke-width="4" fill="none"/>`;
 }
-function openPort(id){
-  const c=USECASES.find(k=>k.id===id);if(!c)return;portId=id;
+function openPort(id,opts={}){
+  const c=USECASES.find(k=>k.id===id);if(!c)return;portId=id;const v0=document.getElementById('port');
   const st=c.status,done=st==='locked';
   document.getElementById("portScene").innerHTML=buildPortScene(c.title,themeOf(c));
   ppPort.textContent=c.title;ppDoc.textContent=c.title+' Use Case Submission';
   ppState.textContent={draft:'Draft · in progress',review:'Submitted · pending approval',locked:'Approved · on file'}[st]||st;
   ppBox.textContent=done?'✓':'';ppStamp.textContent=done?'Cleared':st==='review'?'Awaiting approval':'Pending';ppStamp.className='stamp'+(done?' ok':'');
   ppTitle.textContent=done?'Welcome back to the port.':'Welcome to the port.';
-  ppGo.textContent=done?'View the paperwork':st==='review'?'Review for approval':'Fill out the paperwork';
+  ppActs.innerHTML=done
+    ?`<button class="btn teal" onclick="openTown(portId)">Head into town →</button><button class="btn out" onclick="portToUseCase()">View the paperwork</button><button class="link" onclick="leavePort()">Back to chart</button>`
+    :`<button class="btn teal" onclick="portToUseCase()">${st==='review'?'Review for approval':'Fill out the paperwork'}</button><button class="btn out" onclick="leavePort()">Back to chart</button>`;
+  ppLater.textContent=done?'Paperwork cleared. Town Hall is where the campaign brief gets written.':st==='review'?'Once the paperwork is approved you can head into town to write the campaign brief.':'Once the paperwork is filled out and approved, you can head into town to write the campaign brief.';
+  v0.classList.toggle('still',!!opts.still);
   const v=document.getElementById('port');
   // restart the animations each visit
   v.querySelectorAll('#portBoat,#portBob,.wakeline,#portRope,.paper').forEach(el=>{el.style.animation='none';void el.getBoundingClientRect();el.style.animation=''});
@@ -1503,6 +1547,107 @@ function openPort(id){
 function closePortView(){const v=document.getElementById('port');v.classList.remove('show');setTimeout(()=>v.classList.remove('on'),450)}
 function portToUseCase(){const id=portId;openUseCase(id);setTimeout(closePortView,500)}
 function leavePort(){closePortView();setTimeout(()=>{renderMap();endVoyage()},450)}
+
+// ----- into town: Maz and Gladys walk from the dock to Town Hall -----
+let townId=null,walkRAF=0,walkSkip=false;
+function walkerMaz(){return `<g class="bobw">
+  <g class="legA"><rect x="-9" y="0" width="7" height="30" fill="#090F12"/></g><g class="legB"><rect x="2" y="0" width="7" height="30" fill="#090F12"/></g>
+  <path d="M0 -78 q -20 2 -20 22 l 0 22 q 4 4 12 3 l 0 -18 q 3 -13 16 -17 z" fill="#BFA66A"/><path d="M0 -78 q 20 2 20 22 l 0 22 q -4 4 -12 3 l 0 -18 q -3 -13 -16 -17 z" fill="#BFA66A"/>
+  <rect x="-14" y="-40" width="28" height="42" rx="4" fill="#FFFFFF" stroke="#090F12" stroke-width="2"/>
+  <g fill="#618FA4"><rect x="-14" y="-32" width="28" height="4"/><rect x="-14" y="-22" width="28" height="4"/><rect x="-14" y="-12" width="28" height="4"/></g>
+  <rect x="12" y="-36" width="6" height="26" rx="3" fill="#FFFFFF" stroke="#090F12" stroke-width="1.5" transform="rotate(-10 15 -36)"/>
+  <rect x="-3" y="-48" width="6" height="9" fill="#E9CABD"/>
+  <ellipse cx="0" cy="-60" rx="16" ry="18" fill="#E9CABD"/>
+  <path d="M-16 -63 q 4 -16 20 -15 q 11 1 12 12 q -7 -5 -16 -2 q -6 -4 -16 5 z" fill="#BFA66A"/>
+  <circle cx="5" cy="-60" r="1.8" fill="#090F12"/><circle cx="12" cy="-60" r="1.8" fill="#090F12"/>
+  <path d="M4 -52 q 5 4 10 0" fill="none" stroke="#090F12" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M-18 -72 q 18 -6 37 0 l -2 -9 q -16 -6 -33 0 z" fill="#002423"/><path d="M-15 -80 q 15 -12 31 0 q 1 -9 -15 -12 q -16 3 -16 12 z" fill="#FFFFFF"/>
+  <rect x="-16" y="-81" width="34" height="5" fill="#002423"/></g>`}
+function walkerDog(){return `<g class="trot">
+  <path d="M-16 -16 q -8 -8 -4 -14" fill="none" stroke="#090F12" stroke-width="3.5" stroke-linecap="round"/>
+  <ellipse cx="-4" cy="-12" rx="14" ry="9" fill="#090F12"/>
+  <g class="legA"><rect x="-13" y="-6" width="4" height="10" fill="#090F12"/></g><g class="legB"><rect x="2" y="-6" width="4" height="10" fill="#090F12"/></g>
+  <circle cx="11" cy="-22" r="8.5" fill="#090F12"/><ellipse cx="4" cy="-22" rx="3.5" ry="8.5" fill="#090F12" transform="rotate(10 4 -22)"/>
+  <circle cx="18" cy="-20" r="2.6" fill="#090F12"/><circle cx="13" cy="-24" r="1.2" fill="#FFFFFF"/><rect x="4" y="-16" width="12" height="2.5" fill="#B8664C"/></g>`}
+function house(x,y,w,h,roof){return `<g transform="translate(${x} ${y})"><rect x="0" y="${-h}" width="${w}" height="${h}" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
+  <polygon points="-8,${-h} ${w/2},${-h-w*.45} ${w+8},${-h}" fill="${roof}" stroke="#090F12" stroke-width="3"/>
+  <rect x="${w*.18}" y="${-h*.7}" width="${w*.22}" height="${h*.22}" fill="#D2E1EA" stroke="#090F12" stroke-width="2"/><rect x="${w*.58}" y="${-h*.45}" width="${w*.22}" height="${h*.45}" fill="#002423"/></g>`}
+const lamp=(x,y)=>`<g transform="translate(${x} ${y})"><rect x="-2" y="-70" width="4" height="70" fill="#090F12"/><rect x="-8" y="-82" width="16" height="14" fill="#BFA66A" stroke="#090F12" stroke-width="2"/></g>`;
+const ROAD='M420 760 C620 760 700 690 900 690 S1250 760 1500 700 S1900 640 2120 640';
+function buildTownScene(title,theme){
+  const T=THEMES[theme]||THEMES.temperate;
+  const flora=(x,y,sc)=>theme==='tropical'?palm(x,y+6,sc*1.1):theme==='desert'?cactus(x,y+4,sc*1.2):theme==='arctic'?snowPine(x,y,sc):tree(x,y,sc,theme==='volcanic'?'#2F5A3A':'#336B60');
+  return `<rect y="-100" width="1600" height="1100" fill="#E8EEF4"/>
+  <g id="townWorld">
+    <rect x="-200" y="-100" width="2900" height="1100" fill="#E8EEF4"/>
+    ${cloud(300,250,140)}${cloud(1100,210,170)}${cloud(1900,260,150)}${cloud(2500,220,120)}
+    <path d="M360 600 Q 700 430 1050 560 T 1700 520 T 2350 470 T 2800 520 L 2800 620 L 360 620 Z" fill="${T.land}" opacity=".35"/>
+    <!-- ground and water -->
+    <rect x="-200" y="780" width="560" height="200" fill="#D2E1EA"/>${[0,1,2,3].map(i=>`<path d="M${-160+i*130} ${830+(i%2)*30} q 14 -10 28 0 t 28 0" fill="none" stroke="#FFFFFF" stroke-width="3"/>`).join('')}
+    <path d="M360 780 L360 600 Q 900 520 1600 560 T 2700 520 L 2700 980 L 360 980 Z" fill="${T.shore}" stroke="#090F12" stroke-width="4"/>
+    <path d="M420 980 L420 640 Q 900 580 1600 610 T 2700 580 L 2700 980 Z" fill="${T.land}" opacity=".55"/>
+    ${theme==='volcanic'?`<g transform="translate(2350 520)"><polygon points="-160,40 0,-200 160,40" fill="#4A4A4A" stroke="#090F12" stroke-width="4"/><path d="M-30 -160 l30 -40 l30 40 z" fill="#C97A5A"/><path d="M-6 -214 q-24 -36 8 -60 q30 -24 8 -54" fill="none" stroke="#9AA6AC" stroke-width="10" stroke-linecap="round"/></g>`:''}
+    <!-- the dock and the docked Mazinator -->
+    <rect x="220" y="770" width="200" height="16" fill="#B8664C" stroke="#090F12" stroke-width="3"/>${[0,1,2,3].map(i=>`<rect x="${232+i*50}" y="786" width="9" height="60" fill="#090F12"/>`).join('')}
+    <g transform="translate(70 800) scale(.5)">
+      <path d="M-250 -40 L250 -40 L210 30 L-220 30 Z" fill="#090F12"/><rect x="-250" y="-46" width="500" height="10" fill="#B8664C"/>
+      <rect x="-200" y="-150" width="330" height="104" fill="#FFFFFF" stroke="#090F12" stroke-width="5"/>
+      <rect x="-180" y="-124" width="54" height="40" fill="#D2E1EA" stroke="#090F12" stroke-width="3"/><rect x="-110" y="-124" width="54" height="40" fill="#D2E1EA" stroke="#090F12" stroke-width="3"/>
+      <rect x="40" y="-126" width="56" height="80" fill="#002423"/><rect x="-210" y="-164" width="350" height="16" fill="#090F12"/>
+      <text x="-20" y="10" font-size="22" font-weight="800" letter-spacing="4" fill="#FFFFFF">MAZINATOR</text></g>
+    <!-- the road -->
+    <path d="${ROAD}" fill="none" stroke="#090F12" stroke-width="44" stroke-linecap="round" opacity=".08"/>
+    <path d="${ROAD}" fill="none" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round"/>
+    <path d="${ROAD}" fill="none" stroke="#D2E1EA" stroke-width="3" stroke-dasharray="14 16"/>
+    <!-- town -->
+    ${house(560,640,90,80,'#B8664C')}${house(700,610,70,64,'#002423')}${house(1020,640,96,90,'#3F7A78')}${house(1160,620,74,70,'#B8664C')}
+    ${house(1440,650,90,84,'#002423')}${house(1580,630,80,72,'#BFA66A')}
+    ${flora(820,640,1.6)}${flora(870,620,1.3)}${flora(1310,650,1.7)}${flora(1360,630,1.2)}${flora(1720,620,1.6)}${flora(1780,600,1.3)}
+    ${lamp(640,750)}${lamp(980,720)}${lamp(1360,760)}${lamp(1720,690)}
+    <g transform="translate(470 600)"><rect x="-4" y="0" width="8" height="70" fill="#090F12"/><rect x="-80" y="-34" width="160" height="40" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
+      <text x="0" y="-18" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="2" fill="#4F6F82">WELCOME TO</text>
+      <text x="0" y="-2" text-anchor="middle" font-size="${title.length>22?11:13}" font-weight="800" fill="#090F12">${esc(title.toUpperCase())}</text></g>
+    <!-- Town Hall -->
+    <g transform="translate(2120 640)">
+      <rect x="-210" y="-20" width="420" height="20" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/><rect x="-230" y="-4" width="460" height="16" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
+      <rect x="-180" y="-230" width="360" height="210" fill="#FFFFFF" stroke="#090F12" stroke-width="4"/>
+      ${[-150,-80,80,150].map(x=>`<rect x="${x-12}" y="-220" width="24" height="200" fill="#F4F4F0" stroke="#090F12" stroke-width="3"/>`).join('')}
+      <rect id="hallDoor" x="-36" y="-130" width="72" height="110" fill="#002423" stroke="#090F12" stroke-width="3"/>
+      <rect x="-200" y="-252" width="400" height="24" fill="#FFFFFF" stroke="#090F12" stroke-width="4"/>
+      <polygon points="-210,-252 0,-340 210,-252" fill="#FFFFFF" stroke="#090F12" stroke-width="4"/>
+      <circle cx="0" cy="-286" r="22" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/><path d="M0 -286 v-14 M0 -286 h10" stroke="#090F12" stroke-width="3"/>
+      <text x="0" y="-235" text-anchor="middle" font-size="15" font-weight="800" letter-spacing="6" fill="#090F12">TOWN HALL</text>
+      <rect x="-3" y="-420" width="6" height="84" fill="#090F12"/><path d="M3 -418 l52 14 l-52 14 z" fill="#3F7A78"/>
+    </g>
+    <path id="walkPath" d="${ROAD}" fill="none" stroke="none"/>
+    <g class="walkers" id="walkers"><g id="wMaz">${walkerMaz()}</g><g id="wDog">${walkerDog()}</g></g>
+  </g>`;
+}
+function openTown(id){
+  const c=USECASES.find(k=>k.id===id);if(!c)return;townId=id;walkSkip=false;
+  const v=document.getElementById('town');v.classList.remove('arrived');
+  document.getElementById('townScene').innerHTML=buildTownScene(c.title,themeOf(c));
+  thKicker.textContent='Town Hall · '+c.title;thTitle.textContent='Welcome to Town Hall.';
+  thText.textContent=`Maz and Gladys made it. This is where the campaign brief for ${c.title} gets written: who the campaign is for, what it says, where it runs and when.`;
+  thLater.textContent='The campaign brief template is the next thing we build.';thGo.disabled=true;
+  v.classList.add('on');requestAnimationFrame(()=>v.classList.add('show'));
+  setTimeout(()=>{document.getElementById('port').classList.remove('show','on')},500);
+  walk();
+}
+function walk(){
+  const path=document.getElementById('walkPath'),L=path.getTotalLength(),maz=document.getElementById('wMaz'),dog=document.getElementById('wDog'),
+    world=document.getElementById('townWorld'),walkers=document.getElementById('walkers');
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,dur=reduced?0:7200;const t0=performance.now();
+  walkers.classList.add('walking');cancelAnimationFrame(walkRAF);
+  const place=(e)=>{const d=Math.min(L,e*L);const pm=path.getPointAtLength(Math.max(0,d-40)),pd=path.getPointAtLength(Math.min(L,d+10));
+    maz.setAttribute('transform',`translate(${pm.x} ${pm.y-8})`);dog.setAttribute('transform',`translate(${pd.x} ${pd.y-4})`);
+    const cam=Math.max(-1150,Math.min(0,800-pm.x));world.setAttribute('transform',`translate(${cam} 0)`)};
+  (function step(t){const e=walkSkip||!dur?1:Math.min(1,(t-t0)/dur);const q=e<.15?e*e/.3:e>.85?1-(1-e)*(1-e)/.3:(e-.075)/.85;place(Math.max(0,Math.min(1,q)));
+    if(e<1)walkRAF=requestAnimationFrame(step);else{walkers.classList.remove('walking');setTimeout(()=>document.getElementById('town').classList.add('arrived'),walkSkip?0:350)}})(t0);
+}
+function skipWalk(){walkSkip=true}
+function startBrief(){}
+function backToDock(){const v=document.getElementById('town');cancelAnimationFrame(walkRAF);openPort(townId,{still:true});setTimeout(()=>{v.classList.remove('show');setTimeout(()=>v.classList.remove('on','arrived'),450)},50)}
 
 // ----- use case view: chat on the left, live page on the right -----
 let ucCur=null,ucBusy=false;
