@@ -10,6 +10,7 @@ import { renderHtml } from './src/usecase/render-html.js';
 import { listBriefs, createBrief, loadBrief, patchBrief, setBriefStatus, getBriefChat } from './src/brief/store.js';
 import { briefChatTurn } from './src/brief/author.js';
 import { listAssets, assetAction, promptPack } from './src/brief/assets.js';
+import { sentBackAlert } from './src/alerts.js';
 import { globalStats } from './src/stats.js';
 import { CORE, GROUPS, COMMS, STATUSES } from './src/brief/spec.js';
 import { listCabinItems, addCabinItem, removeCabinItem } from './src/cabins.js';
@@ -121,7 +122,10 @@ async function mazinator(req, env, p) {
       if (!out && req.method === 'GET') return json(await listAssets(env.DB, id));
       if (out && pack && req.method === 'GET') return json({ text: await promptPack(env.DB, id, out, new URL(req.url).origin) });
       if (out && !pack && req.method === 'POST') {
-        try { return json(await assetAction(env.DB, id, out, body)); } catch (e) { return json({ error: e.message }, 400); }
+        let res;
+        try { res = await assetAction(env.DB, id, out, body); } catch (e) { return json({ error: e.message }, 400); }
+        if (body.action === 'send_back') { try { await sentBackAlert(env, env.DB, id, out, body, new URL(req.url).origin); } catch (e) { /* the send-back stands even if the email fails */ } }
+        return json(res);
       }
       return json({ error: 'Method not allowed' }, 405);
     }
