@@ -1,11 +1,12 @@
 // Cabins below deck: what the team keeps for Claude to read when it writes use cases and briefs.
 export const CABINS = [
   { id: 'radio', title: 'Radio room', use: 'Customer and prospect call data: pains in the buyer\'s words, objections, competitor mentions. Quotes from calls are internal only unless cleared.' },
-  { id: 'brand', title: 'Brand room', use: 'Brand guide, logos, templates, voice and tone.' },
+  { id: 'brand', title: 'Brand room', use: 'Brand guide, logos, voice and tone.' },
   { id: 'product', title: 'Product library', use: 'Product docs, release notes and feature specs for Flow, Play and Go.' },
   { id: 'proof', title: 'Proof locker', use: 'Customers, quotes, case studies and win wires.' },
   { id: 'partners', title: 'Partner hold', use: 'Partner programs and partner materials.' },
   { id: 'competitors', title: 'Competitor intel', use: 'Competitor pages, their pitches, how we win, battlecards.' },
+  { id: 'templates', title: 'Sales templates', use: 'Sales deck, account review presentation, proposal, one-pager and email templates: start from these when making sales material.' },
   { id: 'content', title: 'Content archive', use: 'Existing blogs, decks, enablement materials and past use cases.' },
 ];
 const IDS = new Set(CABINS.map((c) => c.id));

@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Mazinator</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%23002423%22/%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2214%22%20r%3D%225%22/%3E%3Cpath%20d%3D%22M32%2019v32M22%2028h20M14%2038c2%209%209%2014%2018%2014s16-5%2018-14%22/%3E%3C/g%3E%3Cpath%20d%3D%22M10%2038l6-5%204%207z%20M54%2038l-6-5-4%207z%22%20fill%3D%22%23BFA66A%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Permanent+Marker&family=Rye&family=UnifrakturMaguntia&family=Limelight&display=swap" rel="stylesheet">
 <style>
@@ -1255,13 +1256,14 @@
 
 <script>
 const CABINS=[
-  {id:'radio',label:'Cabin 01',title:'Radio room',color:'#B8664C',desc:'Customer and prospect call data: recordings, transcripts and notes. Claude pulls out pains in the buyer\'s words, objections, competitor mentions and quotes worth clearing.'},
-  {id:'brand',label:'Cabin 02',title:'Brand room',color:'#002423',desc:'Brand guide, logos, templates, imagery and the design system used in Claude Design.'},
-  {id:'product',label:'Cabin 03',title:'Product library',color:'#3F7A78',desc:'Product docs, release notes, feature specs and screenshots for Flow, Play and Go.'},
-  {id:'proof',label:'Cabin 04',title:'Proof locker',color:'#BFA66A',desc:'Customers, quotes, case studies and win wires: the proof every use case and asset draws on.'},
-  {id:'partners',label:'Cabin 05',title:'Partner hold',color:'#618FA4',desc:'Partner programs and materials: Microsoft, Google, Oracle, SAP, Salesforce.'},
-  {id:'competitors',label:'Cabin 06',title:'Competitor intel',color:'#4F6F82',desc:'Competitors, their pitches, how we win, and battlecards.'},
-  {id:'content',label:'Cabin 07',title:'Content archive',color:'#9A6A3F',desc:'Existing blogs, decks, enablement materials and past use cases.'},
+  {id:'radio',label:'Context cabin 1',title:'Radio room',color:'#B8664C',desc:'Customer and prospect call data: recordings, transcripts and notes. Claude pulls out pains in the buyer\'s words, objections, competitor mentions and quotes worth clearing.'},
+  {id:'brand',label:'Context cabin 2',title:'Brand room',color:'#002423',desc:'Brand guide, logos, imagery, voice and tone, and the design system used in Claude Design.'},
+  {id:'product',label:'Context cabin 3',title:'Product library',color:'#3F7A78',desc:'Product docs, release notes, feature specs and screenshots for Flow, Play and Go.'},
+  {id:'proof',label:'Context cabin 4',title:'Proof locker',color:'#BFA66A',desc:'Customers, quotes, case studies and win wires: the proof every use case and asset draws on.'},
+  {id:'partners',label:'Context cabin 5',title:'Partner hold',color:'#618FA4',desc:'Partner programs and materials: Microsoft, Google, Oracle, SAP, Salesforce.'},
+  {id:'competitors',label:'Context cabin 6',title:'Competitor intel',color:'#4F6F82',desc:'Competitors, their pitches, how we win, and battlecards.'},
+  {id:'content',label:'Context cabin 7',title:'Content archive',color:'#9A6A3F',desc:'Existing blogs, decks, enablement materials and past use cases.'},
+  {id:'templates',label:'Context cabin 8',title:'Sales templates',color:'#8A9A3B',desc:'Sales deck, account review presentation, proposal, one-pager and email templates: the starting points the shops build from.'},
 ];
 // Cabin items live in the database (shared by the team); this is the local copy.
 let CABIN_ITEMS=[];
@@ -1378,11 +1380,11 @@ function renderDeck(){
   // portholes
   for(const s of [-1,1])for(const z of [1.08]){const [cx,cy]=P(s*W,-20,z);o+=`<ellipse cx="${cx}" cy="${cy}" rx="${34/z*.5}" ry="${60/z}" fill="#618FA4" stroke="#E0A43A" stroke-width="${8/z}"/><ellipse cx="${cx}" cy="${cy}" rx="${20/z*.5}" ry="${38/z}" fill="#D2E1EA"/>`}
   // doors
-  const DOORS=[[1,-1,1.22,1.62],[2,-1,1.95,2.3],[3,-1,2.75,3.05],[4,1,1.22,1.62],[5,1,1.95,2.3],[6,1,2.75,3.05]];
+  const DOORS=[[1,-1,1.15,1.5],[2,-1,1.75,2.05],[3,-1,2.35,2.6],[7,-1,2.95,3.2],[4,1,1.22,1.62],[5,1,1.95,2.3],[6,1,2.75,3.05]];
   const doorG=(c,s,z1,z2)=>{const cnt=items(c.id).length,x=s*W,col=c.color||'#002423';
     const f=[P(x,FL,z1-.04),P(x,FL,z2+.04),P(x,DT-30,z2+.04),P(x,DT-30,z1-.04)],d=[P(x,FL,z1),P(x,FL,z2),P(x,DT,z2),P(x,DT,z1)];
     const knob=P(x,170,z2-.06);
-    const sz=(z1+z2)/2,[sx,sy]=P(x-s*14,DT-110,sz),sc=1.02/sz,sw=Math.max(300,110+c.title.length*17);
+    const sz=(z1+z2)/2,[sx,sy]=P(x-s*14,DT-110+(sz-1.2)*60,sz),sc=.98/sz,sw=Math.max(330,110+c.title.length*17,c.label.length*14+120);
     return `<g class="cab" data-id="${c.id}" role="button" aria-label="${esc(c.title)}">
       ${quad(f,'#3E2A1C',`stroke="${K}" stroke-width="2"`)}${quad(d,col,`stroke="${K}" stroke-width="2"`)}
       ${quad([P(x,DT+40,z1+.06),P(x,DT+40,z2-.06),P(x,40,z2-.06),P(x,40,z1+.06)],'rgba(255,255,255,.12)')}
