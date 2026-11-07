@@ -2921,7 +2921,9 @@ const isShown=id=>document.getElementById(id)?.classList.contains('show');
 function hideView(id){const v=document.getElementById(id);if(!v||!v.classList.contains('on'))return;v.classList.remove('show');setTimeout(()=>{if(!v.classList.contains('show'))v.classList.remove('on','arrived','carded','card-left','walking-on')},450)}
 function stopMotion(){cancelAnimationFrame(walkRAF);cancelAnimationFrame(shopRAF);shopWalking=false;if(typeof hideShopTip==='function')hideShopTip()}
 function navShip(){stopMotion();closeApprove();['port','town','usecase','brief','shops','shopIn','chart'].forEach(hideView);document.getElementById('chart').classList.remove('voyage');
-  drawer.classList.remove('open');scrim.classList.remove('on');document.body.classList.add('aboard');renderDeck();interior.classList.add('on');requestAnimationFrame(()=>interior.classList.add('show'))}
+  drawer.classList.remove('open');scrim.classList.remove('on');closeDrawer();resetBoat();
+  if(isShown('interior')){interior.classList.remove('show');setTimeout(()=>interior.classList.remove('on'),450)}
+  document.body.classList.remove('aboard');document.body.classList.add('skip')}
 async function navChart(){stopMotion();closeApprove();['port','town','usecase','brief','shops','shopIn'].forEach(hideView);drawer.classList.remove('open');scrim.classList.remove('on');
   if(isShown('interior')){interior.classList.remove('show');setTimeout(()=>interior.classList.remove('on'),450)}
   document.body.classList.add('aboard');try{await loadUseCases()}catch(e){}renderMap();
