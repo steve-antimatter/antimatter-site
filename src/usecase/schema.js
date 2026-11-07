@@ -28,5 +28,6 @@ export const SCHEMA = [
  "CREATE TABLE IF NOT EXISTS campaign_brief_versions ( brief_id TEXT NOT NULL REFERENCES campaign_briefs(id) ON DELETE CASCADE, version INTEGER NOT NULL, snapshot TEXT NOT NULL, locked_by TEXT NOT NULL, locked_at TEXT NOT NULL DEFAULT (datetime('now')), PRIMARY KEY (brief_id, version) )",
  "CREATE TABLE IF NOT EXISTS brief_chat ( brief_id TEXT NOT NULL REFERENCES campaign_briefs(id) ON DELETE CASCADE, seq INTEGER NOT NULL, role TEXT NOT NULL, content TEXT NOT NULL, author TEXT, created_at TEXT NOT NULL DEFAULT (datetime('now')), PRIMARY KEY (brief_id, seq) )",
  "CREATE TABLE IF NOT EXISTS cabin_items ( id INTEGER PRIMARY KEY AUTOINCREMENT, cabin TEXT NOT NULL, kind TEXT NOT NULL DEFAULT 'link', name TEXT NOT NULL, url TEXT NOT NULL, note TEXT, added_by TEXT, created_at TEXT NOT NULL DEFAULT (datetime('now')) )",
- "CREATE INDEX IF NOT EXISTS cabin_items_cabin ON cabin_items(cabin)"
+ "CREATE INDEX IF NOT EXISTS cabin_items_cabin ON cabin_items(cabin)",
+ "CREATE TABLE IF NOT EXISTS cabin_files ( item_id INTEGER PRIMARY KEY REFERENCES cabin_items(id) ON DELETE CASCADE, r2_key TEXT NOT NULL, mime TEXT, size INTEGER )"
 ];

@@ -11,6 +11,7 @@ import { listBriefs, createBrief, loadBrief, patchBrief, setBriefStatus, getBrie
 import { briefChatTurn } from './src/brief/author.js';
 import { CORE, GROUPS, COMMS, STATUSES } from './src/brief/spec.js';
 import { listCabinItems, addCabinItem, removeCabinItem } from './src/cabins.js';
+import { uploadCabinFile, getCabinFile, deleteCabinFile } from './src/cabin-files.js';
 import governanceSeed from './db/seed/governance-in-testing.json';
 
 const COOKIE = 'lw_session';
@@ -73,6 +74,23 @@ async function mazinator(req, env, p) {
     }
     if (p === '/leapwork/api/islands') return json(await listIslands(env.DB));
 
+    // File uploads come in as a form, before the JSON body is read.
+    let up = p.match(/^\/leapwork\/api\/cabins\/([a-z]+)\/files$/);
+    if (up && req.method === 'POST') {
+      const form = await req.formData().catch(() => null);
+      try {
+        const id = await uploadCabinFile(env, env.DB, up[1], form && form.get('file'), { note: form && form.get('note'), author: form && form.get('author') }, addCabinItem);
+        return json({ id, items: await listCabinItems(env.DB) });
+      } catch (e) { return json({ error: e.message }, e.status || 400); }
+    }
+    up = p.match(/^\/leapwork\/api\/cabins\/files\/(\d+)$/);
+    if (up && req.method === 'GET') {
+      const f = await getCabinFile(env, env.DB, up[1]);
+      if (!f) return new Response('Not found', { status: 404 });
+      return new Response(f.obj.body, { headers: { 'content-type': f.mime || 'application/octet-stream', 'content-disposition': `inline; filename="${f.name.replace(/"/g, '')}"`, 'cache-control': 'no-store' } });
+    }
+    if (p === '/leapwork/api/storage') return json({ files: !!env.CABIN_FILES });
+
     const body = req.method === 'POST' || req.method === 'PUT' ? await req.json().catch(() => ({})) : null;
 
     // ---- cabins below deck ----
@@ -84,7 +102,7 @@ async function mazinator(req, env, p) {
       return json({ id, items: await listCabinItems(env.DB) });
     }
     cb = p.match(/^\/leapwork\/api\/cabins\/items\/(\d+)$/);
-    if (cb && req.method === 'DELETE') { await removeCabinItem(env.DB, cb[1]); return json({ ok: true, items: await listCabinItems(env.DB) }); }
+    if (cb && req.method === 'DELETE') { await deleteCabinFile(env, env.DB, cb[1]); await removeCabinItem(env.DB, cb[1]); return json({ ok: true, items: await listCabinItems(env.DB) }); }
 
     // ---- campaign briefs (Town Hall) ----
     if (p === '/leapwork/api/brief-spec') return json({ core: CORE, groups: GROUPS, comms: COMMS, statuses: STATUSES });

@@ -14,14 +14,14 @@ export async function listCabinItems(db) {
   return (await db.prepare('SELECT id, cabin, kind, name, url, note, added_by, created_at FROM cabin_items ORDER BY cabin, created_at DESC, id DESC').all()).results;
 }
 
-export async function addCabinItem(db, cabin, { url, name, note, author }) {
+export async function addCabinItem(db, cabin, { url, name, note, author, kind = 'link' }) {
   if (!IDS.has(cabin)) throw new Error('Unknown cabin');
   url = String(url || '').trim();
   if (!/^https?:\/\/\S+$/.test(url)) throw new Error('Add a full link starting with https://');
   let label = String(name || '').trim();
   if (!label) { try { const u = new URL(url); label = u.hostname.replace(/^www\./, '') + u.pathname.replace(/\/$/, ''); } catch { label = url; } }
   const r = await db.prepare('INSERT INTO cabin_items (cabin, kind, name, url, note, added_by) VALUES (?, ?, ?, ?, ?, ?)')
-    .bind(cabin, 'link', label.slice(0, 200), url.slice(0, 2000), String(note || '').trim().slice(0, 1000) || null, String(author || '').slice(0, 80) || null).run();
+    .bind(cabin, kind === 'file' ? 'file' : 'link', label.slice(0, 200), url.slice(0, 2000), String(note || '').trim().slice(0, 1000) || null, String(author || '').slice(0, 80) || null).run();
   const rid = r?.meta?.last_row_id ?? r?.lastInsertRowid;
   return rid == null ? null : Number(rid);
 }
@@ -38,7 +38,8 @@ export function cabinsForPrompt(items, only) {
     const its = items.filter((i) => i.cabin === c.id);
     if (!its.length) continue;
     lines.push(`- ${c.title} (${c.use})`);
-    for (const i of its) lines.push(`  - ${i.name}: ${i.url}${i.note ? ` (note: ${i.note})` : ''}`);
+    for (const i of its) lines.push(i.kind === 'file' ? `  - ${i.name} (uploaded file, file_id ${i.id}; read it with read_cabin_file)${i.note ? ` (note: ${i.note})` : ''}`
+      : `  - ${i.name}: ${i.url}${i.note ? ` (note: ${i.note})` : ''}`);
   }
   return lines.length ? lines.join('\n') : '(nothing in the cabins yet)';
 }

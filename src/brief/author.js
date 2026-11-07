@@ -6,6 +6,7 @@ import { CORE, GROUPS, COMMS, applyPatch } from './spec.js';
 import { resolve } from '../usecase/resolve.js';
 import { MODEL, WEB_FETCH } from '../usecase/author.js';
 import { listCabinItems, cabinsForPrompt } from '../cabins.js';
+import { READ_FILE_TOOL, readFileTool } from '../cabin-files.js';
 
 const MAX_STEPS = 8;
 
@@ -67,7 +68,7 @@ HOW TO WORK:
 - When the author asks for a change, make it with update_brief and confirm in one line.
 - When the brief looks complete, say so and explain the next step: read the brief on the right, then click "Submit for approval" at the bottom.
 
-THE CABINS (material the Leapwork team keeps for you; open what bears on the brief with web_fetch, e.g. Competitor intel for battlecard landmines, Brand room for voice):
+THE CABINS (material the Leapwork team keeps for you; open what bears on the brief with web_fetch (links) or read_cabin_file (uploaded files), e.g. Competitor intel for battlecard landmines, Brand room for voice):
 ${cabinsForPrompt(cabinItems)}
 
 APPROVED USE CASE: ${b.use_case.title}
@@ -105,13 +106,14 @@ export async function briefChatTurn(env, db, id, text, author, { fetchClaude, to
   const changed = new Set();
   let reply = '';
   for (let step = 0; step < MAX_STEPS; step++) {
-    const res = await call({ model: MODEL, max_tokens: 16000, system, tools: [BRIEF_TOOL, WEB_FETCH], messages });
+    const res = await call({ model: MODEL, max_tokens: 16000, system, tools: [BRIEF_TOOL, READ_FILE_TOOL, WEB_FETCH], messages });
     messages.push({ role: 'assistant', content: res.content });
     reply = res.content.filter((x) => x.type === 'text').map((x) => x.text).join('').trim() || reply;
     if (res.stop_reason === 'pause_turn') continue;
     if (res.stop_reason !== 'tool_use') break;
-    const results = [];
+    const results = [], extra = [];
     for (const t of res.content.filter((x) => x.type === 'tool_use')) {
+      if (t.name === 'read_cabin_file') { const r = await readFileTool(env, db, t); results.push(r.result); extra.push(...r.extra); continue; }
       try {
         if (t.name !== 'update_brief') throw new Error(`Unknown tool ${t.name}`);
         const what = applyPatch(b.doc, t.input || {}, b.options);
@@ -121,7 +123,7 @@ export async function briefChatTurn(env, db, id, text, author, { fetchClaude, to
         results.push({ type: 'tool_result', tool_use_id: t.id, content: String(e.message || e) + ' Nothing from this call was saved; fix it and send the call again.', is_error: true });
       }
     }
-    messages.push({ role: 'user', content: results });
+    messages.push({ role: 'user', content: [...results, ...extra] });
   }
 
   if (changed.size) await saveBriefDoc(db, id, b.doc);
