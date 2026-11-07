@@ -705,6 +705,8 @@
   #town .spin{transform-box:fill-box;transform-origin:50% 50%;animation:spin 2s linear infinite} @keyframes spin{to{transform:rotate(360deg)}}
   #town .bulbA{animation:bulb .7s steps(1) infinite} #town .bulbB{animation:bulb .7s steps(1) infinite reverse}
   @media (prefers-reduced-motion:reduce){#deck .blobA,#deck .blobB,#deck .discoball,#deck [class^=spk],#deck .cone,#deck .notes g,#town .neon,#town .beam,#town .spin{animation:none}}
+  /* the breadcrumb replaces the per-view crumb text */
+  #usecase .ctop .crumbs,#brief .ctop .crumbs{display:none}
 </style>
 </head>
 <body>
@@ -1415,14 +1417,20 @@ function renderDeck(){
     <rect x="-300" y="-880" width="600" height="170" rx="85" fill="#FFF3D6" stroke="${K}" stroke-width="8"/>
     <text x="0" y="-790" text-anchor="middle" font-size="64" font-weight="900" letter-spacing="6" fill="${K}">${esc(R.title.toUpperCase())}</text>
     <text x="0" y="-742" text-anchor="middle" font-size="30" font-weight="700" letter-spacing="3" fill="#A9552F">${esc(R.label.toUpperCase())} · ${rc} ITEM${rc===1?'':'S'}</text></g></g>`;
-  o+=at(-500,3.35,couch('#E0A43A','#B8873A'));
-  o+=at(500,3.35,couch('#8A9A3B','#5F6B26'));
-  o+=at(-300,3.55,stereo);
-  DOORS.filter(d=>d[2]>2.5).forEach(([i,s,z1,z2])=>{if(CABINS[i])o+=doorG(CABINS[i],s,z1,z2)});
-  o+=at(-W+80,2.52,lava('a','#F6C177','#C9432F'))+at(W-80,2.52,lava('b','#B7E0D6','#3F7A78'));
-  DOORS.filter(d=>d[2]>1.9&&d[2]<2.5).forEach(([i,s,z1,z2])=>{if(CABINS[i])o+=doorG(CABINS[i],s,z1,z2)});
-  o+=at(-W+90,1.78,lava('c','#E9D3F2','#B8664C'))+at(W-90,1.78,lava('d','#FBE29A','#D9643A'));
-  DOORS.filter(d=>d[2]<1.9).forEach(([i,s,z1,z2])=>{if(CABINS[i])o+=doorG(CABINS[i],s,z1,z2)});
+  DOORS.slice().sort((a,b)=>b[2]-a[2]).forEach(([i,s,z1,z2])=>{if(CABINS[i])o+=doorG(CABINS[i],s,z1,z2)});
+  // furniture on the carpet, clear of the doors: couch left, stereo right, the bar up close
+  o+=at(-400,2.35,couch('#E0A43A','#B8873A'))+at(390,2.35,stereo);
+  const bar=`<g><path d="M-360 -250 L-340 -282 H340 L360 -250Z" fill="#3E2A1C" stroke="${K}" stroke-width="5"/>
+    <rect x="-370" y="-252" width="740" height="30" rx="6" fill="#6B4226" stroke="${K}" stroke-width="5"/>
+    <rect x="-350" y="-222" width="700" height="222" fill="#C97A5A" stroke="${K}" stroke-width="5"/>
+    ${[...Array(7)].map((_,k)=>`<rect x="${-338+k*98}" y="-206" width="86" height="190" rx="43" fill="${['#E0A43A','#A9552F','#E0A43A','#6B4226','#E0A43A','#A9552F','#E0A43A'][k]}" stroke="${K}" stroke-width="3"/>`).join('')}
+    <text y="-110" text-anchor="middle" font-family="'Limelight',Georgia,serif" font-size="46" fill="#FFF3D6" stroke="${K}" stroke-width="1.5">BAR</text>
+    <g transform="translate(-220 -262)">${lava('bar','#F6C177','#C9432F')}</g>
+    ${[[-60,'#3F7A78',120],[-20,'#8A9A3B',140],[20,'#B8664C',110]].map(([x,c,h])=>`<g transform="translate(${x} -270)"><rect x="-12" y="${-h}" width="24" height="${h}" rx="6" fill="${c}" stroke="${K}" stroke-width="3"/><rect x="-5" y="${-h-26}" width="10" height="28" fill="${c}" stroke="${K}" stroke-width="3"/><rect x="-12" y="${-h*.6}" width="24" height="${h*.3}" fill="#FFF3D6"/></g>`).join('')}
+    <g transform="translate(110 -270)"><path d="M-30 -70 H30 L0 -30Z" fill="#E9F3F6" stroke="${K}" stroke-width="3"/><path d="M0 -30 V0 M-18 0 H18" stroke="${K}" stroke-width="4"/><circle cx="16" cy="-62" r="8" fill="#BFD96A" stroke="${K}" stroke-width="2"/></g>
+    <g transform="translate(200 -270)"><path d="M-24 0 L-30 -90 H30 L24 0Z" fill="#C8CFD3" stroke="${K}" stroke-width="3"/><path d="M-22 -90 Q0 -130 22 -90" fill="#9AA6AC" stroke="${K}" stroke-width="3"/></g>
+    <g transform="translate(275 -270)"><rect x="-20" y="-60" width="40" height="60" rx="4" fill="#F2C46A" stroke="${K}" stroke-width="3" opacity=".9"/><rect x="-20" y="-60" width="40" height="12" fill="#FFFFFF" opacity=".8"/></g></g>`;
+  o+=at(0,1.04,bar,FL+190);
   o+=`<g id="exitHatch" class="cab-exit" role="button" aria-label="Up to deck"><g transform="translate(40 960)">
     <rect x="0" y="-180" width="200" height="56" rx="28" fill="#3E2A1C" stroke="#E0A43A" stroke-width="3"/><text x="100" y="-158" text-anchor="middle" font-size="11" font-weight="700" letter-spacing="2" fill="#F6DDA8">↑ UP THE STAIRS</text><text x="100" y="-136" text-anchor="middle" font-size="15" font-weight="800" fill="#FFFFFF">Back on deck</text></g></g>`;
   svg.setAttribute('viewBox','0 0 1600 900');svg.innerHTML=o;
