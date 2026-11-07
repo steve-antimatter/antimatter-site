@@ -111,12 +111,38 @@
   #dog.shaking #dShakerIn{animation:dShake .12s ease-in-out infinite alternate}
   @keyframes dShake{from{transform:rotate(-24deg) translateY(0)}to{transform:rotate(24deg) translateY(-6px)}}
   #dog.shaking #doghead{animation:chomp .12s ease-in-out infinite alternate}
-  #introP{transition:opacity .5s} body.steveout #introP{opacity:0}
+  #introP{transition:opacity .5s} body.steveout #introP{opacity:0;pointer-events:none} body.steveout .title{pointer-events:none}
   #steveBody{transform-box:fill-box;transform-origin:50% 100%}
   #steveG.pop #steveBody{animation:stevePop .5s cubic-bezier(.3,1.5,.5,1) both}
   @keyframes stevePop{from{transform:scale(.2) translateY(30px);opacity:0}to{transform:none;opacity:1}}
   #steveG.cheers #steveBody{animation:steveCheers .5s ease-in-out 2 alternate}
   @keyframes steveCheers{to{transform:rotate(-4deg) translateY(-6px)}}
+  #steveSplash .spl{transform-box:fill-box;transform-origin:50% 100%;animation:splUp .9s ease-out forwards}
+  @keyframes splUp{0%{transform:scaleY(0);opacity:1}40%{transform:scaleY(1.2)}100%{transform:scaleY(0);opacity:0}}
+  #steveSplash .spr{transform-box:fill-box;transform-origin:center;animation:splRing 1.2s ease-out forwards}
+  @keyframes splRing{from{transform:scale(.3);opacity:1}to{transform:scale(2.4);opacity:0}}
+  #steveSplash .spd{animation:splDrop .9s ease-out forwards}
+  @keyframes splDrop{0%{transform:translateY(20px);opacity:0}30%{opacity:1}100%{transform:translateY(-10px);opacity:0}}
+  #kimLounge .kimZ text{opacity:0;animation:float 3s ease-out infinite}
+  #kimLoungeBody{transform-box:fill-box;transform-origin:50% 100%}
+  #kimLounge.setup #kimLoungeBody{animation:stevePop .5s cubic-bezier(.3,1.5,.5,1) both}
+  #bubble{transition:opacity .3s} body.djon #bubble{opacity:0;pointer-events:none}
+  #djBody{transform-box:fill-box;transform-origin:50% 100%}
+  #djG.pop #djBody{animation:stevePop .55s cubic-bezier(.3,1.5,.5,1) both}
+  #djDude{animation:djBob .42s ease-in-out infinite alternate}
+  @keyframes djBob{to{transform:translateY(-8px)}}
+  #djG .djHand{transform-box:fill-box;transform-origin:20% 90%;animation:djPump .42s ease-in-out infinite alternate}
+  @keyframes djPump{from{transform:rotate(-10deg)}to{transform:rotate(14deg)}}
+  #djG .djDisc ellipse:last-child{transform-box:fill-box;transform-origin:center;animation:djSpin .6s linear infinite}
+  @keyframes djSpin{to{transform:rotate(360deg)}}
+  #djG .djb{opacity:.18;animation:djBeam 1.2s ease-in-out infinite alternate}
+  @keyframes djBeam{to{opacity:.55}}
+  #djG .djLed{animation:djLed .6s steps(2) infinite}
+  @keyframes djLed{50%{opacity:.2}}
+  #djG .djSpk{transform-box:fill-box;transform-origin:center;animation:djThump .42s ease-in-out infinite alternate}
+  @keyframes djThump{to{transform:scale(1.12)}}
+  #djG .snote{opacity:0;transform-box:fill-box;transform-origin:0 100%;animation:float 2.4s ease-out infinite}
+  @media (prefers-reduced-motion:reduce){#djDude,#djG .djHand,#djG .djDisc ellipse,#djG .djb,#djG .djLed,#djG .djSpk,#djG .snote{animation:none}}
   #doorLeaf.sopen{animation:doorOpen .5s cubic-bezier(.4,0,.6,1) forwards}
   #doorLeaf.sclose{animation:doorClose .5s cubic-bezier(.4,0,.6,1) both}
   #saxBody{transform-box:fill-box;transform-origin:50% 100%}
@@ -964,6 +990,35 @@
       </g>
       <rect x="560" y="352" width="70" height="20" fill="#002423"/>
       <rect x="630" y="336" width="14" height="36" fill="#002423"/>
+      <!-- DJ Ziggla: a DJ booth on the front of the top deck (hidden until someone mentions Ken) -->
+      <g id="djG" style="display:none;cursor:pointer" transform="translate(915 372)"><g transform="scale(.55)"><g id="djBody">
+        <g class="djBeams"><polygon class="djb" points="-30,-80 -190,-420 -120,-430" fill="#F28AA0"/><polygon class="djb" points="0,-80 60,-440 120,-430" fill="#BFA66A" style="animation-delay:.25s"/><polygon class="djb" points="30,-80 220,-380 260,-330" fill="#618FA4" style="animation-delay:.5s"/></g>
+        <g id="djDude">
+          <rect x="-30" y="-170" width="60" height="92" rx="8" fill="#090F12"/><text x="0" y="-122" text-anchor="middle" font-size="16" font-weight="900" fill="#BFA66A">ZIG</text>
+          <rect x="-9" y="-186" width="18" height="18" fill="#F1D3C2"/>
+          <ellipse cx="0" cy="-214" rx="32" ry="36" fill="#F1D3C2"/>
+          <path d="M-34 -214 q -6 -42 30 -48 q 30 -6 42 18 q 6 14 -2 26 q -6 -18 -30 -20 q -22 -2 -40 24 z" fill="#6B4A2E"/>
+          <circle cx="-11" cy="-214" r="3.5" fill="#090F12"/><circle cx="11" cy="-214" r="3.5" fill="#090F12"/>
+          <path d="M-10 -196 q 10 9 20 0" fill="none" stroke="#090F12" stroke-width="3" stroke-linecap="round"/>
+          <path d="M-36 -214 q 0 -56 36 -56 q 36 0 36 56" fill="none" stroke="#2F2F2F" stroke-width="7"/>
+          <rect x="-44" y="-226" width="14" height="26" rx="6" fill="#C9432F" stroke="#090F12" stroke-width="2"/><rect x="30" y="-226" width="14" height="26" rx="6" fill="#C9432F" stroke="#090F12" stroke-width="2"/>
+          <g class="djHand"><rect x="20" y="-164" width="14" height="60" rx="7" fill="#090F12" transform="rotate(-160 27 -160)"/><circle cx="46" cy="-214" r="8" fill="#F1D3C2"/></g>
+          <rect x="-36" y="-160" width="14" height="56" rx="7" fill="#090F12" transform="rotate(30 -29 -156)"/><circle cx="-58" cy="-112" r="8" fill="#F1D3C2"/>
+        </g>
+        <rect x="-110" y="-84" width="220" height="14" rx="3" fill="#2F2F2F" stroke="#090F12" stroke-width="2"/>
+        <g class="djDisc" transform="translate(-66 -84)"><ellipse rx="30" ry="9" fill="#090F12"/><ellipse rx="10" ry="3" fill="#C9432F"/></g>
+        <g class="djDisc" transform="translate(66 -84)"><ellipse rx="30" ry="9" fill="#090F12"/><ellipse rx="10" ry="3" fill="#BFA66A"/></g>
+        <rect x="-22" y="-92" width="44" height="10" rx="2" fill="#4F6F82"/><g fill="#B9E08A"><circle class="djLed" cx="-12" cy="-87" r="2.5"/><circle class="djLed" cx="0" cy="-87" r="2.5" style="animation-delay:.2s"/><circle class="djLed" cx="12" cy="-87" r="2.5" style="animation-delay:.4s"/></g>
+        <rect x="-104" y="-70" width="208" height="70" fill="#1F1F2A" stroke="#090F12" stroke-width="3"/>
+        <text x="0" y="-27" text-anchor="middle" font-size="22" font-weight="900" letter-spacing="3" fill="#F28AA0">DJ ZIGGLA</text>
+        <g fill="#BFA66A"><circle class="djLed" cx="-92" cy="-10" r="3" style="animation-delay:0.0s"/><circle class="djLed" cx="-69" cy="-10" r="3" style="animation-delay:0.2s"/><circle class="djLed" cx="-46" cy="-10" r="3" style="animation-delay:0.4s"/><circle class="djLed" cx="-23" cy="-10" r="3" style="animation-delay:0.0s"/><circle class="djLed" cx="0" cy="-10" r="3" style="animation-delay:0.2s"/><circle class="djLed" cx="23" cy="-10" r="3" style="animation-delay:0.4s"/><circle class="djLed" cx="46" cy="-10" r="3" style="animation-delay:0.0s"/><circle class="djLed" cx="69" cy="-10" r="3" style="animation-delay:0.2s"/><circle class="djLed" cx="92" cy="-10" r="3" style="animation-delay:0.4s"/></g>
+        <g transform="translate(-150 0)"><rect x="-28" y="-110" width="56" height="110" fill="#2F2F2F" stroke="#090F12" stroke-width="3"/><circle class="djSpk" cx="0" cy="-74" r="16" fill="#4F4F4F" stroke="#090F12" stroke-width="2"/><circle class="djSpk" cx="0" cy="-30" r="20" fill="#4F4F4F" stroke="#090F12" stroke-width="2"/></g>
+        <g transform="translate(150 0)"><rect x="-28" y="-110" width="56" height="110" fill="#2F2F2F" stroke="#090F12" stroke-width="3"/><circle class="djSpk" cx="0" cy="-74" r="16" fill="#4F4F4F" stroke="#090F12" stroke-width="2"/><circle class="djSpk" cx="0" cy="-30" r="20" fill="#4F4F4F" stroke="#090F12" stroke-width="2"/></g>
+        <g font-size="34" font-weight="700" fill="#F28AA0"><text class="snote" x="-150" y="-130">♪</text><text class="snote" x="140" y="-140" style="animation-delay:.7s">♫</text><text class="snote" x="-130" y="-150" style="animation-delay:1.4s">♫</text></g>
+      </g></g></g>
+      <g id="steveSplash" style="display:none" transform="translate(236 668)"><g fill="#FFFFFF">
+        <path class="spl" d="M-30 0 q 10 -40 18 0 z M-8 0 q 8 -60 16 0 z M12 0 q 10 -44 20 0 z"/><ellipse class="spr" cx="0" cy="2" rx="40" ry="7" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+        <circle class="spd" cx="-26" cy="-30" r="5"/><circle class="spd" cx="24" cy="-38" r="5" style="animation-delay:.1s"/><circle class="spd" cx="2" cy="-60" r="6" style="animation-delay:.05s"/></g></g>
       <!-- Steve, in the seat on the top deck (hidden until someone mentions him to Gladys) -->
       <g id="steveG" style="display:none;cursor:pointer" transform="translate(604 352)"><g transform="scale(.5)"><g id="steveBody"><defs><pattern id="hawaiiP" width="34" height="34" patternUnits="userSpaceOnUse"><rect width="34" height="34" fill="#2F8F8A"/>
           <g transform="translate(9 9)"><circle r="3" fill="#F2C46A"/><g fill="#F28AA0"><circle cx="0" cy="-5" r="3.6"/><circle cx="5" cy="-1.5" r="3.6"/><circle cx="3" cy="4.5" r="3.6"/><circle cx="-3" cy="4.5" r="3.6"/><circle cx="-5" cy="-1.5" r="3.6"/></g><circle r="2.2" fill="#F2C46A"/></g>
@@ -1048,6 +1103,37 @@
       <rect x="1140" y="520" width="56" height="10" fill="#002423"/>
 
       <!-- THE CAPTAIN -->
+      <!-- Kim: comes out the door, sets up a beach chair right of the door and sunbathes (hidden until mentioned) -->
+      <g id="kimWalk" style="display:none;cursor:pointer" transform="translate(775 600)"><g transform="scale(.6)"><g id="kimWalkBody">
+        <rect class="legA" x="-18" y="-66" width="14" height="66" fill="#F3D2C1"/><rect class="legB" x="4" y="-66" width="14" height="66" fill="#F3D2C1"/>
+        <rect x="-22" y="-3" width="20" height="6" rx="3" fill="#C97A5A"/><rect x="2" y="-3" width="20" height="6" rx="3" fill="#C97A5A"/>
+        <path d="M-40 -218 q -6 70 4 104 h76 q 10 -34 4 -104 z" fill="#E8C66A"/>
+        <path d="M-30 -150 h60 l 10 84 h-80 z" fill="#FFFFFF"/><g fill="#F28AA0"><rect x="-32" y="-140" width="64" height="9"/><rect x="-34" y="-118" width="68" height="9"/><rect x="-37" y="-96" width="74" height="9"/><rect x="-39" y="-74" width="78" height="8"/></g>
+        <rect x="-44" y="-148" width="12" height="58" rx="6" fill="#F3D2C1" transform="rotate(10 -38 -146)"/><rect x="32" y="-148" width="12" height="58" rx="6" fill="#F3D2C1" transform="rotate(-10 38 -146)"/>
+        <rect x="-8" y="-166" width="16" height="18" fill="#F3D2C1"/>
+        <ellipse cx="0" cy="-194" rx="32" ry="36" fill="#F3D2C1"/>
+        <path d="M-32 -200 q 4 -30 32 -30 q 28 0 32 30 q -14 -12 -32 -10 q -18 -2 -32 10 z" fill="#E8C66A"/>
+        <g><ellipse cx="-12" cy="-196" rx="11" ry="8" fill="#090F12"/><ellipse cx="12" cy="-196" rx="11" ry="8" fill="#090F12"/><path d="M-2 -197 h4" stroke="#090F12" stroke-width="3"/></g>
+        <path d="M-9 -176 q 9 7 18 0" fill="none" stroke="#C9432F" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="0" cy="-222" rx="62" ry="13" fill="#E9D3A8" stroke="#B89A66" stroke-width="2"/><path d="M-28 -224 q 0 -30 28 -30 q 28 0 28 30 z" fill="#E9D3A8" stroke="#B89A66" stroke-width="2"/><rect x="-28" y="-232" width="56" height="8" fill="#090F12"/>
+        <g id="kimChairFolded"><rect x="36" y="-130" width="12" height="110" rx="3" fill="#3F7A78" stroke="#090F12" stroke-width="2" transform="rotate(12 42 -75)"/><g fill="#FFFFFF"><rect x="37" y="-110" width="10" height="10" transform="rotate(12 42 -75)"/><rect x="37" y="-80" width="10" height="10" transform="rotate(12 42 -75)"/><rect x="37" y="-50" width="10" height="10" transform="rotate(12 42 -75)"/></g></g>
+      </g></g></g>
+      <g id="kimLounge" style="display:none;cursor:pointer" transform="translate(930 600)"><g transform="scale(.6)"><g id="kimLoungeBody">
+        <path d="M-70 0 L-20 -44 M50 0 L0 -44 M-40 0 L40 -44" stroke="#5A3F2A" stroke-width="5" stroke-linecap="round"/>
+        <path d="M-74 -40 L-112 -128 L-86 -134 L-50 -44 Z" fill="#3F7A78" stroke="#090F12" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M-80 -56 L-104 -110 L-96 -112 L-72 -58 Z M-66 -50 L-92 -112" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="5"/>
+        <rect x="-60" y="-52" width="118" height="14" rx="4" fill="#3F7A78" stroke="#090F12" stroke-width="2.5"/><g fill="#FFFFFF"><rect x="-40" y="-50" width="12" height="10"/><rect x="-10" y="-50" width="12" height="10"/><rect x="20" y="-50" width="12" height="10"/></g>
+        <path d="M-96 -170 q -10 50 10 64 l 30 -10 q -16 -24 -10 -50 z" fill="#E8C66A"/>
+        <path d="M-80 -122 L-40 -60 L22 -60 L22 -84 L-30 -84 L-62 -132 Z" fill="#FFFFFF" stroke="#F28AA0" stroke-width="3"/>
+        <g stroke="#F28AA0" stroke-width="6"><path d="M-68 -116 L-58 -122"/><path d="M-50 -90 L-40 -98"/><path d="M-10 -84 V-60"/></g>
+        <path d="M18 -82 L96 -66 L96 -56 L18 -58 Z" fill="#F3D2C1"/><path d="M18 -70 L98 -52 L98 -44 L18 -50 Z" fill="#F3D2C1"/>
+        <ellipse cx="102" cy="-56" rx="8" ry="5" fill="#F3D2C1"/><ellipse cx="104" cy="-46" rx="8" ry="5" fill="#F3D2C1"/>
+        <path d="M-56 -118 q -30 -10 -40 -40" fill="none" stroke="#F3D2C1" stroke-width="11" stroke-linecap="round"/>
+        <ellipse cx="-82" cy="-150" rx="28" ry="31" fill="#F3D2C1" transform="rotate(-20 -82 -150)"/>
+        <g transform="rotate(-20 -82 -150)"><ellipse cx="-92" cy="-152" rx="10" ry="7" fill="#090F12"/><ellipse cx="-71" cy="-152" rx="10" ry="7" fill="#090F12"/><path d="M-82 -153 h2" stroke="#090F12" stroke-width="3"/><path d="M-90 -134 q 8 6 16 0" fill="none" stroke="#C9432F" stroke-width="3" stroke-linecap="round"/></g>
+        <g transform="rotate(-24 -88 -176)"><ellipse cx="-88" cy="-176" rx="58" ry="12" fill="#E9D3A8" stroke="#B89A66" stroke-width="2"/><path d="M-114 -178 q 0 -26 26 -26 q 26 0 26 26 z" fill="#E9D3A8" stroke="#B89A66" stroke-width="2"/><rect x="-114" y="-185" width="52" height="7" fill="#090F12"/></g>
+        <g class="kimZ" font-size="22" font-weight="700" fill="#4F6F82"><text x="-40" y="-190">z</text><text x="-24" y="-214" style="animation-delay:.8s">z</text><text x="-8" y="-238" style="animation-delay:1.6s">z</text></g>
+      </g></g></g>
       <!-- a man with a sax, out on deck (hidden until "Donny won't blow") -->
       <g id="saxMan" style="display:none;cursor:pointer" transform="translate(775 600)"><g transform="scale(.64)"><g id="saxBody">
         <rect class="legA" x="-21" y="-62" width="18" height="62" fill="#2F2F2F"/><rect class="legB" x="3" y="-62" width="18" height="62" fill="#2F2F2F"/>
@@ -1776,6 +1862,8 @@ const gNorm=t=>t.toLowerCase().replace(/[\u2018\u2019]/g,"'").replace(/[^a-z' ]/
 function talkGladys(){const t=gIn.value.trim();if(!t)return;gIn.value='';gSay('me',t);const n=gNorm(t);
   if(/donny won'?t blow|donny wont blow/.test(n)){gState='';saxUnlock();setTimeout(()=>{gSay('dog','Now you know.');setTimeout(()=>{closeDog();saxShow()},1400)},500);return}
   if(/\bsteve\b/.test(n)){gState='';setTimeout(()=>{gSay('dog',"Oh, Steve, right, I'll see if he wants a drink.");setTimeout(()=>{closeDog();steveDrink()},1600)},500);return}
+  if(/\bkim\b/.test(n)){gState='';setTimeout(()=>{gSay('dog',"Yeah Kim's around here somewhere.");setTimeout(()=>{closeDog();kimOut()},1600)},500);return}
+  if(/\bken\b/.test(n)){gState='';setTimeout(()=>{gSay('dog','Engage DJ Ziggla.');setTimeout(()=>{closeDog();djOn()},1500)},500);return}
   if(/\btricks?\b/.test(n)){gState='bmode';setTimeout(()=>gSay('dog','Have you heard about B-MODE?'),600);return}
   if(gState==='bmode'){gState='';
     if(/^(no|nope|nah|not really|no i haven'?t|never)\b/.test(n)||n==='no'){setTimeout(()=>gSay('dog','Click the little yellow light on the back of the boat.'),600);return}
@@ -1793,7 +1881,7 @@ function dogPath(segs,done){const r=document.getElementById('dogRun'),d=document
     (function step(t){const e=Math.min(1,(t-t0)/g.ms),q=g.jump?e:(e<.5?2*e*e:1-Math.pow(-2*e+2,2)/2),x=g.x0+(g.x1-g.x0)*q,y=g.y0+(g.y1-g.y0)*q-(g.jump?Math.sin(Math.PI*e)*70:0);
       r.setAttribute('transform',`translate(${x} ${y}) translate(1240 0) scale(${left?-1:1} 1) translate(-1240 0)`);
       if(e<1)requestAnimationFrame(step);else run()})(t0)};run()}
-function steveDrink(){if(steveBusy||saxBusy||(typeof bRunning!=='undefined'&&bRunning))return;steveBusy=true;
+function steveDrink(){if(steveBusy||(typeof bRunning!=='undefined'&&bRunning))return;steveBusy=true;
   const go=()=>{const st=document.getElementById('steveG'),d=document.getElementById('dog'),sh=document.getElementById('dShaker'),gl=document.getElementById('dGlass'),
       up=document.getElementById('steveArmUp'),dn=document.getElementById('steveArmDown');
     up.style.display='none';dn.style.display='';st.style.display='';st.classList.remove('cheers');st.classList.add('pop');document.body.classList.add('steveout');
@@ -1803,7 +1891,36 @@ function steveDrink(){if(steveBusy||saxBusy||(typeof bRunning!=='undefined'&&bRu
           setTimeout(()=>{gl.style.display='none';dn.style.display='none';up.style.display='';st.classList.add('cheers');
             setTimeout(()=>dogPath([{x0:-560,x1:-470,y0:-230,y1:0,ms:650,jump:1},{x0:-470,x1:0,y0:0,y1:0,ms:1500}],()=>{document.getElementById('dogRun').removeAttribute('transform');steveBusy=false}),800)},300)})},1900)},700)};
   if(isShown('interior')||!document.getElementById('maz').getBoundingClientRect().width){navShip();setTimeout(go,900)}else go()}
-document.addEventListener('DOMContentLoaded',()=>{const st=document.getElementById('steveG');if(st)st.addEventListener('click',e=>{e.stopPropagation();if(steveBusy)return;st.style.transition='opacity .4s';st.style.opacity='0';setTimeout(()=>{st.style.display='none';st.style.opacity='';st.classList.remove('pop','cheers');document.body.classList.remove('steveout')},400)})});
+function steveDive(){const st=document.getElementById('steveG'),sp=document.getElementById('steveSplash');if(steveBusy||st.style.display==='none')return;steveBusy=true;
+  st.classList.remove('pop','cheers');const t0=performance.now(),ms=1300,x0=604,y0=352,x1=236,y1=700;
+  (function step(t){const e=Math.min(1,(t-t0)/ms),x=x0+(x1-x0)*e,y=y0+(y1-y0)*e*e-Math.sin(Math.PI*Math.min(1,e*1.4))*140*(1-e),r=-200*e;
+    st.setAttribute('transform',`translate(${x} ${y}) rotate(${r})`);
+    if(e<1)requestAnimationFrame(step);else{st.style.display='none';st.setAttribute('transform','translate(604 352)');
+      sp.style.display='';sp.querySelectorAll('*').forEach(n=>{n.style.animation='none';void n.getBoundingClientRect();n.style.animation=''});
+      setTimeout(()=>{sp.style.display='none';document.body.classList.remove('steveout');steveBusy=false},1300)}})(t0)}
+// ----- DJ Ziggla -----
+function djOn(){const go=()=>{const d=document.getElementById('djG');if(d.style.display!=='none')return;d.style.display='';d.style.opacity='';d.classList.remove('pop');void d.getBoundingClientRect();d.classList.add('pop');document.body.classList.add('djon')};
+  if(isShown('interior')||!document.getElementById('maz').getBoundingClientRect().width){navShip();setTimeout(go,900)}else go()}
+function djOff(){const d=document.getElementById('djG');d.style.transition='opacity .5s';d.style.opacity='0';setTimeout(()=>{d.style.display='none';d.style.opacity='';d.classList.remove('pop');document.body.classList.remove('djon')},500)}
+document.addEventListener('DOMContentLoaded',()=>{const d=document.getElementById('djG');if(d)d.addEventListener('click',e=>{e.stopPropagation();djOff()})});
+// ----- Kim: out the door, beach chair, sunbathing -----
+let kimBusy=false;
+function kimWalkTo(el,from,to,ms,done){const t0=performance.now();el.classList.add('walking');
+  (function step(t){const e=Math.min(1,(t-t0)/ms),x=from+(to-from)*(e<.5?2*e*e:1-Math.pow(-2*e+2,2)/2);el.setAttribute('transform',`translate(${x} 600)`);
+    if(e<1)requestAnimationFrame(step);else{el.classList.remove('walking');done&&done()}})(t0)}
+function kimOut(){if(kimBusy)return;kimBusy=true;
+  const go=()=>{const leaf=document.getElementById('doorLeaf'),w=document.getElementById('kimWalk'),l=document.getElementById('kimLounge');
+    if(l.style.display!=='none'){kimBusy=false;return}
+    leaf.classList.remove('sclose');leaf.classList.add('sopen');
+    setTimeout(()=>{w.style.display='';w.style.opacity='0';w.style.transition='opacity .4s';w.setAttribute('transform','translate(775 600)');requestAnimationFrame(()=>{w.style.opacity='1'});
+      setTimeout(()=>kimWalkTo(w,775,930,1500,()=>{if(!saxBusy){leaf.classList.remove('sopen');leaf.classList.add('sclose')}
+        setTimeout(()=>{w.style.display='none';l.style.display='';l.classList.remove('setup');void l.getBoundingClientRect();l.classList.add('setup');kimBusy=false},350)}),400)},450)};
+  if(isShown('interior')||!document.getElementById('maz').getBoundingClientRect().width){navShip();setTimeout(go,900)}else go()}
+function kimIn(){const leaf=document.getElementById('doorLeaf'),w=document.getElementById('kimWalk'),l=document.getElementById('kimLounge');if(kimBusy)return;kimBusy=true;
+  l.style.display='none';w.style.display='';w.style.opacity='1';w.setAttribute('transform','translate(930 600)');leaf.classList.remove('sclose');leaf.classList.add('sopen');
+  kimWalkTo(w,930,775,1400,()=>{w.style.opacity='0';setTimeout(()=>{w.style.display='none';if(!saxBusy){leaf.classList.remove('sopen');leaf.classList.add('sclose')}kimBusy=false},400)})}
+document.addEventListener('DOMContentLoaded',()=>{const st=document.getElementById('steveG');if(st)st.addEventListener('click',e=>{e.stopPropagation();steveDive()});
+  const kl=document.getElementById('kimLounge');if(kl)kl.addEventListener('click',e=>{e.stopPropagation();kimIn()})});
 // ----- "Donny won't blow": a man with a sax walks out on deck -----
 let saxAudio=null,saxBusy=false,saxRAF=0;
 function saxUnlock(){if(!saxAudio){saxAudio=new Audio('/leapwork/api/media/donny-wont-blow.mp3');saxAudio.preload='auto';saxAudio.addEventListener('ended',saxHide)}
