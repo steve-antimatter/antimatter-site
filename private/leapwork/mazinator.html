@@ -924,13 +924,20 @@
       <!-- B-MODE: hidden knob, secret console, roof hatch and the blimp -->
       <defs><clipPath id="bConsoleClip"><rect x="280" y="440" width="120" height="160"/></clipPath><clipPath id="bRoofClip"><rect x="-400" y="-1400" width="2400" height="1772"/></clipPath></defs>
       <g id="bBlimpWrap" clip-path="url(#bRoofClip)"><g id="bBlimp">
-        <g stroke="#090F12" stroke-width="3"><line x1="560" y1="300" x2="600" y2="372"/><line x1="880" y1="300" x2="840" y2="372"/><line x1="720" y1="310" x2="720" y2="372"/></g>
-        <path d="M1040 170 l70 -60 v120z M1040 230 l70 60 v-120z" fill="#B8664C" stroke="#090F12" stroke-width="4"/>
-        <ellipse cx="720" cy="200" rx="340" ry="105" fill="#E9E4D8" stroke="#090F12" stroke-width="6"/>
-        <path d="M400 200 Q720 150 1040 200" fill="none" stroke="#618FA4" stroke-width="14"/><path d="M405 225 Q720 275 1035 225" fill="none" stroke="#C97A5A" stroke-width="10"/>
-        <ellipse cx="560" cy="160" rx="90" ry="22" fill="#FFFFFF" opacity=".55"/>
-        <text x="720" y="214" text-anchor="middle" font-size="44" font-weight="900" letter-spacing="10" fill="#002423">B-MODE</text>
-        <circle cx="1060" cy="200" r="7" fill="#BFA66A" class="bBlink"/>
+        <defs><linearGradient id="bmBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4F6F7"/><stop offset=".45" stop-color="#C8CFD3"/><stop offset="1" stop-color="#7F8B91"/></linearGradient>
+          <linearGradient id="bmFin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2F4754"/><stop offset="1" stop-color="#002423"/></linearGradient></defs>
+        <g stroke="#090F12" stroke-width="3"><line x1="560" y1="305" x2="600" y2="372"/><line x1="880" y1="305" x2="840" y2="372"/><line x1="720" y1="318" x2="720" y2="372"/></g>
+        <path d="M1060 200 L1150 92 L1182 100 L1120 200Z" fill="url(#bmFin)" stroke="#090F12" stroke-width="5"/>
+        <path d="M1060 200 L1150 308 L1182 300 L1120 200Z" fill="url(#bmFin)" stroke="#090F12" stroke-width="5"/>
+        <ellipse cx="720" cy="200" rx="430" ry="122" fill="url(#bmBody)" stroke="#090F12" stroke-width="6"/>
+        <path d="M300 230 Q720 300 1140 230 L1136 246 Q720 318 304 246Z" fill="#BFA66A" stroke="#090F12" stroke-width="3"/>
+        <path d="M296 182 Q720 120 1144 182 L1146 196 Q720 136 294 196Z" fill="#002423"/>
+        <path d="M420 107 Q428 200 420 293" fill="none" stroke="#090F12" stroke-opacity=".12" stroke-width="3"/><path d="M560 95 Q568 200 560 305" fill="none" stroke="#090F12" stroke-opacity=".12" stroke-width="3"/><path d="M720 82 Q728 200 720 318" fill="none" stroke="#090F12" stroke-opacity=".12" stroke-width="3"/><path d="M880 95 Q888 200 880 305" fill="none" stroke="#090F12" stroke-opacity=".12" stroke-width="3"/><path d="M1020 107 Q1028 200 1020 293" fill="none" stroke="#090F12" stroke-opacity=".12" stroke-width="3"/>
+        <ellipse cx="560" cy="135" rx="140" ry="22" fill="#FFFFFF" opacity=".6"/>
+        <text x="712" y="242" text-anchor="middle" font-size="84" font-style="italic" font-weight="900" letter-spacing="1" fill="#002423" stroke="#FFFDF7" stroke-width="8" paint-order="stroke" transform="skewX(-8)">Mazinator</text>
+        <circle cx="300" cy="200" r="10" fill="#BFA66A" stroke="#090F12" stroke-width="3"/>
+        <circle class="bBlink" style="animation-delay:0.0s" cx="480" cy="285" r="5" fill="#FFF3C4"/><circle class="bBlink" style="animation-delay:0.2s" cx="600" cy="299" r="5" fill="#FFF3C4"/><circle class="bBlink" style="animation-delay:0.4s" cx="720" cy="312" r="5" fill="#FFF3C4"/><circle class="bBlink" style="animation-delay:0.6s" cx="840" cy="299" r="5" fill="#FFF3C4"/><circle class="bBlink" style="animation-delay:0.8s" cx="960" cy="285" r="5" fill="#FFF3C4"/>
+        <circle cx="1150" cy="96" r="6" fill="#C9432F" class="bBlink"/>
       </g></g>
       <g id="bHatchL"><rect x="360" y="366" width="360" height="8" fill="#618FA4"/></g>
       <g id="bHatchR"><rect x="720" y="366" width="360" height="8" fill="#618FA4"/></g>
@@ -2090,6 +2097,7 @@ function house(x,y,w,h,roof){return `<g transform="translate(${x} ${y})"><rect x
   <rect x="${w*.18}" y="${-h*.7}" width="${w*.22}" height="${h*.22}" fill="#D2E1EA" stroke="#090F12" stroke-width="2"/><rect x="${w*.58}" y="${-h*.45}" width="${w*.22}" height="${h*.45}" fill="#002423"/></g>`}
 const lamp=(x,y)=>`<g transform="translate(${x} ${y})"><rect x="-2" y="-70" width="4" height="70" fill="#090F12"/><rect x="-8" y="-82" width="16" height="14" fill="#BFA66A" stroke="#090F12" stroke-width="2"/></g>`;
 const ROAD='M420 760 C620 760 700 690 900 690 S1250 760 1500 700 S1900 640 2120 640';
+function wrapWords(t,n,max=3){const lines=[''];for(const w of String(t).split(' ')){const c=lines[lines.length-1];if(c&&(c+' '+w).length>n)lines.push(w);else lines[lines.length-1]=(c?c+' ':'')+w}return lines.slice(0,max)}
 function buildTownScene(title,theme,id){
   const LM=islandLandmarks(id||title);
   const T=THEMES[theme]||THEMES.temperate;
@@ -2117,13 +2125,14 @@ function buildTownScene(title,theme,id){
     <path d="${ROAD}" fill="none" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round"/>
     <path d="${ROAD}" fill="none" stroke="#D2E1EA" stroke-width="3" stroke-dasharray="14 16"/>
     <!-- town -->
-    ${landmark(LM[0],530,645)}${house(700,610,70,64,'#002423')}${landmark(LM[1],990,645)}${house(1160,620,74,70,'#B8664C')}
+    ${landmark(LM[0],560,645)}${house(700,610,70,64,'#002423')}${landmark(LM[1],990,645)}${house(1160,620,74,70,'#B8664C')}
     ${landmark(LM[2],1420,655)}${house(1580,630,80,72,'#BFA66A')}
     ${flora(820,640,1.6)}${flora(870,620,1.3)}${flora(1310,650,1.7)}${flora(1360,630,1.2)}${flora(1720,620,1.6)}${flora(1780,600,1.3)}
     ${lamp(640,750)}${lamp(980,720)}${lamp(1360,760)}${lamp(1720,690)}
-    <g transform="translate(470 600)"><rect x="-4" y="0" width="8" height="70" fill="#090F12"/><rect x="-80" y="-34" width="160" height="40" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
-      <text x="0" y="-18" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="2" fill="#4F6F82">WELCOME TO</text>
-      <text x="0" y="-2" text-anchor="middle" font-size="${title.length>22?11:13}" font-weight="800" fill="#090F12">${esc(title.toUpperCase())}</text></g>
+    ${(()=>{const L=wrapWords(title.toUpperCase(),18,2),w=Math.max(150,Math.max(...L.map(l=>l.length))*9+28),h=26+L.length*15;
+      return `<g transform="translate(410 600)"><rect x="-4" y="0" width="8" height="70" fill="#090F12"/><rect x="${-w/2}" y="${-h+6}" width="${w}" height="${h}" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
+      <text x="0" y="${-h+20}" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="2" fill="#4F6F82">WELCOME TO</text>
+      ${L.map((l,k)=>`<text x="0" y="${-h+35+k*15}" text-anchor="middle" font-size="12.5" font-weight="800" fill="#090F12">${esc(l)}</text>`).join('')}</g>`})()}
     <!-- Town Hall -->
     <g transform="translate(2120 640)">
       <rect x="-210" y="-20" width="420" height="20" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/><rect x="-230" y="-4" width="460" height="16" fill="#FFFFFF" stroke="#090F12" stroke-width="3"/>
@@ -2908,7 +2917,7 @@ async function showPack(){const box=document.getElementById('packBox');if(!box)r
 // ----- B-MODE: the secret console, the blimp, and the view of the whole planet -----
 let bRunning=false,bOrbit=0;
 const exSvg=()=>document.querySelector('#exterior svg.scene');
-function bReset(){const s=exSvg();if(s)s.classList.remove('bm1','bm3','bm4','bm5');document.body.classList.remove('bzoom','brun');
+function bReset(keepRun){const s=exSvg();if(s)s.classList.remove('bm1','bm3','bm4','bm5');document.body.classList.remove('bzoom');if(!keepRun)document.body.classList.remove('brun');
   const r=document.getElementById('dogRun');if(r)r.removeAttribute('transform');const d=document.getElementById('dog');if(d)d.classList.remove('running','typing');
   const sc=document.getElementById('bScreen');if(sc)sc.textContent='READY_';document.getElementById('bCard').classList.remove('on');bRunning=false}
 function runDog(dx,ms,done){const r=document.getElementById('dogRun'),d=document.getElementById('dog'),t0=performance.now();d.classList.add('running');
@@ -2933,7 +2942,7 @@ async function openPlanet(){const v=document.getElementById('bmode');document.ge
   document.getElementById('bPlanet').innerHTML=planetSvg(st?st.per_island:[]);wirePins(st);orbit();
   if(st)renderStats(st);setTimeout(()=>v.classList.add('stats'),400)}
 function landB(){const v=document.getElementById('bmode');v.classList.remove('show','stats');cancelAnimationFrame(bOrbit);
-  setTimeout(()=>{v.classList.remove('on');bReset()},900)}
+  setTimeout(()=>{v.classList.remove('on');bReset(true);setTimeout(()=>document.body.classList.remove('brun'),3200)},900)}
 function planetSvg(per){const K='#090F12',cx=800,cy=480,R=290;
   const stars=[...Array(90)].map((_,k)=>`<circle cx="${(k*373)%1600}" cy="${(k*197)%900}" r="${(k%3)*.6+.6}" fill="#FFFFFF" opacity="${.3+(k%5)*.12}"/>`).join('');
   const pins=USECASES.map(u=>{const p=per.find(x=>x.id===u.id)||{};const px=cx+(u.x-800)/800*R*.78,py=cy+(u.y-450)/450*R*.62,t=THEMES[themeOf(u)]||THEMES.temperate,sc=.32;
