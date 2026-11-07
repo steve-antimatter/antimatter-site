@@ -1,3 +1,5 @@
+import { linkTitle, isDrive } from './link-title.js';
+
 // Cabins below deck: what the team keeps for Claude to read when it writes use cases and briefs.
 export const CABINS = [
   { id: 'radio', title: 'Radio room', use: 'Customer and prospect call data: pains in the buyer\'s words, objections, competitor mentions. Quotes from calls are internal only unless cleared.' },
@@ -20,6 +22,8 @@ export async function addCabinItem(db, cabin, { url, name, note, author, kind = 
   url = String(url || '').trim();
   if (!/^https?:\/\/\S+$/.test(url)) throw new Error('Add a full link starting with https://');
   let label = String(name || '').trim();
+  if (!label && kind !== 'file') label = (await linkTitle(url)) || '';
+  if (!label && kind !== 'file' && isDrive(url)) throw new Error("Couldn't read this file's name from Google Drive (it isn't shared publicly). Add a name for it.");
   if (!label) { try { const u = new URL(url); label = u.hostname.replace(/^www\./, '') + u.pathname.replace(/\/$/, ''); } catch { label = url; } }
   const r = await db.prepare('INSERT INTO cabin_items (cabin, kind, name, url, note, added_by) VALUES (?, ?, ?, ?, ?, ?)')
     .bind(cabin, kind === 'file' ? 'file' : 'link', label.slice(0, 200), url.slice(0, 2000), String(note || '').trim().slice(0, 1000) || null, String(author || '').slice(0, 80) || null).run();

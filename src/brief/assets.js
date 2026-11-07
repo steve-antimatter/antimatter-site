@@ -4,6 +4,7 @@ import { loadBrief } from './store.js';
 import { OUTPUTS, GROUPS } from './spec.js';
 import { resolve } from '../usecase/resolve.js';
 import { listCabinItems } from '../cabins.js';
+import { linkTitle } from '../link-title.js';
 
 export const STAGES = ['ordered', 'in_progress', 'review', 'approved'];
 export const STAGE_STATUS = { ordered: 'Not started', in_progress: 'In progress', review: 'In progress', approved: 'Done' };
@@ -52,7 +53,9 @@ export async function assetAction(db, briefId, out, { action, link, title, note,
       if (cur === 'approved') throw new Error('This asset is approved. Reopen it to deliver a new version.');
       const url = String(link || '').trim();
       if (!/^https?:\/\/\S+$/.test(url)) throw new Error('Paste the full link to the finished asset (starting with https://).');
-      await set({ stage: 'review', link: url.slice(0, 2000), link_title: String(title || '').trim().slice(0, 200) || null, delivered_by: who || null, delivered_at: new Date().toISOString() });
+      let name = String(title || '').trim().slice(0, 200) || (await linkTitle(url));
+      if (!name) throw new Error("Couldn't read the file's name from Google Drive (it isn't shared publicly). Type the file name.");
+      await set({ stage: 'review', link: url.slice(0, 2000), link_title: name, delivered_by: who || null, delivered_at: new Date().toISOString() });
       await addEvent(db, briefId, out, 'delivered', url, who); break;
     }
     case 'approve':
