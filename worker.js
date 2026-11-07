@@ -9,6 +9,7 @@ import { chatTurn } from './src/usecase/author.js';
 import { renderHtml } from './src/usecase/render-html.js';
 import { listBriefs, createBrief, loadBrief, patchBrief, setBriefStatus, getBriefChat } from './src/brief/store.js';
 import { briefChatTurn } from './src/brief/author.js';
+import { listAssets, assetAction, promptPack } from './src/brief/assets.js';
 import { CORE, GROUPS, COMMS, STATUSES } from './src/brief/spec.js';
 import { listCabinItems, addCabinItem, removeCabinItem } from './src/cabins.js';
 import { uploadCabinFile, getCabinFile, deleteCabinFile } from './src/cabin-files.js';
@@ -110,6 +111,16 @@ async function mazinator(req, env, p) {
     if (b) {
       if (req.method === 'GET') return json(await listBriefs(env.DB, b[1]));
       if (req.method === 'POST') return json({ id: await createBrief(env.DB, b[1], String(body.author || '')) });
+      return json({ error: 'Method not allowed' }, 405);
+    }
+    b = p.match(/^\/leapwork\/api\/briefs\/([a-z0-9-]+)\/assets(?:\/([a-z_0-9]+)(\/pack)?)?$/);
+    if (b) {
+      const [, id, out, pack] = b;
+      if (!out && req.method === 'GET') return json(await listAssets(env.DB, id));
+      if (out && pack && req.method === 'GET') return json({ text: await promptPack(env.DB, id, out, new URL(req.url).origin) });
+      if (out && !pack && req.method === 'POST') {
+        try { return json(await assetAction(env.DB, id, out, body)); } catch (e) { return json({ error: e.message }, 400); }
+      }
       return json({ error: 'Method not allowed' }, 405);
     }
     b = p.match(/^\/leapwork\/api\/briefs\/([a-z0-9-]+)(?:\/(chat|status))?$/);

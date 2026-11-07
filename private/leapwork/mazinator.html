@@ -687,10 +687,10 @@
   #interior .int-head{display:none}
   #interior{background:#3E2A1C}
   /* ---------- breadcrumb ---------- */
-  #crumbs{position:fixed;top:22px;left:50%;transform:translateX(-50%);z-index:47;display:flex;align-items:center;gap:6px;max-width:min(760px,calc(100vw - 560px));overflow:hidden;white-space:nowrap;
+  #crumbs{position:fixed;top:22px;left:50%;transform:translateX(-50%);z-index:47;display:flex;align-items:center;gap:6px;max-width:min(980px,calc(100vw - 340px));overflow:hidden;white-space:nowrap;
     background:rgba(9,15,18,.86);color:#FFFFFF;padding:8px 16px;border-radius:22px;font-size:13px;box-shadow:0 4px 14px rgba(9,15,18,.25)}
   #crumbs[hidden]{display:none}
-  #crumbs button{background:none;border:0;color:#D2E1EA;font:500 13px var(--font);cursor:pointer;padding:2px 4px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+  #crumbs button{background:none;border:0;color:#D2E1EA;font:500 13px var(--font);cursor:pointer;padding:2px 4px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;max-width:220px;flex:0 1 auto;min-width:0}
   #crumbs button:hover{background:rgba(255,255,255,.12);color:#FFFFFF}
   #crumbs b{font-weight:700;padding:2px 4px;overflow:hidden;text-overflow:ellipsis;max-width:240px} #crumbs .sep{color:#618FA4}
   @media (max-width:1100px){#crumbs{top:auto;bottom:16px;max-width:calc(100vw - 32px)}}
@@ -711,6 +711,51 @@
   .cab-err{color:#7A2F2F;font-size:13px;margin:6px 0 0;min-height:0}
   .file .n a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(9,15,18,.25)} .file .n small{display:block;font-size:12px;color:var(--steel-blue);margin-top:2px}
   .file.up{opacity:.6}
+  /* ---------- inside a shop ---------- */
+  #shopIn{display:none;z-index:14;background:#2F4754;opacity:0;transition:opacity .45s;overflow:hidden}
+  #shopIn.on{display:block} #shopIn.show{opacity:1}
+  #shopIn svg{position:absolute;inset:0;width:100%;height:100%}
+  .in-acts{position:absolute;right:24px;top:24px;z-index:3}
+  .board{position:absolute;left:28px;top:84px;bottom:24px;width:min(440px,40vw);z-index:2;overflow:auto;padding:18px 18px 22px;
+    background:#B98B5A;background-image:radial-gradient(rgba(90,58,42,.35) 1.5px,transparent 1.6px);background-size:14px 14px;border:10px solid #6B4226;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .board-hd{background:#FFFDF7;border:2px solid #090F12;padding:12px 14px;margin-bottom:12px;transform:rotate(-1deg)}
+  .board-hd small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--fog-blue)}
+  .board-hd h3{font-size:22px;margin:2px 0 4px;color:var(--deep-slate)} .board-hd p{font-size:13px;color:var(--steel-blue);margin:0}
+  .board-sec{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#FFF3D6;margin:14px 2px 8px;text-shadow:0 1px 0 rgba(0,0,0,.4)}
+  .slip{display:block;width:100%;text-align:left;font:inherit;cursor:pointer;background:#FFFDF7;border:0;border-left:6px solid var(--c,#9AA6AC);padding:11px 14px 12px;margin-bottom:10px;
+    box-shadow:2px 3px 0 rgba(0,0,0,.25);position:relative;transition:transform .15s}
+  .slip:nth-child(odd){transform:rotate(-.8deg)} .slip:nth-child(even){transform:rotate(.7deg)}
+  .slip:hover,.slip.on{transform:rotate(0) translateX(4px);box-shadow:4px 5px 0 rgba(0,0,0,.3)}
+  .slip::before{content:'';position:absolute;top:-6px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#C9432F;border:2px solid #090F12}
+  .slip b{display:block;font-size:15px;color:var(--deep-slate);margin-bottom:3px} .slip span{font-size:12.5px;color:var(--steel-blue)}
+  .slip em{float:right;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;color:#fff;background:var(--c,#9AA6AC)}
+  .shelf-item{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#F4F1EA;border:2px solid #090F12;padding:8px 12px;margin-bottom:8px;font-size:13.5px}
+  .shelf-item a{color:var(--deep-slate);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(9,15,18,.3)} .shelf-item small{color:var(--fog-blue)}
+  .shelf-empty{font-size:13px;color:#FFF3D6;opacity:.85;margin:0 2px}
+  .slip-panel{position:absolute;right:24px;top:84px;bottom:24px;width:min(500px,52vw);z-index:3;background:#FFFDF7;border:2px solid #090F12;box-shadow:8px 8px 0 rgba(0,0,0,.25);
+    overflow:auto;padding:20px 24px 24px;opacity:0;transform:translateX(30px);pointer-events:none;transition:opacity .3s,transform .3s}
+  #shopIn.slipped .slip-panel{opacity:1;transform:none;pointer-events:auto}
+  .slip-panel small.k{display:block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--fog-blue)}
+  .slip-panel h3{font-size:24px;margin:4px 0 6px;color:var(--deep-slate)} .slip-panel .meta{font-size:13.5px;color:var(--steel-blue);margin-bottom:14px}
+  .track{display:flex;gap:0;margin:0 0 16px} .track span{flex:1;position:relative;font-size:11px;font-weight:700;color:#9AA6AC;padding-top:18px;text-align:center}
+  .track span::before{content:'';position:absolute;top:2px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#D2D8DC;border:2px solid #9AA6AC}
+  .track span::after{content:'';position:absolute;top:8px;left:calc(50% + 8px);right:calc(-50% + 8px);height:2px;background:#D2D8DC} .track span:last-child::after{display:none}
+  .track span.done{color:#3F7A78} .track span.done::before{background:#3F7A78;border-color:#3F7A78} .track span.done::after{background:#3F7A78}
+  .track span.now{color:var(--deep-slate)} .track span.now::before{background:#BFA66A;border-color:#090F12}
+  .stagebox{border:2px solid #090F12;padding:14px 16px;margin-bottom:16px;background:#FFFFFF}
+  .stagebox h4{font-size:15px;margin:0 0 6px;color:var(--deep-slate)} .stagebox p{font-size:13.5px;line-height:1.5;color:var(--steel-blue);margin:0 0 10px}
+  .stagebox .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .stagebox input,.stagebox textarea{width:100%;font:14px var(--font);padding:9px 11px;border:1.5px solid rgba(9,15,18,.3);margin-top:6px}
+  .stagebox textarea{min-height:70px;resize:vertical}
+  .stagebox.review{background:#FBF1E2;border-color:#BFA66A} .stagebox.approved{background:#EAF3EE;border-color:#3F7A78} .stagebox .note{background:#FBEBEB;border-left:3px solid #C9432F;padding:8px 10px;font-size:13.5px;margin-bottom:10px;color:#5A1F18}
+  .stagebox a.open{display:inline-block;font-weight:700;color:var(--deep-slate);margin:2px 0 8px}
+  .slip-err{color:#7A2F2F;font-size:13px;min-height:16px;margin-top:6px}
+  .pack{width:100%;min-height:300px;font:12px/1.45 ui-monospace,Menlo,monospace;padding:10px;border:1.5px solid rgba(9,15,18,.3);margin-top:8px;background:#F7F9FA}
+  .slip-panel details{margin:6px 0 14px} .slip-panel summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--harbor-teal)}
+  .hist{font-size:12.5px;color:var(--steel-blue);border-top:1px solid rgba(9,15,18,.12);padding-top:10px} .hist div{padding:3px 0} .hist b{color:var(--deep-slate);font-weight:600}
+  .scard-go{margin-top:8px}
+  @media (max-width:900px){.board{width:auto;right:28px;bottom:50%}.slip-panel{left:24px;width:auto;top:52%}}
+  #shopIn .neonin{animation:neon 2.4s infinite}
 </style>
 </head>
 <body>
@@ -1186,7 +1231,7 @@
   <div class="shopcard" role="dialog" aria-labelledby="shopName">
     <div class="top"><small id="shopKicker"></small><h3 id="shopName"></h3><div class="meta" id="shopMeta"></div></div>
     <div class="body" id="shopBody"></div>
-    <div class="foot"><p>Inside the shop, the team makes these assets with Claude and gets each one approved. That part is next.</p><button class="btn out" onclick="closeShopCard()">Back to town</button></div>
+    <div class="foot"><button class="btn big teal" onclick="enterShop(shopOpen)">Step inside →</button> <button class="btn out" onclick="closeShopCard()">Back to town</button></div>
   </div>
 </div>
 
@@ -1211,6 +1256,18 @@
       <button class="link" onclick="closeApprove()">Stay here</button>
     </div>
   </div>
+</div>
+
+<!-- ================= INSIDE A SHOP ================= -->
+<div class="view" id="shopIn">
+  <svg id="inScene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+  <div class="in-acts"><button class="btn out" onclick="leaveShop()">← Back to town</button></div>
+  <div class="board" aria-label="Order board">
+    <div class="board-hd"><small id="inKind"></small><h3 id="inName"></h3><p id="inSub"></p></div>
+    <div class="board-sec">Orders</div><div id="inSlips"></div>
+    <div class="board-sec">On the shelf</div><div id="inShelf"></div>
+  </div>
+  <aside class="slip-panel" id="slipPanel" aria-live="polite"></aside>
 </div>
 
 <!-- ================= USE CASE ================= -->
@@ -2354,7 +2411,7 @@ const SHOP_THEMES=[
 let SHOPS=[],shopRAF=0,shopPos={x:HALL_X,y:ROW1+8},shopSkip=false,shopWalking=false,shopOpen=null;
 function outInfo(id){for(const g of SPEC.groups){const o=g.outputs.find(x=>x.id===id);if(o)return{g,o}}return null}
 function shopStatus(outs){const ss=outs.map(a=>a.st.status);return ss.every(s=>s==='Done')?'Done':ss.some(s=>s!=='Not started')?'In progress':'Not started'}
-function townShops(b){return SHOP_THEMES.map(t=>{const outs=t.outputs.map(id=>{const i=outInfo(id),st=b.doc.outputs[id];return i&&st?.on&&b.doc.groups[i.g.id]?{...i,st}:null}).filter(Boolean);
+function townShops(b){return SHOP_THEMES.map(t=>{const outs=t.outputs.map(id=>{const i=outInfo(id),st=b.doc.outputs[id];return i&&st?.on&&b.doc.groups[i.g.id]?{...i,st:{...st,status:assetOf(id).status||'Not started'}}:null}).filter(Boolean);
   return {t,outs,open:outs.length>0,status:outs.length?shopStatus(outs):null}})}
 // --- drawing helpers (origin = middle of the shop's front, at ground level) ---
 const K='#090F12';
@@ -2497,8 +2554,8 @@ function walkPath(pts,done){cancelAnimationFrame(shopRAF);const segs=[];let L=0;
   (function step(t){const e=shopSkip||!dur||!L?1:Math.min(1,(t-t0)/dur),q=e<.5?2*e*e:1-Math.pow(-2*e+2,2)/2,at=q*L;
     const sg=segs.find(g=>at<=g.s+g.d)||segs[segs.length-1];if(sg){const k=sg.d?(at-sg.s)/sg.d:1;placeWalkers(sg.a.x+(sg.b.x-sg.a.x)*Math.min(1,k),sg.a.y+(sg.b.y-sg.a.y)*Math.min(1,k),sg.b.x<sg.a.x)}
     if(e<1)shopRAF=requestAnimationFrame(step);else{walkers.classList.remove('walking');shopWalking=false;v.classList.remove('walking-on');done&&done()}})(t0)}
-function openShops(){
-  if(!bf||bf.status!=='locked')return;closeShopCard();
+async function openShops(){
+  if(!bf||bf.status!=='locked')return;closeShopCard();await loadAssets();
   const v=document.getElementById('shops');document.getElementById('shopScene').innerHTML=buildTown();
   const open=SHOPS.filter(s=>s.open),all=open.flatMap(s=>s.outs),done=all.filter(a=>a.st.status==='Done').length;
   shopTitle.textContent=bf.doc.core.name||'Campaign';
@@ -2605,27 +2662,108 @@ let curIsland=null;
 const isShown=id=>document.getElementById(id)?.classList.contains('show');
 function hideView(id){const v=document.getElementById(id);if(!v||!v.classList.contains('on'))return;v.classList.remove('show');setTimeout(()=>{if(!v.classList.contains('show'))v.classList.remove('on','arrived','carded','card-left','walking-on')},450)}
 function stopMotion(){cancelAnimationFrame(walkRAF);cancelAnimationFrame(shopRAF);shopWalking=false;if(typeof hideShopTip==='function')hideShopTip()}
-function navShip(){stopMotion();closeApprove();['port','town','usecase','brief','shops','chart'].forEach(hideView);document.getElementById('chart').classList.remove('voyage');
+function navShip(){stopMotion();closeApprove();['port','town','usecase','brief','shops','shopIn','chart'].forEach(hideView);document.getElementById('chart').classList.remove('voyage');
   drawer.classList.remove('open');scrim.classList.remove('on');document.body.classList.add('aboard');renderDeck();interior.classList.add('on');requestAnimationFrame(()=>interior.classList.add('show'))}
-async function navChart(){stopMotion();closeApprove();['port','town','usecase','brief','shops'].forEach(hideView);drawer.classList.remove('open');scrim.classList.remove('on');
+async function navChart(){stopMotion();closeApprove();['port','town','usecase','brief','shops','shopIn'].forEach(hideView);drawer.classList.remove('open');scrim.classList.remove('on');
   if(isShown('interior')){interior.classList.remove('show');setTimeout(()=>interior.classList.remove('on'),450)}
   document.body.classList.add('aboard');try{await loadUseCases()}catch(e){}renderMap();
   chartV.classList.add('on');requestAnimationFrame(()=>chartV.classList.add('show'));
   if(chartV.classList.contains('voyage'))endVoyage();else setTimeout(()=>fitAll(),60)}
-function navIsland(){if(!curIsland)return;stopMotion();closeApprove();openPort(curIsland,{still:true});['town','usecase','brief','shops'].forEach(hideView)}
-function navTown(){if(!curIsland)return;stopMotion();closeApprove();openTown(curIsland,{still:true});['usecase','brief','shops'].forEach(hideView)}
-function navBrief(){if(!bf)return;stopMotion();if(!isShown('brief'))openBrief(bf.id);closeShops()}
+function navIsland(){if(!curIsland)return;stopMotion();closeApprove();openPort(curIsland,{still:true});['town','usecase','brief','shops','shopIn'].forEach(hideView)}
+function navTown(){if(!curIsland)return;stopMotion();closeApprove();openTown(curIsland,{still:true});['usecase','brief','shops','shopIn'].forEach(hideView)}
+function navBrief(){if(!bf)return;stopMotion();if(!isShown('brief'))openBrief(bf.id);hideView('shopIn');closeShops()}
 function updateCrumbs(){const nav=document.getElementById('crumbs');if(!nav)return;
   if(!document.body.classList.contains('aboard')){nav.hidden=true;return}nav.hidden=false;
-  const top=['shops','brief','town','usecase','port','chart','interior'].find(isShown)||'interior',c=USECASES.find(k=>k.id===curIsland),bname=bf?.doc?.core?.name||'Campaign brief';
+  const top=['shopIn','shops','brief','town','usecase','port','chart','interior'].find(isShown)||'interior',c=USECASES.find(k=>k.id===curIsland),bname=bf?.doc?.core?.name||'Campaign brief';
   const it=[['⚓ Ship','navShip()',top==='interior'],['Chart','navChart()',top==='chart']];
-  if(c&&['port','usecase','town','brief','shops'].includes(top)){it.push([c.title,'navIsland()',top==='port']);
+  if(c&&['port','usecase','town','brief','shops','shopIn'].includes(top)){it.push([c.title,'navIsland()',top==='port']);
     if(top==='usecase')it.push(['Use case',null,true]);
-    if(['town','brief','shops'].includes(top))it.push(['Town Hall','navTown()',top==='town']);
+    if(['town','brief','shops','shopIn'].includes(top))it.push(['Town Hall','navTown()',top==='town']);
     if(top==='brief')it.push([bname,null,true]);
-    if(top==='shops'){it.push([bname,'navBrief()',false]);it.push(['Shops',null,true])}}
+    if(top==='shops'){it.push([bname,'navBrief()',false]);it.push(['Shops',null,true])}
+    if(top==='shopIn'){it.push([bname,'navBrief()',false]);it.push(['Shops','leaveShop()',false]);it.push([inShop?.t.name||'Shop',null,true])}}
   nav.innerHTML=it.map(([t,fn,cur],i)=>`${i?'<span class="sep">›</span>':''}${cur||!fn?`<b>${escs(t)}</b>`:`<button type="button" onclick="${fn}">${escs(t)}</button>`}`).join('')}
-{const mo=new MutationObserver(()=>requestAnimationFrame(updateCrumbs));['interior','chart','port','town','usecase','brief','shops'].forEach(id=>{const v=document.getElementById(id);if(v)mo.observe(v,{attributes:true,attributeFilter:['class']})});mo.observe(document.body,{attributes:true,attributeFilter:['class']})}
+{const mo=new MutationObserver(()=>requestAnimationFrame(updateCrumbs));['interior','chart','port','town','usecase','brief','shops','shopIn'].forEach(id=>{const v=document.getElementById(id);if(v)mo.observe(v,{attributes:true,attributeFilter:['class']})});mo.observe(document.body,{attributes:true,attributeFilter:['class']})}
+// ----- inside a shop: order slips, prompt pack, delivery, review, the shelf -----
+let SHOP_ASSETS=[],inShop=null,inSlip=null,inBusy=false;
+const STAGE_LABEL={ordered:'Ordered',in_progress:'Being made',review:'Ready for review',approved:'Approved'};
+const STAGE_COLOR={ordered:'#9AA6AC',in_progress:'#618FA4',review:'#BFA66A',approved:'#3F7A78'};
+async function loadAssets(){if(!bf)return;try{SHOP_ASSETS=await api('briefs/'+encodeURIComponent(bf.id)+'/assets')}catch(e){SHOP_ASSETS=[]}}
+const assetOf=id=>SHOP_ASSETS.find(a=>a.output_id===id)||{output_id:id,stage:'ordered',status:'Not started',events:[]};
+function interiorArt(t){const K='#090F12';
+  if(t.id==='barber')return `<rect width="1600" height="900" fill="#3F7A78"/>
+    ${[...Array(20)].map((_,k)=>`<rect x="${k*80}" y="0" width="40" height="560" fill="#468580"/>`).join('')}
+    <rect y="520" width="1600" height="130" fill="#F4F1EA"/>${[...Array(5)].map((_,r)=>[...Array(41)].map((_,c)=>`<rect x="${c*40-(r%2?20:0)}" y="${522+r*26}" width="40" height="26" fill="none" stroke="#D2D8DC" stroke-width="1.5"/>`).join('')).join('')}
+    <rect y="512" width="1600" height="12" fill="#6B4226"/>
+    <rect y="650" width="1600" height="250" fill="#F4F1EA"/>${[...Array(9)].map((_,r)=>[...Array(34)].map((_,c)=>(r+c)%2?`<rect x="${c*50-25+(r*6)}" y="${650+r*28}" width="50" height="28" fill="#1F2A30"/>`:'').join('')).join('')}
+    
+    <g transform="translate(1080 150) rotate(-4)"><text text-anchor="middle" font-family="'Permanent Marker','Marker Felt',cursive" font-size="70" fill="none" stroke="#F28AA0" stroke-width="10" opacity=".35">Sales Stylin'</text><text class="neonin" text-anchor="middle" font-family="'Permanent Marker','Marker Felt',cursive" font-size="70" fill="#FFE9F0" stroke="#F28AA0" stroke-width="2.5">Sales Stylin'</text></g>
+    ${[760,1100].map(x=>`<g transform="translate(${x} 220)"><rect x="0" y="0" width="230" height="270" rx="16" fill="#BFA66A" stroke="${K}" stroke-width="5"/><rect x="16" y="16" width="198" height="238" rx="10" fill="#D2E1EA"/><path d="M40 40 l60 0 l-80 120z" fill="#FFFFFF" opacity=".5"/></g>`).join('')}
+    <rect x="720" y="492" width="680" height="24" fill="#5A3A2A" stroke="${K}" stroke-width="4"/>
+    <g transform="translate(800 492)"><rect x="-14" y="-56" width="28" height="56" rx="6" fill="#5FB3C9" opacity=".75" stroke="${K}" stroke-width="3"/><rect x="-16" y="-64" width="32" height="10" fill="${K}"/>${[-6,0,6].map(x=>`<path d="M${x} -50 v40" stroke="#1F2A30" stroke-width="2"/>`).join('')}</g>
+    <g transform="translate(880 488)"><path d="M0 0 l40 -30 M10 0 l30 -32" stroke="${K}" stroke-width="4"/><circle cx="0" cy="2" r="7" fill="none" stroke="${K}" stroke-width="3"/><circle cx="12" cy="2" r="7" fill="none" stroke="${K}" stroke-width="3"/></g>
+    <g transform="translate(1180 486)"><rect x="0" y="-12" width="60" height="12" fill="#C97A5A" stroke="${K}" stroke-width="2"/>${[...Array(10)].map((_,k)=>`<path d="M${4+k*5.5} -12 v-10" stroke="${K}" stroke-width="2"/>`).join('')}</g>
+    ${[875,1215].map(x=>`<g transform="translate(${x} 0)"><rect x="-70" y="600" width="140" height="70" rx="14" fill="#B8664C" stroke="${K}" stroke-width="5"/><rect x="-62" y="520" width="124" height="96" rx="18" fill="#B8664C" stroke="${K}" stroke-width="5"/><rect x="-36" y="492" width="72" height="34" rx="12" fill="#B8664C" stroke="${K}" stroke-width="4"/>
+      <rect x="-84" y="606" width="24" height="56" rx="10" fill="#C8CFD3" stroke="${K}" stroke-width="4"/><rect x="60" y="606" width="24" height="56" rx="10" fill="#C8CFD3" stroke="${K}" stroke-width="4"/>
+      <rect x="-10" y="670" width="20" height="80" fill="#C8CFD3" stroke="${K}" stroke-width="4"/><ellipse cy="760" rx="70" ry="16" fill="#C8CFD3" stroke="${K}" stroke-width="4"/><rect x="-40" y="700" width="80" height="12" fill="#9AA6AC" stroke="${K}" stroke-width="3"/></g>`).join('')}
+    <g transform="translate(1440 120)"><rect width="150" height="330" fill="#D2E1EA" stroke="${K}" stroke-width="6"/><path d="M75 0 V330 M0 165 H150" stroke="${K}" stroke-width="4"/>
+      <defs><clipPath id="poleIn"><rect x="60" y="40" width="30" height="250" rx="15"/></clipPath></defs><rect x="60" y="40" width="30" height="250" rx="15" fill="#FFFFFF" stroke="${K}" stroke-width="3"/>
+      <g clip-path="url(#poleIn)"><g class="polespin">${[...Array(16)].map((_,k)=>`<path d="M50 ${k*24-60} L100 ${k*24-90} L100 ${k*24-78} L50 ${k*24-48}Z" fill="${k%2?'#618FA4':'#B8664C'}"/>`).join('')}</g></g></g>
+    <g transform="translate(1500 560)"><circle r="34" fill="#FFFFFF" stroke="${K}" stroke-width="5"/><path d="M0 0 V-22 M0 0 H16" stroke="${K}" stroke-width="4"/></g>`;
+  // every other shop: a counter, shelves, and its name on the wall
+  const c=t.color;return `<rect width="1600" height="900" fill="${c}"/><rect width="1600" height="900" fill="#FFFFFF" opacity=".55"/>
+    <rect y="640" width="1600" height="260" fill="#9A6A3F"/>${[...Array(12)].map((_,k)=>`<path d="M0 ${660+k*22} H1600" stroke="#7A5536" stroke-width="2"/>`).join('')}
+    <g transform="translate(1080 130)"><rect x="-300" y="-50" width="600" height="96" rx="10" fill="${c}" stroke="${K}" stroke-width="5"/><text y="18" text-anchor="middle" font-size="44" font-weight="900" letter-spacing="2" fill="#FFFFFF">${escs(t.name.toUpperCase())}</text></g>
+    ${[260,360].map(y=>`<rect x="760" y="${y}" width="640" height="14" fill="#6B4226" stroke="${K}" stroke-width="3"/>`).join('')}
+    ${[...Array(9)].map((_,k)=>`<rect x="${790+k*66}" y="${206+(k%3)*8}" width="44" height="${54-(k%3)*8}" fill="${['#C97A5A','#618FA4','#BFA66A','#3F7A78'][k%4]}" stroke="${K}" stroke-width="3"/><rect x="${800+k*66}" y="${300+(k%2)*10}" width="36" height="${60-(k%2)*10}" fill="${['#FFFDF7','#D2E1EA','#F2D9A6'][k%3]}" stroke="${K}" stroke-width="3"/>`).join('')}
+    <rect x="720" y="520" width="760" height="150" fill="#6B4226" stroke="${K}" stroke-width="5"/><rect x="700" y="500" width="800" height="26" fill="#3E2A1C" stroke="${K}" stroke-width="5"/>
+    <g transform="translate(1380 500)"><rect x="-40" y="-60" width="80" height="60" fill="#C8CFD3" stroke="${K}" stroke-width="4"/><rect x="-30" y="-50" width="60" height="22" fill="#2F4754"/></g>`}
+async function enterShop(id){const s=SHOPS.find(k=>k.t.id===id);if(!s||!s.open)return;inShop=s;inSlip=null;
+  closeShopCard();await loadAssets();
+  document.getElementById('inScene').innerHTML=interiorArt(s.t);
+  inKind.textContent=s.t.kind;inName.textContent=s.t.name;
+  renderBoard();const v=document.getElementById('shopIn');v.classList.remove('slipped');v.classList.add('on');requestAnimationFrame(()=>v.classList.add('show'))}
+function leaveShop(){const v=document.getElementById('shopIn');v.classList.remove('show','slipped');setTimeout(()=>v.classList.remove('on'),450);if(bf&&isShown('shops')){const keep=document.getElementById('shopScene');openShops()}}
+function renderBoard(){if(!inShop)return;const outs=inShop.outs;const as=outs.map(a=>({...a,as:assetOf(a.o.id)}));
+  const open=as.filter(a=>a.as.stage!=='approved'),done=as.filter(a=>a.as.stage==='approved');
+  inSub.textContent=`${outs.length} order${outs.length>1?'s':''} for ${bf.doc.core.name||'this campaign'} · ${done.length} on the shelf`;
+  inSlips.innerHTML=open.length?open.map(a=>`<button class="slip ${inSlip===a.o.id?'on':''}" style="--c:${STAGE_COLOR[a.as.stage]}" onclick="openSlip('${a.o.id}')"><em>${STAGE_LABEL[a.as.stage]}</em><b>${escs(a.o.title)}</b><span>${escs(a.st.owner||'Owner not set')}${a.st.due?' · due '+escs(fmtDate(a.st.due)):''}</span></button>`).join(''):'<p class="shelf-empty">Every order is done.</p>';
+  inShelf.innerHTML=done.length?done.map(a=>`<div class="shelf-item"><span><a href="${escs(a.as.link)}" target="_blank" rel="noopener">${escs(a.as.link_title||a.o.title)} ↗</a><br><small>${escs(a.o.title)} · approved by ${escs(a.as.approved_by||'')}</small></span><button class="btn out" onclick="openSlip('${a.o.id}')">Details</button></div>`).join(''):'<p class="shelf-empty">Nothing finished yet. Approved assets land here.</p>'}
+function openSlip(id){inSlip=id;renderBoard();renderSlip();document.getElementById('shopIn').classList.add('slipped')}
+function closeSlip(){inSlip=null;document.getElementById('shopIn').classList.remove('slipped');renderBoard()}
+const whenStr=t=>{if(!t)return '';const d=new Date(String(t).includes('T')?t:String(t).replace(' ','T')+'Z');return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric'})};
+function renderSlip(){const a=inShop.outs.find(x=>x.o.id===inSlip);if(!a)return;const as=assetOf(inSlip),st=a.st,stg=as.stage,idx=['ordered','in_progress','review','approved'].indexOf(stg);
+  const lastBack=[...as.events].reverse().find(e=>e.kind==='sent_back');
+  const packUI=`<div class="row"><button class="btn teal" onclick="copyPack()">Copy prompt pack</button><button class="btn out" onclick="showPack()">View it</button></div><div id="packBox"></div>`;
+  const deliverUI=`<input id="aLink" placeholder="Google Drive link to the finished asset (https://…)"><input id="aTitle" placeholder="Name it (optional), e.g. DORA sales slides v1"><div class="row"><button class="btn" onclick="assetDo('deliver')">Deliver for review</button></div>`;
+  let box='';
+  if(stg==='ordered')box=`<div class="stagebox"><h4>Ordered</h4><p>Antimatter makes this in Claude Design (or a claude.ai chat) from the prompt pack: the brief, the use case, the context cabins and the brand rules in one paste.</p>${packUI}<div class="row"><button class="btn out" onclick="assetDo('start')">Start making it</button></div></div>
+    <div class="stagebox"><h4>Already made?</h4><p>Save it in the campaign's Google Drive folder and paste the link.</p>${deliverUI}</div>`;
+  else if(stg==='in_progress')box=`<div class="stagebox">${lastBack?`<div class="note"><b>Sent back${lastBack.author?' by '+escs(lastBack.author):''}:</b> ${escs(lastBack.content)}</div>`:''}<h4>Being made</h4><p>Use the prompt pack in Claude Design, save the result in the campaign's Google Drive folder, then deliver the link.</p>${packUI}${deliverUI}</div>`;
+  else if(stg==='review')box=`<div class="stagebox review"><h4>Ready for review</h4><a class="open" href="${escs(as.link)}" target="_blank" rel="noopener">${escs(as.link_title||'Open the asset')} ↗</a><p>Delivered${as.delivered_by?' by '+escs(as.delivered_by):''}${whenStr(as.delivered_at)?' on '+whenStr(as.delivered_at):''}. Open it, then approve it or send it back with notes.</p>
+    <div class="row"><button class="btn big approve" onclick="approveAsset()">Approve and initial</button></div>
+    <textarea id="sbNote" placeholder="What needs to change?"></textarea><div class="row"><button class="btn out" onclick="assetDo('send_back')">Send it back</button></div></div>`;
+  else box=`<div class="stagebox approved"><h4>Approved · on the shelf</h4><a class="open" href="${escs(as.link)}" target="_blank" rel="noopener">${escs(as.link_title||'Open the asset')} ↗</a><p>Approved by ${escs(as.approved_by||'')}${whenStr(as.approved_at)?' on '+whenStr(as.approved_at):''}.</p><div class="row"><button class="btn out" onclick="assetDo('reopen')">Reopen to make changes</button></div></div>`;
+  const KIND={started:'Started',delivered:'Delivered',approved:'Approved',sent_back:'Sent back',reopened:'Reopened'};
+  slipPanel.innerHTML=`<div style="display:flex;justify-content:space-between;gap:10px"><small class="k">${escs(inShop.t.name)}</small><button class="link" style="border:0;background:none;cursor:pointer;font:600 12px var(--font);color:var(--fog-blue)" onclick="closeSlip()">CLOSE ×</button></div>
+    <h3>${escs(a.o.title)}</h3><div class="meta">Owner: ${escs(st.owner||'Not set')} · Due: ${st.due?escs(fmtDate(st.due)):'Not set'}</div>
+    <div class="track">${['Ordered','Being made','Ready for review','Approved'].map((l,i)=>`<span class="${i<idx?'done':i===idx?'now':''}">${l}</span>`).join('')}</div>
+    ${box}<div class="slip-err" id="slipErr"></div>
+    <details><summary>What the brief says</summary>${a.o.fields.map(f=>{const v=fmtVal(f,st.values[f.key]);return `<div class="srow"><b>${escs(f.label)}</b><span class="${v?'':'unset'}">${v?escs(v):'Not set'}</span></div>`}).join('')}</details>
+    ${as.events.length?`<div class="hist">${as.events.slice().reverse().map(e=>`<div><b>${KIND[e.kind]||e.kind}</b>${e.author?' · '+escs(e.author):''}${whenStr(e.created_at)?' · '+whenStr(e.created_at):''}${e.kind==='sent_back'&&e.content?`: ${escs(e.content)}`:''}</div>`).join('')}</div>`:''}`}
+async function assetDo(action,extra={}){if(inBusy)return;inBusy=true;const err=document.getElementById('slipErr');if(err)err.textContent='';
+  const body={action,author:extra.author||author(),...extra};
+  if(action==='deliver'){body.link=document.getElementById('aLink')?.value;body.title=document.getElementById('aTitle')?.value}
+  if(action==='send_back')body.note=document.getElementById('sbNote')?.value;
+  try{SHOP_ASSETS=await api('briefs/'+encodeURIComponent(bf.id)+'/assets/'+inSlip,{method:'POST',body:JSON.stringify(body)});renderBoard();renderSlip()}
+  catch(e){inBusy=false;if(extra.author)throw e;const er=document.getElementById('slipErr');if(er)er.textContent=e.message}
+  inBusy=false}
+function approveAsset(){const a=inShop.outs.find(x=>x.o.id===inSlip);
+  openApprove({title:a.o.title,what:'asset',text:'Approving marks this asset done. It goes on the shelf, and the shop shows it as done. You can reopen it later.',
+    approve:(who)=>assetDo('approve',{author:who}),doneText:'On the shelf.',nextLabel:'Back to the shop',next:()=>{}})}
+async function getPack(){const d=await api('briefs/'+encodeURIComponent(bf.id)+'/assets/'+inSlip+'/pack');return d.text}
+async function copyPack(){try{const t=await getPack();await navigator.clipboard.writeText(t);toast('Prompt pack copied. Paste it into Claude Design.')}catch(e){showPack()}}
+async function showPack(){const box=document.getElementById('packBox');if(!box)return;try{const t=await getPack();box.innerHTML='<textarea class="pack" readonly></textarea>';box.firstChild.value=t;box.firstChild.focus();box.firstChild.select();box.firstChild.scrollTop=0}catch(e){box.textContent=e.message}}
 </script>
 </body>
 </html>
