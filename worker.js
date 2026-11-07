@@ -10,6 +10,7 @@ import { renderHtml } from './src/usecase/render-html.js';
 import { listBriefs, createBrief, loadBrief, patchBrief, setBriefStatus, getBriefChat } from './src/brief/store.js';
 import { briefChatTurn } from './src/brief/author.js';
 import { listAssets, assetAction, promptPack } from './src/brief/assets.js';
+import { globalStats } from './src/stats.js';
 import { CORE, GROUPS, COMMS, STATUSES } from './src/brief/spec.js';
 import { listCabinItems, addCabinItem, removeCabinItem } from './src/cabins.js';
 import { uploadCabinFile, getCabinFile, deleteCabinFile } from './src/cabin-files.js';
@@ -91,6 +92,7 @@ async function mazinator(req, env, p) {
       return new Response(f.obj.body, { headers: { 'content-type': f.mime || 'application/octet-stream', 'content-disposition': `inline; filename="${f.name.replace(/"/g, '')}"`, 'cache-control': 'no-store' } });
     }
     if (p === '/leapwork/api/storage') return json({ files: !!env.CABIN_FILES });
+    if (p === '/leapwork/api/stats') return json(await globalStats(env.DB));
 
     const body = req.method === 'POST' || req.method === 'PUT' ? await req.json().catch(() => ({})) : null;
 

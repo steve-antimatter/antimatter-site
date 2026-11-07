@@ -39,4 +39,8 @@ assert.match(pack, /Make the "Sales slides" for Leapwork's campaign "DORA push"/
 assert.match(pack, /How many slides: 5/);
 assert.match(pack, /Sales templates:\n- Leapwork sales deck template/);
 assert.match(pack, new RegExp(seed.use_case.title));
+const { globalStats } = await import('../../stats.js');
+const gs = await globalStats(db);
+assert.equal(gs.briefs.total, 1); assert.equal(gs.briefs.approved, 1); assert.equal(gs.assets.total, 2); assert.equal(gs.assets.in_progress, 1); assert.equal(gs.cabins.links, 1);
+assert.equal(gs.per_island.find((p) => p.id === 'governance-in-testing').assets, 2);
 console.log('asset tests ok');
