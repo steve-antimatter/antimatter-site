@@ -1727,7 +1727,7 @@ function stKey(c){return c.kind==='usecase'?({locked:'locked',review:'pending',d
 function allIslands(){return USECASES}
 async function loadUseCases(){
   try{const r=await fetch('/leapwork/api/islands',{credentials:'same-origin'});if(!r.ok)return;
-    USECASES=(await r.json()).map(u=>Object.assign(u,{kind:'usecase',seed:u.seed||9}));
+    USECASES=(await r.json()).map(u=>Object.assign(u,{kind:'usecase',seed:u.seed||9}));assignThemes(USECASES);
     if(document.getElementById('chart').classList.contains('on'))renderMap();
     if(!fitted&&USECASES.length&&document.getElementById('chart').classList.contains('show')){fitted=true;fitAll(true)}
   }catch(e){}
@@ -1764,7 +1764,10 @@ const THEMES={
 };
 const THEME_KEYS=Object.keys(THEMES);
 function hash(str){let h=2166136261;for(const ch of String(str)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
-function themeOf(c){return THEME_KEYS[hash(c.id)%THEME_KEYS.length]}
+// islands take themes in the order they were created, so no two repeat until all seven are used
+const THEME_ORDER=['tropical','city','desert','jungle','arctic','volcanic','harbor'];let THEME_IDX=new Map();
+function assignThemes(list){THEME_IDX=new Map([...list].sort((x,y)=>String(x.created_on||'').localeCompare(String(y.created_on||''))||x.id.localeCompare(y.id)).map((u,i)=>[u.id,i]))}
+function themeOf(c){const i=THEME_IDX.get(c.id);return i==null?THEME_KEYS[hash(c.id)%THEME_KEYS.length]:THEME_ORDER[i%THEME_ORDER.length]}
 const palm=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 10 q3 -12 -2 -24" stroke="#7A5A3A" stroke-width="3" fill="none"/><path d="M-2 -14 q-12 -6 -18 2 M-2 -14 q-10 -12 -18 -10 M-2 -14 q8 -12 18 -8 M-2 -14 q12 -4 16 6 M-2 -14 q0 -12 4 -16" stroke="#2F7A4E" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>`;
 const cactus=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})" fill="#5F7F4A"><rect x="-3" y="-18" width="6" height="22" rx="3"/><rect x="-10" y="-12" width="5" height="9" rx="2.5"/><rect x="5" y="-14" width="5" height="10" rx="2.5"/><rect x="-10" y="-5" width="8" height="3"/><rect x="2" y="-6" width="8" height="3"/></g>`;
 const snowPine=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><rect x="-2" y="0" width="4" height="10" fill="#090F12"/><polygon points="-12,2 0,-20 12,2" fill="#336B60"/><polygon points="-9,-8 0,-26 9,-8" fill="#336B60"/><polygon points="-5,-16 0,-26 5,-16" fill="#FFFFFF"/><polygon points="-12,2 -6,-4 0,2 6,-4 12,2" fill="#FFFFFF" opacity=".85"/></g>`;
