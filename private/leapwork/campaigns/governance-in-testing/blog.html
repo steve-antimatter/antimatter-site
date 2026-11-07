@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to prove every software change was tested and approved | Leapwork</title><meta name="description" content="Auditors sample changes and expect a test record and sign-off for each one. Here is how to build a test automation audit trail with review, approval, version history and tests that run the same way every time.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--slate:#090F12;--teal:#002423;--atlantic:#618FA4;--mist:#D2E1EA;--harbor:#3F7A78;--copper:#C97A5A;--gold:#BFA66A;--fog:#4F6F82;--steel:#2F4754;--light:#F4F7F8}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Arial,sans-serif;color:var(--slate);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.5}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 32px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.eyebrow::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--copper)}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 24px;border-radius:6px;font:600 15px Inter,sans-serif;text-decoration:none;border:0;cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.copper{background:var(--copper);color:#fff}.btn.copper:hover{background:#B8664C}
+.btn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px var(--mist)}
+.btn.dark{background:var(--slate);color:#fff}
+/* header */
+header{position:absolute;inset:0 0 auto;z-index:5}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:84px}
+header svg{height:26px;width:auto}
+header .btn{height:40px;font-size:14px}
+/* hero */
+.hero{position:relative;background:var(--slate);color:#fff;overflow:hidden;padding:150px 0 110px}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(900px 600px at 15% 110%,rgba(63,122,120,.55),transparent 60%),radial-gradient(700px 500px at 95% -10%,rgba(97,143,164,.25),transparent 60%)}
+.hero .arcs{position:absolute;right:-220px;top:-200px;width:900px;height:900px;opacity:.18}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center}
+.hero .eyebrow{color:var(--mist)}
+.hero h1{font-size:54px;line-height:1.06;letter-spacing:-.025em;font-weight:800;margin:20px 0 22px}
+.hero h1 span{color:var(--atlantic)}
+.hero p.sub{font-size:19px;color:var(--mist);max-width:560px}
+.hero ul{list-style:none;margin:30px 0 0;display:grid;gap:12px}
+.hero li{display:flex;gap:12px;align-items:flex-start;font-size:16px;color:#E8F0F4}
+.hero li svg{flex:none;margin-top:3px}
+/* form */
+.form{background:#fff;color:var(--slate);border-radius:12px;padding:30px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.form h2{font-size:22px;letter-spacing:-.01em}
+.form p{font-size:14px;color:var(--fog);margin:6px 0 20px}
+.form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form label{display:block;font-size:12px;font-weight:600;color:var(--steel);margin-bottom:12px}
+.form input,.form select{display:block;width:100%;height:42px;margin-top:5px;padding:0 12px;border:1.5px solid #D5DEE3;border-radius:6px;font:15px Inter,sans-serif;color:var(--slate);background:#fff}
+.form input:focus,.form select:focus{outline:none;border-color:var(--harbor);box-shadow:0 0 0 3px rgba(63,122,120,.15)}
+.form .btn{width:100%;margin-top:6px}
+.form small{display:block;font-size:11.5px;color:var(--fog);margin-top:12px;text-align:center}
+.form .alt{display:block;text-align:center;font-size:14px;margin-top:10px;color:var(--harbor);font-weight:600}
+.thanks{display:none;text-align:center;padding:40px 10px}.thanks h2{margin-bottom:8px}
+.form.sent form{display:none}.form.sent .thanks{display:block}
+/* logos */
+.logos{background:#fff;border-bottom:1px solid #E3EAEE}
+.logos .wrap{display:flex;align-items:center;gap:40px;padding-top:28px;padding-bottom:28px;flex-wrap:wrap}
+.logos b{font-size:11px;letter-spacing:.2em;color:var(--fog);font-weight:700}
+.logos span{font-size:17px;font-weight:700;color:var(--steel);letter-spacing:-.01em}
+/* sections */
+section{padding:100px 0}
+.light{background:var(--light);background-image:linear-gradient(rgba(97,143,164,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(97,143,164,.08) 1px,transparent 1px);background-size:48px 48px}
+.head{max-width:720px;margin-bottom:52px}
+.head .eyebrow{color:var(--fog)}
+.head h2{font-size:40px;line-height:1.12;letter-spacing:-.02em;margin-top:14px}
+.head p{font-size:18px;color:var(--steel);margin-top:14px}
+.problem{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pcard{background:#fff;border:1px solid #DCE5EA;border-radius:10px;padding:26px}
+.pcard .n{font-size:26px;font-weight:800;color:var(--copper)}
+.pcard h3{font-size:18px;margin:10px 0 8px}
+.pcard p{color:var(--steel);font-size:15px}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pillar{background:#fff;border:1px solid #DCE5EA;border-radius:10px;padding:30px;display:flex;flex-direction:column}
+.pillar .dot{width:44px;height:44px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:800}
+.pillar h3{font-size:19px;line-height:1.3;margin:20px 0 10px}
+.pillar p{color:var(--steel);font-size:15px}
+.pillar .proof{margin-top:auto;padding-top:18px;border-top:1px solid #E3EAEE;font-size:14px;font-style:italic;color:var(--harbor)}
+.pillar p+.proof{margin-top:22px}
+/* proof */
+.dark{background:var(--slate);color:#fff;position:relative;overflow:hidden}
+.dark::before{content:'';position:absolute;inset:0;background:radial-gradient(800px 500px at 90% 120%,rgba(63,122,120,.45),transparent 60%)}
+.dark .wrap{position:relative}
+.dark .head .eyebrow{color:var(--mist)}.dark .head p{color:var(--mist)}
+.quote{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.quote blockquote{font-size:34px;line-height:1.25;font-weight:700;letter-spacing:-.02em}
+.quote cite{display:block;margin-top:18px;font-style:normal;color:var(--mist);font-size:15px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stat{background:rgba(255,255,255,.04);border:1px solid rgba(210,225,234,.16);border-radius:10px;padding:22px}
+.stat b{display:block;font-size:40px;font-weight:800;letter-spacing:-.02em}
+.stat span{color:var(--mist);font-size:14px}
+.stat.wide{grid-column:1/-1}
+.stat.wide b{font-size:34px}
+.src{margin-top:26px;font-size:12px;color:#9FBFCC}
+/* platform */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tile{background:#fff;border:1px solid #DCE5EA;border-radius:10px;overflow:hidden}
+.tile .top{height:120px;display:grid;place-items:center;background:#fff;border-bottom:1px solid #E3EAEE}
+.tile .top img{height:56px;width:auto}
+.tile .bar{height:6px}
+.tile .body{padding:24px}
+.tile h3{font-size:17px}
+.tile p{color:var(--steel);font-size:15px;margin-top:8px}
+.under{margin-top:20px;background:var(--teal);color:#fff;border-radius:10px;padding:18px 26px;font-size:15px}
+.under b{letter-spacing:.16em;font-size:12px;color:var(--mist);margin-right:14px}
+/* industries */
+.inds{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ind{border-top:3px solid var(--teal);padding-top:16px}
+.ind small{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--copper)}
+.ind h3{font-size:17px;margin:6px 0 8px}
+.ind p{font-size:14.5px;color:var(--steel)}
+.note{margin-top:30px;font-size:13px;color:var(--fog)}
+/* faq */
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid #DCE5EA;padding:22px 0}
+.faq summary{font-size:18px;font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'+';font-size:24px;line-height:1;color:var(--harbor);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq p{margin-top:12px;color:var(--steel);font-size:16px;max-width:700px}
+/* cta */
+.cta{text-align:left}
+.cta h2{font-size:56px;letter-spacing:-.03em;font-weight:800}
+.cta h2 span{color:var(--copper)}
+.cta p{font-size:19px;color:var(--mist);max-width:620px;margin:16px 0 30px}
+.cta .btns{display:flex;gap:14px;flex-wrap:wrap}
+footer{background:var(--slate);color:#9FBFCC;border-top:1px solid rgba(210,225,234,.12);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;height:76px}
+footer svg{height:18px;width:auto}
+@media (max-width:900px){
+  .hero{padding:120px 0 70px}.hero .wrap,.quote{grid-template-columns:1fr;gap:40px}.hero h1{font-size:38px}
+  .problem,.pillars,.tiles{grid-template-columns:1fr}.inds{grid-template-columns:1fr 1fr}.head h2{font-size:30px}.cta h2{font-size:40px}.quote blockquote{font-size:26px}
+}
+
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid #E3EAEE}
+.nav .wrap{display:flex;align-items:center;gap:36px;height:72px}
+.nav svg{height:22px;width:auto}
+.nav ul{display:flex;gap:28px;list-style:none;font-size:15px;font-weight:500;color:var(--steel);flex:1}
+.nav .btn{height:40px;font-size:14px}
+@media(max-width:900px){.nav ul{display:none}}
+
+.post-hero{background:var(--light);background-image:linear-gradient(rgba(97,143,164,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(97,143,164,.08) 1px,transparent 1px);background-size:48px 48px;padding:70px 0 0}
+.post-hero .wrap{max-width:900px}
+.crumb{font-size:13px;color:var(--fog);margin-bottom:22px}.crumb b{color:var(--harbor)}
+.post-hero h1{font-size:50px;line-height:1.08;letter-spacing:-.025em;font-weight:800;margin:16px 0 18px}
+.post-hero .dek{font-size:20px;color:var(--steel);max-width:760px}
+.meta{display:flex;gap:14px;align-items:center;margin:28px 0 40px;font-size:14px;color:var(--fog)}
+.meta .av{width:40px;height:40px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:700}
+.meta b{color:var(--slate)}
+.feature{position:relative;border-radius:14px 14px 0 0;overflow:hidden;background:var(--slate);height:360px}
+.feature::before{content:'';position:absolute;inset:0;background:radial-gradient(600px 400px at 20% 120%,rgba(63,122,120,.6),transparent 60%)}
+.feature svg.f{position:absolute;inset:0;width:100%;height:100%}
+article{max-width:720px;margin:0 auto;padding:60px 32px 40px;font-size:18px;line-height:1.7;color:#1C2A31}
+article p{margin:0 0 22px}
+article h2{font-size:28px;line-height:1.2;letter-spacing:-.015em;color:var(--slate);margin:48px 0 16px}
+article h3{font-size:21px;color:var(--slate);margin:36px 0 12px}
+article ul{margin:0 0 24px 22px}article li{margin-bottom:10px}
+article li b{color:var(--slate)}
+.callout{border-left:4px solid var(--copper);background:var(--light);padding:22px 26px;border-radius:0 10px 10px 0;margin:30px 0}
+.callout p{margin:0;font-size:17px}
+.pull{margin:40px 0;padding:34px 36px;background:var(--slate);color:#fff;border-radius:12px;position:relative;overflow:hidden}
+.pull p{font-size:25px;line-height:1.3;font-weight:700;letter-spacing:-.01em;margin:0}
+.pull cite{display:block;margin-top:14px;font-style:normal;font-size:14px;color:var(--mist)}
+.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0}
+.statrow div{border:1px solid #DCE5EA;border-radius:10px;padding:18px}
+.statrow b{display:block;font-size:34px;letter-spacing:-.02em;color:var(--teal)}
+.statrow span{font-size:13.5px;color:var(--fog);line-height:1.4;display:block}
+.steps{counter-reset:s;margin:10px 0 24px}
+.step{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:20px 0;border-top:1px solid #E3EAEE}
+.step:last-child{border-bottom:1px solid #E3EAEE}
+.step i{font-style:normal;width:44px;height:44px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px}
+.step h3{margin:6px 0 6px;font-size:19px}.step p{margin:0;font-size:16.5px}
+.endcta{max-width:720px;margin:10px auto 90px;padding:0 32px}
+.endcta .box{background:var(--slate);color:#fff;border-radius:14px;padding:40px;position:relative;overflow:hidden}
+.endcta .box::before{content:'';position:absolute;inset:0;background:radial-gradient(500px 300px at 100% 120%,rgba(63,122,120,.6),transparent 60%)}
+.endcta h2{position:relative;font-size:34px;letter-spacing:-.02em}.endcta h2 span{color:var(--copper)}
+.endcta p{position:relative;color:var(--mist);margin:12px 0 24px;font-size:17px}
+.endcta .btns{position:relative;display:flex;gap:12px;flex-wrap:wrap}
+.share{max-width:720px;margin:0 auto;padding:0 32px 30px;display:flex;gap:10px;font-size:13px;color:var(--fog);align-items:center}
+.share span{border:1px solid #DCE5EA;border-radius:20px;padding:6px 14px;color:var(--steel)}
+@media(max-width:900px){.post-hero h1{font-size:34px}.statrow{grid-template-columns:1fr}.feature{height:220px}}
+</style></head><body><nav class="nav"><div class="wrap"><svg aria-label="leapwork" viewBox="56 23.75 286.3 54.25" xmlns="http://www.w3.org/2000/svg"><defs><mask id="e1" maskUnits="userSpaceOnUse" x="56" y="20" width="290" height="60"><rect x="56" y="20" width="290" height="60" fill="#fff"/><rect x="88" y="53.3" width="20" height="3.3" fill="#000"/></mask><mask id="o1" maskUnits="userSpaceOnUse" x="56" y="20" width="290" height="60"><rect x="56" y="20" width="290" height="60" fill="#fff"/><polygon points="240,39.3 258,45.06 258,52.36 240,46.6" fill="#000"/></mask><clipPath id="c1"><circle cx="87.8" cy="50.7" r="18.3"/></clipPath></defs><g fill="#002423"><rect x="56.12" y="23.75" width="7.13" height="44.5"/><g mask="url(#e1)"><path fill-rule="evenodd" d="M69.5 50.7a18.3 18.3 0 1 0 36.6 0a18.3 18.3 0 1 0 -36.6 0ZM76.7 50.7a11.1 11.1 0 1 0 22.2 0a11.1 11.1 0 1 0 -22.2 0Z"/><rect x="69" y="47.3" width="38" height="6" clip-path="url(#c1)"/></g><path fill-rule="evenodd" d="M110.4 50.7a18.3 18.3 0 1 0 36.6 0a18.3 18.3 0 1 0 -36.6 0ZM117.6 50.7a11.1 11.1 0 1 0 22.2 0a11.1 11.1 0 1 0 -22.2 0Z"/><rect x="139.8" y="33" width="7.3" height="35.25"/><path fill-rule="evenodd" d="M153.65 50.7a18.3 18.3 0 1 0 36.6 0a18.3 18.3 0 1 0 -36.6 0ZM160.85 50.7a11.1 11.1 0 1 0 22.2 0a11.1 11.1 0 1 0 -22.2 0Z"/><rect x="153.4" y="33" width="7.2" height="45"/><polygon points="192.4,33 199.8,33 206.4,54.5 217.4,32.6 219.4,32.6 234.4,68.25 227,68.25 218.6,47.6 209.6,68.25 203,68.25"/><path d="M237.4 32.4A10.07 10.07 0 0 1 232 51.8Z"/><g mask="url(#o1)"><path fill-rule="evenodd" d="M246.9 50.7a18.2 18.2 0 1 0 36.4 0a18.2 18.2 0 1 0 -36.4 0ZM254.1 50.7a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/></g><rect x="287.75" y="33" width="7.25" height="35.25"/><path d="M307.6 33A21.2 21.2 0 0 0 291 41L291 50L295 50L295 46.8A14.6 14.6 0 0 1 307.6 39.6Z"/><rect x="312" y="23.75" width="7.1" height="44.5"/><polygon points="333.2,33 342.3,33 331,50.7 342.3,68.25 333.2,68.25 322.4,50.7"/></g></svg>
+<ul><li>Platform</li><li>Solutions</li><li>Customers</li><li>Resources</li><li>Pricing</li></ul><a class="btn copper" href="#demo">Book a demo</a></div></nav>
+<div class="post-hero"><div class="wrap">
+<div class="crumb">Blog · <b>Governance in testing</b></div>
+<span class="eyebrow" style="color:var(--fog)">Governance in testing</span>
+<h1>How to prove every software change was tested and approved</h1>
+<p class="dek">Auditors sample changes and expect a test record and sign-off for each one. Here's what a test automation audit trail needs, and how to build one.</p>
+<div class="meta"><div class="av">L</div><div><b>[Author name]</b><br>November 2026 · 6 min read</div></div>
+<div class="feature"><svg class="f" viewBox="0 0 1100 360" preserveAspectRatio="xMidYMid slice" fill="none">
+<g stroke="#D2E1EA" stroke-opacity=".14" stroke-width="1.5"><circle cx="980" cy="40" r="80"/><circle cx="980" cy="40" r="150"/><circle cx="980" cy="40" r="220"/><circle cx="980" cy="40" r="290"/><circle cx="980" cy="40" r="360"/><circle cx="980" cy="40" r="430"/><circle cx="980" cy="40" r="500"/><circle cx="980" cy="40" r="570"/></g>
+<g transform="translate(330 60)"><rect width="440" height="250" rx="14" fill="#FFFFFF"/><rect width="440" height="54" rx="14" fill="#002423"/><rect y="40" width="440" height="14" fill="#002423"/>
+<text x="26" y="34" font-family="Inter,Arial" font-size="15" font-weight="700" fill="#FFFFFF" letter-spacing="2">CHANGE CR-2041 · AUDIT SAMPLE</text>
+<g font-family="Inter,Arial" font-size="17" font-weight="600" fill="#090F12">
+<circle cx="44" cy="96" r="14" fill="#3F7A78"/><path d="M37 96l5 5 9-10" stroke="#fff" stroke-width="3" stroke-linecap="round"/><text x="74" y="102">Test reviewed and approved</text>
+<circle cx="44" cy="146" r="14" fill="#3F7A78"/><path d="M37 146l5 5 9-10" stroke="#fff" stroke-width="3" stroke-linecap="round"/><text x="74" y="152">Version 7 ran on release</text>
+<circle cx="44" cy="196" r="14" fill="#3F7A78"/><path d="M37 196l5 5 9-10" stroke="#fff" stroke-width="3" stroke-linecap="round"/><text x="74" y="202">Logs and video kept</text></g>
+<g transform="translate(372 196) rotate(-12)"><rect x="-56" y="-26" width="112" height="52" rx="6" stroke="#C97A5A" stroke-width="4"/><text x="0" y="9" text-anchor="middle" font-family="Inter,Arial" font-size="22" font-weight="800" fill="#C97A5A" letter-spacing="2">PASS</text></g></g></svg></div></div></div>
+<article>
+<p>When auditors review a regulated system, they rarely look at everything. They sample. They pick a handful of changes and ask two questions about each one: <b>where is the test, and who approved it?</b></p>
+<p>For many teams, answering those questions means a scramble. Someone digs through test scripts, exports results, collects screenshots and pieces together a story that the change was tested before it shipped. SAP teams can spend weeks gathering screenshots for SOX. Validation teams in life sciences run and document GxP tests by hand.</p>
+<p>Test automation was supposed to fix this. But most test automation doesn't produce audit evidence on its own. Here is why, and what it takes to close the gap.</p>
+
+<h2>Why a passing test isn't proof</h2>
+<p>A green test run tells you the software behaved as expected at that moment. It doesn't tell an auditor three things they care about:</p>
+<ul>
+<li><b>Was the test itself reviewed?</b> If anyone can edit a script and run it, a passing result says little about whether the test checked the right thing.</li>
+<li><b>Which version of the test ran?</b> Tests change over time. Without version history, you can't show what was actually checked for a given release.</li>
+<li><b>Can you show the run?</b> Logs scattered across tools, or no recording at all, mean evidence has to be rebuilt after the fact.</li>
+</ul>
+<div class="callout"><p>There's a newer problem too. If AI writes your tests and also decides what happens while they run, the same test can behave differently from one run to the next. That makes results harder to trust, and harder to defend.</p></div>
+
+<h2>What a test automation audit trail needs</h2>
+<p>A test automation audit trail auditors can follow has four parts.</p>
+<div class="steps">
+<div class="step"><i>1</i><div><h3>Review and approval before a test is used</h3><p>Treat tests like any other controlled artifact. A test should move from draft to review to published, and only people with the right role should be able to publish it. In Leapwork, tests move through exactly that flow, and only authorized roles can publish.</p></div></div>
+<div class="step"><i>2</i><div><h3>A version history for every test change</h3><p>Every change to a test should be logged: what changed, who changed it and when. When an auditor asks what was tested for a specific release, you can point to the exact version that ran.</p></div></div>
+<div class="step"><i>3</i><div><h3>Evidence captured on every run</h3><p>The fastest way to stop collecting screenshots is to never need them. Every Leapwork run keeps the test version, logs and a video, and results can be exported via API into the reporting or quality tools you already use.</p></div></div>
+<div class="step"><i>4</i><div><h3>Tests that run the same way every time</h3><p>In Leapwork, AI helps write tests from requirements and links each test back to its source. Then the tests run as fixed steps, with no AI at runtime. You get the speed of AI-assisted authoring and results that behave the same every time.</p></div></div>
+</div>
+
+<h2>What it looks like in practice</h2>
+<p>NecstGen, a Dutch cell and gene therapy center, uses Leapwork to test its Salesforce-based quality and lab system in a GxP environment.</p>
+<div class="statrow"><div><b>110</b><span>test flows in a GxP environment</span></div><div><b>270</b><span>fully compliant features</span></div><div><b>14 days</b><span>to up and running</span></div></div>
+<div class="pull"><p>“Now, it’s like using Word or Excel for us.”</p><cite>Kees Mensch, NecstGen</cite></div>
+<p>Princess Alexandra Hospital NHS Trust cut release testing from a week to 2 hours, and now runs 76 tests daily. As Liz Barber, ICT Testing Manager, puts it: “Leapwork has minimum maintenance and less dependency on the infrastructure team.”</p>
+
+<h2>Where this matters most</h2>
+<ul>
+<li><b>Public companies:</b> SOX auditors sample changes to financial systems and expect proof each was tested and approved.</li>
+<li><b>Pharma and life sciences:</b> GxP systems must be validated, with documented test evidence and approvals. For teams that need a validated tool, Leapwork is offered as a GxP-validated managed service through Pharma IT.</li>
+<li><b>Financial services:</b> PCI DSS calls for tested, approved changes, and banks with EU operations must also test changes and performance under DORA.</li>
+<li><b>Healthcare:</b> EHR upgrades and migrations need full regression before go-live.</li>
+</ul>
+<p>Leapwork helps support SOX, GxP, DORA and PCI DSS evidence needs. No tool makes a company compliant on its own, but the right one can make the evidence part of the work instead of an extra project.</p>
+
+<h2>One platform, one audit trail</h2>
+<p>Governance shouldn't stop at one kind of test. <b>Leapwork Flow</b> covers no-code process testing across SAP, Oracle, Dynamics, Salesforce and desktop apps. <b>Leapwork Play</b> adds login, roles, scheduling, approvals and audit logs around Playwright, for teams that write tests in code. <b>Leapwork Go</b> brings performance, load and API testing into the same controls, with role-based access and exportable audit logs.</p>
+
+<h2>Start with one process</h2>
+<p>You don't need to change everything at once. Pick one regulated process with a clear owner, automate it with review and approval built in, and see what the evidence trail looks like at the end.</p>
+</article>
+<div class="share">Share <span>LinkedIn</span><span>X</span><span>Email</span></div>
+<div class="endcta" id="demo"><div class="box"><h2>Look before you <span>Leap.</span></h2><p>See how Leapwork helps prove every change was tested and approved, on your hardest process.</p><div class="btns"><a class="btn copper" href="#demo">Book a demo</a><a class="btn ghost" href="#demo">Start a free trial</a></div></div></div>
+<footer><div class="wrap"><svg aria-label="leapwork" viewBox="56 23.75 286.3 54.25" xmlns="http://www.w3.org/2000/svg"><defs><mask id="e2" maskUnits="userSpaceOnUse" x="56" y="20" width="290" height="60"><rect x="56" y="20" width="290" height="60" fill="#fff"/><rect x="88" y="53.3" width="20" height="3.3" fill="#000"/></mask><mask id="o2" maskUnits="userSpaceOnUse" x="56" y="20" width="290" height="60"><rect x="56" y="20" width="290" height="60" fill="#fff"/><polygon points="240,39.3 258,45.06 258,52.36 240,46.6" fill="#000"/></mask><clipPath id="c2"><circle cx="87.8" cy="50.7" r="18.3"/></clipPath></defs><g fill="#FFFFFF"><rect x="56.12" y="23.75" width="7.13" height="44.5"/><g mask="url(#e2)"><path fill-rule="evenodd" d="M69.5 50.7a18.3 18.3 0 1 0 36.6 0a18.3 18.3 0 1 0 -36.6 0ZM76.7 50.7a11.1 11.1 0 1 0 22.2 0a11.1 11.1 0 1 0 -22.2 0Z"/><rect x="69" y="47.3" width="38" height="6" clip-path="url(#c2)"/></g><path fill-rule="evenodd" d="M110.4 50.7a18.3 18.3 0 1 0 36.6 0a18.3 18.3 0 1 0 -36.6 0ZM117.6 50.7a11.1 11.1 0 1 0 22.2 0a11.1 11.1 0 1 0 -22.2 0Z"/><rect x="139.8" y="33" width="7.3" height="35.25"/><path fill-rule="evenodd" d="M153.65 50.7a18.3 18.3 0 1 0 36.6 0a18.3 18.3 0 1 0 -36.6 0ZM160.85 50.7a11.1 11.1 0 1 0 22.2 0a11.1 11.1 0 1 0 -22.2 0Z"/><rect x="153.4" y="33" width="7.2" height="45"/><polygon points="192.4,33 199.8,33 206.4,54.5 217.4,32.6 219.4,32.6 234.4,68.25 227,68.25 218.6,47.6 209.6,68.25 203,68.25"/><path d="M237.4 32.4A10.07 10.07 0 0 1 232 51.8Z"/><g mask="url(#o2)"><path fill-rule="evenodd" d="M246.9 50.7a18.2 18.2 0 1 0 36.4 0a18.2 18.2 0 1 0 -36.4 0ZM254.1 50.7a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/></g><rect x="287.75" y="33" width="7.25" height="35.25"/><path d="M307.6 33A21.2 21.2 0 0 0 291 41L291 50L295 50L295 46.8A14.6 14.6 0 0 1 307.6 39.6Z"/><rect x="312" y="23.75" width="7.1" height="44.5"/><polygon points="333.2,33 342.3,33 331,50.7 342.3,68.25 333.2,68.25 322.4,50.7"/></g></svg>
+<span>© 2026 Leapwork · leapwork.com</span></div></footer></body></html>
