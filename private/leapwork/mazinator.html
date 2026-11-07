@@ -707,6 +707,8 @@
   @media (prefers-reduced-motion:reduce){#deck .blobA,#deck .blobB,#deck .discoball,#deck [class^=spk],#deck .cone,#deck .notes g,#town .neon,#town .beam,#town .spin{animation:none}}
   /* the breadcrumb replaces the per-view crumb text */
   #usecase .ctop .crumbs,#brief .ctop .crumbs{display:none}
+  .cab-err{color:#7A2F2F;font-size:13px;margin:6px 0 0;min-height:0}
+  .file .n a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(9,15,18,.25)} .file .n small{display:block;font-size:12px;color:var(--steel-blue);margin-top:2px}
 </style>
 </head>
 <body>
@@ -1077,15 +1079,12 @@
       <button class="close" onclick="closeDrawer()" aria-label="Close">×</button>
     </header>
     <div class="body">
-      <label class="drop" id="drop">
-        <b>Drop files here, or click to choose</b>
-        <span>PDF, DOCX, PPTX, images, CSV — anything the cabin should hold</span>
-        <input type="file" id="fileInput" multiple>
-      </label>
-      <div class="linkrow"><input id="linkInput" placeholder="…or paste a link (Drive, Notion, Salesforce, HubSpot)"><button class="btn" onclick="addLink()">Add</button></div>
+      <div class="linkrow"><input id="linkInput" placeholder="Paste a link: a web page, Google Drive file, Notion page…"><button class="btn" onclick="addLink()">Add</button></div>
+      <div class="linkrow"><input id="linkNote" placeholder="Optional note for Claude (e.g. &quot;their main pitch page&quot;)"></div>
+      <p class="cab-err" id="cabErr"></p>
       <div class="files" id="files"></div>
     </div>
-    <footer>Demo mode: files are listed in this browser only. Real storage comes with the backend.</footer>
+    <footer>Saved for the whole team. Claude opens these links when it writes use cases and briefs. Pages that need JavaScript to load, or private links it can't open, won't be readable; add a public page or a PDF link instead. File uploads come later.</footer>
   </aside>
 </div>
 
@@ -1258,10 +1257,16 @@ const CABINS=[
   {id:'competitors',label:'Cabin 06',title:'Competitor intel',color:'#4F6F82',desc:'Competitors, their pitches, how we win, and battlecards.'},
   {id:'content',label:'Cabin 07',title:'Content archive',color:'#9A6A3F',desc:'Existing blogs, decks, enablement materials and past use cases.'},
 ];
-let store={};
-try{store=JSON.parse(localStorage.getItem('mazinator.cabins')||'{}')}catch(e){store={}}
-function save(){try{localStorage.setItem('mazinator.cabins',JSON.stringify(store))}catch(e){}}
-function items(id){return store[id]||(store[id]=[])}
+// Cabin items live in the database (shared by the team); this is the local copy.
+let CABIN_ITEMS=[];
+function items(id){return CABIN_ITEMS.filter(i=>i.cabin===id)}
+async function loadCabins(){try{const r=await fetch('/leapwork/api/cabins',{credentials:'same-origin'});if(r.ok){CABIN_ITEMS=await r.json();await importOldLinks();if(document.getElementById('interior').classList.contains('on'))renderDeck()}}catch(e){}}
+// Links added before cabins were saved on the server move up once, then the browser copy is cleared.
+async function importOldLinks(){let old={};try{old=JSON.parse(localStorage.getItem('mazinator.cabins')||'{}')}catch(e){return}
+  const ids=CABINS.map(c=>c.id);let moved=0;
+  for(const [cab,list] of Object.entries(old))if(ids.includes(cab))for(const it of list||[])if(it.kind==='link'){const url=/^https?:/.test(it.url||'')?it.url:/^https?:/.test(it.name)?it.name:'https://'+it.name;
+    try{const r=await fetch('/leapwork/api/cabins/'+cab,{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({url,author:(localStorage.getItem('mazinator.author')||'')})});if(r.ok){CABIN_ITEMS=(await r.json()).items;moved++}}catch(e){}}
+  try{localStorage.removeItem('mazinator.cabins')}catch(e){}}
 
 const FURN={
   design:(x,y)=>`
@@ -1451,18 +1456,18 @@ function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('o
 function renderFiles(){
   const f=document.getElementById('files');const list=items(current.id);
   if(!list.length){f.innerHTML='<div class="empty">Nothing aboard yet.</div>';return}
-  f.innerHTML=list.map((it,i)=>`<div class="file"><i class="${it.kind}"></i><div class="n">${esc(it.name)}</div><div class="s">${it.size||''}</div><button onclick="removeItem(${i})" title="Remove">×</button></div>`).join('');
+  f.innerHTML=list.map(it=>`<div class="file"><i class="link"></i><div class="n"><a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.name)}</a>${it.note?`<small>${esc(it.note)}</small>`:''}</div><div class="s">${it.added_by?esc(it.added_by):''}</div><button onclick="removeItem(${it.id})" title="Remove">×</button></div>`).join('');
 }
 function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function kindOf(name){const e=name.split('.').pop().toLowerCase();if(/png|jpe?g|gif|svg|webp/.test(e))return'img';if(/pdf|docx?|pptx?|xlsx?|csv|md|txt/.test(e))return'doc';return''}
 function fmt(b){return b>1e6?(b/1e6).toFixed(1)+' MB':b>1e3?Math.round(b/1e3)+' KB':b+' B'}
-function addFiles(files){for(const f of files)items(current.id).push({name:f.name,size:fmt(f.size),kind:kindOf(f.name)});save();renderFiles()}
-function addLink(){const v=linkInput.value.trim();if(!v)return;let name=v;try{name=new URL(v).hostname.replace(/^www\./,'')+new URL(v).pathname.replace(/\/$/,'')}catch(e){}items(current.id).push({name,kind:'link'});linkInput.value='';save();renderFiles()}
-function removeItem(i){items(current.id).splice(i,1);save();renderFiles()}
-fileInput.addEventListener('change',e=>{addFiles(e.target.files);e.target.value=''});
-drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('over')});
-drop.addEventListener('dragleave',()=>drop.classList.remove('over'));
-drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('over');addFiles(e.dataTransfer.files)});
+async function addLink(){const url=linkInput.value.trim();if(!url)return;cabErr.textContent='';
+  try{const r=await fetch('/leapwork/api/cabins/'+current.id,{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({url,note:linkNote.value,author:(localStorage.getItem('mazinator.author')||'')})});
+    const d=await r.json();if(!r.ok||d.error)throw new Error(d.error||'Could not save the link');CABIN_ITEMS=d.items;linkInput.value='';linkNote.value='';renderFiles();
+  }catch(e){cabErr.textContent=e.message}}
+async function removeItem(id){try{const r=await fetch('/leapwork/api/cabins/items/'+id,{method:'DELETE',credentials:'same-origin'});const d=await r.json();if(r.ok)CABIN_ITEMS=d.items;renderFiles()}catch(e){cabErr.textContent=e.message}}
+document.addEventListener('keydown',e=>{if((e.target.id==='linkInput'||e.target.id==='linkNote')&&e.key==='Enter'){e.preventDefault();addLink()}});
+loadCabins();
 
 // ---- navigation ----
 const interior=document.getElementById('interior');

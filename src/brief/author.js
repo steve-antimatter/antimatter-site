@@ -4,7 +4,8 @@
 import { loadBrief, saveBriefDoc, getBriefChat, appendBriefChat } from './store.js';
 import { CORE, GROUPS, COMMS, applyPatch } from './spec.js';
 import { resolve } from '../usecase/resolve.js';
-import { MODEL } from '../usecase/author.js';
+import { MODEL, WEB_FETCH } from '../usecase/author.js';
+import { listCabinItems, cabinsForPrompt } from '../cabins.js';
 
 const MAX_STEPS = 8;
 
@@ -32,7 +33,7 @@ function fieldLine(x, opts) {
   return `    - ${t} "${x.label}"${x.ai ? ' [draft this from the use case]' : ''}${x.hint ? ` — ${x.hint}` : ''}`;
 }
 
-export function briefSystemPrompt(b, today) {
+export function briefSystemPrompt(b, today, cabinItems = []) {
   const opts = b.options;
   const spec = [
     'CORE (always on):',
@@ -66,6 +67,9 @@ HOW TO WORK:
 - When the author asks for a change, make it with update_brief and confirm in one line.
 - When the brief looks complete, say so and explain the next step: read the brief on the right, then click "Submit for approval" at the bottom.
 
+THE CABINS (material the Leapwork team keeps for you; open what bears on the brief with web_fetch, e.g. Competitor intel for battlecard landmines, Brand room for voice):
+${cabinsForPrompt(cabinItems)}
+
 APPROVED USE CASE: ${b.use_case.title}
 ${JSON.stringify(uc)}
 
@@ -97,11 +101,11 @@ export async function briefChatTurn(env, db, id, text, author, { fetchClaude, to
   messages.push({ role: 'user', content: text });
 
   // Fixed for the whole turn (signed thinking blocks depend on it); edits are reported in tool results.
-  const system = briefSystemPrompt(b, today || new Date().toISOString().slice(0, 10));
+  const system = briefSystemPrompt(b, today || new Date().toISOString().slice(0, 10), await listCabinItems(db).catch(() => []));
   const changed = new Set();
   let reply = '';
   for (let step = 0; step < MAX_STEPS; step++) {
-    const res = await call({ model: MODEL, max_tokens: 16000, system, tools: [BRIEF_TOOL], messages });
+    const res = await call({ model: MODEL, max_tokens: 16000, system, tools: [BRIEF_TOOL, WEB_FETCH], messages });
     messages.push({ role: 'assistant', content: res.content });
     reply = res.content.filter((x) => x.type === 'text').map((x) => x.text).join('').trim() || reply;
     if (res.stop_reason === 'pause_turn') continue;

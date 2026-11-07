@@ -10,6 +10,7 @@ import { renderHtml } from './src/usecase/render-html.js';
 import { listBriefs, createBrief, loadBrief, patchBrief, setBriefStatus, getBriefChat } from './src/brief/store.js';
 import { briefChatTurn } from './src/brief/author.js';
 import { CORE, GROUPS, COMMS, STATUSES } from './src/brief/spec.js';
+import { listCabinItems, addCabinItem, removeCabinItem } from './src/cabins.js';
 import governanceSeed from './db/seed/governance-in-testing.json';
 
 const COOKIE = 'lw_session';
@@ -73,6 +74,17 @@ async function mazinator(req, env, p) {
     if (p === '/leapwork/api/islands') return json(await listIslands(env.DB));
 
     const body = req.method === 'POST' || req.method === 'PUT' ? await req.json().catch(() => ({})) : null;
+
+    // ---- cabins below deck ----
+    if (p === '/leapwork/api/cabins' && req.method === 'GET') return json(await listCabinItems(env.DB));
+    let cb = p.match(/^\/leapwork\/api\/cabins\/([a-z]+)$/);
+    if (cb && req.method === 'POST') {
+      let id;
+      try { id = await addCabinItem(env.DB, cb[1], body); } catch (e) { return json({ error: e.message }, 400); }
+      return json({ id, items: await listCabinItems(env.DB) });
+    }
+    cb = p.match(/^\/leapwork\/api\/cabins\/items\/(\d+)$/);
+    if (cb && req.method === 'DELETE') { await removeCabinItem(env.DB, cb[1]); return json({ ok: true, items: await listCabinItems(env.DB) }); }
 
     // ---- campaign briefs (Town Hall) ----
     if (p === '/leapwork/api/brief-spec') return json({ core: CORE, groups: GROUPS, comms: COMMS, statuses: STATUSES });

@@ -4,6 +4,7 @@
 // customers, quotes, competitors, sources) are matched by name/URL and created when new.
 import { loadDoc, saveDoc, slugify, getChat, appendChat } from './store.js';
 import { resolve } from './resolve.js';
+import { listCabinItems, cabinsForPrompt } from '../cabins.js';
 
 export const MODEL = 'claude-sonnet-5-5';
 const MAX_STEPS = 10;
@@ -55,6 +56,7 @@ export const TOOLS = [
 ];
 
 const WEB_SEARCH = { type: 'web_search_20250305', name: 'web_search', max_uses: 6 };
+export const WEB_FETCH = { type: 'web_fetch_20250910', name: 'web_fetch', max_uses: 6 };
 
 // ---------- applying tool calls to the document ----------
 
@@ -148,7 +150,7 @@ export function applyTool(doc, name, input) {
 
 // ---------- prompt ----------
 
-function systemPrompt(doc) {
+function systemPrompt(doc, cabinItems = []) {
   const L = doc.libraries;
   const names = (t, f = (r) => r.name) => (L[t] || []).map(f).join('; ');
   const v = resolve(doc);
@@ -174,6 +176,10 @@ HOW TO WORK:
 - Keep chat replies short: what you changed (one line) and the next question. Do not paste whole sections back into the chat; the author sees the page update beside the chat.
 - Tools replace a whole section, so always send the complete list for that section, including items you are keeping.
 - When every section is filled in, stop asking questions. Tell the author the use case is complete, offer one or two specific improvements if you see any, and explain the next step: read the page on the right from top to bottom, then click "Submit for approval" at the bottom of the page. While it is pending approval it cannot be edited; the approver either approves it (it becomes the version campaign briefs are built from) or requests changes.
+
+THE CABINS (material the Leapwork team keeps for you; use it before searching the web):
+${cabinsForPrompt(cabinItems, ['radio', 'product', 'proof', 'partners', 'competitors', 'content'])}
+Open the links that bear on the section you are writing with web_fetch (for Competitors, always open the Competitor intel links first). Cite pages you used in Sources. If a page will not load (some pages need JavaScript), say so and carry on with what you can verify.
 
 LEAPWORK PRODUCTS: ${names('products', (p) => `${p.id} = ${p.name}: ${p.summary || ''}`)}
 STRATEGIC PARTNERS (ids you may use): ${names('partners', (p) => `${p.id} (${p.name}: ${p.program})`)}
@@ -222,9 +228,9 @@ export async function chatTurn(env, db, id, text, author, { fetchClaude } = {}) 
   // The system prompt (which carries the use case as it stood at the start of the turn) must stay
   // identical for the whole turn: Claude's thinking blocks are signed against it and are sent back
   // with every tool result. Edits made during the turn are reported in the tool results instead.
-  const system = systemPrompt(doc);
+  const system = systemPrompt(doc, await listCabinItems(db).catch(() => []));
   for (let step = 0; step < MAX_STEPS; step++) {
-    const res = await call({ model: MODEL, max_tokens: 8000, system, tools: [...TOOLS, WEB_SEARCH], messages });
+    const res = await call({ model: MODEL, max_tokens: 8000, system, tools: [...TOOLS, WEB_SEARCH, WEB_FETCH], messages });
     messages.push({ role: 'assistant', content: res.content });
     reply = res.content.filter((b) => b.type === 'text').map((b) => b.text).join('').trim() || reply;
     if (res.stop_reason === 'pause_turn') continue;

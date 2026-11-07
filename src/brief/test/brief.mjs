@@ -72,3 +72,20 @@ assert.equal(list.length, 2);
 assert.equal(list.find((x) => x.id === id).title, 'DORA push');
 assert.deepEqual((await getBriefChat(db, id)).filter((m) => m.role === 'event').map((m) => m.content), ['Submitted for approval', 'Approved (version 1)']);
 console.log('brief tests ok');
+
+// Cabins: links are stored, checked, and reach Claude's prompts.
+{
+  const { addCabinItem, listCabinItems, removeCabinItem } = await import('../../cabins.js');
+  await assert.rejects(addCabinItem(db, 'attic', { url: 'https://x.com' }), /Unknown cabin/);
+  await assert.rejects(addCabinItem(db, 'competitors', { url: 'tricentis.com' }), /https/);
+  const cid = await addCabinItem(db, 'competitors', { url: 'https://www.tricentis.com/products/automate-continuous-testing-tosca', author: 'Steve' });
+  const items = await listCabinItems(db);
+  assert.equal(items[0].name, 'tricentis.com/products/automate-continuous-testing-tosca');
+  let seen = '';
+  await setBriefStatus(db, id, 'draft', 'Steve');
+  await briefChatTurn({}, db, id, 'battlecard?', 'Steve', { fetchClaude: async (body) => { seen = body.system; assert.ok(body.tools.some((t) => t.name === 'web_fetch')); return { stop_reason: 'end_turn', content: [{ type: 'text', text: 'ok' }] }; } });
+  assert.ok(seen.includes('Competitor intel') && seen.includes('tricentis.com/products'));
+  await removeCabinItem(db, cid);
+  assert.equal((await listCabinItems(db)).length, 0);
+  console.log('cabin tests ok');
+}
