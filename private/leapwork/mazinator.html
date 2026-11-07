@@ -107,6 +107,14 @@
   .modal.on .card{transform:none}
   .card .face{background:var(--mist);display:block;width:100%;height:auto}
   .card .cap{padding:20px 28px 26px}
+  #doorLeaf.sopen{animation:doorOpen .5s cubic-bezier(.4,0,.6,1) forwards}
+  #doorLeaf.sclose{animation:doorClose .5s cubic-bezier(.4,0,.6,1) both}
+  #saxBody{transform-box:fill-box;transform-origin:50% 100%}
+  #saxMan.playing #saxBody{animation:saxSway .9s ease-in-out infinite alternate}
+  @keyframes saxSway{from{transform:rotate(-5deg) translateY(0)}to{transform:rotate(5deg) translateY(-4px)}}
+  #saxMan .snote{opacity:0;transform-box:fill-box;transform-origin:0 100%}
+  #saxMan.playing .snote{animation:float 2.4s ease-out infinite}
+  @media (prefers-reduced-motion:reduce){#saxMan.playing #saxBody,#saxMan.playing .snote{animation:none}}
   #dogModal #gHead{transform-box:fill-box;transform-origin:50% 90%}
   #dogModal #gBone{opacity:0}
   #dogModal .face.treat #gBone{animation:gBone 1.4s ease-in forwards}
@@ -1002,6 +1010,29 @@
       <rect x="1140" y="520" width="56" height="10" fill="#002423"/>
 
       <!-- THE CAPTAIN -->
+      <!-- a man with a sax, out on deck (hidden until "Donny won't blow") -->
+      <g id="saxMan" style="display:none;cursor:pointer" transform="translate(775 600)"><g transform="scale(.64)"><g id="saxBody">
+        <rect class="legA" x="-21" y="-62" width="18" height="62" fill="#2F2F2F"/><rect class="legB" x="3" y="-62" width="18" height="62" fill="#2F2F2F"/>
+        <rect x="-24" y="-4" width="22" height="8" rx="3" fill="#090F12"/><rect x="2" y="-4" width="22" height="8" rx="3" fill="#090F12"/>
+        <rect x="-35" y="-154" width="70" height="98" rx="8" fill="#2F4754"/>
+        <path d="M-12 -154 L0 -128 L12 -154 Z" fill="#FFFFFF"/><path d="M-4 -150 L0 -122 L4 -150 Z" fill="#B8664C"/>
+        <rect x="-35" y="-70" width="70" height="10" fill="#1F2F38"/>
+        <rect x="-9" y="-170" width="18" height="20" fill="#B07A55"/>
+        <ellipse cx="-36" cy="-196" rx="6" ry="10" fill="#9E6B48"/><ellipse cx="36" cy="-196" rx="6" ry="10" fill="#9E6B48"/><ellipse cx="0" cy="-198" rx="36" ry="40" fill="#B07A55"/>
+        
+        <path d="M-18 -176 q 18 18 36 0 q -4 16 -18 18 q -14 -2 -18 -18 z" fill="#2A1C14"/>
+        <rect x="-26" y="-210" width="22" height="12" rx="4" fill="#090F12"/><rect x="4" y="-210" width="22" height="12" rx="4" fill="#090F12"/><path d="M-4 -205 h8" stroke="#090F12" stroke-width="3"/>
+        <ellipse cx="-12" cy="-226" rx="12" ry="5" fill="#FFFFFF" opacity=".35" transform="rotate(-20 -12 -226)"/>
+        <!-- sax -->
+        <path d="M2 -184 q 22 0 28 16" fill="none" stroke="#090F12" stroke-width="5" stroke-linecap="round"/>
+        <path d="M24 -170 L38 -170 L42 -84 Q42 -50 12 -50 Q-10 -50 -14 -70 L-1 -74 Q3 -63 13 -63 Q28 -63 28 -84 Z" fill="#D9A441" stroke="#090F12" stroke-width="3" stroke-linejoin="round"/>
+        <ellipse cx="-8" cy="-73" rx="9" ry="5" fill="#B5832F" stroke="#090F12" stroke-width="2.5" transform="rotate(-20 -8 -73)"/>
+        <g fill="#FFF3C4" stroke="#090F12" stroke-width="1.5"><circle cx="33" cy="-150" r="3.5"/><circle cx="34" cy="-134" r="3.5"/><circle cx="35" cy="-118" r="3.5"/><circle cx="36" cy="-102" r="3.5"/></g>
+        <rect x="-30" y="-146" width="62" height="13" rx="6.5" fill="#2F4754" transform="rotate(38 -30 -140)"/><circle cx="20" cy="-104" r="7" fill="#B07A55"/>
+        <rect x="18" y="-152" width="34" height="13" rx="6.5" fill="#2F4754" transform="rotate(62 24 -146)"/><circle cx="36" cy="-140" r="7" fill="#B07A55"/>
+      </g>
+      <g font-size="40" font-weight="700" fill="#002423"><text class="snote" x="-30" y="-60">♪</text><text class="snote" x="10" y="-70" style="animation-delay:.6s">♫</text><text class="snote" x="-12" y="-66" style="animation-delay:1.2s">♪</text><text class="snote" x="20" y="-56" style="animation-delay:1.8s">♫</text></g>
+      </g></g>
       <g id="maz" style="cursor:pointer">
         <rect x="1086" y="540" width="18" height="62" fill="#090F12"/>
         <rect x="1110" y="540" width="18" height="62" fill="#090F12"/>
@@ -1702,8 +1733,34 @@ function gHappy(){const f=document.querySelector('#dogModal .face');f.classList.
 function treatGladys(){const f=document.querySelector('#dogModal .face');f.classList.remove('treat','happy');void f.getBoundingClientRect();f.classList.add('treat');
   gTreat.disabled=true;setTimeout(()=>{gTreat.disabled=false},1600);
   setTimeout(()=>{gChat.classList.add('on');gSay('dog','Thanks for the treat.');gHappy();gIn.focus()},1450)}
-function talkGladys(){const t=gIn.value.trim();if(!t)return;gIn.value='';gSay('me',t);
+let gState='';
+const gNorm=t=>t.toLowerCase().replace(/[\u2018\u2019]/g,"'").replace(/[^a-z' ]/g,' ').replace(/\s+/g,' ').trim();
+function talkGladys(){const t=gIn.value.trim();if(!t)return;gIn.value='';gSay('me',t);const n=gNorm(t);
+  if(/donny won'?t blow|donny wont blow/.test(n)){gState='';saxUnlock();setTimeout(()=>{gSay('dog','Now you know.');setTimeout(()=>{closeDog();saxShow()},1400)},500);return}
+  if(/\btricks?\b/.test(n)){gState='bmode';setTimeout(()=>gSay('dog','Have you heard about B-MODE?'),600);return}
+  if(gState==='bmode'){gState='';
+    if(/^(no|nope|nah|not really|no i haven'?t|never)\b/.test(n)||n==='no'){setTimeout(()=>gSay('dog','Click the little yellow light on the back of the boat.'),600);return}
+    if(/^(yes|yeah|yep|yup|sure|i have)\b/.test(n)){setTimeout(()=>gSay('dog','Then you know where to find me.'),600);return}}
   const hit=G_REPLIES.find(([re])=>re.test(t));setTimeout(()=>{gSay('dog',gPick(hit?hit[1]:G_DEFAULT));if(hit&&hit[0].source.includes('good'))gHappy()},600)}
+// ----- "Donny won't blow": a man with a sax walks out on deck -----
+let saxAudio=null,saxBusy=false,saxRAF=0;
+function saxUnlock(){if(!saxAudio){saxAudio=new Audio('/leapwork/api/media/donny-wont-blow.mp3');saxAudio.preload='auto';saxAudio.addEventListener('ended',saxHide)}
+  const p=saxAudio.play();if(p&&p.then)p.then(()=>{if(!saxBusy){saxAudio.pause();saxAudio.currentTime=0}}).catch(()=>{})}
+function saxWalk(el,from,to,ms,done){const t0=performance.now();el.classList.add('walking');cancelAnimationFrame(saxRAF);
+  (function step(t){const e=Math.min(1,(t-t0)/ms),x=from+(to-from)*(e<.5?2*e*e:1-Math.pow(-2*e+2,2)/2);el.setAttribute('transform',`translate(${x} 600)`);
+    if(e<1)saxRAF=requestAnimationFrame(step);else{el.classList.remove('walking');done&&done()}})(t0)}
+function saxShow(){if(saxBusy)return;saxBusy=true;
+  const go=()=>{const leaf=document.getElementById('doorLeaf'),sm=document.getElementById('saxMan'),wm=document.getElementById('maz');
+    leaf.classList.remove('sclose');leaf.classList.add('sopen');
+    setTimeout(()=>{sm.style.display='';sm.style.opacity='0';sm.style.transition='opacity .4s';sm.setAttribute('transform','translate(775 600)');
+      requestAnimationFrame(()=>{sm.style.opacity='1'});
+      setTimeout(()=>saxWalk(sm,775,620,1800,()=>{leaf.classList.remove('sopen');leaf.classList.add('sclose');sm.classList.add('playing');
+        if(saxAudio){saxAudio.currentTime=0;saxAudio.play().catch(()=>{})}}),400)},450)};
+  if(isShown('interior')||!document.getElementById('maz').getBoundingClientRect().width){navShip();setTimeout(go,900)}else go()}
+function saxHide(){const sm=document.getElementById('saxMan'),leaf=document.getElementById('doorLeaf'),wm=document.getElementById('maz');if(!saxBusy)return;
+  if(saxAudio&&!saxAudio.paused)saxAudio.pause();sm.classList.remove('playing');leaf.classList.remove('sclose');leaf.classList.add('sopen');
+  saxWalk(sm,620,775,1600,()=>{sm.style.opacity='0';setTimeout(()=>{sm.style.display='none';leaf.classList.remove('sopen');leaf.classList.add('sclose');saxBusy=false},400)})}
+document.addEventListener('DOMContentLoaded',()=>{const sm=document.getElementById('saxMan');if(sm)sm.addEventListener('click',e=>{e.stopPropagation();saxHide()})});
 
 // All aboard? -> anchors aweigh -> sail to the chart
 let casting=false;

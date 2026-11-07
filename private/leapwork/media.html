@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Mazinator · media</title>
+<style>body{font-family:Inter,Arial,sans-serif;background:#F4F7F8;color:#090F12;display:grid;place-items:center;min-height:100vh;margin:0}
+.c{background:#fff;border:3px solid #090F12;padding:32px;width:min(460px,92vw)}h1{margin:0 0 6px;font-size:24px}p{color:#2F4754;font-size:14px}
+label{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4F6F82;margin:16px 0 6px}
+input{width:100%;box-sizing:border-box;padding:10px;border:1px solid #C9D3D8;font:15px Inter,Arial}button{margin-top:20px;width:100%;padding:14px;background:#002423;color:#fff;border:0;font:700 15px Inter,Arial;cursor:pointer}
+#out{margin-top:14px;font-size:14px}</style></head><body><div class="c">
+<h1>Mazinator media</h1><p>Upload sound or other files the app itself uses. They're stored privately and only play for people signed in.</p>
+<label>File</label><input type="file" id="f" accept="audio/*,image/*">
+<label>Save as</label><input id="n" value="donny-wont-blow.mp3">
+<button onclick="up()">Upload</button><div id="out"></div></div>
+<script>
+async function up(){const f=document.getElementById('f').files[0],n=document.getElementById('n').value.trim().toLowerCase(),o=document.getElementById('out');
+if(!f){o.textContent='Choose a file first.';return}o.textContent='Uploading…';
+const r=await fetch('/leapwork/api/media/'+encodeURIComponent(n),{method:'PUT',headers:{'content-type':f.type||'application/octet-stream'},body:f});
+const d=await r.json().catch(()=>({}));o.textContent=r.ok?'Saved as '+d.name+'. You can close this page.':'Upload failed: '+(d.error||r.status)}
+</script></body></html>

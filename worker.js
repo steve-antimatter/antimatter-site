@@ -92,6 +92,34 @@ async function mazinator(req, env, p) {
       if (!f) return new Response('Not found', { status: 404 });
       return new Response(f.obj.body, { headers: { 'content-type': f.mime || 'application/octet-stream', 'content-disposition': `inline; filename="${f.name.replace(/"/g, '')}"`, 'cache-control': 'no-store' } });
     }
+    // Media for the app itself (e.g. sound), stored in R2 under media/.
+    up = p.match(/^\/leapwork\/api\/media\/([a-z0-9][a-z0-9._-]{0,80})$/);
+    if (up) {
+      if (!env.CABIN_FILES) return json({ error: 'File storage not connected' }, 503);
+      const key = 'media/' + up[1];
+      if (req.method === 'PUT') {
+        const len = Number(req.headers.get('content-length') || 0);
+        if (len > 25 * 1024 * 1024) return json({ error: 'That file is over 25 MB.' }, 413);
+        await env.CABIN_FILES.put(key, req.body, { httpMetadata: { contentType: req.headers.get('content-type') || 'application/octet-stream' } });
+        return json({ ok: true, name: up[1] });
+      }
+      if (req.method === 'GET' || req.method === 'HEAD') {
+        const head = await env.CABIN_FILES.head(key);
+        if (!head) return new Response('Not found', { status: 404 });
+        const size = head.size, type = head.httpMetadata?.contentType || 'application/octet-stream';
+        const m = (req.headers.get('range') || '').match(/^bytes=(\d*)-(\d*)$/);
+        if (m && (m[1] || m[2])) {
+          let start = m[1] ? Number(m[1]) : Math.max(0, size - Number(m[2]));
+          let end = m[1] && m[2] ? Math.min(Number(m[2]), size - 1) : size - 1;
+          if (start >= size || start > end) return new Response(null, { status: 416, headers: { 'content-range': `bytes */${size}` } });
+          const obj = await env.CABIN_FILES.get(key, { range: { offset: start, length: end - start + 1 } });
+          return new Response(req.method === 'HEAD' ? null : obj.body, { status: 206, headers: { 'content-type': type, 'content-range': `bytes ${start}-${end}/${size}`, 'content-length': String(end - start + 1), 'accept-ranges': 'bytes', 'cache-control': 'private, max-age=3600' } });
+        }
+        const obj = req.method === 'HEAD' ? null : await env.CABIN_FILES.get(key);
+        return new Response(obj ? obj.body : null, { headers: { 'content-type': type, 'content-length': String(size), 'accept-ranges': 'bytes', 'cache-control': 'private, max-age=3600' } });
+      }
+      return json({ error: 'Method not allowed' }, 405);
+    }
     if (p === '/leapwork/api/storage') return json({ files: !!env.CABIN_FILES });
     if (p === '/leapwork/api/stats') return json(await globalStats(env.DB));
 
