@@ -61,7 +61,8 @@
 
   /* ---------- boat ---------- */
   #boat{transform-box:fill-box;transform-origin:50% 80%;animation:bob 3.4s ease-in-out infinite alternate}
-  #bubble{transform-box:fill-box;transform-origin:95% 100%;animation:bubbleIn .5s cubic-bezier(.3,1.4,.5,1) 5s both}
+  #bubble{opacity:0;visibility:hidden;transition:opacity .2s .3s,visibility 0s .5s}
+  #maz:hover ~ #bubble,#bubble:hover,body.casting #bubble{opacity:1;visibility:visible;transition:opacity .15s,visibility 0s}
   @keyframes bubbleIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
   body.skip #bubble{animation:none}
   #bubble:hover #bubbleBox,#maz:hover ~ #bubble #bubbleBox{fill:var(--mist)}
@@ -126,7 +127,7 @@
   #kimLounge .kimZ text{opacity:0;animation:float 3s ease-out infinite}
   #kimLoungeBody{transform-box:fill-box;transform-origin:50% 100%}
   #kimLounge.setup #kimLoungeBody{animation:stevePop .5s cubic-bezier(.3,1.5,.5,1) both}
-  #bubble{transition:opacity .3s} body.djon #bubble{opacity:0;pointer-events:none}
+  body.djon #bubble{opacity:0!important;visibility:hidden!important;pointer-events:none}
   #djBody{transform-box:fill-box;transform-origin:50% 100%}
   #djG.pop #djBody{animation:stevePop .55s cubic-bezier(.3,1.5,.5,1) both}
   #djDude{animation:djBob .42s ease-in-out infinite alternate}
@@ -1943,7 +1944,7 @@ document.addEventListener('DOMContentLoaded',()=>{const sm=document.getElementBy
 
 // All aboard? -> anchors aweigh -> sail to the chart
 let casting=false;
-function castOff(e){e.stopPropagation();if(casting)return;casting=true;
+function castOff(e){e.stopPropagation();if(casting)return;casting=true;document.body.classList.add('casting');
   bubbleText.textContent='Anchors aweigh!';
   const chain=document.getElementById('chain'),anc=document.getElementById('anchor');let t0=null;
   function up(ts){if(!t0)t0=ts;const t=Math.min(1,(ts-t0)/1100);const e=1-Math.pow(1-t,3);const y=745-(745-640)*e;
@@ -1951,7 +1952,7 @@ function castOff(e){e.stopPropagation();if(casting)return;casting=true;
     if(t<1)requestAnimationFrame(up);else{bubbleText.textContent='Next stop: the islands.';setTimeout(()=>{document.body.classList.add('castoff');setTimeout(()=>{goChart();},1900)},500)}}
   requestAnimationFrame(up)}
 document.getElementById('bubble').addEventListener('click',castOff);document.getElementById('maz').addEventListener('click',castOff);
-function resetBoat(){casting=false;document.body.classList.remove('castoff');bubbleText.textContent='All Aboard!';document.getElementById('chain').setAttribute('y2',745);document.getElementById('anchor').setAttribute('transform','translate(1310 745)')}
+function resetBoat(){casting=false;document.body.classList.remove('casting');document.body.classList.remove('castoff');bubbleText.textContent='All Aboard!';document.getElementById('chain').setAttribute('y2',745);document.getElementById('anchor').setAttribute('transform','translate(1310 745)')}
 function goAboard(){
   document.body.classList.add('aboard');
   setTimeout(()=>{renderDeck();interior.classList.add('on');requestAnimationFrame(()=>interior.classList.add('show'));},1250);
