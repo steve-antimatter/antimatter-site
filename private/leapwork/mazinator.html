@@ -107,6 +107,16 @@
   .modal.on .card{transform:none}
   .card .face{background:var(--mist);display:block;width:100%;height:auto}
   .card .cap{padding:20px 28px 26px}
+  #dShakerIn{transform-box:fill-box;transform-origin:50% 100%}
+  #dog.shaking #dShakerIn{animation:dShake .12s ease-in-out infinite alternate}
+  @keyframes dShake{from{transform:rotate(-24deg) translateY(0)}to{transform:rotate(24deg) translateY(-6px)}}
+  #dog.shaking #doghead{animation:chomp .12s ease-in-out infinite alternate}
+  #introP{transition:opacity .5s} body.steveout #introP{opacity:0}
+  #steveBody{transform-box:fill-box;transform-origin:50% 100%}
+  #steveG.pop #steveBody{animation:stevePop .5s cubic-bezier(.3,1.5,.5,1) both}
+  @keyframes stevePop{from{transform:scale(.2) translateY(30px);opacity:0}to{transform:none;opacity:1}}
+  #steveG.cheers #steveBody{animation:steveCheers .5s ease-in-out 2 alternate}
+  @keyframes steveCheers{to{transform:rotate(-4deg) translateY(-6px)}}
   #doorLeaf.sopen{animation:doorOpen .5s cubic-bezier(.4,0,.6,1) forwards}
   #doorLeaf.sclose{animation:doorClose .5s cubic-bezier(.4,0,.6,1) both}
   #saxBody{transform-box:fill-box;transform-origin:50% 100%}
@@ -954,6 +964,25 @@
       </g>
       <rect x="560" y="352" width="70" height="20" fill="#002423"/>
       <rect x="630" y="336" width="14" height="36" fill="#002423"/>
+      <!-- Steve, in the seat on the top deck (hidden until someone mentions him to Gladys) -->
+      <g id="steveG" style="display:none;cursor:pointer" transform="translate(604 352)"><g transform="scale(.5)"><g id="steveBody">
+        <rect x="-78" y="-14" width="70" height="20" rx="8" fill="#C9B48A"/><rect x="-82" y="-4" width="18" height="44" fill="#C9B48A"/><rect x="-96" y="34" width="30" height="8" rx="3" fill="#5A3F2A"/>
+        <rect x="-33" y="-98" width="66" height="96" rx="8" fill="#9FC3D6"/>
+        <path d="M-14 -98 L0 -80 L14 -98 Z" fill="#FFFFFF" stroke="#7FA3B6" stroke-width="2"/><path d="M0 -80 v76" stroke="#7FA3B6" stroke-width="2"/>
+        <g fill="#FFFFFF"><circle cx="0" cy="-66" r="2"/><circle cx="0" cy="-46" r="2"/><circle cx="0" cy="-26" r="2"/></g>
+        <rect x="22" y="-94" width="13" height="58" rx="6.5" fill="#9FC3D6" transform="rotate(20 28 -90)"/><circle cx="40" cy="-38" r="7" fill="#F1D3C2"/>
+        <g id="steveArmDown"><rect x="-35" y="-94" width="13" height="58" rx="6.5" fill="#9FC3D6" transform="rotate(30 -28 -90)"/><circle cx="-54" cy="-42" r="7" fill="#F1D3C2"/></g>
+        <g id="steveArmUp" style="display:none"><rect x="-35" y="-94" width="13" height="54" rx="6.5" fill="#9FC3D6" transform="rotate(140 -28 -90)"/><circle cx="-62" cy="-124" r="7" fill="#F1D3C2"/>
+          <path d="M-76 -152 h26 l-13 15 z" fill="#E8F4F8" stroke="#090F12" stroke-width="2.5" stroke-linejoin="round"/><path d="M-63 -137 v12 M-69 -125 h12" stroke="#090F12" stroke-width="2.5"/><circle cx="-60" cy="-146" r="3" fill="#7A9A3A"/></g>
+        <rect x="-9" y="-114" width="18" height="20" fill="#F1D3C2"/>
+        <ellipse cx="-34" cy="-142" rx="6" ry="10" fill="#E6BFAA"/><ellipse cx="34" cy="-142" rx="6" ry="10" fill="#E6BFAA"/>
+        <ellipse cx="0" cy="-144" rx="34" ry="38" fill="#F1D3C2"/>
+        <ellipse cx="-11" cy="-170" rx="12" ry="5" fill="#FFFFFF" opacity=".55" transform="rotate(-20 -11 -170)"/>
+        <circle cx="-12" cy="-146" r="3.5" fill="#090F12"/><circle cx="12" cy="-146" r="3.5" fill="#090F12"/>
+        <path d="M-19 -156 q 7 -4 14 0 M5 -156 q 7 -4 14 0" fill="none" stroke="#B89C8A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M-11 -129 q 11 11 22 0" fill="none" stroke="#090F12" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="-21" cy="-135" r="5" fill="#E8A090" opacity=".4"/><circle cx="21" cy="-135" r="5" fill="#E8A090" opacity=".4"/>
+      </g></g></g>
       <circle cx="1000" cy="500" r="26" fill="none" stroke="#B8664C" stroke-width="12"/>
       <circle cx="1000" cy="500" r="26" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-dasharray="20 21"/>
       <line x1="700" y1="372" x2="700" y2="240" stroke="#090F12" stroke-width="6" stroke-linecap="round"/>
@@ -1005,6 +1034,8 @@
           <rect x="1252" y="574" width="20" height="4" fill="#B8664C"/>
         </g>
         <g id="bone" opacity="0" style="display:none"><rect x="1270" y="548" width="22" height="6" rx="3" fill="#FFFFFF" stroke="#090F12" stroke-width="1.5"/><circle cx="1270" cy="548" r="3.5" fill="#FFFFFF" stroke="#090F12" stroke-width="1.5"/><circle cx="1270" cy="554" r="3.5" fill="#FFFFFF" stroke="#090F12" stroke-width="1.5"/><circle cx="1292" cy="548" r="3.5" fill="#FFFFFF" stroke="#090F12" stroke-width="1.5"/><circle cx="1292" cy="554" r="3.5" fill="#FFFFFF" stroke="#090F12" stroke-width="1.5"/></g>
+        <g id="dShaker" style="display:none"><g id="dShakerIn"><rect x="1278" y="534" width="14" height="30" rx="3" fill="#C9D3D8" stroke="#090F12" stroke-width="2"/><rect x="1276" y="528" width="18" height="8" rx="2" fill="#9AA6AC" stroke="#090F12" stroke-width="2"/><rect x="1281" y="522" width="8" height="7" rx="2" fill="#9AA6AC" stroke="#090F12" stroke-width="2"/></g></g>
+        <g id="dGlass" style="display:none"><path d="M1272 536 h24 l-12 14 z" fill="#E8F4F8" stroke="#090F12" stroke-width="2" stroke-linejoin="round"/><path d="M1284 550 v12 M1278 563 h12" stroke="#090F12" stroke-width="2"/><circle cx="1286" cy="541" r="2.6" fill="#7A9A3A"/></g>
       </g></g>
       <rect x="1140" y="520" width="56" height="82" fill="#618FA4"/>
       <rect x="1140" y="520" width="56" height="10" fill="#002423"/>
@@ -1130,7 +1161,7 @@
     </svg>
   </div>
   <div class="ttl"><small>M/V</small><h1>The Mazinator</h1></div>
-  <p>Welcome aboard The Mazinator. This luxury houseboat contains Leapwork's marketing framework. Go below deck to upload context like technical documentation, historical marketing materials, and design guides. When you're ready, ask the captain to cast off and start exploring the seas of marketing!</p>
+  <p id="introP">Welcome aboard The Mazinator. This luxury houseboat contains Leapwork's marketing framework. Go below deck to upload context like technical documentation, historical marketing materials, and design guides. When you're ready, ask the captain to cast off and start exploring the seas of marketing!</p>
   
 </div>
 <div class="ribbon" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -1737,11 +1768,35 @@ let gState='';
 const gNorm=t=>t.toLowerCase().replace(/[\u2018\u2019]/g,"'").replace(/[^a-z' ]/g,' ').replace(/\s+/g,' ').trim();
 function talkGladys(){const t=gIn.value.trim();if(!t)return;gIn.value='';gSay('me',t);const n=gNorm(t);
   if(/donny won'?t blow|donny wont blow/.test(n)){gState='';saxUnlock();setTimeout(()=>{gSay('dog','Now you know.');setTimeout(()=>{closeDog();saxShow()},1400)},500);return}
+  if(/\bsteve\b/.test(n)){gState='';setTimeout(()=>{gSay('dog',"Oh, Steve, right, I'll see if he wants a drink.");setTimeout(()=>{closeDog();steveDrink()},1600)},500);return}
   if(/\btricks?\b/.test(n)){gState='bmode';setTimeout(()=>gSay('dog','Have you heard about B-MODE?'),600);return}
   if(gState==='bmode'){gState='';
     if(/^(no|nope|nah|not really|no i haven'?t|never)\b/.test(n)||n==='no'){setTimeout(()=>gSay('dog','Click the little yellow light on the back of the boat.'),600);return}
     if(/^(yes|yeah|yep|yup|sure|i have)\b/.test(n)){setTimeout(()=>gSay('dog','Then you know where to find me.'),600);return}}
   const hit=G_REPLIES.find(([re])=>re.test(t));setTimeout(()=>{gSay('dog',gPick(hit?hit[1]:G_DEFAULT));if(hit&&hit[0].source.includes('good'))gHappy()},600)}
+// ----- Steve gets a martini -----
+let steveBusy=false;
+function dogToUnused(fromX,toX,ms,done){const r=document.getElementById('dogRun'),d=document.getElementById('dog'),t0=performance.now(),left=toX<fromX;d.classList.add('running');
+  (function step(t){const e=Math.min(1,(t-t0)/ms),q=e<.5?2*e*e:1-Math.pow(-2*e+2,2)/2,x=fromX+(toX-fromX)*q;
+    r.setAttribute('transform',`translate(${x} 0) translate(1240 0) scale(${left?-1:1} 1) translate(-1240 0)`);
+    if(e<1)requestAnimationFrame(step);else{d.classList.remove('running');done&&done()}})(t0)}
+function dogPath(segs,done){const r=document.getElementById('dogRun'),d=document.getElementById('dog');let n=0;
+  const run=()=>{if(n>=segs.length){d.classList.remove('running');return done&&done()}const g=segs[n++],t0=performance.now(),left=g.x1<g.x0||(g.x1===g.x0&&g.left);
+    d.classList.toggle('running',!g.jump);
+    (function step(t){const e=Math.min(1,(t-t0)/g.ms),q=g.jump?e:(e<.5?2*e*e:1-Math.pow(-2*e+2,2)/2),x=g.x0+(g.x1-g.x0)*q,y=g.y0+(g.y1-g.y0)*q-(g.jump?Math.sin(Math.PI*e)*70:0);
+      r.setAttribute('transform',`translate(${x} ${y}) translate(1240 0) scale(${left?-1:1} 1) translate(-1240 0)`);
+      if(e<1)requestAnimationFrame(step);else run()})(t0)};run()}
+function steveDrink(){if(steveBusy||saxBusy||(typeof bRunning!=='undefined'&&bRunning))return;steveBusy=true;
+  const go=()=>{const st=document.getElementById('steveG'),d=document.getElementById('dog'),sh=document.getElementById('dShaker'),gl=document.getElementById('dGlass'),
+      up=document.getElementById('steveArmUp'),dn=document.getElementById('steveArmDown');
+    up.style.display='none';dn.style.display='';st.style.display='';st.classList.remove('cheers');st.classList.add('pop');document.body.classList.add('steveout');
+    setTimeout(()=>{sh.style.display='';d.classList.add('shaking');
+      setTimeout(()=>{d.classList.remove('shaking');sh.style.display='none';gl.style.display='';
+        dogPath([{x0:0,x1:-470,y0:0,y1:0,ms:1500},{x0:-470,x1:-560,y0:0,y1:-230,ms:650,jump:1}],()=>{
+          setTimeout(()=>{gl.style.display='none';dn.style.display='none';up.style.display='';st.classList.add('cheers');
+            setTimeout(()=>dogPath([{x0:-560,x1:-470,y0:-230,y1:0,ms:650,jump:1},{x0:-470,x1:0,y0:0,y1:0,ms:1500}],()=>{document.getElementById('dogRun').removeAttribute('transform');steveBusy=false}),800)},300)})},1900)},700)};
+  if(isShown('interior')||!document.getElementById('maz').getBoundingClientRect().width){navShip();setTimeout(go,900)}else go()}
+document.addEventListener('DOMContentLoaded',()=>{const st=document.getElementById('steveG');if(st)st.addEventListener('click',e=>{e.stopPropagation();if(steveBusy)return;st.style.transition='opacity .4s';st.style.opacity='0';setTimeout(()=>{st.style.display='none';st.style.opacity='';st.classList.remove('pop','cheers');document.body.classList.remove('steveout')},400)})});
 // ----- "Donny won't blow": a man with a sax walks out on deck -----
 let saxAudio=null,saxBusy=false,saxRAF=0;
 function saxUnlock(){if(!saxAudio){saxAudio=new Audio('/leapwork/api/media/donny-wont-blow.mp3');saxAudio.preload='auto';saxAudio.addEventListener('ended',saxHide)}
